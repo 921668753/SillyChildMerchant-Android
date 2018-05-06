@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/TitleDividerWidth" />
+
+    <TextView
+        style="@style/DividerWidth"
+        android:layout_marginTop="@dimen/dimen15" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/whiteColors"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_accountNumber"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/accountNumber"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            android:id="@+id/et_accountNumber"
+            style="@style/AutoMatch"
+            android:layout_marginLeft="@dimen/dimen52"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@color/whiteColors"
+            android:digits="0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz."
+            android:hint="@string/hintAccountText"
+            android:inputType="text"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+        <ImageView
+            android:id="@+id/img_quxiao"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:layout_marginRight="@dimen/dimen15"
+            android:padding="@dimen/dimen15"
+            android:src="@mipmap/delete"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/whiteColors"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/DividerWidth"
+            android:layout_marginLeft="@dimen/dimen15" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/whiteColors"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_pwd"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/password"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            android:id="@+id/et_pwd"
+            style="@style/AutoMatch"
+            android:layout_marginLeft="@dimen/dimen52"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@color/whiteColors"
+            android:hint="@string/hintPasswordText"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:textColorHint="@color/hintColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+        <ImageView
+            android:id="@+id/img_quxiao1"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:layout_marginRight="@dimen/dimen15"
+            android:padding="@dimen/dimen15"
+            android:src="@mipmap/delete"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen20"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize16" />
+
+    <RelativeLayout style="@style/MatchWrap">
+
+        <TextView
+            android:id="@+id/tv_forgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen54"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:paddingTop="@dimen/dimen20"
+            android:text="@string/forgotPassword"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen54"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen15"
+            android:paddingTop="@dimen/dimen20"
+            android:text="@string/register1"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize15" />
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen50"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen25"
+        android:paddingRight="@dimen/dimen25">
+
+        <View
+            style="@style/AutoMatch"
+            android:layout_height="@dimen/dimen1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/longinotherdividerbg" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10"
+            android:text="@string/thirdpartylogin"
+            android:textColor="@color/hintColors"
+            android:textSize="@dimen/textsize14" />
+
+        <View
+            style="@style/AutoMatch"
+            android:layout_height="@dimen/dimen1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/longinotherdividerbg" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/WrapWrap"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen35"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_loginweixin"
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen15"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15"
+            android:paddingTop="@dimen/dimen15">
+
+            <ImageView
+                style="@style/WrapWrap"
+                android:src="@mipmap/weixin" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen14"
+                android:text="@string/thirdweixin"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_loginqq"
+            style="@style/WrapWrap"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15"
+            android:paddingTop="@dimen/dimen15">
+
+            <ImageView
+                style="@style/WrapWrap"
+                android:src="@mipmap/qq" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen14"
+                android:text="@string/thirdqq"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
