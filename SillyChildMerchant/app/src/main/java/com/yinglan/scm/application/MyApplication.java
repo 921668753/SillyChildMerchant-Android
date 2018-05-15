@@ -7,20 +7,14 @@ import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
-import com.hyphenate.chat.ChatClient;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
-import com.hyphenate.easeui.EaseUI;
-import com.hyphenate.helpdesk.easeui.UIProvider;
+
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.yinglan.scm.BuildConfig;
-import com.yinglan.scm.utils.easeim.DemoHelper;
 
 import java.util.Iterator;
 import java.util.List;
@@ -111,7 +105,7 @@ public class MyApplication extends Application {
      */
     private void initBaiDuSDK() {
         // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
-        SDKInitializer.initialize(this);
+     //   SDKInitializer.initialize(this);
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         // SDKInitializer.setCoordType(CoordType.BD09LL);
@@ -121,36 +115,7 @@ public class MyApplication extends Application {
      * 环信即时通讯客服所需
      */
     private void initHuanXinSDK() {
-        //环信客服Kefu sdk 初始化简写方式：
-        ChatClient.Options options1 = new ChatClient.Options().setAppkey(BuildConfig.HUANXIN_APPKEY).setTenantId(BuildConfig.HUANXIN_TENANTID);
-        // 环信客服 SDK 初始化, 初始化成功后再调用环信下面的内容
-        if (ChatClient.getInstance().init(this, options1)) {
-            //设为调试模式，打成正式包时，最好设为false，以免消耗额外的资源
-            ChatClient.getInstance().setDebugMode(true);
-            UIProvider.getInstance().init(this);
-        }
-        //   DemoKFHelper.getInstance().init(this);
-        EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        int pid = android.os.Process.myPid();
-        String processAppName = getAppName(pid);
-        // 如果APP启用了远程的service，此application:onCreate会被调用2次
-        // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
-        // 默认的APP会在以包名为默认的process name下运行，如果查到的process name不是APP的process name就立即返回
-        if (processAppName == null || !processAppName.equalsIgnoreCase(getPackageName())) {
-//            Log.e(TAG, "enter the service process!");
-            // 则此application::onCreate 是被service 调用的，直接返回
-            return;
-        }
-        //初始化
-        EMClient.getInstance().init(this, options);
-        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
-        //
-        EaseUI.getInstance().init(this, options);
-        //
-        DemoHelper.getInstance().init(this);
+
     }
 
     private String getAppName(int pID) {

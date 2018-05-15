@@ -3,7 +3,6 @@ package com.yinglan.scm.startpage;
 
 import android.app.Activity;
 
-import com.baidu.location.LocationClient;
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -22,9 +21,22 @@ public interface StartPageContract {
         /**
          * 设置定位信息
          */
-        void initLocation(Activity activity, LocationClient mLocationClient);
+    //    void initLocation(Activity activity, LocationClient mLocationClient);
 
+        /**
+         * 获取未读系统消息数量
+         */
+        void getSystemMessage();
 
+        /**
+         * 获取未读司导消息数量
+         */
+        void getGuideMessage();
+
+        /**
+         * 获取未读司导消息数量
+         */
+        void getChatManagerListener();
     }
 
     @SuppressWarnings("unchecked")

@@ -58,8 +58,7 @@ public class GuideViewActivity extends BaseActivity {
                 ((ImageView) view).setImageResource((int) model);
             }
         });
-        mForegroundBanner.setData(Arrays.asList(R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher), null);
-
+        //mForegroundBanner.setData(Arrays.asList(R.mipmap.guide_one, R.mipmap.guide_two, R.mipmap.guide_three), null);
     }
 
     @Override

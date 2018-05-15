@@ -1,1 +1,1 @@
-include ':app', ':kefu-easeui', ':easeui', ':Cklibrary'
+include ':app', ':Cklibrary', ':IMKit', ':IMLib', ':CallKit', ':CallLib', ':RedPacket'

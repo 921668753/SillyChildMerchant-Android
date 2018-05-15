@@ -7,10 +7,6 @@ import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.hyphenate.EMMessageListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
 //import com.yinglan.scm.entity.HxUserListBean;
@@ -89,45 +85,10 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void getChatManagerListener() {
-        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+       // EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
-    EMMessageListener msgListener = new EMMessageListener() {
 
-        @Override
-        public void onMessageReceived(List<EMMessage> messages) {
-            Log.d("tag1111", JsonUtil.obj2JsonString(messages.get(messages.size() - 1)).getBytes().toString());
-            //收到消息
-            getGuideMessage();
-        }
-
-        @Override
-        public void onCmdMessageReceived(List<EMMessage> messages) {
-            //收到透传消息
-//            refresh();
-        }
-
-        @Override
-        public void onMessageRead(List<EMMessage> messages) {
-            //收到已读回执
-        }
-
-        @Override
-        public void onMessageDelivered(List<EMMessage> message) {
-            //收到已送达回执
-        }
-
-        @Override
-        public void onMessageRecalled(List<EMMessage> messages) {
-            //消息被撤回
-            getGuideMessage();
-        }
-
-        @Override
-        public void onMessageChanged(EMMessage message, Object change) {
-            //消息状态变动
-        }
-    };
 
     protected boolean loadConversationList(String response) {
 //        HxUserListBean hxUserListBean = (HxUserListBean) JsonUtil.getInstance().json2Obj(response, HxUserListBean.class);
