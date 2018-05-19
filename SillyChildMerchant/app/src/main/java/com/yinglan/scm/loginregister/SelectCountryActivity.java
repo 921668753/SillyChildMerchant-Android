@@ -127,12 +127,12 @@ public class SelectCountryActivity extends BaseActivity implements SelectCountry
     public void getSuccess(String success, int flag) {
         SelectCountryBean selectCountryBean = (SelectCountryBean) JsonUtil.json2Obj(success, SelectCountryBean.class);
 
-        if (selectCountryBean.getResult() != null && selectCountryBean.getResult().size() > 0) {
-            //模拟线上加载数据
-            mDatas.clear();
-            mDatas.addAll(selectCountryBean.getResult());
-            initDatas(mDatas);
-        }
+//        if (selectCountryBean.getResult() != null && selectCountryBean.getResult().size() > 0) {
+//            //模拟线上加载数据
+//            mDatas.clear();
+//            mDatas.addAll(selectCountryBean.getResult());
+//            initDatas(mDatas);
+//        }
         dismissLoadingDialog();
     }
 

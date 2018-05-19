@@ -39,6 +39,8 @@
 -keep class android.net.** { *; }
 -keepattributes EnclosingMethod
 #-target platform,Add-on
+-keepattributes *Annotation
+-keep class * extends java.lang.annotation.Annotation { *; }
 
 #友盟
 -dontusemixedcaseclassnames
@@ -395,7 +397,6 @@ public static final ** CREATOR;
 -keep public class * extends android.content.BroadcastReceiver  # 保持哪些类不被混淆
 -keep public class * extends android.content.ContentProvider    # 保持哪些类不被混淆
 -keep public class * extends android.app.backup.BackupAgentHelper # 保持哪些类不被混淆
--keep public class * extends java.lang.annotation.Annotation{ *; }
 -keep public class * extends android.preference.Preference        # 保持哪些类不被混淆
 -keep public class com.android.vending.licensing.ILicensingService    # 保持哪些类不被混淆
 

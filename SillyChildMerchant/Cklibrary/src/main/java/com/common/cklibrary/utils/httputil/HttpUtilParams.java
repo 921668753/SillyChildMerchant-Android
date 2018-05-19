@@ -2,8 +2,13 @@ package com.common.cklibrary.utils.httputil;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.utils.JsonUtil;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 
 import java.util.Locale;
@@ -29,6 +34,12 @@ public class HttpUtilParams {
         httpParams.putHeaders("country", Locale.getDefault().getCountry());//国家简称
         httpParams.putHeaders("source", "android");
         httpParams.putHeaders("version", getVersion());
+//        String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+//        Log.d("Cookies1", cookies);
+//        if (!StringUtils.isEmpty(cookies)) {
+//            Log.d("Cookies2", cookies);
+//            httpParams.putHeaders("Cookie", cookies);
+//        }
     }
 
     /**

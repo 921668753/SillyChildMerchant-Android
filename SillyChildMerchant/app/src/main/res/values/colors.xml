@@ -13,7 +13,7 @@
 
     <color name="dividercolors">#cfcfcf</color>
     <color name="dividercolors1">#cccccc</color>
-    <color name="dividercolors2">#e8e8e8</color>
+    <color name="dividercolors2">#DDDDDD</color>
 
 
     <!--引导页-->
@@ -25,10 +25,12 @@
     <color name="textColor">#333333</color>
     <color name="grayColors">#888888</color>
     <color name="hintColors">#999999</color>
-    <color name="loginBackgroundColors">#2cd052</color>
+    <color name="loginBackgroundColors">#2CD052</color>
     <color name="partTranslucent">#39000000</color>
     <color name="longinotherdividerbg">#dddddd</color>
-
+    <color name="cs_evaluate_dialog_divider">#eceef3</color>
+    <color name="gray_two">#f2f2f2</color>
+    <color name="seal_bg">#f0f0f6</color>
 
     <!--主界面-->
     <color name="greenColors">#2cd052</color>
@@ -39,11 +41,24 @@
     <color name="guideShapeColors">#ff7f19</color>
     <color name="lightYellowColor">#efcf82</color>
     <color name="userShapeColors">#ff4551</color>
+    <color name="dFFDE6Colors">#DFFDE6</color>
+    <color name="fF4E00Colors">#FF4E00</color>
+    <color name="c9FFD2Colors">#C9FFD2</color>
+
+
+    <!--首页-->
+    <color name="translucent">#50000000</color>
+    <color name="c1C1C1Colors">#C1C1C1</color>
+    <color name="d3D3D3Colors">#D3D3D3</color>
+    <color name="fF0000Colors">#FF0000</color>
+
 
     <!--商城-->
     <color name="lightRedColors">#ff4e4e</color>
     <color name="redColors">#ff2e29</color>
     <color name="mallduanxian">#aaaaaa</color>
+    <color name="f1F4F6Colors">#F1F4F6</color>
+    <color name="fF3542Colors">#FF3542</color>
 
     <!--包车定制-->
     <color name="designatedDriverColors">#868686</color>
@@ -69,6 +84,9 @@
     <color name="deliveryaddressaddress">#9c9c9e</color>
     <color name="deliveryaddressdefault">#636370</color>
     <color name="myWalletDriver">#ff7c7a</color>
+    <color name="darkGreen">#129130</color>
+    <color name="fF2626Colors">#FF2626</color>
+
 
     <!--我的 意见反馈-->
     <color name="red">#fb7979</color>
@@ -88,4 +106,18 @@
     <color name="phonestrcolor">#8e8e8e</color>
     <color name="phonenumbercolor">#222222</color>
 
+
+    <!-- 扫码输入编号确定按钮灰色 -->
+    <color name="common_text_gray">#333333</color>
+    <color name="text_black_color">#333333</color>
+    <color name="ac_filter_string_color">#0099ff</color>
+    <color name="cs_evaluate_bottom_text_backgroud">#0e8cea</color>
+    <color name="cs_evaluate_text_color">#3c4d65</color>
+    <color name="cs_evaluate_text_border">#B4BDCB</color>
+    <color name="cs_evaluate_text_border_hover">#91BCFF</color>
+    <color name="cs_evaluate_text_selected">#4D8DF0</color>
+    <color name="cs_evaluate_text_unselected">#939DAB</color>
+    <color name="cs_evaluate_background_selected">#E3EEFF</color>
+    <color name="cs_evaluate_edittext_background">#f1f3f5</color>
+    <color name="cs_evaluate_edittext_textcolor">#939dab</color>
 </resources>

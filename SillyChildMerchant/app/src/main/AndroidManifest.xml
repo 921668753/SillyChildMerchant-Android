@@ -97,14 +97,11 @@
 
         <!--注册 綁定账号-->
         <activity
-            android:name="com.yinglan.scm.loginregister.bindingaccount.BindingAccountActivity"
+            android:name="com.yinglan.scm.loginregister.bindingaccount.BindingPhoneActivity"
             android:screenOrientation="portrait"></activity>
 
 
         <!-- 忘记密码-->
-        <activity
-            android:name="com.yinglan.scm.loginregister.forgotpassword.ForgotPasswordActivity"
-            android:screenOrientation="portrait"></activity>
 
         <!--主界面-->
         <activity

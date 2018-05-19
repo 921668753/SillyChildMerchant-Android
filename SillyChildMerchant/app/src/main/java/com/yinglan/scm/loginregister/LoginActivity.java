@@ -13,25 +13,30 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMShareConfig;
+import com.yinglan.scm.R;
+import com.yinglan.scm.entity.loginregister.LoginBean;
+import com.yinglan.scm.loginregister.bindingaccount.BindingPhoneActivity;
+import com.yinglan.scm.loginregister.forgotpassword.RetrievePasswordActivity;
+import com.yinglan.scm.loginregister.register.RegisterActivity;
+import com.yinglan.scm.message.rongcloud.util.UserUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.yinglan.scm.R;
-import com.yinglan.scm.entity.LoginBean;
-import com.yinglan.scm.loginregister.bindingaccount.BindingAccountActivity;
-import com.yinglan.scm.loginregister.forgotpassword.ForgotPasswordActivity;
-import com.yinglan.scm.loginregister.register.RegisterActivity;
-
 
 import java.util.Map;
 
-import cn.bingoogolapple.titlebar.BGATitleBar;
+
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
+import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 
 /**
  * 登录
@@ -39,22 +44,38 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  */
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
-    private LoginContract.Presenter mPresenter;
+
     /**
-     * 标题
+     * 返回
      */
-    @BindView(id = R.id.titlebar)
-    private BGATitleBar titlebar;
+    @BindView(id = R.id.img_back, click = true)
+    private ImageView img_back;
+
     /**
      * 账号
      */
     @BindView(id = R.id.et_accountNumber)
     private EditText et_accountNumber;
+
+    /**
+     * 取消
+     */
+    @BindView(id = R.id.img_quxiao, click = true)
+    private ImageView img_quxiao;
+
     /**
      * 密码
      */
     @BindView(id = R.id.et_pwd)
     private EditText et_pwd;
+    /**
+     * 取消
+     */
+    @BindView(id = R.id.img_quxiao1, click = true)
+    private ImageView img_quxiao1;
+    @BindView(id = R.id.img_yanjing, click = true)
+    private ImageView img_yanjing;
+
     /**
      * 忘记密码
      */
@@ -68,15 +89,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     /**
      * 注册
      */
-    @BindView(id = R.id.tv_register, click = true)
-    private TextView tv_register;
-    /**
-     * 取消
-     */
-    @BindView(id = R.id.img_quxiao, click = true)
-    private ImageView img_quxiao;
-    @BindView(id = R.id.img_quxiao1, click = true)
-    private ImageView img_quxiao1;
+    @BindView(id = R.id.ll_register, click = true)
+    private LinearLayout ll_register;
 
     /**
      * 微信
@@ -115,34 +129,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
-        //   tv_login.setFocusable(false);
         tv_login.setClickable(false);//不可点击
         changeInputView(et_accountNumber, img_quxiao);
         changeInputView(et_pwd, img_quxiao1);
-
     }
 
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-//        ActivityTitleUtils.initToolbar(aty, getString(R.string.login), true, R.id.titlebar);
-        titlebar.setTitleText(getString(R.string.login));
-        titlebar.setRightText("");
-        titlebar.setRightDrawable(null);
-        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                super.onClickLeftCtv();
-
-
-                finish();
-            }
-        };
-        titlebar.setDelegate(simpleDelegate);
-
-    }
 
     /**
      * view监听事件
@@ -152,14 +143,16 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-
         switch (v.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
             case R.id.tv_forgotPassword:
-                showActivity(aty, ForgotPasswordActivity.class);
+                showActivity(aty, RetrievePasswordActivity.class);
                 break;
             case R.id.tv_login:
                 showLoadingDialog(getString(R.string.loggingLoad));
-                mPresenter.postToLogin(et_accountNumber.getText().toString(), et_pwd.getText().toString());
+                ((LoginContract.Presenter) mPresenter).postToLogin(et_accountNumber.getText().toString(), et_pwd.getText().toString());
                 break;
             case R.id.img_quxiao:
                 et_accountNumber.setText("");
@@ -167,17 +160,26 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             case R.id.img_quxiao1:
                 et_pwd.setText("");
                 break;
-            case R.id.tv_register:
+            case R.id.img_yanjing:
+                if (et_pwd.getInputType() == 0x00000081) {
+                    img_yanjing.setImageResource(R.mipmap.yanjing1);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    img_yanjing.setImageResource(R.mipmap.yanjing);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                et_pwd.setSelection(et_pwd.getText().toString().trim().length());
+                et_pwd.requestFocus();
+                break;
+            case R.id.ll_register:
                 showActivity(aty, RegisterActivity.class);
                 break;
-
             case R.id.ll_loginweixin:
                 thirdLogin(SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.ll_loginqq:
                 thirdLogin(SHARE_MEDIA.QQ);
                 break;
-
             default:
                 break;
         }
@@ -185,69 +187,21 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void getSuccess(String s, int flag) {
-
         if (flag == 0) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-//            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getResult().getMobile());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getResult().getHead_pic());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getResult().getNickname());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getResult().getCountroy_code());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getResult().getHx_user_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getResult().getHx_password());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "country", bean.getResult().getCountry());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "city", bean.getResult().getCity());
-            ((LoginContract.Presenter) mPresenter).loginHuanXin(bean.getResult().getHx_user_name(), bean.getResult().getHx_password());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", UserUtil.getResTokenInfo(this));
+            ((LoginContract.Presenter) mPresenter).loginRongYun(UserUtil.getResTokenInfo(this), bean);
         } else if (flag == 1) {
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", false);
-
-
+            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
             dismissLoadingDialog();
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             finish();
-        } else if (flag == 2) {
-            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-            Log.d("tag111", bean.getResult().getToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-            if (StringUtils.isEmpty(bean.getResult().getMobile()) && StringUtils.isEmpty(bean.getResult().getEmail()) || bean.getResult().getMobile().length() <= 0 && bean.getResult().getEmail().length() <= 0) {
-                dismissLoadingDialog();
-                Intent intent = new Intent(aty, BindingAccountActivity.class);
-                intent.putExtra("openid", openid);
-                intent.putExtra("from", from);
-                intent.putExtra("nickname", nickname);
-                intent.putExtra("head_pic", head_pic);
-                intent.putExtra("sex", sex);
-                showActivity(aty, intent);
-                return;
-            }
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment1", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "email", bean.getResult().getEmail());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getResult().getMobile());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getResult().getHead_pic());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getResult().getNickname());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getResult().getCountroy_code());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getResult().getHx_user_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getResult().getHx_password());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "country", bean.getResult().getCountry());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "city", bean.getResult().getCity());
-            ((LoginContract.Presenter) mPresenter).loginHuanXin(bean.getResult().getHx_user_name(), bean.getResult().getHx_password());
-//            finish();
-//            dismissLoadingDialog();
         }
     }
 
@@ -255,7 +209,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (msg.equals("4000")) {
-            Intent intent = new Intent(aty, BindingAccountActivity.class);
+            Intent intent = new Intent(aty, BindingPhoneActivity.class);
             intent.putExtra("openid", openid);
             intent.putExtra("from", from);
             intent.putExtra("nickname", nickname);
@@ -329,7 +283,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
      * 第三方授权
      */
     private void thirdLogin(SHARE_MEDIA platform) {
-        //   UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, platform, umAuthListener);
+        UMShareConfig config = new UMShareConfig();
+        config.isNeedAuthOnGetUserInfo(true);
+        UMShareAPI.get(LoginActivity.this).setShareConfig(config);
         UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, platform, umAuthListener);
     }
 
@@ -359,9 +315,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 temp = temp + key + " : " + map.get(key) + "\n";
             }
             Log.d("tag111", temp);
-            if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nan))) {
+            if (map.get("gender") != null && map.get("gender").contains(getString(R.string.man))) {
                 sex = 1;
-            } else if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nv))) {
+            } else if (map.get("gender") != null && map.get("gender").contains(getString(R.string.woman))) {
                 sex = 2;
             } else {
                 sex = 0;
@@ -377,7 +333,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             }
             nickname = map.get("name");
             head_pic = map.get("iconurl");
-            mPresenter.postThirdToLogin(openid, from, nickname, head_pic, sex);
+            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from, nickname, head_pic, sex);
         }
 
         /**
@@ -394,7 +350,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 return;
             }
             ViewInject.toast(getString(R.string.authoriseErr));
-            //   Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -406,7 +361,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         public void onCancel(SHARE_MEDIA platform, int action) {
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.authoriseErr1));
-            //  Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
         }
     };
 
@@ -426,13 +380,5 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
-    }
-
-    @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
-
-
-        finish();
     }
 }

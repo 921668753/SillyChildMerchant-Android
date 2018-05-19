@@ -5,7 +5,6 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.utils.myview.WebViewLayout;
 import com.yinglan.scm.R;
 
-import static com.yinglan.scm.constant.URLConstants.APIURLFORPAY;
 
 /**
  * 注册协议
@@ -49,7 +48,7 @@ public class RegistrationAgreementActivity extends BaseActivity {
             }
         });
         //  if (!StringUtils.isEmpty(url)) {
-        webViewLayout.loadUrl(APIURLFORPAY + "/web/user/regProtocol");
+       // webViewLayout.loadUrl(APIURLFORPAY + "/web/user/regProtocol");
         //    }
     }
 

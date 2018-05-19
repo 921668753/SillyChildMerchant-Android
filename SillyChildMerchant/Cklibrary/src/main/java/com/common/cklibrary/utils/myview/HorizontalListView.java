@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
@@ -274,44 +275,51 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         return handled;
     }
 
-    protected boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                              float velocityY) {
-        synchronized (HorizontalListView.this) {
-            mScroller.fling(mNextX, 0, (int) -velocityX, 0, 0, mMaxX, 0, 0);
-        }
-        requestLayout();
-
-        return true;
-    }
-
-    protected boolean onDown(MotionEvent e) {
-        mScroller.forceFinished(true);
-        return true;
-    }
-
     private OnGestureListener mOnGesture = new GestureDetector.SimpleOnGestureListener() {
 
         @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            getParent().requestDisallowInterceptTouchEvent(false);
+            return false;
+        }
+
+        @Override
         public boolean onDown(MotionEvent e) {
-            return HorizontalListView.this.onDown(e);
+            mScroller.forceFinished(true);
+            return true;
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
-            return HorizontalListView.this.onFling(e1, e2, velocityX, velocityY);
+            getParent().requestDisallowInterceptTouchEvent(true);
+            synchronized (HorizontalListView.this) {
+                mScroller.fling(mNextX, 0, (int) -velocityX, 0, 0, mMaxX, 0, 0);
+            }
+            requestLayout();
+            if (Math.abs(velocityX)>Math.abs(velocityY)){
+                return true;
+            }else{
+                getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
         }
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2,
                                 float distanceX, float distanceY) {
-
-            synchronized (HorizontalListView.this) {
-                mNextX += (int) distanceX;
+            getParent().requestDisallowInterceptTouchEvent(true);
+            if (Math.abs(distanceY)>1000&&Math.abs(distanceY)>Math.abs(distanceX)){
+                getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }else{
+                synchronized (HorizontalListView.this) {
+                    mNextX += (int) distanceX;
+                }
+                requestLayout();
+                return true;
             }
-            requestLayout();
 
-            return true;
         }
 
         @Override
@@ -329,7 +337,9 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
                 }
 
             }
-            return true;
+            getParent().requestDisallowInterceptTouchEvent(false);
+            return false;
+//            return super.onSingleTapConfirmed(e);
         }
 
         @Override
@@ -345,6 +355,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
                 }
 
             }
+            getParent().requestDisallowInterceptTouchEvent(false);
         }
 
         private boolean isEventWithinView(MotionEvent e, View child) {

@@ -1,7 +1,5 @@
 package com.yinglan.scm.main;
 
-import android.util.Log;
-
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.JsonUtil;
@@ -9,12 +7,9 @@ import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
-//import com.yinglan.scm.entity.HxUserListBean;
-//import com.yinglan.scm.entity.SystemMessageBean;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -36,11 +31,11 @@ public class MainPresenter implements MainContract.Presenter {
 //            @Override
 //            public void onSuccess(String response) {
 //                SystemMessageBean systemMessageBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(response, SystemMessageBean.class);
-//                if (systemMessageBean.getResult().getList() == null || systemMessageBean.getResult().getList().size() == 0) {
+//                if (systemMessageBean.getData().getList() == null || systemMessageBean.getData().getList().size() == 0) {
 //                    mView.errorMsg(response, 0);
 //                    return;
 //                }
-//                if (systemMessageBean.getResult().getUnread() > 0) {
+//                if (systemMessageBean.getData().getUnread() > 0) {
 //                    mView.getSuccess("", 0);
 //                } else {
 //                    boolean isRefreshingHomePageFragment = PreferenceHelper.readBoolean(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isRefreshingHomePageFragment", false);
@@ -80,22 +75,57 @@ public class MainPresenter implements MainContract.Presenter {
 //            public void onFailure(String msg) {
 //                mView.errorMsg(msg, 0);
 //            }
-      //  });
+//        });
     }
 
     @Override
     public void getChatManagerListener() {
-       // EMClient.getInstance().chatManager().addMessageListener(msgListener);
+      //  EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
-
+//    EMMessageListener msgListener = new EMMessageListener() {
+//
+//        @Override
+//        public void onMessageReceived(List<EMMessage> messages) {
+//            Log.d("tag1111", JsonUtil.obj2JsonString(messages.get(messages.size() - 1)).getBytes().toString());
+//            //收到消息
+//            getGuideMessage();
+//        }
+//
+//        @Override
+//        public void onCmdMessageReceived(List<EMMessage> messages) {
+//            //收到透传消息
+////            refresh();
+//        }
+//
+//        @Override
+//        public void onMessageRead(List<EMMessage> messages) {
+//            //收到已读回执
+//        }
+//
+//        @Override
+//        public void onMessageDelivered(List<EMMessage> message) {
+//            //收到已送达回执
+//        }
+//
+//        @Override
+//        public void onMessageRecalled(List<EMMessage> messages) {
+//            //消息被撤回
+//            getGuideMessage();
+//        }
+//
+//        @Override
+//        public void onMessageChanged(EMMessage message, Object change) {
+//            //消息状态变动
+//        }
+//    };
 
     protected boolean loadConversationList(String response) {
 //        HxUserListBean hxUserListBean = (HxUserListBean) JsonUtil.getInstance().json2Obj(response, HxUserListBean.class);
-//        if (hxUserListBean == null || hxUserListBean.getResult() == null || hxUserListBean.getResult().size() == 0) {
+//        if (hxUserListBean == null || hxUserListBean.getData() == null || hxUserListBean.getData().size() == 0) {
 //            return false;
 //        }
-//        List<HxUserListBean.ResultBean> hxUserList = hxUserListBean.getResult();
+//        List<HxUserListBean.ResultBean> hxUserList = hxUserListBean.getData();
 //        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
 //        synchronized (conversations) {
 //            for (EMConversation conversation : conversations.values()) {

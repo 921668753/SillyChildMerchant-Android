@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
-import android.support.v7.widget.AppCompatCheckedTextView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.KeyEvent;

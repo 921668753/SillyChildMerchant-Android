@@ -30,17 +30,17 @@ public class StartPagePresenter implements StartPageContract.Presenter {
     @Override
     public void getAppConfig() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getAppConfig(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.getAppConfig(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 0);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 
 //    @Override
@@ -99,9 +99,9 @@ public class StartPagePresenter implements StartPageContract.Presenter {
     @Override
     public void getSystemMessage() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getSystemMessage(httpParams, 1, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
+//        RequestClient.getSystemMessage(httpParams, 1, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
 //                SystemMessageBean systemMessageBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(response, SystemMessageBean.class);
 //                if (systemMessageBean.getResult().getList() == null || systemMessageBean.getResult().getList().size() == 0) {
 //                    mView.errorMsg(response, 0);
@@ -114,12 +114,12 @@ public class StartPagePresenter implements StartPageContract.Presenter {
 //                }
             }
 
-            @Override
-            public void onFailure(String msg) {
-                getGuideMessage();
-            }
-        });
-    }
+//            @Override
+//            public void onFailure(String msg) {
+//                getGuideMessage();
+//            }
+//        });
+ //   }
 
     @Override
     public void getGuideMessage() {
@@ -127,21 +127,21 @@ public class StartPagePresenter implements StartPageContract.Presenter {
         httpParams.put("type", "driver");
         httpParams.put("page", 1);
         httpParams.put("pageSize", 10000);
-        RequestClient.getHxUserList(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-//                if (loadConversationList(response)) {
-//                    mView.getSuccess(response, 0);
-//                } else {
-//                    mView.errorMsg(response, 0);
-//                }
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
+//        RequestClient.getHxUserList(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+////                if (loadConversationList(response)) {
+////                    mView.getSuccess(response, 0);
+////                } else {
+////                    mView.errorMsg(response, 0);
+////                }
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
     }
 
     @Override

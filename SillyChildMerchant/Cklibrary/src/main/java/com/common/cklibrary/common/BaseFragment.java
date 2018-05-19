@@ -6,10 +6,15 @@ import android.view.View;
 
 
 import com.common.cklibrary.R;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
+import com.common.cklibrary.utils.rx.RxManager;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.RxVolley;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 公用的父Fragment
@@ -19,7 +24,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public abstract class BaseFragment extends KJFragment implements LoadingDialogView {
 
-    public Object mPresenter;
+
+    public Object mPresenter = null;
+    public Subscription subscription = null;
     private SweetAlertDialog mLoadingDialog;
 
     @SuppressWarnings("deprecation")
@@ -50,7 +57,7 @@ public abstract class BaseFragment extends KJFragment implements LoadingDialogVi
     @Override
     public void onPause() {
         super.onPause();
-        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
+        //   RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
         dismissLoadingDialog();
         //    MobclickAgent.onPause(this);
     }
@@ -69,15 +76,39 @@ public abstract class BaseFragment extends KJFragment implements LoadingDialogVi
     }
 
 
-    public void showActivityForResult(Activity aty, Class<?> cls, int requestcode) {
-        Intent intent = new Intent();
-        intent.setClass(aty, cls);
-        startActivityForResult(intent, requestcode);
+    /**
+     * 必须此处创建订阅者 Subscription subscription
+     */
+    @Override
+    protected void initData() {
+        super.initData();
+        subscription = RxBus.getInstance().register(MsgEvent.class).subscribe(new Action1<MsgEvent>() {
+            @Override
+            public void call(MsgEvent msgEvent) {
+                callMsgEvent(msgEvent);
+            }
+        });
+    }
+
+    @Override
+    protected void initWidget(View parentView) {
+        super.initWidget(parentView);
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            RxManager.get().add(this.getClass().getName(), subscription);
+        }
+    }
+
+
+    public void callMsgEvent(MsgEvent msgEvent) {
+
     }
 
     @Override
     public void onDestroy() {
+        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
+        RxManager.get().cancel(this.getClass().getName());
         super.onDestroy();
+        subscription = null;
         mLoadingDialog = null;
         mPresenter = null;
     }

@@ -5,10 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.common.cklibrary.R;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
+import com.common.cklibrary.utils.rx.RxManager;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.RxVolley;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import rx.Subscription;
+import rx.functions.Action1;
 
 
 /**
@@ -18,7 +23,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public abstract class BaseActivity extends KJActivity implements LoadingDialogView {
-    public Object mPresenter;
+    public Object mPresenter = null;
+    public Subscription subscription = null;
     private SweetAlertDialog mLoadingDialog = null;
 
     /**
@@ -42,13 +48,36 @@ public abstract class BaseActivity extends KJActivity implements LoadingDialogVi
 //    }
 
     /**
+     * 必须此处创建订阅者 Subscription subscription
+     */
+    @Override
+    public void initData() {
+        super.initData();
+        subscription = RxBus.getInstance().register(MsgEvent.class).subscribe(new Action1<MsgEvent>() {
+            @Override
+            public void call(MsgEvent msgEvent) {
+                callMsgEvent(msgEvent);
+            }
+        });
+    }
+
+
+    @Override
+    public void initWidget() {
+        super.initWidget();
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            RxManager.get().add(this.getClass().getName(), subscription);
+        }
+    }
+
+    /**
      * @param title show Dialog
      */
     @SuppressWarnings("deprecation")
     @Override
     public void showLoadingDialog(String title) {
         if (mLoadingDialog == null) {
-            mLoadingDialog = new SweetAlertDialog(KJActivityStack.create().topActivity(), SweetAlertDialog.PROGRESS_TYPE);
+            mLoadingDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
             mLoadingDialog.getProgressHelper().setBarColor(getResources().getColor(R.color.dialogLoadingColor));
             mLoadingDialog.setCancelable(false);
         }
@@ -79,7 +108,7 @@ public abstract class BaseActivity extends KJActivity implements LoadingDialogVi
         //关闭 Dialog
         dismissLoadingDialog();
         //取消网络请求
-        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
+        //    RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
         //    MobclickAgent.onPause(this);
     }
 
@@ -96,12 +125,19 @@ public abstract class BaseActivity extends KJActivity implements LoadingDialogVi
     }
 
 
+    public void callMsgEvent(MsgEvent msgEvent) {
+
+    }
+
     /**
-     * 便于 gc 回收内存
+     * 页面销毁时取消订阅，防止内存溢出  Subscription subscription
      */
     @Override
     protected void onDestroy() {
+        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
+        RxManager.get().cancel(this.getClass().getName());
         super.onDestroy();
+        subscription = null;
         mLoadingDialog = null;
         mPresenter = null;
     }

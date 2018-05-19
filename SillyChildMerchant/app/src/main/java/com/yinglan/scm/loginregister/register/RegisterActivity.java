@@ -1,130 +1,112 @@
 package com.yinglan.scm.loginregister.register;
 
 import android.content.Intent;
-import android.os.SystemClock;
-import android.view.MotionEvent;
+import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
-import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.utils.ActivityTitleUtils;
-import com.kymjs.common.Log;
+import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
+import com.kymjs.common.PreferenceHelper;
+import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.loginregister.LoginBean;
+import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.message.rongcloud.util.UserUtil;
+
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
+import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 
 /**
- * 注册
- * 有可能  忘记密码公用此页
- * Created by ruitu ck on 2016/9/14.
+ * 手机号注册
+ * Created by Admin on 2017/8/10.
  */
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity implements RegisterContract.View {
+
+    /**
+     * 返回
+     */
+    @BindView(id = R.id.img_back, click = true)
+    private ImageView img_back;
 
 
     /**
-     * 手机号注册
+     * 倒计时内部类
      */
-    @BindView(id = R.id.ll_registerPhone, click = true)
-    private LinearLayout ll_registerPhone;
+    private TimeCount time;
 
-    @BindView(id = R.id.tv_registerPhone)
-    private TextView tv_registerPhone;
-    @BindView(id = R.id.tv_registerPhone1)
-    private TextView tv_registerPhone1;
 
     /**
-     * 邮箱号注册
+     * 手机号
      */
-    @BindView(id = R.id.ll_registerMailBox, click = true)
-    private LinearLayout ll_registerMailBox;
+    @BindView(id = R.id.et_accountNumber)
+    private EditText et_accountNumber;
 
-    @BindView(id = R.id.tv_registerMailBox)
-    private TextView tv_registerMailBox;
-    @BindView(id = R.id.tv_registerMailBox1)
-    private TextView tv_registerMailBox1;
+    /**
+     * 密码
+     */
+    @BindView(id = R.id.et_pwd)
+    private EditText et_pwd;
 
-    private BaseFragment contentFragment;
-    private BaseFragment contentFragment1;
+    @BindView(id = R.id.img_yanjing, click = true)
+    private ImageView img_yanjing;
+
+    /**
+     * 验证码
+     */
+    @BindView(id = R.id.et_code)
+    private EditText et_code;
+    /**
+     * 获取验证码
+     */
+    @BindView(id = R.id.tv_code, click = true)
+    private TextView tv_code;
+
+    /**
+     * 注册
+     */
+    @BindView(id = R.id.tv_registe, click = true)
+    private TextView tv_registe;
+
+    /**
+     * 注册协议
+     */
+    @BindView(id = R.id.tv_agreement, click = true)
+    private TextView tv_agreement;
 
 
-    private int chageIcon = 0;
+    /**
+     * opt	String
+     * 验证码类型 reg=注册 restpwd=找回密码 login=登陆 bind=绑定手机号.
+     */
+    private String opt = "reg";
+
 
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_register);
     }
 
+    /**
+     * 初始化数据
+     */
     @Override
     public void initData() {
         super.initData();
-        contentFragment = new RegisterPhoneFragment();
-        contentFragment1 = new RegisterMailBoxFragment();
-        chageIcon = getIntent().getIntExtra("chageIcon", 0);
+        mPresenter = new RegisterPresenter(this);
+        time = new TimeCount(60000, 1000);// 构造CountDownTimer对象
     }
 
-    @Override
-    public void initWidget() {
-        super.initWidget();
-        initTitle();
-        cleanColors(0);
-        changeFragment(contentFragment);
-        chageIcon = 0;
-    }
-
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.register), true, R.id.titlebar);
-    }
-
-
-    public void changeFragment(BaseFragment targetFragment) {
-        super.changeFragment(R.id.main_content, targetFragment);
-    }
-
-
-    /**
-     * Activity的启动模式变为singleTask
-     * 调用onNewIntent(Intent intent)方法。
-     * Fragment调用的时候，一定要在onResume方法中。
-     *
-     * @param intent
-     */
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        int newChageIcon = intent.getIntExtra("newChageIcon", 2);
-        Log.d("newChageIcon", newChageIcon + "");
-        if (newChageIcon == 0) {
-            setSimulateClick(ll_registerPhone, 160, 100);
-        } else if (newChageIcon == 1) {
-            setSimulateClick(ll_registerMailBox, 160, 100);
-        }
-    }
-
-    /**
-     * 模拟点击
-     *
-     * @param view
-     * @param x
-     * @param y
-     */
-    private void setSimulateClick(View view, float x, float y) {
-        long downTime = SystemClock.uptimeMillis();
-        final MotionEvent downEvent = MotionEvent.obtain(downTime, downTime,
-                MotionEvent.ACTION_DOWN, x, y, 0);
-        downTime += 1000;
-        final MotionEvent upEvent = MotionEvent.obtain(downTime, downTime,
-                MotionEvent.ACTION_UP, x, y, 0);
-        view.onTouchEvent(downEvent);
-        view.onTouchEvent(upEvent);
-        downEvent.recycle();
-        upEvent.recycle();
-    }
 
     @Override
     public void widgetClick(View v) {
@@ -133,41 +115,131 @@ public class RegisterActivity extends BaseActivity {
             case R.id.img_back:
                 finish();
                 break;
-
-            case R.id.ll_registerPhone:
-                cleanColors(0);
-                changeFragment(contentFragment);
-                chageIcon = 0;
+            case R.id.tv_code:
+                showLoadingDialog(getString(R.string.sendingLoad));
+                ((RegisterContract.Presenter) mPresenter).postCode(et_accountNumber.getText().toString(), opt);
                 break;
-            case R.id.ll_registerMailBox:
-                cleanColors(1);
-                changeFragment(contentFragment1);
-                chageIcon = 1;
+            case R.id.tv_registe:
+                tv_registe.setEnabled(false);
+                showLoadingDialog(getString(R.string.submissionLoad));
+                if (opt.equals("reg")) {
+                    ((RegisterContract.Presenter) mPresenter).postRegister(et_accountNumber.getText().toString(), et_code.getText().toString(), et_pwd.getText().toString());
+                }
+                break;
+            case R.id.img_yanjing:
+                if (et_pwd.getInputType() == 0x00000081) {
+                    img_yanjing.setImageResource(R.mipmap.yanjing1);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    img_yanjing.setImageResource(R.mipmap.yanjing);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                et_pwd.setSelection(et_pwd.getText().toString().trim().length());
+                et_pwd.requestFocus();
+                break;
+            case R.id.tv_agreement:
+                // 注册协议
+                showActivity(aty, RegistrationAgreementActivity.class);
                 break;
             default:
                 break;
         }
+
+
+    }
+
+    /* 定义一个倒计时的内部类 */
+    @SuppressWarnings("deprecation")
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);// 参数依次为总时长,和计时的时间间隔
+        }
+
+        @Override
+        public void onFinish() {// 计时完毕时触发
+            tv_code.setText("重新验证");
+            tv_code.setClickable(true);
+            tv_code.setTextColor(getResources().getColor(R.color.greenColors));
+            tv_code.setBackgroundResource(R.drawable.shape_code);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {// 计时过程显示
+            tv_code.setClickable(false);
+            tv_code.setText(millisUntilFinished / 1000 + "秒");
+            tv_code.setTextColor(getResources().getColor(R.color.hintColors));
+            tv_code.setBackgroundResource(R.drawable.shape_code1);
+        }
+    }
+
+    @Override
+    public void getSuccess(String s, int flag) {
+        tv_registe.setEnabled(true);
+        if (flag == 0) {
+            dismissLoadingDialog();
+            ViewInject.toast(getString(R.string.testget));
+            time.start();
+        } else if (flag == 1) {
+            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", UserUtil.getResTokenInfo(this));
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getData().getExpireTime());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getData().getCountroy_code());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getData().getHx_user_name());
+//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getData().getHx_password());
+            ((RegisterContract.Presenter) mPresenter).loginRongYun(UserUtil.getResTokenInfo(this), bean);
+        } else if (flag == 2) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+            dismissLoadingDialog();
+            KJActivityStack.create().finishActivity(LoginActivity.class);
+            aty.finish();
+        }
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        aty.runOnUiThread(new Runnable() {
+            public void run() {
+                ViewInject.toast(msg);
+            }
+        });
+        if (flag == 1) {
+            UserUtil.clearUserInfo(this);
+            aty.finish();
+        }
+        tv_registe.setEnabled(true);
     }
 
 
-    /**
-     * 清除颜色，并添加颜色
-     */
-    @SuppressWarnings("deprecation")
-    public void cleanColors(int chageIcon) {
-        tv_registerPhone.setTextColor(getResources().getColor(R.color.tabColors));
-        tv_registerPhone1.setBackgroundColor(getResources().getColor(R.color.whiteColors));
-        tv_registerMailBox.setTextColor(getResources().getColor(R.color.tabColors));
-        tv_registerMailBox1.setBackgroundColor(getResources().getColor(R.color.whiteColors));
-        if (chageIcon == 0) {
-            tv_registerPhone.setTextColor(getResources().getColor(R.color.greenColors));
-            tv_registerPhone1.setBackgroundColor(getResources().getColor(R.color.greenColors));
-        } else if (chageIcon == 1) {
-            tv_registerMailBox.setTextColor(getResources().getColor(R.color.greenColors));
-            tv_registerMailBox1.setBackgroundColor(getResources().getColor(R.color.greenColors));
-        } else {
-            tv_registerPhone.setTextColor(getResources().getColor(R.color.greenColors));
-            tv_registerPhone1.setBackgroundColor(getResources().getColor(R.color.greenColors));
+    @Override
+    public void setPresenter(RegisterContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        time.cancel();
+        time = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {// 如果等于1
+            // 说明是我们的那次请求
+            // 目的：区分请求，不同的请求要做不同的处理
+//            countroy_code = data.getStringExtra("areaCode");
+//            tv_areaCode.setText("+" + countroy_code);
         }
     }
 }

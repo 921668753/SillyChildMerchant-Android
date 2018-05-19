@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch">
+
+
+        <com.common.cklibrary.utils.myview.ScrollInterceptScrollView
+            android:id="@+id/sv_home"
+            style="@style/MatchMatch"
+            android:background="@color/background"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                style="@style/MatchWrap"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
+
+
+            </RelativeLayout>
+
+        </com.common.cklibrary.utils.myview.ScrollInterceptScrollView>
+
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+
+</RelativeLayout>

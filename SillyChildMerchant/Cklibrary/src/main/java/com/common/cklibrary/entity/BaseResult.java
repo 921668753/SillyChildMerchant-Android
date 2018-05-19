@@ -1,47 +1,44 @@
 package com.common.cklibrary.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 /**
  * Created by ruitu on 2016/11/17.
  */
 
-public  class BaseResult<T> implements Serializable{
+public class BaseResult<T> implements Serializable {
 
     /**
-     * status : 1
-     * msg : 成功
-     * result : {}
+     * result : 1
+     * message : 发送成功
+     * data : null
      */
-    private T result;
-    private int status;
-    private String msg;
 
+    private int result;
+    private String message;
+    private T data;
 
-    public T getResult() {
+    public int getResult() {
         return result;
     }
 
-    public void setResult(T result) {
+    public void setResult(int result) {
         this.result = result;
     }
 
-    public int getStatus() {
-        return status;
+    public String getMessage() {
+        return message;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getMsg() {
-        return msg;
+    public T getData() {
+        return data;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setData(T data) {
+        this.data = data;
     }
-
 }

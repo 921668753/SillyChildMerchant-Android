@@ -16,9 +16,8 @@
 
         <ImageView
             android:id="@+id/img_homePage"
-            style="@style/WrapWrap"
-
-            android:src="@mipmap/ic_launcher" />
+            style="@style/Image20"
+            android:src="@mipmap/tab_home" />
 
         <TextView
             android:id="@+id/tv_homePage"
@@ -41,8 +40,8 @@
 
             <ImageView
                 android:id="@+id/img_message"
-                style="@style/WrapWrap"
-                android:src="@mipmap/ic_launcher" />
+                style="@style/Image20"
+                android:src="@mipmap/tab_message" />
 
             <TextView
                 android:id="@+id/tv_message"
@@ -66,43 +65,22 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/bottombar_mall"
+        android:id="@+id/bottombar_activities"
         style="@style/AutoMatch"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingTop="@dimen/dimen5">
 
         <ImageView
-            android:id="@+id/img_mall"
-            style="@style/WrapWrap"
+            android:id="@+id/img_activities"
+            style="@style/Image20"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/tv_mall"
+            android:id="@+id/tv_activities"
             style="@style/WrapWrap"
             android:layout_marginTop="@dimen/dimen1"
-            android:text="@string/mall"
-            android:textColor="@color/tabColors"
-            android:textSize="@dimen/textSize_10" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bottombar_trip"
-        style="@style/AutoMatch"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/dimen5">
-
-        <ImageView
-            android:id="@+id/img_trip"
-            style="@style/WrapWrap"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/tv_trip"
-            style="@style/WrapWrap"
-            android:layout_marginTop="@dimen/dimen1"
-            android:text="@string/trip"
+            android:text="@string/order"
             android:textColor="@color/tabColors"
             android:textSize="@dimen/textSize_10" />
     </LinearLayout>
@@ -116,8 +94,8 @@
 
         <ImageView
             android:id="@+id/img_mine"
-            style="@style/WrapWrap"
-            android:src="@mipmap/ic_launcher" />
+            style="@style/Image20"
+            android:src="@mipmap/tab_personal" />
 
         <TextView
             android:id="@+id/tv_mine"

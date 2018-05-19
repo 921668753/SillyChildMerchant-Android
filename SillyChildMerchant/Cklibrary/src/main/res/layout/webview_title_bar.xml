@@ -6,7 +6,9 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/MatchMatch">
+    <RelativeLayout
+        style="@style/MatchMatch"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/title_text"
@@ -19,15 +21,16 @@
             android:tag="111111"
             android:text="@string/app_name"
             android:textColor="@color/textColor1"
-            android:textSize="18sp" />
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/title_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/dimen10"
-            android:src="@drawable/back"
+            android:layout_width="@dimen/dimen32"
+            android:layout_height="@dimen/dimen38"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dimen12"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher"
             android:visibility="visible" />
     </RelativeLayout>
 

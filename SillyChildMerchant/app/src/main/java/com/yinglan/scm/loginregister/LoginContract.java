@@ -2,6 +2,7 @@ package com.yinglan.scm.loginregister;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
+import com.yinglan.scm.entity.loginregister.LoginBean;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -15,15 +16,15 @@ public interface LoginContract {
          */
         void postToLogin(String phone, String pwd);
 
-        /**
-         * 获取用户信息
-         */
-        void getInfo();
+//        /**
+//         * 获取用户信息
+//         */
+//        void getInfo();
 
         /**
-         * 登录环信
+         * 登录融云
          */
-        void loginHuanXin(String phone, String pwd);
+        void loginRongYun(String rongYunToken, LoginBean bean);
 
         /**
          * 第三方账号登录

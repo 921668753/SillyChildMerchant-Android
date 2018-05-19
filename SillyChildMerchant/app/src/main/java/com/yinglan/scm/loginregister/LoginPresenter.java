@@ -1,17 +1,23 @@
 package com.yinglan.scm.loginregister;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.CipherUtils;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -31,7 +37,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintAccountText), 0);
             return;
         }
-        if (phone.length() < 5) {
+        if (phone.length() != 11) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
             return;
         }
@@ -45,14 +51,10 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        //   Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("username", phone);
-        Log.d("登录密码", CipherUtils.md5("TPSHOP" + pwd));
-        httpParams.put("password", CipherUtils.md5("TPSHOP" + pwd));
-        httpParams.put("wxOpenid", "");
+        httpParams.put("password", pwd);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postLogin(httpParams, new ResponseListener<String>() {
+        RequestClient.postLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -66,97 +68,73 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void getInfo() {
-//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 1);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
-    }
+    public void loginRongYun(String rongYunToken, LoginBean bean) {
+        RongIM.getInstance().logout();
+        if (!StringUtils.isEmpty(rongYunToken)) {
+            RongIM.connect(rongYunToken, new RongIMClient.ConnectCallback() {
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
 
-    @Override
-    public void loginHuanXin(String phone, String pwd) {
-        // login huanxin server
-//        if (ChatClient.getInstance().isLoggedInBefore()) {
-//            //已经登录，可以直接进入会话界面
-//            ChatClient.getInstance().logout(true, new Callback() {
-//                @Override
-//                public void onSuccess() {
-//                    loginHuanXin1(phone, pwd);
-//                }
-//
-//                @Override
-//                public void onError(int i, String s) {
-//                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 0);
-//                }
-//
-//                @Override
-//                public void onProgress(int i, String s) {
-//
-//                }
-//            });
-//            return;
-//        }
-//        loginHuanXin1(phone, pwd);
-    }
+                }
 
-    public void loginHuanXin1(String phone, String pwd) {
-        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 0);
-            return;
+                /**
+                 * 连接融云成功
+                 *
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
+                    /**
+                     * 获取用户信息
+                     */
+                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", 0);
+                    if (RongIM.getInstance() != null && bean.getData() != null && StringUtils.isEmpty(bean.getData().getUserid())) {
+                        UserInfo userInfo = new UserInfo(bean.getData().getUserid() + "", bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
+                        RongIM.getInstance().setCurrentUserInfo(userInfo);
+                        RongIM.getInstance().setMessageAttachedUserInfo(true);
+                        mView.getSuccess("", 1);
+                        return;
+                    }
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 0);
+                }
+
+                /**
+                 * 连接融云失败
+                 *
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.i("XJ", "--errorCode" + errorCode);
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
+                }
+            });
         }
-        Log.d("tag11", phone);
-        Log.d("tag11", pwd);
-//        ChatClient.getInstance().login(phone, pwd, new Callback() {
-//            @Override
-//            public void onSuccess() {
-//                Log.d("tag11", "11111");
-//                EMClient.getInstance().chatManager().loadAllConversations();
-//                mView.getSuccess("", 1);
-//            }
-//
-//            @Override
-//            public void onError(int code, String error) {
-//                Log.d("tag11", "222222");
-//                loginHuanXin1(phone, pwd);
-//                Log.d("tag11", code + "");
-//                //   mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr), 0);
-//            }
-//
-//            @Override
-//            public void onProgress(int progress, String status) {
-//
-//            }
-//        });
     }
 
     @Override
     public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        //   Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("openid", openid);
         httpParams.put("from", from);
         httpParams.put("nickname", nickname);
         httpParams.put("head_pic", head_pic);
         httpParams.put("sex", sex);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postThirdLogin(httpParams, new ResponseListener<String>() {
+        RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
+                mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
+                mView.errorMsg(msg, 0);
             }
         });
 

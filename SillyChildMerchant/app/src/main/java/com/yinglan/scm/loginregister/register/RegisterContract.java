@@ -3,6 +3,7 @@ package com.yinglan.scm.loginregister.register;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
+import com.yinglan.scm.entity.loginregister.LoginBean;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -14,24 +15,17 @@ interface RegisterContract {
          *
          * @param phone
          */
-        void postCode(String phone, String countroy_code, String postCode);
-
-        /**
-         * 发送邮件验证码
-         *
-         * @param mail
-         */
-        void postMailCaptcha(String mail, String postCode);
+        void postCode(String phone, String postCode);
 
         /**
          * 注册
          */
-        void postRegister(String phone, String type, String countroy_code, String code, String pwd, String pwd1, String recommendcode);
+        void postRegister(String phone, String code, String pwd);
 
         /**
-         * 登录环信
+         * 登录融云
          */
-        void loginHuanXin(String phone, String pwd);
+        void loginRongYun(String rongYunToken, LoginBean bean);
     }
 
     interface View extends BaseView<Presenter, String> {
