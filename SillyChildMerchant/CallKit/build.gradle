@@ -23,7 +23,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.android.support:support-v4:26.0.0'
+    api "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     api project(':IMKit')
     api project(':CallLib')
 }

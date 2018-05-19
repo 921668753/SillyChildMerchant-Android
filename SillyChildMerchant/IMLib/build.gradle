@@ -22,7 +22,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.android.support:support-compat:26.0.0'
+    api "com.android.support:support-compat:$rootProject.supportLibraryVersion"
 }
 
 repositories {
