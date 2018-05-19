@@ -140,7 +140,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     api "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
     //让应用支持多DEX文件  65K
     api 'com.android.support:multidex:1.0.3'
