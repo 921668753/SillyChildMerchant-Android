@@ -164,24 +164,20 @@ dependencies {
 
     //融云-----start-----
     compile project(':IMKit')
-//    compile project(':IMLib')
-//    compile project(':CallKit')
-//    compile project(':CallLib')
     compile project(':RedPacket')
     //融云-----end-----
-
 
     /**
      *         图片浏览
      *         https://github.com/bm-x/PhotoView
      */
     compile 'com.bm.photoview:library:2.0.7'
-    implementation files('libs/open_sdk_r5788_lite.jar')
-    implementation files('libs/SocialSDK_QQ_Full.jar')
-    implementation files('libs/SocialSDK_WeiXin_Full.jar')
-    implementation files('libs/umeng_social_api.jar')
-    implementation files('libs/umeng_social_net.jar')
-    implementation files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
-    implementation files('libs/SocialSDK_Sina_Full.jar')
-    implementation files('libs/weiboSDKCore.jar')
+    api files('libs/open_sdk_r5788_lite.jar')
+    api files('libs/SocialSDK_QQ_Full.jar')
+    api files('libs/SocialSDK_WeiXin_Full.jar')
+    api files('libs/umeng_social_api.jar')
+    api files('libs/umeng_social_net.jar')
+    api files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
+    api files('libs/SocialSDK_Sina_Full.jar')
+    api files('libs/weiboSDKCore.jar')
 }

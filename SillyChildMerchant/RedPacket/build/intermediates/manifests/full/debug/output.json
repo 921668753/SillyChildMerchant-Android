@@ -1,1 +1,1 @@
-[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":20180207},"path":"AndroidManifest.xml","properties":{"packageId":"com.jrmf360.rylib","split":""}}]
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":20180207,"versionName":"1.5.1","enabled":true,"outputFile":"RedPacket-debug.aar","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.jrmf360.rylib","split":""}}]

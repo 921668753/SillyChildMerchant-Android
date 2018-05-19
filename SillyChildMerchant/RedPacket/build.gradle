@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '27.0.0'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 20180207
         versionName "1.5.1"
     }
@@ -28,5 +28,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile 'com.google.code.gson:gson:2.2.4'
-    implementation files('libs/alipaySdk-20180316.jar')
+    api files('libs/alipaySdk-20180316.jar')
 }
