@@ -137,8 +137,7 @@
 
     <TextView
         android:id="@+id/tv_logOut"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen45"
+        style="@style/Match40"
         android:layout_marginLeft="@dimen/dimen73"
         android:layout_marginRight="@dimen/dimen73"
         android:layout_marginTop="@dimen/dimen20"
