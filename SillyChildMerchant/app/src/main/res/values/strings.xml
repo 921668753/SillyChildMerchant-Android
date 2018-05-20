@@ -174,17 +174,20 @@
     <string name="sharePolite">分享有礼</string>
     <string name="setUp">设置</string>
 
+    <!--提现成功-->
+    <string name="withdrawalSuccess1">提现成功</string>
+    <string name="withdrawalFailure">提现失败</string>
+    <string name="returnHomePage">返回首页</string>
+
     <!--  个人中心 个人资料 -->
     <string name="personalData">个人资料</string>
     <string name="headPortrait">头像</string>
     <string name="nickname">昵称</string>
-
     <string name="save">保存</string>
     <string name="nicknamehint">请输入昵称</string>
     <string name="gender">性别</string>
     <string name="selfIntroduction">自我简介</string>
     <string name="myPhotoAlbum">我的相册</string>
-
     <string name="takephoto">拍照</string>
     <string name="chooseFromAlbum">从手机相册选择</string>
 
@@ -195,6 +198,27 @@
     <!-- 个人中心 设置性别-->
     <string name="setSex">设置性别</string>
 
+    <!-- 个人中心 我的钱包-->
+    <string name="accountBalance">账户余额</string>
+    <string name="withdrawal">提现</string>
+    <string name="withdrawalRuleDescription">提现规则说明</string>
+    <string name="withdrawalRuleDescription1">1、提现次数：供货商不限制提现次数，到账规则详见“提现周期”规定。\n2、提现账户：可以选择工商银行、农业银行、中国银行、建设银行、邮政银行、招商银行、支付宝、财付通账户。\n3、提现费率：提现费率：0.1%，提现手续费将从余额中扣除。\n4、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</string>
+
+    <!-- 个人中心 我的钱包  -->
+    <string name="balanceWithdrawal">余额提现</string>
+    <string name="withdrawalAmount">提现金额</string>
+    <string name="withdrawalAmount1">可提现金额2000.00</string>
+    <string name="allWithdrawal">全部提现</string>
+    <string name="bankName">银行名称</string>
+    <string name="bankName1">请输入银行名称</string>
+    <string name="paymentAccount">收款账号</string>
+    <string name="paymentAccount1">请输入收款账号</string>
+    <string name="accountName">开户名称</string>
+    <string name="accountName1">请输入开户名称</string>
+    <string name="confirmWithdrawal">确认提现</string>
+
+    <!-- 个人中心 我的钱包  账户明细-->
+    <string name="accountDetails">账户明细</string>
 
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>
@@ -231,7 +255,6 @@
     <string name="getFeedBackTypeError">无法进行反馈操作！将关闭此页面，您可以移步至客服。</string>
     <string name="selectorType">请选择反馈问题类型</string>
     <string name="textDescribe">请填写意见反馈的文字描述</string>
-
 
 
     <!--融云start-->

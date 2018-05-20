@@ -8,7 +8,7 @@
     <LinearLayout
         style="@style/WrapWrap"
         android:orientation="vertical"
-        android:background="@drawable/shape_vippermissions"
+        android:background="@drawable/shape_homepage"
         android:layout_margin="@dimen/dimen45">
 
         <TextView
