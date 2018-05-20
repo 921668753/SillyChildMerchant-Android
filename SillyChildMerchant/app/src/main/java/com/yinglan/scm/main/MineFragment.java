@@ -48,8 +48,6 @@ public class MineFragment extends BaseFragment implements MineContract.View, Vie
     @BindView(id = R.id.sv_mine)
     private ScrollView sv_mine;
 
-
-
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();

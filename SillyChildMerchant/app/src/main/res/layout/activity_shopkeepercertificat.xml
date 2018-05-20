@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:layout_marginRight="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/whiteColors"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/MatchWrap"
+            android:gravity="center"
+            android:padding="@dimen/dimen15"
+            android:text="@string/authenticationInformation"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView style="@style/DividerWidth" />
+
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginLeft="@dimen/dimen26"
+                android:layout_marginRight="@dimen/dimen41"
+                android:text="@string/localIdentityCard"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize15" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen120"
+                android:layout_height="@dimen/dimen100"
+                android:layout_marginBottom="@dimen/dimen20"
+                android:layout_marginTop="@dimen/dimen20"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <EditText
+        style="@style/Match44"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:layout_marginRight="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/shape_homepage"
+        android:hint="@string/enterName"
+        android:paddingLeft="@dimen/dimen11"
+        android:paddingRight="@dimen/dimen11"
+        android:textColor="@color/titletextcolors"
+        android:textColorHint="@color/hintColors"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textSize="@dimen/textsize14" />
+
+    <TextView
+        style="@style/Match40"
+        android:layout_marginLeft="@dimen/dimen73"
+        android:layout_marginRight="@dimen/dimen73"
+        android:layout_marginTop="@dimen/dimen15"
+        android:background="@drawable/shape_homepagebtn"
+        android:gravity="center"
+        android:text="@string/submitAudit"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize16" />
+
+
+</LinearLayout>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
+
+    <ScrollView
+        style="@style/MatchMatch"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/MatchMatch"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen70"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/headPortrait"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize14" />
+
+                <LinearLayout
+                    style="@style/AutoWrap"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_personaltx"
+                        android:layout_width="@dimen/dimen45"
+                        android:layout_height="@dimen/dimen45"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/avatar" />
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/Image812"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:src="@mipmap/ic_launcher" />
+
+            </LinearLayout>
+
+            <include layout="@layout/common_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/nickname"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:id="@+id/tv_personalnickname"
+                    style="@style/AutoWrap"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="粉红色叶子"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize13" />
+
+                <ImageView
+                    style="@style/Image812"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
+
+            <include layout="@layout/common_dividerwidth1" />
+
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/gender"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize14" />
+
+                <TextView
+                    android:id="@+id/tv_personalsex"
+                    style="@style/AutoMatch"
+                    android:gravity="right|center_vertical"
+                    android:singleLine="true"
+                    android:text="女"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize13" />
+
+                <ImageView
+                    style="@style/Image812"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:paddingLeft="@dimen/dimen17"
+                android:paddingTop="@dimen/dimen18"
+                android:text="@string/selfIntroduction"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize14" />
+
+            <EditText
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:minHeight="@dimen/dimen89"
+                android:paddingBottom="@dimen/dimen17"
+                android:paddingLeft="@dimen/dimen17"
+                android:paddingRight="@dimen/dimen17"
+                android:paddingTop="@dimen/dimen10"
+                android:textCursorDrawable="@drawable/shape_cursor" />
+
+
+            <TextView
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:paddingLeft="@dimen/dimen17"
+                android:paddingTop="@dimen/dimen18"
+                android:text="@string/myPhotoAlbum"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize14" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

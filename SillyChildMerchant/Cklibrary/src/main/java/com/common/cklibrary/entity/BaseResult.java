@@ -3,7 +3,7 @@ package com.common.cklibrary.entity;
 import java.io.Serializable;
 
 /**
- * Created by ruitu on 2016/11/17.
+ * Created by ruitu on 2017/11/17.
  */
 
 public class BaseResult<T> implements Serializable {

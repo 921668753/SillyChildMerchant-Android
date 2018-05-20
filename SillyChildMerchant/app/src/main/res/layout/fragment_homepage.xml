@@ -1,34 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchMatch"
+    android:background="@color/background"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/mRefreshLayout"
-        style="@style/MatchMatch">
+    <TextView
+        style="@style/Match44"
+        android:background="@color/whiteColors"
+        android:gravity="center"
+        android:text="@string/sillyChildBusinessman"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize17" />
 
 
-        <com.common.cklibrary.utils.myview.ScrollInterceptScrollView
-            android:id="@+id/sv_home"
-            style="@style/MatchMatch"
-            android:background="@color/background"
-            android:scrollbars="none">
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:layout_marginRight="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/whiteColors"
+        android:gravity="center"
+        android:orientation="vertical">
 
-            <RelativeLayout
-                style="@style/MatchWrap"
-                android:descendantFocusability="blocksDescendants"
+        <TextView
+            style="@style/MatchWrap"
+            android:gravity="center"
+            android:padding="@dimen/dimen15"
+            android:text="@string/myIdentity"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView style="@style/DividerWidth" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen93"
+            android:layout_height="@dimen/dimen93"
+            android:layout_marginBottom="@dimen/dimen20"
+            android:layout_marginTop="@dimen/dimen20"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone" />
+
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen95"
+                android:layout_height="@dimen/dimen95"
+                android:layout_marginBottom="@dimen/dimen30"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen30"
+                android:src="@mipmap/ic_launcher" />
+
+
+            <LinearLayout
+                style="@style/AutoMatch"
+                android:layout_marginLeft="@dimen/dimen20"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="小仙女集结地"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize14" />
 
-            </RelativeLayout>
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginTop="@dimen/dimen18"
+                    android:text="小仙女"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize14" />
 
-        </com.common.cklibrary.utils.myview.ScrollInterceptScrollView>
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginTop="@dimen/dimen18"
+                    android:text="店铺号：520"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize14" />
 
 
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+            </LinearLayout>
 
 
-</RelativeLayout>
+            <LinearLayout
+                style="@style/WrapMatch"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginRight="@dimen/dimen15"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen25"
+                    android:layout_height="@dimen/dimen25"
+                    android:src="@mipmap/ic_launcher" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginTop="@dimen/dimen15"
+                    android:text="@string/certified"
+                    android:textColor="@color/greenColors"
+                    android:textSize="@dimen/textsize12" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <EditText
+        style="@style/Match44"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:layout_marginRight="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/shape_homepage"
+        android:hint="@string/enterNameStore"
+        android:paddingLeft="@dimen/dimen11"
+        android:paddingRight="@dimen/dimen11"
+        android:textColor="@color/titletextcolors"
+        android:textColorHint="@color/hintColors"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textSize="@dimen/textsize14" />
+
+
+    <TextView
+        style="@style/Match40"
+        android:layout_marginLeft="@dimen/dimen73"
+        android:layout_marginRight="@dimen/dimen73"
+        android:layout_marginTop="@dimen/dimen15"
+        android:background="@drawable/shape_homepagebtn"
+        android:gravity="center"
+        android:text="@string/asManager"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize16" />
+
+
+</LinearLayout>

@@ -93,12 +93,108 @@
     <string name="order">订单</string>
     <string name="mine"> 我的</string>
 
+    <!--首页-->
+    <string name="sillyChildBusinessman">傻孩子商家端</string>
+    <string name="myIdentity">我的身份</string>
+    <string name="enterNameStore">请输入店铺名称(建议少于10个字)</string>
+    <string name="asManager">成为店长</string>
+    <string name="certified">已认证</string>
+
+    <!--店主认证-->
+    <string name="shopkeeperCertificat">店主认证</string>
+    <string name="authenticationInformation">认证信息(必填)</string>
+    <string name="localIdentityCard">手持当地身份证正面照</string>
+    <string name="enterName">请输入您的姓名</string>
+    <string name="submitAudit">提交审核</string>
+
+
     <!--消息-->
     <string name="interactiveMessage">互动消息</string>
     <string name="systemMessage">系统消息</string>
 
     <!--系统消息-->
     <string name="systemMessageDetails">消息详情</string>
+
+    <!--我的订单-->
+    <string name="myOrder">我的订单</string>
+    <string name="obligation">待付款</string>
+    <string name="sendGoods">待发货</string>
+    <string name="waitGoods">待收货</string>
+    <string name="completed">已完成</string>
+    <string name="closed">已关闭</string>
+    <string name="afterSale">售后</string>
+    <string name="all">全部</string>
+    <string name="confirmDelivery">确认发货</string>
+    <string name="seeEvaluation">查看评价</string>
+    <string name="refused">拒绝</string>
+    <string name="agreed">同意</string>
+    <string name="orderNumber">订单号：</string>
+    <string name="totalOnlyWord">共</string>
+    <string name="goods">件商品</string>
+    <string name="renminbi">¥</string>
+    <string name="multiply">x</string>
+    <string name="actualPaymentInCart">实付款：</string>
+    <string name="retry">重试</string>
+    <string name="noOrder">亲，您还没有订单哟~</string>
+
+    <!-- 订单   订单详情-->
+    <string name="waitingPayment">等待买家付款</string>
+    <string name="lateCancelled">请在50分钟内付款，逾期订单将被取消</string>
+    <string name="payment1">付款</string>
+    <string name="checkLogistics">查看物流</string>
+    <string name="orderDetails">订单详情</string>
+    <string name="waitSending">等待发货</string>
+    <string name="commodityInformation">商品信息</string>
+    <string name="orderInformation">订单信息</string>
+    <string name="goodsTogether">商品合计：</string>
+    <string name="freight1">运费：</string>
+    <string name="coupons1">优惠券：</string>
+    <string name="preferentialActivities">活动优惠：</string>
+    <string name="submitTime">提交时间：</string>
+    <string name="amountRealPay">实付金额：</string>
+    <string name="paymentTime">付款时间：</string>
+    <string name="deliveryTime">发货时间：</string>
+    <string name="modePayment">支付方式：</string>
+    <string name="weChatPay">微信支付</string>
+    <string name="alipayToPay">支付宝支付</string>
+    <string name="unionpayPay">银联支付</string>
+    <string name="balancePay">余额支付</string>
+    <string name="reloginPrompting">登录超时，或者在其它设备上登录了，请重新登录！</string>
+
+    <!--  订单   订单详情  评价 -->
+    <string name="scoring">评分</string>
+
+    <!--  个人中心  -->
+    <string name="ordersTotal">订单总数</string>
+    <string name="storeLevel">店铺等级</string>
+    <string name="businessLevel">商家等级</string>
+    <string name="myStores">我的店铺</string>
+    <string name="myWallet">我的钱包</string>
+    <string name="sillyChildCollege">傻孩子学院</string>
+    <string name="sharePolite">分享有礼</string>
+    <string name="setUp">设置</string>
+
+    <!--  个人中心 个人资料 -->
+    <string name="personalData">个人资料</string>
+    <string name="headPortrait">头像</string>
+    <string name="nickname">昵称</string>
+
+    <string name="save">保存</string>
+    <string name="nicknamehint">请输入昵称</string>
+    <string name="gender">性别</string>
+    <string name="selfIntroduction">自我简介</string>
+    <string name="myPhotoAlbum">我的相册</string>
+
+    <string name="takephoto">拍照</string>
+    <string name="chooseFromAlbum">从手机相册选择</string>
+
+    <!-- 个人中心 设置昵称-->
+    <string name="setNickname">设置昵称</string>
+    <string name="complete">完成</string>
+
+    <!-- 个人中心 设置性别-->
+    <string name="setSex">设置性别</string>
+
 
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>
@@ -114,11 +210,29 @@
     <string name="updateVersion">有新版本是否更新</string>
     <string name="update">&#160;&#160;&#160;更&#160;&#160;&#160;&#160;&#160;&#160;&#160;新&#160;&#160;&#160;</string>
 
+    <!-- 个人中心 设置  清除缓存弹框-->
+    <string name="prompting">提示</string>
+    <string name="determineClearCache">确定清除系统缓存</string>
+
     <!-- 个人中心 拨打电话-->
     <string name="permissionsPrompt">您还不是VIP，还无此权限拨打此电话!</string>
     <string name="iKnow">我知道了</string>
-    <string name="servicephone">客服电话</string>
-    <string name="call">呼叫</string>
+
+    <!-- 设置  意见反馈-->
+    <string name="feedbackType">选择反馈类型</string>
+    <string name="dysfunction">功能异常</string>
+    <string name="experienceProblem">体验问题</string>
+    <string name="newFeatureRecommendations">新功能建议</string>
+    <string name="other">其他</string>
+    <string name="hintCommentsSuggestions">傻孩子APP的每一次进步，都离不开您的意见和建议.</string>
+    <string name="wordLimit">500</string>
+    <string name="submit">提交</string>
+    <string name="noHaveFeedBackType">没有反馈问题类型可选，无法进行反馈操作！将关闭此页面，请移步至客服。</string>
+    <string name="getFeedBackTypeError">无法进行反馈操作！将关闭此页面，您可以移步至客服。</string>
+    <string name="selectorType">请选择反馈问题类型</string>
+    <string name="textDescribe">请填写意见反馈的文字描述</string>
+
+
 
     <!--融云start-->
     <string name="server_exception">服务器异常</string>
