@@ -14,13 +14,13 @@ interface BindingPhoneContract {
          *
          * @param phone
          */
-        void postCode(String phone, String countroy_code, String postCode);
+        void postCode(String phone, String postCode);
 
 
         /**
          * 绑定手机号
          */
-        void postBindingPhone(String openid, String from, String phone, String countroy_code, String code, String recommendcode);
+        void postBindingPhone(String openid, String from, String phone, String code, String recommendcode);
 
 
         /**

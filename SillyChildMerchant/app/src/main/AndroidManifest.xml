@@ -72,33 +72,33 @@
         <!--引导页-->
         <activity
             android:name="com.yinglan.scm.startpage.GuideViewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--登录-->
         <activity
             android:name="com.yinglan.scm.loginregister.LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--选择国家或地区-->
         <activity
             android:name="com.yinglan.scm.loginregister.SelectCountryActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--注册 忘记密码-->
         <activity
             android:name="com.yinglan.scm.loginregister.register.RegisterActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--注册 注册协议-->
         <activity
             android:name="com.yinglan.scm.loginregister.register.RegistrationAgreementActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
 
         <!--注册 綁定账号-->
         <activity
             android:name="com.yinglan.scm.loginregister.bindingaccount.BindingPhoneActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
 
         <!-- 忘记密码-->
@@ -108,8 +108,7 @@
             android:name="com.yinglan.scm.main.MainActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
 
 
         <!--支付宝支付-->
@@ -119,12 +118,12 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
 
         <!--支付宝支付-->
         <!--支付宝支付-->
@@ -176,20 +175,20 @@
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="false"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize">
 
         </activity>
         <activity
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
-            android:name="com.sina.weibo.sdk.share.WbShareTransActivity">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -238,9 +237,9 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="${BAIDU_APPKEY}" />
         <!--<service-->
-            <!--android:name="com.baidu.location.f"-->
-            <!--android:enabled="true"-->
-            <!--android:process=":remote" />-->
+        <!--android:name="com.baidu.location.f"-->
+        <!--android:enabled="true"-->
+        <!--android:process=":remote" />-->
         <!--百度地图-->
         <!--百度地图-->
 

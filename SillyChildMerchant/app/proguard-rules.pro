@@ -39,7 +39,8 @@
 -keep class android.net.** { *; }
 -keepattributes EnclosingMethod
 #-target platform,Add-on
--keepattributes *Annotation
+#保留注解参数
+-keepattributes *Annotation*
 -keep class * extends java.lang.annotation.Annotation { *; }
 
 #友盟
@@ -429,6 +430,11 @@ public static final ** CREATOR;
 
 # 过滤R文件的混淆：
 -keep class **.R$* {*;}
+#R文件中的所有记录资源id的静态字段
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
 #-target 错误
 -keepattributes InnerClasses
 #-dontoptimize

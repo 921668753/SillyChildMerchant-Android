@@ -25,23 +25,18 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
     }
 
     @Override
-    public void postCode(String phone, String countroy_code, String opt) {
+    public void postCode(String phone, String opt) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() < 5) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
-        if (countroy_code.equals("86") && phone.length() != 11) {
+        if (phone.length() != 11) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         // Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("mobile", phone);
-        httpParams.put("countroy_code", countroy_code);
         String codeI = String.valueOf(System.currentTimeMillis());
         String codeId = CipherUtils.md5(codeI.substring(2, codeI.length() - 1));
         httpParams.put("codeId", codeId);
@@ -65,16 +60,13 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
 
 
     @Override
-    public void postBindingPhone(String openid, String from, String phone, String countroy_code, String code, String recommendcode) {
+    public void postBindingPhone(String openid, String from, String phone, String code, String recommendcode) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() < 5) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
-        if (countroy_code.equals("86") && phone.length() != 11) {
+
+        if (phone.length() != 11) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
@@ -89,7 +81,6 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
         httpParams.put("from", from);
         httpParams.put("mobile", phone);
         httpParams.put("code", code);
-        httpParams.put("countroy_code", countroy_code);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postBindingPhone(httpParams, new ResponseListener<String>() {
@@ -109,14 +100,12 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
     @Override
     public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        //   Map<String, Object> map = new HashMap<String, Object>();
         httpParams.put("openid", openid);
         httpParams.put("from", from);
         httpParams.put("nickname", nickname);
         httpParams.put("head_pic", head_pic);
         httpParams.put("sex", sex);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

@@ -24,7 +24,7 @@ import com.yinglan.scm.loginregister.register.RegistrationAgreementActivity;
  * Created by ruitu ck on 2016/9/14.
  */
 
-public class BindingPhoneActivity extends BaseActivity implements BindingPhoneContract.View{
+public class BindingPhoneActivity extends BaseActivity implements BindingPhoneContract.View {
 
 
     /**
@@ -35,20 +35,9 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
     /**
      * 注册协议
      */
-    @BindView(id = R.id.ll_agreement)
-    private LinearLayout ll_agreement;
 
     @BindView(id = R.id.tv_agreement, click = true)
     private TextView tv_agreement;
-
-    /**
-     * 国码
-     */
-    @BindView(id = R.id.ll_areaCode, click = true)
-    private LinearLayout ll_areaCode;
-
-    @BindView(id = R.id.tv_areaCode)
-    private TextView tv_areaCode;
 
     /**
      * 手机号
@@ -78,8 +67,6 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
      */
     private String opt = "bind";
 
-    private String countroy_code = "86";
-
 
     @Override
     public void setRootView() {
@@ -97,29 +84,23 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
     }
 
 
-
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_areaCode:
-                Intent intent = new Intent(aty, SelectCountryActivity.class);
-                startActivityForResult(intent, 1);
-//                aty.showActivity(aty, intent);
-                break;
             case R.id.tv_code:
                 showLoadingDialog(getString(R.string.sendingLoad));
-                ((BindingPhoneContract.Presenter) mPresenter).postCode(et_phone.getText().toString(), countroy_code, opt);
+                ((BindingPhoneContract.Presenter) mPresenter).postCode(et_phone.getText().toString(), opt);
                 break;
             case R.id.tv_binding:
                 tv_binding.setEnabled(false);
                 showLoadingDialog(getString(R.string.submissionLoad));
                 ((BindingPhoneContract.Presenter) mPresenter).postBindingPhone(getIntent().getStringExtra("openid"),
-                        getIntent().getStringExtra("from"), et_phone.getText().toString(), countroy_code, et_code.getText().toString(), "");
+                        getIntent().getStringExtra("from"), et_phone.getText().toString(), et_code.getText().toString(), "");
                 break;
             case R.id.tv_agreement:
                 // 注册协议
-               showActivity(aty, RegistrationAgreementActivity.class);
+                showActivity(aty, RegistrationAgreementActivity.class);
                 break;
             default:
                 break;
@@ -136,7 +117,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
 
         @Override
         public void onFinish() {// 计时完毕时触发
-            tv_code.setText("重新验证");
+            tv_code.setText(getString(R.string.revalidation));
             tv_code.setClickable(true);
             tv_code.setTextColor(getResources().getColor(R.color.greenColors));
             tv_code.setBackgroundResource(R.drawable.shape_code);
@@ -163,8 +144,6 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
                     getIntent().getStringExtra("from"), getIntent().getStringExtra("nickname"), getIntent().getStringExtra("head_pic"), getIntent().getIntExtra("sex", 0));
         } else if (flag == 2) {
             dismissLoadingDialog();
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", false);
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();
         } else if (flag == 3) {
@@ -190,12 +169,12 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        aty.runOnUiThread(new Runnable() {
-            public void run() {
-                ViewInject.toast(msg);
-            }
-        });
-        //   ViewInject.toast(msg);
+//        aty.runOnUiThread(new Runnable() {
+//            public void run() {
+//                ViewInject.toast(msg);
+//            }
+//        });
+        ViewInject.toast(msg);
         tv_binding.setEnabled(true);
     }
 
@@ -218,8 +197,8 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
         if (requestCode == 1 && resultCode == RESULT_OK) {// 如果等于1
             // 说明是我们的那次请求
             // 目的：区分请求，不同的请求要做不同的处理
-            countroy_code = data.getStringExtra("areaCode");
-            tv_areaCode.setText("+" + countroy_code);
+//            countroy_code = data.getStringExtra("areaCode");
+//            tv_areaCode.setText("+" + countroy_code);
         }
     }
 }
