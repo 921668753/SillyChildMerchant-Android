@@ -19,7 +19,7 @@
         android:layout_marginLeft="@dimen/dimen8"
         android:layout_marginRight="@dimen/dimen8"
         android:layout_marginTop="@dimen/dimen10"
-        android:background="@color/whiteColors"
+        android:background="@drawable/shape_homepage"
         android:gravity="center"
         android:orientation="vertical">
 

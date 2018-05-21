@@ -8,8 +8,8 @@
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
         style="@style/MatchAuto"
-        android:layout_marginTop="@dimen/dimen10"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:paddingTop="@dimen/dimen10">
 
         <ListView
             android:id="@+id/lv_order"

@@ -194,7 +194,7 @@
 
 
                 <ImageView
-                    android:id="@+id/ll_loginweixin"
+                    android:id="@+id/img_loginweixin"
                     android:layout_width="@dimen/dimen51"
                     android:layout_height="@dimen/dimen51"
                     android:layout_marginRight="@dimen/dimen62"
@@ -202,7 +202,7 @@
 
 
                 <ImageView
-                    android:id="@+id/ll_loginqq"
+                    android:id="@+id/img_loginqq"
                     android:layout_width="@dimen/dimen51"
                     android:layout_height="@dimen/dimen51"
                     android:src="@mipmap/qq" />

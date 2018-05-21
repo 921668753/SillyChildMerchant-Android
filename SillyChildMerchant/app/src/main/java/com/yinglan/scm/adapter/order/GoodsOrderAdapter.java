@@ -31,7 +31,7 @@ public class GoodsOrderAdapter extends BGAAdapterViewAdapter<DataBean> {
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean listBean) {
         viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getFace());
         viewHolderHelper.setText(R.id.tv_goodStatus, listBean.getFace());
-        viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.renminbi) + 2 + mContext.getString(R.string.renminbi));
+        viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + 2 + mContext.getString(R.string.goods));
         viewHolderHelper.setText(R.id.tv_goodsMoney, listBean.getFace());
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
         GoodOrderAdapter adapter = new GoodOrderAdapter(mContext);

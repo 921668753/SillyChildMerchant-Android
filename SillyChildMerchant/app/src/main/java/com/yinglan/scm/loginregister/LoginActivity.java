@@ -95,14 +95,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     /**
      * 微信
      */
-    @BindView(id = R.id.ll_loginweixin, click = true)
-    private LinearLayout ll_loginweixin;
+    @BindView(id = R.id.img_loginweixin, click = true)
+    private ImageView img_loginweixin;
 
     /**
      * QQ
      */
-    @BindView(id = R.id.ll_loginqq, click = true)
-    private LinearLayout ll_loginqq;
+    @BindView(id = R.id.img_loginqq, click = true)
+    private ImageView img_loginqq;
+
     private String openid;
     private String from;
     private String nickname;
@@ -174,10 +175,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             case R.id.ll_register:
                 showActivity(aty, RegisterActivity.class);
                 break;
-            case R.id.ll_loginweixin:
+            case R.id.img_loginweixin:
                 thirdLogin(SHARE_MEDIA.WEIXIN);
                 break;
-            case R.id.ll_loginqq:
+            case R.id.img_loginqq:
                 thirdLogin(SHARE_MEDIA.QQ);
                 break;
             default:

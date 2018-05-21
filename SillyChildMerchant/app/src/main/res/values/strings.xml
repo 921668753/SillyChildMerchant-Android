@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">傻孩子</string>
+    <string name="app_name">傻孩子商家端</string>
 
     <!--网络请求-->
     <!--Dialog-->
@@ -16,6 +16,9 @@
 
     <!--公共的-->
     <string name="imagePathError">图片路径错误</string>
+    <string name="noData">没有数据</string>
+    <string name="denyPermission">您拒绝了「图片选择」所需要的相关权限!</string>
+    <string name="needPermission">图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照\n\n3.读写权限</string>
 
     <!--登录-->
     <string name="login">登录</string>
@@ -51,6 +54,7 @@
     <string name="failedCloudInformation1">获取融云信息失败,请用账号密码登录</string>
     <string name="man">男</string>
     <string name="woman">女</string>
+    <string name="secret">保密</string>
 
     <!--选择国家或地区-->
     <string name="selectCountry">选择国家或地区</string>
@@ -77,12 +81,6 @@
     <string name="myagreement">点击注册即表示您同意</string>
     <string name="agreement">《傻孩子注册协议》</string>
     <string name="determine">确定</string>
-
-
-
-
-
-
 
 
     <!--app权限-->
@@ -180,6 +178,9 @@
     <string name="sillyChildCollege">傻孩子学院</string>
     <string name="sharePolite">分享有礼</string>
     <string name="setUp">设置</string>
+    <string name="notLogged">您还没有登录</string>
+    <string name="loginImmediately">立即登录</string>
+
 
     <!--  个人中心  我的店铺-->
     <string name="classification">分类</string>
@@ -194,6 +195,7 @@
     <string name="hasOffShelves">已下架</string>
 
     <!--  个人中心  我的店铺  产品详情-->
+    <string name="productDetails">产品详情</string>
     <string name="commodityImages">商品图片</string>
     <string name="productName">商品名称</string>
     <string name="commodityPrices">商品价格</string>
@@ -243,7 +245,7 @@
     <string name="withdrawalRuleDescription">提现规则说明</string>
     <string name="withdrawalRuleDescription1">1、提现次数：供货商不限制提现次数，到账规则详见“提现周期”规定。\n2、提现账户：可以选择工商银行、农业银行、中国银行、建设银行、邮政银行、招商银行、支付宝、财付通账户。\n3、提现费率：提现费率：0.1%，提现手续费将从余额中扣除。\n4、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</string>
 
-    <!-- 个人中心 我的钱包  -->
+    <!-- 个人中心 我的钱包  余额提现-->
     <string name="balanceWithdrawal">余额提现</string>
     <string name="withdrawalAmount">提现金额</string>
     <string name="withdrawalAmount1">可提现金额2000.00</string>

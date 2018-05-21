@@ -66,17 +66,19 @@ public class URLConstants {
      */
     public static String SENDFINFDCODE = APIURL + "member/send-find-code.do";
 
-
     /**
      * 用户注册
      */
     public static String REGISTER = APIURL + "member/mobile-register.do";
-
 
     /**
      * 更改密码【手机】
      */
     public static String USERRESTPWD = APIURL + "member/mobile-change-pass.do";
 
+    /**
+     * 获取用户信息
+     */
+    public static String USERINFO = APIURL + "member/info.do";
 
 }

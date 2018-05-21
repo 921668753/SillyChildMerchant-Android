@@ -92,6 +92,7 @@
 
 
         <ImageView
+            android:id="@+id/img_shelves"
             android:layout_width="@dimen/dimen35"
             android:layout_height="@dimen/dimen30"
             android:layout_alignParentBottom="true"

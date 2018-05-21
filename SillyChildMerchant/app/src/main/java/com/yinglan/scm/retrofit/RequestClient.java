@@ -176,6 +176,7 @@ public class RequestClient {
     public static void postResetpwd(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         HttpRequest.requestPostFORMHttp(context, URLConstants.USERRESTPWD, httpParams, listener);
     }
+
     /**
      * 下载App
      */
@@ -209,7 +210,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-            //    HttpRequest.requestGetHttp(context, URLConstants.USERINFO, httpParams, listener);
+                HttpRequest.requestGetHttp(context, URLConstants.USERINFO, httpParams, listener);
             }
         }, listener);
     }
