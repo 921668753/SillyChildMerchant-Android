@@ -10,14 +10,14 @@ import com.common.cklibrary.common.BaseView;
 public interface HomePageContract {
     interface Presenter extends BasePresenter {
         /**
+         * 申请成为店长
+         */
+        void postHomePage(String store_logo, String store_name, String id_img);
+
+        /**
          * 获取首页信息
          */
-        void getHomePage(String city);
-
-//        /**
-//         * 判断是否登录
-//         */
-//        void isLogin(int flag);
+        void getHomePage();
     }
 
     interface View extends BaseView<Presenter, String> {

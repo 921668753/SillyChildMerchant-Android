@@ -178,6 +178,21 @@ public class RequestClient {
     }
 
     /**
+     * 申请成为店长
+     */
+    public static void postHomePage(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestPostFORMHttp(context, URLConstants.USERRESTPWD, httpParams, listener);
+    }
+
+
+
+
+
+
+
+
+
+    /**
      * 下载App
      */
     @SuppressWarnings("unchecked")

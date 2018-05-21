@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/9/7.
  */
 
-public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements Serializable {
+public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> {
 
 
     public class DataBean {
@@ -43,48 +43,79 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
          * paymentOrderCount : 0
          */
 
-        private String region;
-        private int birthday;
+        private String store_name;
+        private String store_id;
+        private int disabled;
+        private String store_logo;
+        private String order_total;
+        private String store_level;
+        private String lv_id;
+        private String nickname;
         private String face;
-        private int sex;
-        private String tel;
-        private int region_id;
-        private int level_id;
-        private String city;
-        private int city_id;
-        private String nick_name;
-        private int commentOrderCount;
-        private String username;
-        private String level;
-        private String name;
-        private String province;
-        private int returnedOrderCount;
-        private int collectNum;
-        private String zip;
-        private int mp;
-        private int province_id;
-        private int favoriteStoreCount;
-        private int point;
-        private int favoriteCount;
-        private String address;
-        private int shippingOrderCount;
-        private String mobile;
-        private int paymentOrderCount;
+        private String lv_name;
 
-        public String getRegion() {
-            return region;
+        public String getStore_name() {
+            return store_name;
         }
 
-        public void setRegion(String region) {
-            this.region = region;
+        public void setStore_name(String store_name) {
+            this.store_name = store_name;
         }
 
-        public int getBirthday() {
-            return birthday;
+        public String getStore_id() {
+            return store_id;
         }
 
-        public void setBirthday(int birthday) {
-            this.birthday = birthday;
+        public void setStore_id(String store_id) {
+            this.store_id = store_id;
+        }
+
+        public int getDisabled() {
+            return disabled;
+        }
+
+        public void setDisabled(int disabled) {
+            this.disabled = disabled;
+        }
+
+        public String getStore_logo() {
+            return store_logo;
+        }
+
+        public void setStore_logo(String store_logo) {
+            this.store_logo = store_logo;
+        }
+
+        public String getOrder_total() {
+            return order_total;
+        }
+
+        public void setOrder_total(String order_total) {
+            this.order_total = order_total;
+        }
+
+        public String getStore_level() {
+            return store_level;
+        }
+
+        public void setStore_level(String store_level) {
+            this.store_level = store_level;
+        }
+
+        public String getLv_id() {
+            return lv_id;
+        }
+
+        public void setLv_id(String lv_id) {
+            this.lv_id = lv_id;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getFace() {
@@ -95,196 +126,12 @@ public class UserInfoBean extends BaseResult<UserInfoBean.DataBean> implements S
             this.face = face;
         }
 
-        public int getSex() {
-            return sex;
+        public String getLv_name() {
+            return lv_name;
         }
 
-        public void setSex(int sex) {
-            this.sex = sex;
-        }
-
-        public String getTel() {
-            return tel;
-        }
-
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
-
-        public int getRegion_id() {
-            return region_id;
-        }
-
-        public void setRegion_id(int region_id) {
-            this.region_id = region_id;
-        }
-
-        public int getLevel_id() {
-            return level_id;
-        }
-
-        public void setLevel_id(int level_id) {
-            this.level_id = level_id;
-        }
-
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
-        }
-
-        public int getCity_id() {
-            return city_id;
-        }
-
-        public void setCity_id(int city_id) {
-            this.city_id = city_id;
-        }
-
-        public String getNick_name() {
-            return nick_name;
-        }
-
-        public void setNick_name(String nick_name) {
-            this.nick_name = nick_name;
-        }
-
-        public int getCommentOrderCount() {
-            return commentOrderCount;
-        }
-
-        public void setCommentOrderCount(int commentOrderCount) {
-            this.commentOrderCount = commentOrderCount;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getLevel() {
-            return level;
-        }
-
-        public void setLevel(String level) {
-            this.level = level;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getProvince() {
-            return province;
-        }
-
-        public void setProvince(String province) {
-            this.province = province;
-        }
-
-        public int getReturnedOrderCount() {
-            return returnedOrderCount;
-        }
-
-        public void setReturnedOrderCount(int returnedOrderCount) {
-            this.returnedOrderCount = returnedOrderCount;
-        }
-
-        public int getCollectNum() {
-            return collectNum;
-        }
-
-        public void setCollectNum(int collectNum) {
-            this.collectNum = collectNum;
-        }
-
-        public String getZip() {
-            return zip;
-        }
-
-        public void setZip(String zip) {
-            this.zip = zip;
-        }
-
-        public int getMp() {
-            return mp;
-        }
-
-        public void setMp(int mp) {
-            this.mp = mp;
-        }
-
-        public int getProvince_id() {
-            return province_id;
-        }
-
-        public void setProvince_id(int province_id) {
-            this.province_id = province_id;
-        }
-
-        public int getFavoriteStoreCount() {
-            return favoriteStoreCount;
-        }
-
-        public void setFavoriteStoreCount(int favoriteStoreCount) {
-            this.favoriteStoreCount = favoriteStoreCount;
-        }
-
-        public int getPoint() {
-            return point;
-        }
-
-        public void setPoint(int point) {
-            this.point = point;
-        }
-
-        public int getFavoriteCount() {
-            return favoriteCount;
-        }
-
-        public void setFavoriteCount(int favoriteCount) {
-            this.favoriteCount = favoriteCount;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public int getShippingOrderCount() {
-            return shippingOrderCount;
-        }
-
-        public void setShippingOrderCount(int shippingOrderCount) {
-            this.shippingOrderCount = shippingOrderCount;
-        }
-
-        public String getMobile() {
-            return mobile;
-        }
-
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
-        }
-
-        public int getPaymentOrderCount() {
-            return paymentOrderCount;
-        }
-
-        public void setPaymentOrderCount(int paymentOrderCount) {
-            this.paymentOrderCount = paymentOrderCount;
+        public void setLv_name(String lv_name) {
+            this.lv_name = lv_name;
         }
     }
 }

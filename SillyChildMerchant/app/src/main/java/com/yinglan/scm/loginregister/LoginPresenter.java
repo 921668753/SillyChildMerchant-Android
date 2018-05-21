@@ -122,9 +122,9 @@ public class LoginPresenter implements LoginContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("openid", openid);
         httpParams.put("from", from);
-        httpParams.put("nickname", nickname);
-        httpParams.put("head_pic", head_pic);
-        httpParams.put("sex", sex);
+//        httpParams.put("nickname", nickname);
+//        httpParams.put("head_pic", head_pic);
+//        httpParams.put("sex", sex);
         httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override

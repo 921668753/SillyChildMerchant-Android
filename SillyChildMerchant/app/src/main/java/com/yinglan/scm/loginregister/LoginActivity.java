@@ -86,6 +86,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
      */
     @BindView(id = R.id.tv_login, click = true)
     private TextView tv_login;
+
     /**
      * 注册
      */
