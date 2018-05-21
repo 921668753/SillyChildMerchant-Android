@@ -111,14 +111,6 @@
             android:screenOrientation="portrait"></activity>
 
 
-        <activity
-            android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
-            android:screenOrientation="portrait"></activity>
-
 
         <!--支付宝支付-->
         <!--支付宝支付-->
@@ -245,66 +237,12 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="${BAIDU_APPKEY}" />
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
+        <!--<service-->
+            <!--android:name="com.baidu.location.f"-->
+            <!--android:enabled="true"-->
+            <!--android:process=":remote" />-->
         <!--百度地图-->
         <!--百度地图-->
-
-        <!--环信客服-->
-        <!--环信客服-->
-        <!-- 设置环信应用的AppKey -->
-        <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="${HUANXIN_APPKEY}" />
-
-        <receiver
-            android:name="com.hyphenate.chat.EMGCMBroadcastReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.hyphenate.chatuidemo" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.hyphenate.chat.EMGCMListenerService"
-            android:exported="false" />
-        <!-- 地图 -->
-        <!--<activity-->
-        <!--android:name=".utils.activity.EaseBaiduMapActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/horizontal_slide" />-->
-        <!-- 设置环信应用的AppKey -->
-
-        <!-- 声明SDK所需的service SDK核心功能-->
-        <service
-            android:name="com.hyphenate.chat.EMChatService"
-            android:exported="true" />
-
-        <service
-            android:name="com.hyphenate.chat.EMJobService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!-- 声明SDK所需的receiver -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
-            </intent-filter>
-            <!-- 可选filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-
-        <!--环信客服-->
-        <!--环信客服-->
 
 
         <!--Anrroid 7.0SD卡路径-->

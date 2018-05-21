@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchWrap"
+    android:background="@color/whiteColors"
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen15">
+
+
+    <ImageView
+        android:layout_width="@dimen/dimen105"
+        android:layout_height="@dimen/dimen90"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        style="@style/AutoMatch"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen16">
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/goodName"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize14" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:maxLines="2"
+                android:text="Dior口红52000"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:layout_marginTop="@dimen/dimen10"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/warehouseInventory"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize14" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:singleLine="true"
+                android:text="500件"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:layout_marginTop="@dimen/dimen10"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/commodityPrice"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize14" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:singleLine="true"
+                android:text="280.00"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize14" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        style="@style/WrapMatch"
+        android:gravity="center_horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen10"
+            android:singleLine="true"
+            android:text="@string/inSale"
+            android:textColor="@color/greenColors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <ImageView
+            android:layout_width="@dimen/dimen35"
+            android:layout_height="@dimen/dimen30"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingTop="@dimen/dimen10"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

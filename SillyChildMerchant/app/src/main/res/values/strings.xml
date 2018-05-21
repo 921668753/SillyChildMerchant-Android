@@ -174,6 +174,38 @@
     <string name="sharePolite">分享有礼</string>
     <string name="setUp">设置</string>
 
+    <!--  个人中心  我的店铺-->
+    <string name="classification">分类</string>
+    <string name="allState">全部状态</string>
+    <string name="inventory">库存</string>
+    <string name="price">价格</string>
+    <string name="itemAdd">新增商品</string>
+    <string name="goodName">商品名称：</string>
+    <string name="warehouseInventory">仓库库存：</string>
+    <string name="commodityPrice">商品售价：</string>
+    <string name="inSale">在售中</string>
+    <string name="hasOffShelves">已下架</string>
+
+    <!--  个人中心  我的店铺  产品详情-->
+    <string name="commodityImages">商品图片</string>
+    <string name="productName">商品名称</string>
+    <string name="commodityPrices">商品价格</string>
+    <string name="introduction">商品介绍</string>
+    <string name="productParameters">商品参数</string>
+    <string name="productName1">商品名称：</string>
+    <string name="productSpecifications">商品规格：</string>
+    <string name="shopPrice">专&#160;&#160;&#160;柜&#160;&#160;价：</string>
+    <string name="commodityQualityMaterial">商品质地：</string>
+    <string name="limitedDate">限用日期：</string>
+    <string name="goodsOrigin">商品产地：</string>
+    <string name="commodityPackaging">商品包装：</string>
+    <string name="applicablePeople">适用人群：</string>
+    <string name="methodUse">使用方法：</string>
+    <string name="modify">修改</string>
+
+    <!--  个人中心  我的店铺   发布商品-->
+    <string name="releaseGoods">发布商品</string>
+
     <!--提现成功-->
     <string name="withdrawalSuccess1">提现成功</string>
     <string name="withdrawalFailure">提现失败</string>
@@ -255,7 +287,6 @@
     <string name="getFeedBackTypeError">无法进行反馈操作！将关闭此页面，您可以移步至客服。</string>
     <string name="selectorType">请选择反馈问题类型</string>
     <string name="textDescribe">请填写意见反馈的文字描述</string>
-
 
     <!--融云start-->
     <string name="server_exception">服务器异常</string>

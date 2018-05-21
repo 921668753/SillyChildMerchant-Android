@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:background="@color/background"
     android:fitsSystemWindows="true"
@@ -9,5 +10,131 @@
 
     <TextView style="@style/DividerWidth" />
 
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/whiteColors"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/classification"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize14" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen7"
+                android:layout_height="@dimen/dimen7"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:src="@mipmap/right_arrow" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.3"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/allState"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize14" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen7"
+                android:layout_height="@dimen/dimen7"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:src="@mipmap/right_arrow" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/inventory"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize14" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen7"
+                android:layout_height="@dimen/dimen7"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:src="@mipmap/right_arrow" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/price"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize14" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen7"
+                android:layout_height="@dimen/dimen7"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:src="@mipmap/right_arrow" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchAuto"
+        android:background="@color/background"
+        android:paddingTop="@dimen/dimen10">
+
+        <!-- item_companyguidemassage -->
+        <ListView
+            android:id="@+id/lv_myStores"
+            style="@style/MatchMatch"
+            android:dividerHeight="@dimen/dimen10"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_mystores" />
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <include layout="@layout/common_error" />
+
+    <TextView
+        android:id="@+id/tv_itemAdd"
+        style="@style/Match40"
+        android:layout_marginBottom="@dimen/dimen4"
+        android:layout_marginLeft="@dimen/dimen73"
+        android:layout_marginRight="@dimen/dimen73"
+        android:layout_marginTop="@dimen/dimen4"
+        android:background="@drawable/shape_homepagebtn"
+        android:gravity="center"
+        android:text="@string/itemAdd"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize16" />
 
 </LinearLayout>

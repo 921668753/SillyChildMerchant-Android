@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
+
+    <ScrollView
+        style="@style/MatchMatch"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/MatchMatch"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:paddingBottom="@dimen/dimen15"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15"
+                android:text="@string/commodityImages"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize15" />
+
+            <com.common.cklibrary.utils.myview.ChildListView
+                android:id="@+id/clv_productImg"
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:divider="@color/background"
+                android:dividerHeight="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="gone"
+                tools:listitem="@layout/item_productimg" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen68"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_homepage"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingTop="@dimen/dimen10"
+                    android:text="@string/productName"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <EditText
+                    style="@style/MatchWrap"
+                    android:background="@color/whiteColors"
+                    android:paddingLeft="@dimen/dimen11"
+                    android:paddingRight="@dimen/dimen11"
+                    android:paddingTop="@dimen/dimen5"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    style="@style/DividerWidth"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen64"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_homepage"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingTop="@dimen/dimen10"
+                    android:text="@string/commodityPrices"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:layout_marginLeft="@dimen/dimen11"
+                        android:layout_marginRight="@dimen/dimen10"
+                        android:text="@string/renminbi"
+                        android:textColor="@color/fF0000Colors"
+                        android:textSize="@dimen/textsize20"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        style="@style/MatchWrap"
+                        android:orientation="vertical">
+
+                        <EditText
+                            style="@style/MatchWrap"
+                            android:background="@color/whiteColors"
+                            android:paddingLeft="@dimen/dimen11"
+                            android:paddingRight="@dimen/dimen11"
+                            android:paddingTop="@dimen/dimen5"
+                            android:singleLine="true"
+                            android:textColor="@color/titletextcolors"
+                            android:textSize="@dimen/textsize13" />
+
+                        <TextView
+                            style="@style/DividerWidth"
+                            android:layout_marginLeft="@dimen/dimen10"
+                            android:layout_marginRight="@dimen/dimen186" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_homepage"
+                android:minHeight="@dimen/dimen96"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingTop="@dimen/dimen10"
+                    android:text="@string/introduction"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <EditText
+                    style="@style/MatchWrap"
+                    android:background="@color/whiteColors"
+                    android:minHeight="@dimen/dimen57"
+                    android:paddingLeft="@dimen/dimen11"
+                    android:paddingRight="@dimen/dimen11"
+                    android:paddingTop="@dimen/dimen5"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_homepage"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingTop="@dimen/dimen10"
+                    android:text="@string/productParameters"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/productName1"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="迪奥烈艳蓝金唇膏"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/productSpecifications"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="3.5g"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/shopPrice"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="300元/3.5g"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/commodityQualityMaterial"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="膏状"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/limitedDate"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="与专柜同步更新"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/goodsOrigin"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="法国"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/commodityPackaging"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="全新有外盒 无塑封 有中文标签"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/applicablePeople"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="所有女性人群"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginTop="@dimen/dimen4"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/methodUse"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize14" />
+
+                    <TextView
+                        style="@style/AutoWrap"
+                        android:paddingLeft="@dimen/dimen11"
+                        android:text="彩妆因人而异，如果亲对颜色实在拿不准，请先去专柜使用后再来购买哦~"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/textsize12" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_releaseGoods"
+                style="@style/Match40"
+                android:layout_marginLeft="@dimen/dimen68"
+                android:layout_marginRight="@dimen/dimen68"
+                android:layout_marginTop="@dimen/dimen20"
+                android:background="@drawable/shape_homepagebtn"
+                android:gravity="center"
+                android:text="@string/releaseGoods"
+                android:textColor="@color/whiteColors"
+                android:textSize="@dimen/textsize16" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>
