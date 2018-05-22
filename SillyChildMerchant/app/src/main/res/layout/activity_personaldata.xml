@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -149,13 +151,22 @@
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textsize14" />
 
-
-
-
-
-
-
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                style="@style/MatchWrap"
+                android:layout_marginBottom="@dimen/dimen5"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:listSelector="@android:color/transparent"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen25"
+                android:scrollbarStyle="outsideOverlay"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/item_chooseimage1" />
 
         </LinearLayout>
 

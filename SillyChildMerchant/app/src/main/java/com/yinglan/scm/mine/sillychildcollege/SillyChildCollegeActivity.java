@@ -11,6 +11,6 @@ public class SillyChildCollegeActivity extends BaseActivity {
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_balancewithdrawal);
+        setContentView(R.layout.activity_withdrawal);
     }
 }

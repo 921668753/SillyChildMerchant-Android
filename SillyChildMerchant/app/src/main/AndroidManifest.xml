@@ -4,23 +4,23 @@
     package="com.yinglan.scm">
 
     <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <!-- 用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 访问网络，网络定位需要上网-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据-->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -134,6 +134,32 @@
             android:name="com.yinglan.scm.mine.mywallet.MyWalletActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的  我的钱包 账户明细-->
+        <activity
+            android:name="com.yinglan.scm.mine.mywallet.AccountDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  我的钱包 提现-->
+        <activity
+            android:name="com.yinglan.scm.mine.mywallet.withdrawal.WithdrawalActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  我的钱包 提现成功-->
+        <activity
+            android:name="com.yinglan.scm.mine.mywallet.withdrawal.withdrawalresult.WithdrawalCompleteActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  我的钱包 提现 我的银行卡-->
+        <activity
+            android:name="com.yinglan.scm.mine.mywallet.mybankcard.MyBankCardActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  我的钱包 提现 我的银行卡  添加银行卡-->
+        <activity
+            android:name="com.yinglan.scm.mine.mywallet.mybankcard.AddBankCardActivity"
+            android:screenOrientation="portrait" />
+
+
         <!--我的  傻孩子学院-->
         <activity
             android:name="com.yinglan.scm.mine.sillychildcollege.SillyChildCollegeActivity"
@@ -147,6 +173,21 @@
         <!--我的  设置-->
         <activity
             android:name="com.yinglan.scm.mine.setup.SetUpActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  设置  关于我们-->
+        <activity
+            android:name="com.yinglan.scm.mine.setup.AboutUsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  设置  帮助中心-->
+        <activity
+            android:name="com.yinglan.scm.mine.setup.HelpCenterActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  设置  设置中的意见反馈-->
+        <activity
+            android:name="com.yinglan.scm.mine.setup.feedback.FeedbackActivity"
             android:screenOrientation="portrait" />
 
         <!--支付宝支付-->

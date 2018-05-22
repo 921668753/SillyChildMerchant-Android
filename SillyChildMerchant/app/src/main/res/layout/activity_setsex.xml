@@ -5,11 +5,9 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
     <include layout="@layout/common_title" />
 
     <View style="@style/DividerWidth" />
-
 
     <RelativeLayout
         android:layout_width="match_parent"

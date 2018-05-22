@@ -70,11 +70,11 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     @BindView(id = R.id.tv_ordersTotal)
     private TextView tv_ordersTotal;
 
-    @BindView(id = R.id.img_storeLevel)
-    private ImageView img_storeLevel;
+    @BindView(id = R.id.tv_storeLevel)
+    private TextView tv_storeLevel;
 
-    @BindView(id = R.id.img_businessLevel)
-    private ImageView img_businessLevel;
+    @BindView(id = R.id.tv_businessLevel)
+    private TextView tv_businessLevel;
 
     @BindView(id = R.id.tv_notLogged)
     private TextView tv_notLogged;
@@ -164,16 +164,16 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 tv_divider.setVisibility(View.VISIBLE);
                 ll_mineBot.setVisibility(View.VISIBLE);
                 saveUserInfo(userInfoBean);
-                tv_storesName.setText(userInfoBean.getData().getNick_name());
+                tv_storesName.setText(userInfoBean.getData().getNickname());
                 if (StringUtils.isEmpty(userInfoBean.getData().getFace())) {
                     img_head.setImageResource(R.mipmap.avatar);
                 } else {
                     GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), img_head, 0, R.mipmap.avatar);
                 }
-                tv_nature.setText(userInfoBean.getData().getUsername());
-                tv_ordersTotal.setText(userInfoBean.getData().getUsername());
-                img_storeLevel.setImageResource(R.mipmap.avatar);
-                img_businessLevel.setImageResource(R.mipmap.avatar);
+                // tv_nature.setText(userInfoBean.getData().getUsername());
+                tv_ordersTotal.setText(userInfoBean.getData().getOrder_total());
+                tv_storeLevel.setText(userInfoBean.getData().getStore_level());
+                tv_businessLevel.setText(userInfoBean.getData().getLv_id());
             }
         } else if (flag == 1) {
             Intent personalDataIntent = new Intent(aty, PersonalDataActivity.class);
@@ -198,19 +198,16 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
      * 用户信息本地化
      */
     private void saveUserInfo(UserInfoBean userInfoBean) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "username", userInfoBean.getData().getUsername());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "nick_name", userInfoBean.getData().getNick_name());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "birthday", userInfoBean.getData().getBirthday());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_name", userInfoBean.getData().getStore_name());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_id", userInfoBean.getData().getStore_id());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "disabled", userInfoBean.getData().getDisabled());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_logo", userInfoBean.getData().getStore_logo());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "order_total", userInfoBean.getData().getOrder_total());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_level", userInfoBean.getData().getStore_level());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "lv_id", userInfoBean.getData().getLv_id());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", userInfoBean.getData().getNickname());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "face", userInfoBean.getData().getFace());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getData().getSex());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "province", userInfoBean.getData().getProvince());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "province_id", userInfoBean.getData().getProvince_id());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "city", userInfoBean.getData().getCity());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "city_id", userInfoBean.getData().getCity_id());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "region", userInfoBean.getData().getRegion());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "region_id", userInfoBean.getData().getRegion_id());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "address", userInfoBean.getData().getAddress());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", userInfoBean.getData().getMobile());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "lv_name", userInfoBean.getData().getLv_name());
     }
 
     @Override
@@ -243,7 +240,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MinePresenter) mPresenter).getInfo(aty);
+        ((MineContract.Presenter) mPresenter).getInfo(aty);
     }
 
     @Override
@@ -256,7 +253,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {// 如果等于1
-            ((MinePresenter) mPresenter).getInfo(aty);
+            ((MineContract.Presenter) mPresenter).getInfo(aty);
         }
     }
 
@@ -267,7 +264,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
-            ((MinePresenter) mPresenter).getInfo(aty);
+            ((MineContract.Presenter) mPresenter).getInfo(aty);
         } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
             String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
             if (!StringUtils.isEmpty(avatar)) {

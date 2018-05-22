@@ -126,7 +126,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
         @Override
         public void onTick(long millisUntilFinished) {// 计时过程显示
             tv_code.setClickable(false);
-            tv_code.setText(millisUntilFinished / 1000 + "秒");
+            tv_code.setText(millisUntilFinished / 1000 + getString(R.string.toResend));
             tv_code.setTextColor(getResources().getColor(R.color.hintColors));
             tv_code.setBackgroundResource(R.drawable.shape_code1);
         }

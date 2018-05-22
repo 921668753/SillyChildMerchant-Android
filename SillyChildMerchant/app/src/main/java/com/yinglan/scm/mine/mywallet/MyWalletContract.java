@@ -10,15 +10,11 @@ import com.common.cklibrary.common.BaseView;
 public interface MyWalletContract {
 
     interface Presenter extends BasePresenter {
-        /**
-         * 检测更新app
-         */
-        void getUpdateApp();
 
         /**
-         * 下载app
+         * 获取钱包余额
          */
-        void downloadApp(String updateAppUrl);
+        void getMyWallet();
 
     }
 

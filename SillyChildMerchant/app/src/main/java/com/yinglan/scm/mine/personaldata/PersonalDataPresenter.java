@@ -14,7 +14,6 @@ import com.yinglan.scm.retrofit.RequestClient;
 
 import java.io.File;
 
-
 /**
  * Created by Administrator on 2017/2/11.
  */
@@ -26,6 +25,46 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
     public PersonalDataPresenter(PersonalDataContract.View view) {
         mView = view;
         mView.setPresenter(this);
+    }
+
+    @Override
+    public void getInfo() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getStoreInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+    }
+
+    @Override
+    public void postMemberEdit(String imgUrl, String sex, String nickName, String language, String remark, String photo) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("imgUrl", imgUrl);
+        httpParams.put("sex", sex);
+        httpParams.put("nickName", nickName);
+        httpParams.put("language", language);
+        httpParams.put("remark", remark);
+        httpParams.put("photo", photo);
+        RequestClient.postMemberEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 2);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 2);
+            }
+        });
+
+
     }
 
     @Override

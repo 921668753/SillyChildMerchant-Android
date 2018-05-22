@@ -136,7 +136,7 @@
                 android:layout_marginTop="@dimen/dimen10">
 
                 <EditText
-                    android:id="@+id/tv_feed"
+                    android:id="@+id/et_feed"
                     style="@style/MatchMatch"
                     android:background="@color/whiteColors"
                     android:gravity="start"

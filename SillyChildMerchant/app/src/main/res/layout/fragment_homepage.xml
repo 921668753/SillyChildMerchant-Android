@@ -34,25 +34,29 @@
         <TextView style="@style/DividerWidth" />
 
         <ImageView
+            android:id="@+id/img_storeLogo"
             android:layout_width="@dimen/dimen93"
             android:layout_height="@dimen/dimen93"
             android:layout_marginBottom="@dimen/dimen20"
             android:layout_marginTop="@dimen/dimen20"
-            android:src="@mipmap/ic_launcher"
-            android:visibility="gone" />
+            android:src="@mipmap/home_add_shop_logo"
+            android:visibility="visible" />
 
 
         <LinearLayout
+            android:id="@+id/ll_seller"
             style="@style/MatchWrap"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <ImageView
+                android:id="@+id/img_storeLogo1"
                 android:layout_width="@dimen/dimen95"
                 android:layout_height="@dimen/dimen95"
                 android:layout_marginBottom="@dimen/dimen30"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:layout_marginTop="@dimen/dimen30"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/avatar" />
 
 
             <LinearLayout
@@ -62,19 +66,22 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_storeName"
                     style="@style/WrapWrap"
                     android:text="小仙女集结地"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
+                    android:id="@+id/tv_type"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen18"
-                    android:text="小仙女"
+                    android:text="@string/manager"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
+                    android:id="@+id/tv_shopNum"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen18"
                     android:text="店铺号：520"
@@ -93,12 +100,14 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/img_certified"
                     android:layout_width="@dimen/dimen25"
                     android:layout_height="@dimen/dimen25"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/home_authentication_icon" />
 
 
                 <TextView
+                    android:id="@+id/tv_certified"
                     style="@style/WrapWrap"
                     android:layout_marginTop="@dimen/dimen15"
                     android:text="@string/certified"
@@ -115,6 +124,7 @@
 
 
     <EditText
+        android:id="@+id/et_enterNameStore"
         style="@style/Match44"
         android:layout_marginLeft="@dimen/dimen8"
         android:layout_marginRight="@dimen/dimen8"
@@ -122,6 +132,7 @@
         android:background="@drawable/shape_homepage"
         android:hint="@string/enterNameStore"
         android:paddingLeft="@dimen/dimen11"
+        android:maxLength="15"
         android:paddingRight="@dimen/dimen11"
         android:textColor="@color/titletextcolors"
         android:textColorHint="@color/hintColors"
@@ -130,6 +141,7 @@
 
 
     <TextView
+        android:id="@+id/tv_asManager"
         style="@style/Match40"
         android:layout_marginLeft="@dimen/dimen73"
         android:layout_marginRight="@dimen/dimen73"

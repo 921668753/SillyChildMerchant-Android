@@ -112,7 +112,7 @@
                                 style="@style/WrapWrap"
                                 android:layout_marginBottom="@dimen/dimen10"
                                 android:layout_marginTop="@dimen/dimen10"
-                                android:text="520"
+                                android:text="0"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/textsize12" />
 
@@ -129,13 +129,16 @@
                                 android:textColor="@color/titletextcolors"
                                 android:textSize="@dimen/textsize13" />
 
-                            <ImageView
-                                android:id="@+id/img_storeLevel"
+                            <TextView
+                                android:id="@+id/tv_storeLevel"
                                 android:layout_width="@dimen/dimen20"
                                 android:layout_height="@dimen/dimen16"
                                 android:layout_marginTop="@dimen/dimen7"
-                                android:scaleType="fitXY"
-                                android:src="@mipmap/ic_launcher" />
+                                android:background="@mipmap/mine_grade_icon"
+                                android:gravity="bottom|center_horizontal"
+                                android:text="0"
+                                android:textColor="@color/whiteColors"
+                                android:textSize="@dimen/textsize8" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -149,13 +152,16 @@
                                 android:textColor="@color/titletextcolors"
                                 android:textSize="@dimen/textsize13" />
 
-                            <ImageView
-                                android:id="@+id/img_businessLevel"
+                            <TextView
+                                android:id="@+id/tv_businessLevel"
                                 android:layout_width="@dimen/dimen20"
                                 android:layout_height="@dimen/dimen16"
                                 android:layout_marginTop="@dimen/dimen7"
-                                android:scaleType="fitXY"
-                                android:src="@mipmap/ic_launcher" />
+                                android:background="@mipmap/mine_grade_icon"
+                                android:gravity="bottom|center_horizontal"
+                                android:text="0"
+                                android:textColor="@color/whiteColors"
+                                android:textSize="@dimen/textsize8" />
 
                         </LinearLayout>
 
@@ -200,7 +206,7 @@
                         style="@style/Image20"
                         android:layout_marginLeft="@dimen/dimen15"
                         android:layout_marginRight="@dimen/dimen15"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/mine_shop_icon" />
 
                     <TextView
                         style="@style/AutoWrap"
@@ -236,7 +242,7 @@
                             style="@style/Image20"
                             android:layout_marginLeft="@dimen/dimen15"
                             android:layout_marginRight="@dimen/dimen15"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/mine_wallet_icon" />
 
                         <TextView
                             style="@style/AutoWrap"
@@ -267,7 +273,7 @@
                             style="@style/Image20"
                             android:layout_marginLeft="@dimen/dimen15"
                             android:layout_marginRight="@dimen/dimen15"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/mine_college_icon" />
 
                         <TextView
                             style="@style/AutoWrap"
@@ -305,7 +311,7 @@
                             style="@style/Image20"
                             android:layout_marginLeft="@dimen/dimen15"
                             android:layout_marginRight="@dimen/dimen15"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/mine_sharing_courtesy_icon" />
 
                         <TextView
                             style="@style/AutoWrap"
@@ -335,7 +341,7 @@
                             style="@style/Image20"
                             android:layout_marginLeft="@dimen/dimen15"
                             android:layout_marginRight="@dimen/dimen15"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/mine_set_up" />
 
                         <TextView
                             style="@style/AutoWrap"

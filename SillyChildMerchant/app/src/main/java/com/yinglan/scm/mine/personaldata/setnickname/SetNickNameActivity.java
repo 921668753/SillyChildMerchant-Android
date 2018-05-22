@@ -81,7 +81,7 @@ public class SetNickNameActivity extends BaseActivity implements SetNickNameCont
                 super.onClickRightCtv();
                 showLoadingDialog(getString(R.string.saveLoad));
                 SoftKeyboardUtils.packUpKeyboard(aty);
-                ((SetNickNameContract.Presenter) mPresenter).saveInfo(et_nickname.getText().toString());
+                ((SetNickNameContract.Presenter) mPresenter).postMemberEdit(et_nickname.getText().toString());
             }
         };
         titlebar.setDelegate(simpleDelegate);

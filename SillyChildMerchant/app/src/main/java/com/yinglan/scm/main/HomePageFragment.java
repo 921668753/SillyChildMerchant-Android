@@ -1,23 +1,48 @@
 package com.yinglan.scm.main;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
+import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.GlideCatchUtil;
+import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
+import com.yinglan.scm.entity.UploadImageBean;
+import com.yinglan.scm.entity.main.UserInfoBean;
+import com.yinglan.scm.homepage.ShopkeeperCertificationActivity;
+import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
+import com.yinglan.scm.utils.GlideImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.yinglan.scm.constant.NumericConstants.STATUS;
+import static android.app.Activity.RESULT_OK;
+import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_SELECT;
+import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
 
 /**
  * 首页
@@ -27,8 +52,43 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
 
     private MainActivity aty;
 
+    @BindView(id = R.id.img_storeLogo, click = true)
+    private ImageView img_storeLogo;
+
+    @BindView(id = R.id.ll_seller)
+    private LinearLayout ll_seller;
+
+    @BindView(id = R.id.img_storeLogo1)
+    private ImageView img_storeLogo1;
+
+    @BindView(id = R.id.tv_storeName)
+    private TextView tv_storeName;
+
+    @BindView(id = R.id.tv_type)
+    private TextView tv_type;
+
+    @BindView(id = R.id.tv_shopNum)
+    private TextView tv_shopNum;
+
+
+    @BindView(id = R.id.img_certified)
+    private ImageView img_certified;
+
+    @BindView(id = R.id.tv_certified)
+    private TextView tv_certified;
+
+    @BindView(id = R.id.et_enterNameStore)
+    private EditText et_enterNameStore;
+
+    @BindView(id = R.id.tv_asManager, click = true)
+    private TextView tv_asManager;
+    private PictureSourceDialog pictureSourceDialog = null;
+
+    private String store_logo = null;
+
 
     @Override
+
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
         return View.inflate(aty, R.layout.fragment_homepage, null);
@@ -38,13 +98,39 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     protected void initData() {
         super.initData();
         mPresenter = new HomePagePresenter(this);
-
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((HomePageContract.Presenter) mPresenter).getHomePage(aty);
     }
 
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
+        initImagePicker();
+        img_storeLogo.setVisibility(View.VISIBLE);
+        et_enterNameStore.setVisibility(View.VISIBLE);
+        tv_asManager.setVisibility(View.VISIBLE);
+        ll_seller.setVisibility(View.GONE);
+    }
 
+    /**
+     * 初始化图片选择器
+     */
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        GlideImageLoader glideImageLoader = new GlideImageLoader();
+        imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
+        imagePicker.setCrop(true);                           //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
+        imagePicker.setSelectLimit(1);              //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+//        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+//        imagePicker.setFocusHeight(800);                  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+//        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
+//        imagePicker.setOutPutY(1000);                         //保存文件的高度。单位像素
+        imagePicker.setMultiMode(false);//设置为单选模式，默认多选
+        imagePicker.setShowCamera(false);                      //显示拍照按钮
     }
 
     /**
@@ -54,95 +140,32 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-
-//            case R.id.tv_moreLines:
-//                Intent intent2 = new Intent(aty, HotStrategyActivity.class);
-//                //    intent2.putExtra("city", tv_address.getText().toString());
-//                aty.showActivity(aty, intent2);
-//                break;
+            case R.id.img_storeLogo:
+                choicePhotoWrapper();
+                break;
+            case R.id.tv_asManager:
+                Intent intent = new Intent(aty, ShopkeeperCertificationActivity.class);
+                intent.putExtra("store_logo", store_logo);
+                intent.putExtra("store_name", et_enterNameStore.getText().toString().trim());
+                startActivityForResult(intent, RESULT_CODE_GET);
+                break;
             default:
                 break;
         }
     }
 
-    @Override
-    public void setPresenter(HomePageContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void getSuccess(String success, int flag) {
-        //       if (flag == 0) {
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshingChangeHomePageFragment", false);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshingHomePageFragment", false);
-//            HomePageBean homePageBean = (HomePageBean) JsonUtil.getInstance().json2Obj(success, HomePageBean.class);
-//            processLogic(homePageBean.getData().getAd());
-//            if (homePageBean.getData().getAction() == null) {
-//                dismissLoadingDialog();
-//                return;
-//            }
-//            if (homePageBean.getData().getAction().getLocal() == null || homePageBean.getData().getAction().getLocal().size() == 0 || homePageBean.getData().getAction().getLocal().isEmpty()) {
-//                ll_hotRegion.setVisibility(View.GONE);
-//                hlv_hotRegion.setVisibility(View.GONE);
-//            } else {
-//                ll_hotRegion.setVisibility(View.VISIBLE);
-//                hlv_hotRegion.setVisibility(View.VISIBLE);
-//                hotRegionViewAdapter.clear();
-//                homePageBean.getData().getAction().getLocal().get(homePageBean.getData().getAction().getLocal().size() - 1).setStatusL("last");
-//                hotRegionViewAdapter.addNewData(homePageBean.getData().getAction().getLocal());
-//            }
-//            if (homePageBean.getData().getAction().getHot() == null || homePageBean.getData().getAction().getHot().size() == 0 || homePageBean.getData().getAction().getHot().isEmpty()) {
-//                ll_boutiqueLine1.setVisibility(View.GONE);
-//                clv_boutiqueLine.setVisibility(View.GONE);
-//            } else {
-//                ll_boutiqueLine1.setVisibility(View.VISIBLE);
-//                clv_boutiqueLine.setVisibility(View.VISIBLE);
-//                boutiqueLineViewAdapter.clear();
-//                boutiqueLineViewAdapter.addNewData(homePageBean.getData().getAction().getHot());
-//            }
-//        } else if (flag == 1) {
-//            dismissLoadingDialog();
-//            tv_tag.setVisibility(View.GONE);
-//           // aty.showActivity(aty, OverleafActivity.class);
-//        }
-        dismissLoadingDialog();
-
-    }
-
-    @Override
-    public void errorMsg(String msg, int flag) {
-        dismissLoadingDialog();
-        if (flag == 1) {
-            if (isLogin(msg)) {
-//                Intent intent = new Intent(aty, LoginActivity.class);
-//                // intent.putExtra("name", "GetOrderFragment");
-//                aty.showActivity(aty, intent);
-                return;
-            }
+    @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
+    private void choicePhotoWrapper() {
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(aty, perms)) {
+            PictureDialog();
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.needPermission), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
         }
-        ViewInject.toast(msg);
     }
 
     @Override
-    public void onChange() {
-        super.onChange();
-//        boolean isRefreshingChangeHomePageFragment = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshingChangeHomePageFragment", false);
-//        if (isRefreshingChangeHomePageFragment) {
-//            String locationCity = PreferenceHelper.readString(aty, StringConstants.FILENAME, "selectCity", getString(R.string.allAeservationNumber));
-//            tv_address.setText(locationCity);
-//            showLoadingDialog(getString(R.string.dataLoad));
-//            if (tv_address.getText().toString().equals(getString(R.string.allAeservationNumber))) {
-//                ((HomePageContract.Presenter) mPresenter).getHomePage("");
-//            } else {
-//                ((HomePageContract.Presenter) mPresenter).getHomePage(tv_address.getText().toString());
-//            }
-//        }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
@@ -153,8 +176,138 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if (requestCode == NumericConstants.LOCATION_CODE) {
-            //     ViewInject.toast(aty.getString(R.string.locationRelatedPermission));
+        if (requestCode == NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER) {
+            ViewInject.toast(getString(R.string.denyPermission));
+        }
+    }
+
+    /**
+     * 选择更换头像的弹窗
+     */
+    public void PictureDialog() {
+        if (pictureSourceDialog == null) {
+            pictureSourceDialog = new PictureSourceDialog(aty);
+        }
+        pictureSourceDialog.show();
+    }
+
+    @Override
+    public void setPresenter(HomePageContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        if (flag == 0) {
+            GlideCatchUtil.getInstance().cleanImageDisk();
+            UploadImageBean uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
+            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
+                store_logo = uploadimagebean.getData().getFile().getUrl();
+                GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo, R.mipmap.home_add_shop_logo);
+            }
+        } else if (flag == 1) {
+            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
+            if (userInfoBean != null && userInfoBean.getData() != null) {
+                saveUserInfo(userInfoBean);
+                if (userInfoBean.getData().getDisabled() == 0) {
+                    img_storeLogo.setVisibility(View.VISIBLE);
+                    et_enterNameStore.setVisibility(View.VISIBLE);
+                    tv_asManager.setVisibility(View.VISIBLE);
+                    ll_seller.setVisibility(View.GONE);
+                } else if (userInfoBean.getData().getDisabled() == 1 || userInfoBean.getData().getDisabled() == 2 || userInfoBean.getData().getDisabled() == 3) {
+                    tv_storeName.setText(userInfoBean.getData().getStore_name());
+                    //  tv_type.setText(userInfoBean.getData().getStore_name());
+                    store_logo = userInfoBean.getData().getStore_logo();
+                    tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
+                    GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo1, R.mipmap.home_add_shop_logo);
+                } else {
+                    img_storeLogo.setVisibility(View.VISIBLE);
+                    et_enterNameStore.setVisibility(View.VISIBLE);
+                    tv_asManager.setVisibility(View.VISIBLE);
+                    ll_seller.setVisibility(View.GONE);
+                }
+            }
+        }
+        dismissLoadingDialog();
+    }
+
+    /**
+     * 用户信息本地化
+     */
+    private void saveUserInfo(UserInfoBean userInfoBean) {
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_name", userInfoBean.getData().getStore_name());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_id", userInfoBean.getData().getStore_id());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "disabled", userInfoBean.getData().getDisabled());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_logo", userInfoBean.getData().getStore_logo());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "order_total", userInfoBean.getData().getOrder_total());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "store_level", userInfoBean.getData().getStore_level());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "lv_id", userInfoBean.getData().getLv_id());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", userInfoBean.getData().getNickname());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "face", userInfoBean.getData().getFace());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "lv_name", userInfoBean.getData().getLv_name());
+    }
+
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        if (flag == 1 && isLogin(msg)) {
+            aty.showActivity(aty, LoginActivity.class);
+            return;
+        }
+        ViewInject.toast(msg);
+    }
+
+    @Override
+    public void onChange() {
+        super.onChange();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_SELECT:
+                if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) {
+                    ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                    if (images == null || images.size() == 0) {
+                        ViewInject.toast(getString(R.string.noData));
+                        return;
+                    }
+                    String imgPath = images.get(0).path;
+                    showLoadingDialog(getString(R.string.saveLoad));
+                    ((HomePageContract.Presenter) mPresenter).upPictures(imgPath);
+                } else {
+                    ViewInject.toast(getString(R.string.noData));
+                }
+                break;
+            case RESULT_CODE_GET:
+                if (resultCode == RESULT_OK && data != null) {
+                    img_storeLogo.setVisibility(View.GONE);
+                    et_enterNameStore.setVisibility(View.GONE);
+                    tv_asManager.setVisibility(View.GONE);
+                    ll_seller.setVisibility(View.VISIBLE);
+                    ((HomePageContract.Presenter) mPresenter).getHomePage(aty);
+                }
+                break;
+        }
+    }
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
+            ((HomePageContract.Presenter) mPresenter).getHomePage(aty);
+        } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+            String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
+            if (!StringUtils.isEmpty(avatar)) {
+//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
+            }
         }
     }
 
@@ -164,20 +317,12 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
         super.onDestroy();
 //        mLocationClient.unRegisterLocationListener(myListener); //注销掉监听
 //        mLocationClient.stop(); //停止定位服务
+        if (pictureSourceDialog != null) {
+            pictureSourceDialog.cancel();
+        }
+        pictureSourceDialog = null;
+        GlideCatchUtil.getInstance().cleanImageDisk();
+        GlideCatchUtil.getInstance().cleanCatchDisk();
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == STATUS && resultCode == RESULT_OK) {// 如果等于1
-//            String selectCity = data.getStringExtra("selectCity");
-//            int selectCityId = data.getIntExtra("selectCityId", 0);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", selectCity);
-//            showLoadingDialog(aty.getString(R.string.dataLoad));
-//            ((HomePageContract.Presenter) mPresenter).getHomePage(selectCity);
-//            Log.d("tag888", selectCity);
-//        }
-    }
-
 
 }

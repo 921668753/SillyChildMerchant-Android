@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,10 +14,9 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.common.ImagePreviewNoDelActivity;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
-import com.common.cklibrary.utils.BitmapCoreUtil;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
@@ -28,18 +24,14 @@ import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.ImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
-import com.yinglan.scm.dialog.ImagePopupWindow;
-import com.yinglan.scm.dialog.VIPPermissionsDialog;
 import com.yinglan.scm.entity.UploadImageBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +40,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/2.
  */
 
-public class FeedbackActivity extends BaseActivity implements TextWatcher, ImagePickerAdapter.OnRecyclerViewItemClickListener, FeedbackContract.View, AdapterView.OnItemClickListener {
+public class FeedbackActivity extends BaseActivity implements TextWatcher, ImagePickerAdapter.OnRecyclerViewItemClickListener, FeedbackContract.View {
 
 
     @BindView(id = R.id.tv_feedbackType)
@@ -56,17 +48,20 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
 
     @BindView(id = R.id.ll_dysfunction, click = true)
     private LinearLayout ll_dysfunction;
+
     @BindView(id = R.id.img_dysfunction)
     private ImageView img_dysfunction;
 
 
     @BindView(id = R.id.ll_experienceProblem, click = true)
     private LinearLayout ll_experienceProblem;
+
     @BindView(id = R.id.img_experienceProblem)
     private ImageView img_experienceProblem;
 
     @BindView(id = R.id.ll_newFeatureRecommendations, click = true)
     private LinearLayout ll_newFeatureRecommendations;
+
     @BindView(id = R.id.img_newFeatureRecommendations)
     private ImageView img_newFeatureRecommendations;
 
@@ -75,8 +70,8 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     @BindView(id = R.id.img_other)
     private ImageView img_other;
 
-    @BindView(id = R.id.tv_feed)
-    private EditText tv_feed;
+    @BindView(id = R.id.et_feed)
+    private EditText et_feed;
 
     @BindView(id = R.id.tv_currentwords)
     private TextView tv_currentwords;
@@ -90,19 +85,16 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     @BindView(id = R.id.tv_submit, click = true)
     private TextView tv_submit;
 
-    private String feedcontent;
+    private String feedType = getString(R.string.dysfunction);
+
     private int wordLimit;
+
     private List<ImageItem> selImageList;
+
     private List<ImageItem> images;
+
     private List<String> urllist;
     private ImagePickerAdapter adapter;
-    private File imagefile;
-    private ImagePopupWindow imagePopupWindow;
-    private UploadImageBean uploadimagebean;
-    private String urls;
-    private int currentposition = -1;
-    private int FLAGSUBMIT = 9;
-    private int FLAGTYPE = 10;
 
     @Override
     public void setRootView() {
@@ -124,11 +116,11 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
         tv_feedbackType.setFocusableInTouchMode(true);
         tv_feedbackType.requestFocus();
         tv_feedbackType.requestFocusFromTouch();
-        tv_feed.addTextChangedListener(this);
-        tv_feed.setMovementMethod(ScrollingMovementMethod.getInstance());
+        et_feed.addTextChangedListener(this);
+        et_feed.setMovementMethod(ScrollingMovementMethod.getInstance());
         initImagePicker();
         selImageList = new ArrayList<>();
-        urllist = new ArrayList<>();
+        urllist = new ArrayList<String>();
         adapter = new ImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
         adapter.setOnItemClickListener(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
@@ -153,31 +145,32 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
                 img_experienceProblem.setImageResource(R.mipmap.feedback_unselected);
                 img_newFeatureRecommendations.setImageResource(R.mipmap.feedback_unselected);
                 img_other.setImageResource(R.mipmap.feedback_unselected);
+                feedType = getString(R.string.dysfunction);
                 break;
             case R.id.ll_experienceProblem:
                 img_dysfunction.setImageResource(R.mipmap.feedback_unselected);
                 img_experienceProblem.setImageResource(R.mipmap.feedback_selected);
                 img_newFeatureRecommendations.setImageResource(R.mipmap.feedback_unselected);
                 img_other.setImageResource(R.mipmap.feedback_unselected);
+                feedType = getString(R.string.experienceProblem);
                 break;
             case R.id.ll_newFeatureRecommendations:
                 img_dysfunction.setImageResource(R.mipmap.feedback_unselected);
                 img_experienceProblem.setImageResource(R.mipmap.feedback_unselected);
                 img_newFeatureRecommendations.setImageResource(R.mipmap.feedback_selected);
                 img_other.setImageResource(R.mipmap.feedback_unselected);
+                feedType = getString(R.string.newFeatureRecommendations);
                 break;
             case R.id.ll_other:
                 img_dysfunction.setImageResource(R.mipmap.feedback_unselected);
                 img_experienceProblem.setImageResource(R.mipmap.feedback_unselected);
                 img_newFeatureRecommendations.setImageResource(R.mipmap.feedback_unselected);
                 img_other.setImageResource(R.mipmap.feedback_selected);
+                feedType = getString(R.string.other);
                 break;
             case R.id.tv_submit:
-                if (currentposition == -1) {
-                    ViewInject.toast(getString(R.string.selectorType));
-                } else {
-                    pullEvaluation();
-                }
+                showLoadingDialog(getString(R.string.submissionLoad));
+                ((FeedbackContract.Presenter) mPresenter).postAdvice(feedType, et_feed.getText().toString(), urllist);
                 break;
         }
     }
@@ -208,10 +201,10 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     @Override
     public void afterTextChanged(Editable editable) {
         //edit  输入结束呈现在输入框中的信息
-        feedcontent = editable.toString();
+        String feedcontent = editable.toString();
         if (feedcontent != null && feedcontent.length() > wordLimit) {
-            tv_feed.setText(feedcontent.substring(0, wordLimit));
-            tv_feed.setSelection(wordLimit);
+            et_feed.setText(feedcontent.substring(0, wordLimit));
+            et_feed.setSelection(wordLimit);
         }
     }
 
@@ -257,10 +250,7 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
                     }
                 } else {
                     //打开预览
-//                    imagePopupWindow = new ImagePopupWindow(this, getWindow(), urllist.get(position));
-//                    imagePopupWindow.showAtLocation(ll_allactivity, Gravity.CENTER, 0, 0);
-                    //打开预览
-                    Intent intentPreview = new Intent(FeedbackActivity.this, ImagePreviewDelActivity.class);
+                    Intent intentPreview = new Intent(FeedbackActivity.this, ImagePreviewNoDelActivity.class);
                     intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                     intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
                     intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
@@ -273,28 +263,25 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+        if (data != null && resultCode == ImagePicker.RESULT_CODE_ITEMS && requestCode == NumericConstants.REQUEST_CODE_SELECT) {
             //添加图片返回
-            if (data != null && requestCode == NumericConstants.REQUEST_CODE_SELECT) {
-                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                if (images != null) {
-                    imagefile = new File(images.get(0).path);
-                    imagefile = BitmapCoreUtil.customCompression(imagefile);
-                    showLoadingDialog(getString(R.string.crossLoad));
-                    ((FeedbackPresenter) mPresenter).upPictures("file", imagefile, 0);
-                }
-
+            images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+            if (images == null || images.size() == 0) {
+                ViewInject.toast(getString(R.string.noData));
+                return;
             }
-        } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
+            showLoadingDialog(getString(R.string.crossLoad));
+            ((FeedbackContract.Presenter) mPresenter).upPictures(images.get(0).path);
+        } else if (data != null && resultCode == ImagePicker.RESULT_CODE_BACK && requestCode == NumericConstants.REQUEST_CODE_PREVIEW) {
             //预览图片返回
-            if (data != null && requestCode == NumericConstants.REQUEST_CODE_PREVIEW) {
-                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
-                if (images != null) {
-                    selImageList.clear();
-                    selImageList.addAll(images);
-                    adapter.setImages(selImageList);
-                }
+            images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+            if (images != null) {
+                selImageList.clear();
+                selImageList.addAll(images);
+                adapter.setImages(selImageList);
             }
+        } else {
+            ViewInject.toast(getString(R.string.noData));
         }
     }
 
@@ -305,87 +292,31 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
 
     @Override
     public void getSuccess(String success, int flag) {
-        if (flag == FLAGSUBMIT) {
-            dismissLoadingDialog();
-            ViewInject.toast(getString(R.string.submitSuccess));
-            finish();
-        } else if (flag == FLAGTYPE) {
-//            FeedBackTypeBean uploadimagebean = (FeedBackTypeBean) JsonUtil.getInstance().json2Obj(success, FeedBackTypeBean.class);
-//            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getList() != null && uploadimagebean.getData().getList().size() > 0) {
-//
-//
-//                dismissLoadingDialog();
-//            } else {
-//                dismissLoadingDialog();
-//                initDialog(getString(R.string.noHaveFeedBackType));
-//            }
-        } else {
+        if (flag == 0) {
             GlideCatchUtil.getInstance().cleanImageDisk();
-            uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
+            UploadImageBean uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
+            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !StringUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
                 urllist.add(uploadimagebean.getData().getFile().getUrl());
                 selImageList.addAll(images);
                 adapter.setImages(selImageList);
                 dismissLoadingDialog();
-            } else {
-                ViewInject.toast("图片上传失败！");
-                dismissLoadingDialog();
             }
+        } else if (flag == 1) {
+            dismissLoadingDialog();
+            ViewInject.toast(getString(R.string.submitSuccess));
+            finish();
         }
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-        GlideCatchUtil.getInstance().cleanImageDisk();
-        Log.e("图片", msg);
+        dismissLoadingDialog();
         if (isLogin(msg)) {
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(this, StringConstants.FILENAME, "isReLogin", true);
+            //   ViewInject.toast(getString(R.string.reloginPrompting));
             showActivity(this, LoginActivity.class);
             finish();
             return;
         }
-        if (flag == FLAGTYPE) {
-            dismissLoadingDialog();
-            initDialog(msg + getString(R.string.getFeedBackTypeError));
-            return;
-        }
-        dismissLoadingDialog();
-        ViewInject.toast(this, msg);
+        ViewInject.toast(msg);
     }
-
-    /**
-     * 上传评价
-     */
-    private void pullEvaluation() {
-        urls = "";
-        if (urllist.size() > 0) {
-            for (String s : urllist) {
-                if (!TextUtils.isEmpty(s)) {
-                    urls += "|" + s;
-                }
-            }
-        }
-        showLoadingDialog(getString(R.string.submissionLoad));
-        // ((FeedbackPresenter) mPresenter).submitFeed(feedBackTypeAdapter.getItem(currentposition).getId(), urls, tv_feed.getText().toString(), FLAGSUBMIT);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        currentposition = i;
-    }
-
-    private void initDialog(String content) {
-        VIPPermissionsDialog typedialog = new VIPPermissionsDialog(this) {
-            @Override
-            public void doAction() {
-                finish();
-            }
-        };
-        typedialog.setCancelable(false);
-        typedialog.show();
-        typedialog.setContent(content);
-    }
-
 }

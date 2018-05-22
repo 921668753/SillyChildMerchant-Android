@@ -21,24 +21,25 @@ public class SetNickNamePresenter implements SetNickNameContract.Presenter {
         mView.setPresenter(this);
     }
 
+
     @Override
-    public void saveInfo(String newnickname) {
-        if (TextUtils.isEmpty(newnickname)) {
+    public void postMemberEdit(String nickName) {
+        if (TextUtils.isEmpty(nickName)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.nicknamehint), 0);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("name", newnickname);
-//        RequestClient.postSaveInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 0);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+        httpParams.put("nickName", nickName);
+        RequestClient.postMemberEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 }

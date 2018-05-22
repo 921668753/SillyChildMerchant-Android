@@ -22,7 +22,7 @@ public class MinePresenter implements MineContract.Presenter {
     @Override
     public void getInfo(Context context) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getInfo(context, httpParams, new ResponseListener<String>() {
+        RequestClient.getStoreInfo(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

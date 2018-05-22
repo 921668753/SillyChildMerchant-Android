@@ -10,6 +10,7 @@
     <string name="submitSuccess">提交成功！</string>
     <string name="crossLoad">上传中&#8230;</string>
     <string name="download">下载中&#8230;</string>
+    <string name="deleteLoad">删除中&#8230;</string>
     <string name="shareJumpLoad">分享跳转中&#8230;</string>
     <string name="saveLoad">保存中&#8230;</string>
     <!--Dialog-->
@@ -104,6 +105,9 @@
     <string name="enterNameStore">请输入店铺名称(建议少于10个字)</string>
     <string name="asManager">成为店长</string>
     <string name="certified">已认证</string>
+    <string name="shopNum">店铺号：</string>
+    <string name="manager">店长</string>
+
 
     <!--店主认证-->
     <string name="shopkeeperCertificat">店主认证</string>
@@ -247,16 +251,50 @@
 
     <!-- 个人中心 我的钱包  余额提现-->
     <string name="balanceWithdrawal">余额提现</string>
-    <string name="withdrawalAmount">提现金额</string>
-    <string name="withdrawalAmount1">可提现金额2000.00</string>
-    <string name="allWithdrawal">全部提现</string>
-    <string name="bankName">银行名称</string>
-    <string name="bankName1">请输入银行名称</string>
-    <string name="paymentAccount">收款账号</string>
-    <string name="paymentAccount1">请输入收款账号</string>
-    <string name="accountName">开户名称</string>
-    <string name="accountName1">请输入开户名称</string>
-    <string name="confirmWithdrawal">确认提现</string>
+    <string name="withdrawalRecord1">请输入提现金额</string>
+    <string name="withdrawalAmount1">提现金额</string>
+    <string name="withdrawalAmount2">可提现金额</string>
+    <string name="withdrawalAmount3">零钱余额¥</string>
+    <string name="toBank">到账银行</string>
+    <string name="modification">修改</string>
+    <string name="noCard">暂无</string>
+    <string name="addCard">添加</string>
+    <string name="tail">尾号</string>
+    <string name="withdrawalRecord">提现记录</string>
+    <string name="accountingDate">到账需要2个工作日</string>
+    <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
+    <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
+    <string name="withdrawalsBank1">请输入提现银行</string>
+    <string name="cancel">取消</string>
+    <string name="withdrawCash">确定要提现吗</string>
+
+    <!-- 个人中心 我的钱包  我的银行卡列表-->
+    <string name="myBankCard">我的银行卡</string>
+    <string name="chinaBank">中国银行</string>
+    <string name="ccdBank">建设银行</string>
+    <string name="cmbBank">招商银行</string>
+    <string name="deleteCard">确定删除银行卡吗</string>
+
+
+    <!-- 个人中心 我的钱包  我的银行卡列表 添加银行卡-->
+    <string name="addBankCard">添加银行卡</string>
+    <string name="realName">真实姓名</string>
+    <string name="accountHolderName1">请输入持卡人姓名</string>
+    <string name="idNumber">身份证号</string>
+    <string name="pleaseidNumber">请正确填写身份证号码</string>
+    <string name="bankCardNumber">银行卡号</string>
+    <string name="bankCardNumber1">请输入银行卡号</string>
+    <string name="hintName1">请输入正确的姓名</string>
+    <string name="openingBank">开户银行</string>
+    <string name="pleaseSelect">请选择</string>
+    <string name="phone1">手机号</string>
+    <string name="accountText">请填写预留手机号</string>
+    <string name="enterVerifyCode">请输入验证码</string>
+    <string name="ensureSamePerson">请确保姓名、身份证、银行卡开户人为同一个人</string>
+    <string name="confirmAdd">确认添加</string>
+    <string name="toResend">s后重发</string>
+    <string name="openingBank1">请输入开户行</string>
+
 
     <!-- 个人中心 我的钱包  账户明细-->
     <string name="accountDetails">账户明细</string>

@@ -10,6 +10,18 @@ import com.common.cklibrary.common.BaseView;
 public interface PersonalDataContract {
 
     interface Presenter extends BasePresenter {
+
+
+        /**
+         * 获取个人信息
+         */
+        void getInfo();
+
+        /**
+         * 修改个人信息
+         */
+        void postMemberEdit(String imgUrl, String sex, String nickName, String language, String remark, String photo);
+
         /**
          * 上传图片
          */

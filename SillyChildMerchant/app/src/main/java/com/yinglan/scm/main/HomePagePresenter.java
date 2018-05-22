@@ -1,10 +1,20 @@
 package com.yinglan.scm.main;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.utils.BitmapCoreUtil;
+import com.common.cklibrary.utils.DataCleanManager;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.nanchen.compresshelper.FileUtil;
+import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
+
+import java.io.File;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -19,10 +29,29 @@ public class HomePagePresenter implements HomePageContract.Presenter {
     }
 
     @Override
-    public void postHomePage(String store_logo, String store_name, String id_img) {
+    public void upPictures(String path) {
+        if (StringUtils.isEmpty(path)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 0);
+            return;
+        }
+        File oldFile = new File(path);
+        if (!(FileUtil.isFileExists(oldFile))) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.imagePathError), 0);
+            return;
+        }
+        long fileSize = 0;
+        try {
+            fileSize = DataCleanManager.getFileSize(oldFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileSize = 0;
+        }
+        if (fileSize >= StringConstants.COMPRESSION_SIZE) {
+            oldFile = BitmapCoreUtil.customCompression(oldFile);
+        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.postHomePage(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-
+        httpParams.put("file", oldFile);
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), httpParams, 0, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -33,33 +62,22 @@ public class HomePagePresenter implements HomePageContract.Presenter {
                 mView.errorMsg(msg, 0);
             }
         });
-
     }
 
     @Override
-    public void getHomePage() {
+    public void getHomePage(Context context) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        RequestClient.getHome(httpParams, city, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mView.getSuccess(response, 0);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mView.errorMsg(msg, 0);
-//                    }
-//                });
-//            }
-//        });
+        RequestClient.getStoreInfo(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
     }
 
 }

@@ -81,7 +81,7 @@ public class BitmapCoreUtil {
         File newFile = new CompressHelper.Builder(KJActivityStack.create().topActivity())
 //                .setMaxWidth(720)  // 默认最大宽度为720
 //                .setMaxHeight(960) // 默认最大高度为960
-                .setQuality(80)    // 默认压缩质量为80
+                .setQuality(70)    // 默认压缩质量为80
                 .setCompressFormat(Bitmap.CompressFormat.PNG) // 设置默认压缩为jpg格式
                 .setFileName(yourFileName) // 设置你的文件名
                 .setDestinationDirectoryPath(destinationDirectoryPath)

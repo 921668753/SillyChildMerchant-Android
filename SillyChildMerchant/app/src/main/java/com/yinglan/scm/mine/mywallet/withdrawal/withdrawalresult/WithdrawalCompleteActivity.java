@@ -1,12 +1,14 @@
-package com.yinglan.scm.mine.mywallet.withdrawalresult;
+package com.yinglan.scm.mine.mywallet.withdrawal.withdrawalresult;
 
 import android.view.View;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.yinglan.scm.R;
+import com.yinglan.scm.main.MainActivity;
 
 /**
  * 提现成功/提现失败
@@ -46,7 +48,7 @@ public class WithdrawalCompleteActivity extends BaseActivity {
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_returnHomePage:
-
+                KJActivityStack.create().finishOthersActivity(MainActivity.class);
                 break;
         }
     }

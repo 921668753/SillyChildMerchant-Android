@@ -77,18 +77,67 @@ public class URLConstants {
     public static String USERRESTPWD = APIURL + "sys/edit.d";
 
     /**
-     * 获取用户信息
+     * 申请成为店长
      */
-    public static String USERINFO = APIURL + "member/store/get.do";
+    public static String HOMEPAGE = APIURL + "member/post.do";
 
+    /**
+     * 重新申请成为店长
+     */
+    public static String REHOMEPAGE = APIURL + "member/rePost.do";
 
+    /**
+     * 获取商家店铺信息
+     */
+    public static String STOREINFO = APIURL + "member/store/get.do";
 
+    /**
+     * 修改个人信息
+     */
+    public static String MEMBEREDIT = APIURL + "member/edit.do";
 
+    /**
+     * 获取个人信息
+     */
+    public static String MEMBERINFO = APIURL + "member/get.do";
 
+    /**
+     * 获取钱包余额
+     */
+    public static String PURSEGET = APIURL + "purse/get.do";
 
+    /**
+     * 获取账户钱包明细
+     */
+    public static String PURSEDETAIL = APIURL + "purse/detail.do";
 
+    /**
+     * 提现
+     */
+    public static String PURSECASH = APIURL + "purse/cash.do";
 
+    /**
+     * 银行卡列表
+     */
+    public static String PURSELIST = APIURL + "purse/list.do";
 
+    /**
+     * 删除银行卡
+     */
+    public static String PURSEREMOVE = APIURL + "purse/remove.do";
 
+    /**
+     * 设置默认银行卡
+     */
+    public static String PURSEDEFAULT = APIURL + "purse/default.di";
 
+    /**
+     * 添加银行卡(可添加支付宝账号)
+     */
+    public static String PURSEADD = APIURL + "purse/add.do";
+
+    /**
+     * 提交意见反馈
+     */
+    public static String ADVICEPOST = APIURL + "advice/post.do";
 }

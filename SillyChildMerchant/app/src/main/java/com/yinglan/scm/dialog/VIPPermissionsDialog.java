@@ -15,9 +15,8 @@ import com.yinglan.scm.R;
  * Created by Administrator on 2017/9/5.
  */
 
-public abstract class VIPPermissionsDialog extends Dialog implements View.OnClickListener{
+public abstract class VIPPermissionsDialog extends Dialog implements View.OnClickListener {
 
-    private TextView tv_iknow;
     private TextView tv_content;
 
     @Override
@@ -28,15 +27,15 @@ public abstract class VIPPermissionsDialog extends Dialog implements View.OnClic
 
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width= WindowManager.LayoutParams.MATCH_PARENT;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         dialogWindow.setAttributes(lp);
 
     }
 
-    private void initView(){
-        tv_iknow=(TextView)findViewById(R.id.tv_iknow);
+    private void initView() {
+        TextView tv_iknow = (TextView) findViewById(R.id.tv_iknow);
         tv_iknow.setOnClickListener(this);
-        tv_content=(TextView)findViewById(R.id.tv_content);
+        tv_content = (TextView) findViewById(R.id.tv_content);
     }
 
     public VIPPermissionsDialog(Context context) {
@@ -53,8 +52,8 @@ public abstract class VIPPermissionsDialog extends Dialog implements View.OnClic
 
     public abstract void doAction();
 
-    public void setContent(String content){
-        if (tv_content!=null){
+    public void setContent(String content) {
+        if (tv_content != null) {
             tv_content.setText(content);
         }
     }

@@ -1,5 +1,7 @@
 package com.yinglan.scm.main;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -9,15 +11,20 @@ import com.common.cklibrary.common.BaseView;
 
 public interface HomePageContract {
     interface Presenter extends BasePresenter {
+//        /**
+//         * 申请成为店长
+//         */
+//        void postHomePage(String store_logo, String store_name, String id_img);
+
         /**
-         * 申请成为店长
+         * 上传图片
          */
-        void postHomePage(String store_logo, String store_name, String id_img);
+        void upPictures(String paramname);
 
         /**
          * 获取首页信息
          */
-        void getHomePage();
+        void getHomePage(Context context);
     }
 
     interface View extends BaseView<Presenter, String> {

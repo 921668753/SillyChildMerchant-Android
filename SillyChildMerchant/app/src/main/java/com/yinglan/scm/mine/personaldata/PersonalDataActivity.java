@@ -3,6 +3,8 @@ package com.yinglan.scm.mine.personaldata;
 import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,19 +20,24 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
+import com.yinglan.scm.adapter.mine.personaldata.ImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.UploadImageBean;
+import com.yinglan.scm.entity.mine.personaldata.PersonalDataBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scm.mine.personaldata.setnickname.SetNickNameActivity;
 import com.yinglan.scm.mine.personaldata.setsex.SetSexActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +45,17 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_PREVIEW;
 import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_SELECT;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_ADD;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_MINUS;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_PRODUCT;
 
-public class PersonalDataActivity extends BaseActivity implements PersonalDataContract.View, EasyPermissions.PermissionCallbacks {
+/**
+ * 个人资料
+ */
+public class PersonalDataActivity extends BaseActivity implements PersonalDataContract.View, EasyPermissions.PermissionCallbacks, ImagePickerAdapter.OnRecyclerViewItemClickListener {
 
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
@@ -70,6 +81,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @BindView(id = R.id.et_selfIntroduction)
     private EditText et_selfIntroduction;
 
+    @BindView(id = R.id.recyclerView)
+    private RecyclerView recyclerView;
+
     private boolean isRefresh = false;
 
     private PictureSourceDialog pictureSourceDialog = null;
@@ -77,6 +91,11 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private String touxiangpath = null;
 
     private ImagePicker imagePicker;
+
+    private List<ImageItem> selImageList;
+    private List<ImageItem> images;
+    private List<String> urllist;
+    private ImagePickerAdapter adapter;
 
     @Override
     public void setRootView() {
@@ -88,6 +107,16 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         super.initData();
         mPresenter = new PersonalDataPresenter(this);
         initImagePicker();
+        selImageList = new ArrayList<>();
+        urllist = new ArrayList<>();
+        adapter = new ImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
+        adapter.setOnItemClickListener(this);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((PersonalDataContract.Presenter) mPresenter).getInfo();
     }
 
     /**
@@ -166,11 +195,21 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private void choicePhotoWrapper(int code) {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms) && code == RESULT_CODE_GET) {
+            ImagePicker.getInstance().setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
+            ImagePicker.getInstance().setShowCamera(false);//显示拍照按钮
+            ImagePicker.getInstance().setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+            ImagePicker.getInstance().setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+            ImagePicker.getInstance().setOutPutX(0);                         //保存文件的宽度。单位像素
+            ImagePicker.getInstance().setOutPutY(0);                         //保存文件的高度。单位像素
             PictureDialog();
         } else if (EasyPermissions.hasPermissions(this, perms) && code == RESULT_CODE_PRODUCT) {
-
-
-
+            ImagePicker.getInstance().setSelectLimit(8);
+            ImagePicker.getInstance().setShowCamera(true);//显示拍照按钮
+            ImagePicker.getInstance().setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+            ImagePicker.getInstance().setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+            ImagePicker.getInstance().setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+            ImagePicker.getInstance().setOutPutX(1000);                         //保存文件的宽度。单位像素
+            ImagePicker.getInstance().setOutPutY(1000);                         //保存文件的高度。单位像素
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.needPermission), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
         }
@@ -199,37 +238,11 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
      */
     public void PictureDialog() {
         if (pictureSourceDialog == null) {
-            pictureSourceDialog = new PictureSourceDialog(aty) {
-                @Override
-                public void takePhoto() {
-                    takeTouxiang();
-                }
-
-                @Override
-                public void chooseFromAlbum() {
-                    selectPicture();
-                }
-            };
+            pictureSourceDialog = new PictureSourceDialog(aty);
         }
         pictureSourceDialog.show();
     }
 
-    private void takeTouxiang() {
-        Intent intent = new Intent(this, ImageGridActivity.class);
-        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
-        startActivityForResult(intent, REQUEST_CODE_SELECT);
-    }
-
-    private void selectPicture() {
-        //打开选择,本次允许选择的数量
-        ImagePicker.getInstance().setSelectLimit(1);
-        Intent intent1 = new Intent(this, ImageGridActivity.class);
-        /* 如果需要进入选择的时候显示已经选中的图片，
-         * 详情请查看ImagePickerActivity
-         * */
-        // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
-        startActivityForResult(intent1, REQUEST_CODE_SELECT);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -265,10 +278,45 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                         ViewInject.toast(getString(R.string.noData));
                     }
                     break;
+                case REQUEST_CODE_PREVIEW:
+                    if (resultCode == ImagePicker.RESULT_CODE_BACK && data != null) {
+                        images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+                        if (images != null) {
+                            selImageList.clear();
+                            selImageList.addAll(images);
+                            adapter.setImages(selImageList);
+                        }
+                    }
+                    break;
             }
         }
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        switch (position) {
+            case NumericConstants.IMAGE_ITEM_ADD:
+                //打开选择,本次允许选择的数量
+                Intent intent1 = new Intent(this, ImageGridActivity.class);
+                /* 如果需要进入选择的时候显示已经选中的图片，
+                 * 详情请查看ImagePickerActivity
+                 * */
+                //  intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+                startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
+                break;
+            default:
+                //打开预览
+//                    imagePopupWindow = new ImagePopupWindow(this, getWindow(), urllist.get(position));
+//                    imagePopupWindow.showAtLocation(ll_allactivity, Gravity.CENTER, 0, 0);
+                //打开预览
+                Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
+                intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
+                intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
+                startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
+                break;
+        }
+    }
 
     @Override
     public void setPresenter(PersonalDataContract.Presenter presenter) {
@@ -286,6 +334,36 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     showLoadingDialog(getString(R.string.saveLoad));
                 }
                 isRefresh = true;
+                break;
+            case 1:
+                PersonalDataBean personalDataBean = (PersonalDataBean) JsonUtil.getInstance().json2Obj(success, PersonalDataBean.class);
+                if (personalDataBean != null && personalDataBean.getData() != null) {
+                    if (StringUtils.isEmpty(personalDataBean.getData().getImgUrl())) {
+                        iv_headPortrait.setImageResource(R.mipmap.avatar);
+                    } else {
+                        GlideImageLoader.glideLoader(aty, personalDataBean.getData().getImgUrl(), iv_headPortrait, 0, R.mipmap.avatar);
+                    }
+                    if (StringUtils.isEmpty(personalDataBean.getData().getNickName())) {
+                        String mobile = PreferenceHelper.readString(aty, StringConstants.FILENAME, "mobile");
+                        tv_nickname.setText(mobile);
+                    } else {
+                        tv_nickname.setText(personalDataBean.getData().getNickName());
+                    }
+                    if (personalDataBean.getData().getSex() == 1) {
+                        tv_gender.setText(getString(R.string.man));
+                    } else if (personalDataBean.getData().getSex() == 2) {
+                        tv_gender.setText(getString(R.string.woman));
+                    } else {
+                        tv_gender.setText(getString(R.string.secret));
+                    }
+                    if (StringUtils.isEmpty(personalDataBean.getData().getRemark())) {
+                        et_selfIntroduction.setText("");
+                    } else {
+                        et_selfIntroduction.setText(personalDataBean.getData().getRemark());
+                    }
+//                    photo
+//                    adapter.setImages(selImageList);
+                }
                 break;
         }
         dismissLoadingDialog();
@@ -327,5 +405,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         }
         return super.onKeyUp(keyCode, event);
     }
+
 
 }

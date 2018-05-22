@@ -1,28 +1,31 @@
-package com.yinglan.scm.mine.mywallet;
+package com.yinglan.scm.mine.mywallet.mybankcard;
+
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
 /**
- * Created by Administrator on 2017/2/11.
+ * Created by Administrator on 2017/2/17.
  */
 
-public interface BalanceWithdrawalContract {
+public interface MyBankCardContract {
 
     interface Presenter extends BasePresenter {
-        /**
-         * 检测更新app
-         */
-        void getUpdateApp();
 
         /**
-         * 下载app
+         * 获取银行卡列表
          */
-        void downloadApp(String updateAppUrl);
+        void getMyBankCard();
 
+        /**
+         * 删除银行卡
+         */
+        void postRemoveBank(int id);
     }
 
     interface View extends BaseView<Presenter, String> {
+
     }
+
 
 }

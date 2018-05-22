@@ -23,7 +23,7 @@ public interface SetUpContract {
         void downloadApp(String updateAppUrl);
 
         /**
-         * 退出环信登录
+         * 退出APP登录
          */
         void logOutAPP(Activity activity);
     }

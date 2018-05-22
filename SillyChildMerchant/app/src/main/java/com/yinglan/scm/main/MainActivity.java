@@ -277,7 +277,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                     tv_message.setTextColor(getResources().getColor(R.color.textColor));
                     break;
                 case 2:
-                    img_activities.setImageResource(R.mipmap.tab_activity);
+                    img_activities.setImageResource(R.mipmap.home_order_unselected);
                     tv_activities.setTextColor(getResources().getColor(R.color.textColor));
                     break;
                 case 3:
@@ -298,7 +298,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                     changeFragment(contentFragment1);
                     break;
                 case 2:
-                    img_activities.setImageResource(R.mipmap.tab_activity_selected);
+                    img_activities.setImageResource(R.mipmap.home_order_selected);
                     tv_activities.setTextColor(getResources().getColor(R.color.greenColors));
                     changeFragment(contentFragment2);
                     break;
@@ -329,7 +329,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 changeFragment(contentFragment1);
                 break;
             case 2:
-                img_activities.setImageResource(R.mipmap.tab_activity_selected);
+                img_activities.setImageResource(R.mipmap.home_order_selected);
                 tv_activities.setTextColor(getResources().getColor(R.color.greenColors));
                 changeFragment(contentFragment2);
                 break;

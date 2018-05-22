@@ -10,9 +10,9 @@ import com.common.cklibrary.common.BaseView;
 public interface SetNickNameContract {
     interface Presenter extends BasePresenter {
         /**
-         * 更改用户信息
+         * 修改个人信息
          */
-        void saveInfo(String newnickname);
+        void postMemberEdit(String nickName);
 
     }
 
