@@ -1,5 +1,6 @@
 package com.yinglan.scm.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.order.GoodsOrderAdapter;
@@ -21,6 +23,7 @@ import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.entity.order.GoodOrderBean;
 import com.yinglan.scm.entity.order.GoodOrderBean.DataBean;
 import com.yinglan.scm.main.MainActivity;
+import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
 
 import java.util.List;
 
@@ -68,9 +71,10 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
      */
     private boolean isShowLoadingMore = false;
 
-    private GoodOrderBean goodOrderBean;
-
-    private List<DataBean> databean;
+    /**
+     * 订单状态
+     */
+    private String status = "5";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -91,8 +95,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
-//        showLoadingDialog(getString(R.string.dataLoad));
-//        mPresenter.getChartOrder(NumericConstants.NoPay+"");
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -115,7 +118,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        //  ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
     }
 
     @Override
@@ -127,7 +130,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        // ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+        ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
         return true;
     }
 
@@ -137,10 +140,10 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        Intent intent = new Intent(aty, GoodsDetailsActivity.class);
-//        intent.putExtra("good_id", mAdapter.getItem(position).getGoods_id());
-//        showActivity(aty, intent);
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Intent intent = new Intent(aty, OrderDetailsActivity.class);
+        intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+        aty.showActivity(aty, intent);
     }
 
     @Override
@@ -149,27 +152,27 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         mRefreshLayout.setPullDownRefreshEnable(true);
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-//        MyCollectionBean myCollectionBean = (MyCollectionBean) JsonUtil.getInstance().json2Obj(success, MyCollectionBean.class);
-//        if (myCollectionBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-//                myCollectionBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            errorMsg(getString(R.string.noCollectedGoods), 1);
-//            return;
-//        } else if (myCollectionBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-//                myCollectionBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-//            ViewInject.toast(getString(R.string.noMoreData));
-//            isShowLoadingMore = false;
-//            dismissLoadingDialog();
-//            mRefreshLayout.endLoadingMore();
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(myCollectionBean.getData());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(myCollectionBean.getData());
-//        }
+        GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
+        if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                goodOrderBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            errorMsg(getString(R.string.noOrder), 1);
+            return;
+        } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                goodOrderBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            isShowLoadingMore = false;
+            dismissLoadingDialog();
+            mRefreshLayout.endLoadingMore();
+            return;
+        }
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+            mAdapter.clear();
+            mAdapter.addNewData(goodOrderBean.getData());
+        } else {
+            mRefreshLayout.endLoadingMore();
+            mAdapter.addMoreData(goodOrderBean.getData());
+        }
         dismissLoadingDialog();
     }
 

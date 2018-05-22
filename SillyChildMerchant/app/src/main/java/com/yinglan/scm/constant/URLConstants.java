@@ -87,6 +87,36 @@ public class URLConstants {
     public static String REHOMEPAGE = APIURL + "member/rePost.do";
 
     /**
+     * 获取订单信息列表
+     */
+    public static String ORDERLIST = APIURL + "order/list.do";
+
+    /**
+     * 确认发货
+     */
+    public static String ORDERSHIP = APIURL + "order/ship.do";
+
+    /**
+     * 查看评价
+     */
+    public static String ORDERRATE = APIURL + "order/rate.do";
+
+    /**
+     * 订单售后
+     */
+    public static String ORDERBACK = APIURL + "order/back.do";
+
+    /**
+     * 获取订单详情
+     */
+    public static String ORDERDETAIL = APIURL + "order/detail.do";
+
+    /**
+     * 批量填写快递单信息
+     */
+    public static String ORDERSHOPNO = APIURL + "order/shopNo.do";
+
+    /**
      * 获取商家店铺信息
      */
     public static String STOREINFO = APIURL + "member/store/get.do";

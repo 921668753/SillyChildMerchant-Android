@@ -21,59 +21,41 @@ public class GoodOrderBean extends BaseResult<List<GoodOrderBean.DataBean>> {
          * imuser :
          * username : 17051335257
          */
-        private String userid;
-        private String face;
-        private String impass;
-        private String level;
-        private String imuser;
-        private String username;
+        private String orderStatus;
+        private String orderType;
+        private String order_id;
+        private String orderprice;
 
-        public String getUserid() {
-            return userid;
+        public String getOrderStatus() {
+            return orderStatus;
         }
 
-        public void setUserid(String userid) {
-            this.userid = userid;
+        public void setOrderStatus(String orderStatus) {
+            this.orderStatus = orderStatus;
         }
 
-        public String getFace() {
-            return face;
+        public String getOrderType() {
+            return orderType;
         }
 
-        public void setFace(String face) {
-            this.face = face;
+        public void setOrderType(String orderType) {
+            this.orderType = orderType;
         }
 
-        public String getImpass() {
-            return impass;
+        public String getOrder_id() {
+            return order_id;
         }
 
-        public void setImpass(String impass) {
-            this.impass = impass;
+        public void setOrder_id(String order_id) {
+            this.order_id = order_id;
         }
 
-        public String getLevel() {
-            return level;
+        public String getOrderprice() {
+            return orderprice;
         }
 
-        public void setLevel(String level) {
-            this.level = level;
-        }
-
-        public String getImuser() {
-            return imuser;
-        }
-
-        public void setImuser(String imuser) {
-            this.imuser = imuser;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
+        public void setOrderprice(String orderprice) {
+            this.orderprice = orderprice;
         }
     }
 }
