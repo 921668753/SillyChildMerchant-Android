@@ -24,9 +24,11 @@ import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.adapter.order.GoodsOrderAdapter;
 import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
+import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
 
 import java.util.List;
 
+import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
@@ -34,7 +36,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View {
+public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View, BGAOnItemChildClickListener {
 
     private MainActivity aty;
 
@@ -96,6 +98,7 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
         mRefreshLayout.beginRefreshing();
     }
 
@@ -211,6 +214,23 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
+        }
+    }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.tv_confirmDelivery) {
+            Intent intent = new Intent(aty, OrderDetailsActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (childView.getId() == R.id.tv_seeEvaluation) {
+            Intent intent = new Intent(aty, SeeEvaluationActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (childView.getId() == R.id.tv_refused) {
+            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrder_id(), 2, "", mAdapter.getItem(position).getOrderprice());
+        } else if (childView.getId() == R.id.tv_agreed) {
+            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrder_id(), 1, "", mAdapter.getItem(position).getOrderprice());
         }
     }
 }

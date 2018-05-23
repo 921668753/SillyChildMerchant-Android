@@ -24,9 +24,11 @@ import com.yinglan.scm.entity.order.GoodOrderBean;
 import com.yinglan.scm.entity.order.GoodOrderBean.DataBean;
 import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
+import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
 
 import java.util.List;
 
+import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
@@ -34,7 +36,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View {
+public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View ,BGAOnItemChildClickListener {
 
     private MainActivity aty;
 
@@ -95,6 +97,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
         mRefreshLayout.beginRefreshing();
     }
 
@@ -210,6 +213,15 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
+        }
+    }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.tv_seeEvaluation) {
+            Intent intent = new Intent(aty, SeeEvaluationActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            aty.showActivity(aty, intent);
         }
     }
 }

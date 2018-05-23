@@ -40,7 +40,6 @@
                 android:visibility="gone"
                 tools:listitem="@layout/item_productimg" />
 
-
             <LinearLayout
                 style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen10"
@@ -74,6 +73,66 @@
                     android:layout_marginLeft="@dimen/dimen10"
                     android:layout_marginRight="@dimen/dimen10"
                     android:layout_marginTop="@dimen/dimen4" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen68"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_homepage"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingTop="@dimen/dimen10"
+                    android:text="@string/warehouseInventory1"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <LinearLayout
+                    style="@style/MatchWrap"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        style="@style/AutoWrap"
+                        android:orientation="vertical">
+
+                        <EditText
+                            style="@style/MatchWrap"
+                            android:background="@color/whiteColors"
+                            android:digits="@string/number0"
+                            android:maxLength="10"
+                            android:paddingLeft="@dimen/dimen11"
+                            android:paddingRight="@dimen/dimen11"
+                            android:paddingTop="@dimen/dimen5"
+                            android:text="200"
+                            android:textColor="@color/titletextcolors"
+                            android:textCursorDrawable="@drawable/shape_cursor"
+                            android:textSize="@dimen/textsize13" />
+
+                        <TextView
+                            style="@style/DividerWidth"
+                            android:layout_marginLeft="@dimen/dimen10"
+                            android:layout_marginRight="@dimen/dimen10"
+                            android:layout_marginTop="@dimen/dimen4" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:layout_marginLeft="@dimen/dimen6"
+                        android:paddingRight="@dimen/dimen159"
+                        android:paddingTop="@dimen/dimen5"
+                        android:text="@string/jian"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize15" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -122,6 +181,7 @@
                             android:singleLine="true"
                             android:text="5000.00"
                             android:textColor="@color/titletextcolors"
+                            android:textCursorDrawable="@drawable/shape_cursor"
                             android:textSize="@dimen/textsize13" />
 
                         <TextView
@@ -131,7 +191,6 @@
 
                     </LinearLayout>
                 </LinearLayout>
-
 
             </LinearLayout>
 
@@ -301,7 +360,6 @@
                         android:text="与专柜同步更新"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/textsize12" />
-
 
                 </LinearLayout>
 

@@ -210,6 +210,7 @@
 
     <!--  个人中心  我的店铺  产品详情-->
     <string name="productDetails">产品详情</string>
+    <string name="selectCommodityClassification">选择商品分类</string>
     <string name="commodityImages">商品图片</string>
     <string name="productName">商品名称</string>
     <string name="commodityPrices">商品价格</string>
@@ -225,14 +226,19 @@
     <string name="applicablePeople">适用人群：</string>
     <string name="methodUse">使用方法：</string>
     <string name="modify">修改</string>
+    <string name="warehouseInventory1">仓库库存</string>
+    <string name="jian">/件</string>
 
     <!--  个人中心  我的店铺   发布商品-->
     <string name="releaseGoods">发布商品</string>
 
     <!--提现成功-->
-    <string name="withdrawalSuccess1">提现成功</string>
-    <string name="withdrawalFailure">提现失败</string>
-    <string name="returnHomePage">返回首页</string>
+    <string name="withdrawalRequestSucceeded">提现申请成功</string>
+    <string name="withdrawalRequestSubmissionSuccess">提现申请提交成功</string>
+    <string name="withdrawalRequestSubmissionSuccess1">我们将在3个工作日内处理您的提现申请</string>
+    <string name="estimatedTimeArrival">预计到账时间：</string>
+    <string name="cashCard">储蓄卡：</string>
+    <string name="withdrawalAmount">提现金额：</string>
 
     <!--  个人中心 个人资料 -->
     <string name="personalData">个人资料</string>

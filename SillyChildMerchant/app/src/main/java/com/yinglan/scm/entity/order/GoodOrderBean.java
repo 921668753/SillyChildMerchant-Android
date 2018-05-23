@@ -21,16 +21,16 @@ public class GoodOrderBean extends BaseResult<List<GoodOrderBean.DataBean>> {
          * imuser :
          * username : 17051335257
          */
-        private String orderStatus;
+        private int orderStatus;
         private String orderType;
-        private String order_id;
+        private int order_id;
         private String orderprice;
 
-        public String getOrderStatus() {
+        public int getOrderStatus() {
             return orderStatus;
         }
 
-        public void setOrderStatus(String orderStatus) {
+        public void setOrderStatus(int orderStatus) {
             this.orderStatus = orderStatus;
         }
 
@@ -42,11 +42,11 @@ public class GoodOrderBean extends BaseResult<List<GoodOrderBean.DataBean>> {
             this.orderType = orderType;
         }
 
-        public String getOrder_id() {
+        public int getOrder_id() {
             return order_id;
         }
 
-        public void setOrder_id(String order_id) {
+        public void setOrder_id(int order_id) {
             this.order_id = order_id;
         }
 

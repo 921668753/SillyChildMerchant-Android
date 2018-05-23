@@ -16,7 +16,6 @@ import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
-import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.mine.mywallet.mybankcard.AddBankCardActivity;
 import com.yinglan.scm.mine.mywallet.mybankcard.MyBankCardActivity;
@@ -90,18 +89,6 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     @Override
     public void initWidget() {
         super.initWidget();
-        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                super.onClickLeftCtv();
-                aty.finish();
-            }
-
-            @Override
-            public void onClickRightCtv() {
-                super.onClickRightCtv();
-            }
-        };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal), true, R.id.titlebar);
         String withdrawalAmount = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdrawalAmount");
         tv_money.setText(withdrawalAmount);
@@ -144,6 +131,9 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         dismissLoadingDialog();
         if (flag == 0) {
             Intent intent = new Intent(aty, WithdrawalCompleteActivity.class);
+            intent.putExtra("estimatedTimeArrival", "");
+            intent.putExtra("cashCard", bankCardName + "  " + getString(R.string.tail) + bankCardNun + "");
+            intent.putExtra("withdrawalAmount", getString(R.string.renminbi) + et_withdrawalAmount1.getText().toString().trim());
             startActivityForResult(intent, REQUEST_CODE_SELECT);
         } else if (flag == 1) {
             if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {

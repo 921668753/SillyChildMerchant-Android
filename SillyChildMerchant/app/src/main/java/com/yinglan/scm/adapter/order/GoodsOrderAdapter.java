@@ -26,6 +26,14 @@ public class GoodsOrderAdapter extends BGAAdapterViewAdapter<DataBean> {
         this.countDownCounters = new SparseArray<>();
     }
 
+    @Override
+    protected void setItemChildListener(BGAViewHolderHelper helper) {
+        super.setItemChildListener(helper);
+        helper.setItemChildClickListener(R.id.tv_confirmDelivery);
+        helper.setItemChildClickListener(R.id.tv_seeEvaluation);
+        helper.setItemChildClickListener(R.id.tv_refused);
+        helper.setItemChildClickListener(R.id.tv_agreed);
+    }
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean listBean) {
