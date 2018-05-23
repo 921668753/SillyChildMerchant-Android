@@ -17,6 +17,7 @@ import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.mine.mywallet.MyWalletBean;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.mine.mywallet.mybankcard.MyBankCardActivity;
 import com.yinglan.scm.mine.mywallet.withdrawal.WithdrawalActivity;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
@@ -35,6 +36,8 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @BindView(id = R.id.ll_withdraw, click = true)
     private LinearLayout ll_withdraw;
 
+    @BindView(id = R.id.ll_bankCard, click = true)
+    private LinearLayout ll_bankCard;
 
     @Override
     public void setRootView() {
@@ -90,6 +93,9 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
                 intent.putExtra("bankCardNun", "");
                 intent.putExtra("bankCardId", "");
                 showActivity(aty, intent);
+                break;
+            case R.id.ll_bankCard:
+                showActivity(aty, MyBankCardActivity.class);
                 break;
         }
     }

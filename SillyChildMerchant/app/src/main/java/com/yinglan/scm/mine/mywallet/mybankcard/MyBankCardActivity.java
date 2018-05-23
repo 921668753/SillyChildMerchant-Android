@@ -1,7 +1,6 @@
 package com.yinglan.scm.mine.mywallet.mybankcard;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -81,7 +80,11 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
 
 
     private void initTitle() {
-        titlebar.setTitleText(R.string.myBankCard);
+        if (type == 1) {
+            titlebar.setTitleText(R.string.selectBankCard);
+        } else {
+            titlebar.setTitleText(R.string.myBankCard);
+        }
         titlebar.setRightDrawable(R.mipmap.bank_card_plus_sign);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
             @Override
@@ -102,17 +105,8 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (type == 1) {
-            MyBankCardBean.DataBean resultBean = myBankCardViewAdapter.getItem(position);
-            Intent intent = getIntent();
-            // 获取内容
-            intent.putExtra("bankCardName", resultBean.getAccount_name());
-            intent.putExtra("bankCardNun", resultBean.getAccount_no());
-            intent.putExtra("bankCardId", resultBean.getId());
-            // 设置结果 结果码，一个数据
-            setResult(RESULT_OK, intent);
-            // 结束该activity 结束之后，前面的activity才可以处理结果
-            aty.finish();
-            return;
+            removePosition = position;
+            ((MyBankCardContract.Presenter) mPresenter).postPurseDefault(myBankCardViewAdapter.getItem(removePosition).getId());
         }
     }
 
@@ -146,6 +140,18 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
                 submitBouncedDialog.dismiss();
             }
             myBankCardViewAdapter.removeItem(removePosition);
+        } else if (flag == 2) {
+            MyBankCardBean.DataBean dataBean = myBankCardViewAdapter.getItem(removePosition);
+            Intent intent = getIntent();
+            // 获取内容
+            intent.putExtra("bankCardName", dataBean.getAccount_name());
+            intent.putExtra("bankCardNun", dataBean.getAccount_no());
+            intent.putExtra("bankCardId", dataBean.getId());
+            // 设置结果 结果码，一个数据
+            setResult(RESULT_OK, intent);
+            // 结束该activity 结束之后，前面的activity才可以处理结果
+            aty.finish();
+            return;
         }
         dismissLoadingDialog();
     }

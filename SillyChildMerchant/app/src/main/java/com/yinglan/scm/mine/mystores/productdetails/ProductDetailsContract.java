@@ -10,15 +10,16 @@ import com.common.cklibrary.common.BaseView;
 public interface ProductDetailsContract {
 
     interface Presenter extends BasePresenter {
-        /**
-         * 检测更新app
-         */
-        void getUpdateApp();
 
         /**
-         * 下载app
+         * 获取商品详情
          */
-        void downloadApp(String updateAppUrl);
+        void getGoodDetail(int goodsId);
+
+        /**
+         * 新增修改商品
+         */
+        void postGoodAddAndEdit(int goodsId, String name, String sn, int brand_id, int cat_id, String brief, String price, String params, String store, String enable_store, String big, String small);
 
     }
 

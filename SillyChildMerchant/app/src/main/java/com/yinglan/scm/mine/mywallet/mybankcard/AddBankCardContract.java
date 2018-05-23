@@ -28,6 +28,11 @@ public interface AddBankCardContract {
          */
         void postAddBankCard(String account_name, String id_number, int open_bank, String account_no, String phone, String verificationCode);
 
+        /**
+         * 设置默认银行卡
+         */
+        void postPurseDefault(int id);
+
     }
 
     interface View extends BaseView<Presenter, String> {

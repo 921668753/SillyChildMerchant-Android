@@ -9,6 +9,6 @@
 
     <stroke
         android:width="@dimen/dimen1"
-        android:color="@color/greenColors" />
+        android:color="@color/hintColors" />
 
 </shape>

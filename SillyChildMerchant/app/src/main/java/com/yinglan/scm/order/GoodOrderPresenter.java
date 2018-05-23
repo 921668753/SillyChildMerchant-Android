@@ -69,19 +69,13 @@ public class GoodOrderPresenter implements GoodOrderContract.Presenter {
         RequestClient.postOrderBack(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 2);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, 2);
             }
         });
-
-
-
-
-
-
     }
 }

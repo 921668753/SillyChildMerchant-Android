@@ -5,8 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -180,7 +178,6 @@ public class SeeEvaluationActivity extends BaseActivity implements SeeEvaluation
 //            pictureerror=msg;
 ////            upOperation();
 //        }
-
     }
 
     @Override

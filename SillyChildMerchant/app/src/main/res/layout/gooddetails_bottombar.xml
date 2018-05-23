@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Match50"
+    android:id="@+id/ll_bottom"
     android:background="@color/whiteColors"
     android:gravity="center_vertical|right"
     android:orientation="horizontal"
     android:paddingRight="@dimen/dimen15">
 
     <TextView
-        android:id="@+id/tv_leftbtn"
+        android:id="@+id/tv_confirmDelivery"
         style="@style/Match9035"
         android:background="@drawable/shape_goodbtn"
         android:gravity="center"
@@ -17,6 +18,7 @@
         android:visibility="visible" />
 
     <TextView
+        android:id="@+id/tv_seeEvaluation"
         style="@style/Match9035"
         android:layout_marginLeft="@dimen/dimen10"
         android:background="@drawable/shape_goodbtn"
@@ -24,10 +26,11 @@
         android:text="@string/seeEvaluation"
         android:textColor="@color/greenColors"
         android:textSize="@dimen/textsize15"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
     <TextView
+        android:id="@+id/tv_refused"
         style="@style/Match9035"
         android:layout_marginLeft="@dimen/dimen10"
         android:background="@drawable/shape_goodbtn"
@@ -39,6 +42,7 @@
 
 
     <TextView
+        android:id="@+id/tv_agreed"
         style="@style/Match9035"
         android:layout_marginLeft="@dimen/dimen10"
         android:background="@drawable/shape_goodbtn"
@@ -47,6 +51,5 @@
         android:textColor="@color/greenColors"
         android:textSize="@dimen/textsize15"
         android:visibility="gone" />
-
 
 </LinearLayout>

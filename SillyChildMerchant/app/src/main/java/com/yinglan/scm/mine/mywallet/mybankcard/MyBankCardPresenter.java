@@ -53,4 +53,22 @@ public class MyBankCardPresenter implements MyBankCardContract.Presenter {
             }
         });
     }
+
+
+    @Override
+    public void postPurseDefault(int id) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("id", id);
+        RequestClient.postPurseDefault(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 2);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
 }

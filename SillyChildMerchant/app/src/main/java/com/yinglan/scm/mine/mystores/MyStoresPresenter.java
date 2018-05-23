@@ -2,7 +2,9 @@ package com.yinglan.scm.mine.mystores;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
 import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
@@ -21,26 +23,14 @@ public class MyStoresPresenter implements MyStoresContract.Presenter {
         mView.setPresenter(this);
     }
 
-
     @Override
-    public void getUpdateApp() {
-
-    }
-
-    /**
-     * @param updateAppUrl 下载app
-     */
-    @Override
-    public void downloadApp(String updateAppUrl) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.download));
-        ProgressListener progressListener = new ProgressListener() {
-            @Override
-            public void onProgress(long transferredBytes, long totalSize) {
-                String size = MathUtil.keepZero(((double) transferredBytes) * 100 / totalSize) + "%";
-                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.download) + size);
-            }
-        };
-        RequestClient.downloadApp(updateAppUrl, progressListener, new ResponseListener<String>() {
+    public void getGoodList(int catId, int type, String store, String price) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("catId", catId);
+        httpParams.put("type", type);
+        httpParams.put("store", store);
+        httpParams.put("price", price);
+        RequestClient.getGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -53,4 +43,21 @@ public class MyStoresPresenter implements MyStoresContract.Presenter {
         });
     }
 
+    @Override
+    public void postGoodUpAndDown(int goodsId, int marketEnable) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("goodsId", goodsId);
+        httpParams.put("marketEnable", marketEnable);
+        RequestClient.postGoodUpAndDown(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
 }

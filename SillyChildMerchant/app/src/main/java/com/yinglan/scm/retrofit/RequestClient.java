@@ -405,6 +405,82 @@ public class RequestClient {
     }
 
     /**
+     * 获取商品列表
+     */
+    public static void getGoodList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getGoodList");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.GOODLIST, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 商品上下架
+     */
+    public static void postGoodUpAndDown(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postGoodUpAndDown");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.GOODUPANDDOWN, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 获取商品详情
+     */
+    public static void getGoodDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getGoodDetail");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.GOODGET, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 新增修改商品
+     */
+    public static void postGoodAddAndEdit(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postGoodAddAndEdit");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.GOODADDANDEDIT, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 获取钱包余额
      */
     public static void getMyWallet(Context context, HttpParams httpParams, ResponseListener<String> listener) {
@@ -483,6 +559,25 @@ public class RequestClient {
 
 
     /**
+     * 设置默认银行卡
+     */
+    public static void postPurseDefault(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postPurseDefault");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestPostFORMHttp(context, URLConstants.PURSEDEFAULT, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 添加银行卡
      */
     public static void postAddBankCard(Context context, HttpParams httpParams, ResponseListener<String> listener) {
@@ -500,7 +595,6 @@ public class RequestClient {
             }
         }, listener);
     }
-
 
     /**
      * 提交意见反馈

@@ -138,6 +138,7 @@
     <string name="refused">拒绝</string>
     <string name="agreed">同意</string>
     <string name="orderNumber">订单号：</string>
+    <string name="orderNumber1">订单编号：</string>
     <string name="totalOnlyWord">共</string>
     <string name="goods">件商品</string>
     <string name="renminbi">¥</string>
@@ -153,6 +154,10 @@
     <string name="checkLogistics">查看物流</string>
     <string name="orderDetails">订单详情</string>
     <string name="waitSending">等待发货</string>
+    <string name="sellerShippedGoods">卖家已发货</string>
+    <string name="transactionCompleted">交易已完成</string>
+    <string name="applyAfterSales">申请售后</string>
+    <string name="sellerAppliesRefund">卖家申请退款</string>
     <string name="commodityInformation">商品信息</string>
     <string name="orderInformation">订单信息</string>
     <string name="goodsTogether">商品合计：</string>
@@ -168,6 +173,11 @@
     <string name="alipayToPay">支付宝支付</string>
     <string name="unionpayPay">银联支付</string>
     <string name="balancePay">余额支付</string>
+    <string name="expressNumber">填写快递单号</string>
+    <string name="courierCompany">快递公司名称</string>
+    <string name="afterWhy">售后原因</string>
+
+
     <string name="reloginPrompting">登录超时，或者在其它设备上登录了，请重新登录！</string>
 
     <!--  订单   订单详情  评价 -->
@@ -246,6 +256,9 @@
     <!-- 个人中心 我的钱包-->
     <string name="accountBalance">账户余额</string>
     <string name="withdrawal">提现</string>
+    <string name="bankCard">银行卡</string>
+
+
     <string name="withdrawalRuleDescription">提现规则说明</string>
     <string name="withdrawalRuleDescription1">1、提现次数：供货商不限制提现次数，到账规则详见“提现周期”规定。\n2、提现账户：可以选择工商银行、农业银行、中国银行、建设银行、邮政银行、招商银行、支付宝、财付通账户。\n3、提现费率：提现费率：0.1%，提现手续费将从余额中扣除。\n4、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</string>
 
@@ -270,6 +283,7 @@
 
     <!-- 个人中心 我的钱包  我的银行卡列表-->
     <string name="myBankCard">我的银行卡</string>
+    <string name="selectBankCard">选择银行卡</string>
     <string name="chinaBank">中国银行</string>
     <string name="ccdBank">建设银行</string>
     <string name="cmbBank">招商银行</string>

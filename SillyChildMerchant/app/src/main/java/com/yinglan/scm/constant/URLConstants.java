@@ -132,6 +132,26 @@ public class URLConstants {
     public static String MEMBERINFO = APIURL + "member/get.do";
 
     /**
+     * 获取商品列表
+     */
+    public static String GOODLIST = APIURL + "goods/list.do";
+
+    /**
+     * 商品上下架
+     */
+    public static String GOODUPANDDOWN = APIURL + "goods/upAndDown.do";
+
+    /**
+     * 获取商品详情
+     */
+    public static String GOODGET = APIURL + "goods/get.do";
+
+    /**
+     * 新增修改商品
+     */
+    public static String GOODADDANDEDIT = APIURL + "goods/addAndEdit.do";
+
+    /**
      * 获取钱包余额
      */
     public static String PURSEGET = APIURL + "purse/get.do";

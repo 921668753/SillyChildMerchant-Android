@@ -18,6 +18,11 @@ public interface MyBankCardContract {
         void getMyBankCard();
 
         /**
+         * 设置默认银行卡
+         */
+        void postPurseDefault(int id);
+
+        /**
          * 删除银行卡
          */
         void postRemoveBank(int id);

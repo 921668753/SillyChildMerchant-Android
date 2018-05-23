@@ -36,28 +36,58 @@
 
 
         <LinearLayout
-            android:id="@+id/ll_withdraw"
+
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen35"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dimen49"
-            android:layout_marginLeft="@dimen/dimen120"
-            android:layout_marginRight="@dimen/dimen120"
-            android:background="@drawable/shape_mywallet"
-            android:gravity="center"
+            android:layout_marginLeft="@dimen/dimen36"
+            android:layout_marginRight="@dimen/dimen36"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="@dimen/dimen20"
-                android:layout_height="@dimen/dimen20"
-                android:src="@mipmap/my_wallet_withdrawals" />
+            <LinearLayout
+                android:id="@+id/ll_withdraw"
+                style="@style/AutoMatch"
+                android:background="@drawable/shape_mywallet"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <TextView
-                style="@style/WrapWrap"
-                android:layout_marginLeft="@dimen/dimen10"
-                android:text="@string/withdrawal"
-                android:textColor="@color/darkGreen"
-                android:textSize="@dimen/textsize14" />
+                <ImageView
+                    android:layout_width="@dimen/dimen20"
+                    android:layout_height="@dimen/dimen20"
+                    android:src="@mipmap/my_wallet_withdrawals" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:text="@string/withdrawal"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="@dimen/textsize14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_bankCard"
+                style="@style/AutoMatch"
+                android:layout_marginLeft="@dimen/dimen34"
+                android:background="@drawable/shape_mywallet"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen20"
+                    android:layout_height="@dimen/dimen20"
+                    android:src="@mipmap/bank_card_icon" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:text="@string/bankCard"
+                    android:textColor="@color/darkGreen"
+                    android:textSize="@dimen/textsize14" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </RelativeLayout>

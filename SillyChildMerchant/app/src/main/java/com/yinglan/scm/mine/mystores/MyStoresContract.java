@@ -12,15 +12,16 @@ import com.common.cklibrary.common.BaseView;
 public interface MyStoresContract {
 
     interface Presenter extends BasePresenter {
-        /**
-         * 检测更新app
-         */
-        void getUpdateApp();
 
         /**
-         * 下载app
+         * 获取商品列表
          */
-        void downloadApp(String updateAppUrl);
+        void getGoodList(int catId, int type, String store, String price);
+
+        /**
+         * 商品上下架
+         */
+        void postGoodUpAndDown(int goodsId, int marketEnable);
 
     }
 

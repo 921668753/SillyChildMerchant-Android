@@ -23,11 +23,11 @@ public class GoodOrderAdapter extends BGAAdapterViewAdapter<DataBean> {
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean listBean) {
-        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getFace(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
-        viewHolderHelper.setText(R.id.tv_goodtitle, listBean.getFace());
-        viewHolderHelper.setText(R.id.tv_number, listBean.getFace());
+        GlideImageLoader.glideOrdinaryLoader(mContext, listBean.getOrderprice(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
+        viewHolderHelper.setText(R.id.tv_goodtitle, listBean.getOrderprice());
+        viewHolderHelper.setText(R.id.tv_number, listBean.getOrderprice());
         viewHolderHelper.setText(R.id.tv_goodDescribe, mContext.getString(R.string.renminbi) + 2 + mContext.getString(R.string.renminbi));
-        viewHolderHelper.setText(R.id.tv_money, listBean.getFace());
+        viewHolderHelper.setText(R.id.tv_money, listBean.getOrderprice());
     }
 
 }

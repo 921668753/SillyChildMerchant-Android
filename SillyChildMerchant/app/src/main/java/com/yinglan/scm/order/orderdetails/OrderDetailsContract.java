@@ -12,23 +12,17 @@ public interface OrderDetailsContract {
         /**
          * 获取订单详情
          */
-        void getOrderDetails();
+        void getOrderDetails(int orderId);
 
         /**
-         * 付款
+         * 确认发货
          */
-        void Pay();
+        void postOrderShip(int orderId);
 
         /**
-         * 申请售后
+         * 订单售后
          */
-        void getAfterSale();
-
-        /**
-         * 评价
-         */
-        void toAppraise();
-
+        void postOrderBack(int orderId, int status, String sellerRemark, String money);
 
     }
 

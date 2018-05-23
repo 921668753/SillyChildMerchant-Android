@@ -77,6 +77,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
      */
     @BindView(id = R.id.et_verificationCode)
     private EditText et_verificationCode;
+
     @BindView(id = R.id.tv_verificationCode, click = true)
     private TextView tv_verificationCode;
 
@@ -89,7 +90,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     private OptionsPickerView pvOptions;
     // private List<BankBean.ResultBean> bankList;
 
-    private int bank_id = 0;
+
+    private int bankCardId = 0;
 
     @Override
     public void setRootView() {
@@ -178,7 +180,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 
     @Override
     public void getSuccess(String success, int flag) {
-        dismissLoadingDialog();
+
 //        if (flag == 0) {
 //            ViewInject.toast(getString(R.string.testget));
 //            time.start();
@@ -188,14 +190,20 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 //            if (bankList != null && bankList.size() > 0) {
 //                pvOptions.setPicker(bankList);
 //            }
+        // dismissLoadingDialog();
 //        } else
         if (flag == 2) {
+            AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
+            bankCardId = addBankCardBean.getData().getId();
+            ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
+        } else if (flag == 3) {
+            dismissLoadingDialog();
             AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
             Intent intent = getIntent();
             // 获取内容
             intent.putExtra("bankCardName", tv_openingBank.getText().toString());
             intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 5));
-            intent.putExtra("bankCardId", addBankCardBean.getData().getId());
+            intent.putExtra("bankCardId", bankCardId);
             //设置结果 结果码，一个数据
             setResult(RESULT_OK, intent);
             RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));

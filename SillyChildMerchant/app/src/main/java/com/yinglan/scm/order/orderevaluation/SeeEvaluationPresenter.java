@@ -28,17 +28,17 @@ public class SeeEvaluationPresenter implements SeeEvaluationContract.Presenter {
     public void seeEvaluation(String orderid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("orderId", orderid);
-//        RequestClient.seeEvaluationDetail(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 0);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+        RequestClient.postOrderRate(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 
 

@@ -3,7 +3,7 @@ package com.yinglan.scm.adapter.mine.mywallet;
 import android.content.Context;
 
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean.ResultBean.ListBean;
+import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean.DataBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -13,7 +13,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/9/8.
  */
 
-public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ListBean> {
+public class AccountDetailsAdapter extends BGAAdapterViewAdapter<DataBean> {
 
 
     public AccountDetailsAdapter(Context context) {
@@ -21,7 +21,7 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ListBean> {
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, ListBean model) {
+    protected void fillData(BGAViewHolderHelper helper, int position, DataBean model) {
 
 //        /**
 //         * 明细类型

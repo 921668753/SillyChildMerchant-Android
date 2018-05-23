@@ -1,10 +1,9 @@
 package com.yinglan.scm.mine.mystores.releasegoods;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.rxvolley.client.ProgressListener;
-import com.yinglan.scm.R;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.retrofit.RequestClient;
 
 
@@ -21,26 +20,24 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
         mView.setPresenter(this);
     }
 
-
     @Override
-    public void getUpdateApp() {
-
-    }
-
-    /**
-     * @param updateAppUrl 下载app
-     */
-    @Override
-    public void downloadApp(String updateAppUrl) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.download));
-        ProgressListener progressListener = new ProgressListener() {
-            @Override
-            public void onProgress(long transferredBytes, long totalSize) {
-                String size = MathUtil.keepZero(((double) transferredBytes) * 100 / totalSize) + "%";
-                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.download) + size);
-            }
-        };
-        RequestClient.downloadApp(updateAppUrl, progressListener, new ResponseListener<String>() {
+    public void postGoodAddAndEdit(int goodsId, String name, String sn, int brand_id, int cat_id, String brief, String price, String params, String store, String enable_store, String big, String small) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("goodsId", goodsId);
+        httpParams.put("name", name);
+        httpParams.put("sn", sn);
+        httpParams.put("brand_id", brand_id);
+        httpParams.put("cat_id", cat_id);
+        httpParams.put("brief", brief);
+        httpParams.put("goodsId", goodsId);
+        httpParams.put("price", price);
+        httpParams.put("goodsId", goodsId);
+        httpParams.put("params", params);
+        httpParams.put("store", store);
+        httpParams.put("enable_store", enable_store);
+        httpParams.put("big", big);
+        httpParams.put("small", small);
+        RequestClient.postGoodAddAndEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -52,5 +49,4 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
             }
         });
     }
-
 }
