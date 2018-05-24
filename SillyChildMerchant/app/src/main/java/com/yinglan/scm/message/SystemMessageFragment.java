@@ -197,7 +197,7 @@ public class SystemMessageFragment extends BaseSupportFragment implements System
             img_err.setImageResource(R.mipmap.no_network);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.noOrder))) {
+        } else if (msg.contains(getString(R.string.noSystemMessage))) {
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setVisibility(View.GONE);

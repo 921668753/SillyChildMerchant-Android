@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 发布评价
+ * 订单评价
  * Created by Administrator on 2017/9/15.
  */
 

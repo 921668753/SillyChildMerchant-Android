@@ -24,7 +24,6 @@ public class SystemMessageDetailsPresenter implements SystemMessageDetailsContra
     public void getSystemMessageDetails(int newsId) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("newsId", newsId);
-
         RequestClient.getSystemMessageDetails(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
