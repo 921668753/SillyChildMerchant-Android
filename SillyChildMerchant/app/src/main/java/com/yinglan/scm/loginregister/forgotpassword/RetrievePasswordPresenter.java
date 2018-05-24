@@ -32,7 +32,7 @@ public class RetrievePasswordPresenter implements RetrievePasswordContract.Prese
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("mobile", phone);
+        httpParams.put("phone", phone);
         RequestClient.postSendFindCode(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -80,8 +80,8 @@ public class RetrievePasswordPresenter implements RetrievePasswordContract.Prese
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("mobile", phone);
-        httpParams.put("mobilecode", code);
+        httpParams.put("phone", phone);
+        httpParams.put("code", code);
         httpParams.put("password", pwd);
         RequestClient.postResetpwd(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override

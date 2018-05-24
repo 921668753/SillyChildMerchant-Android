@@ -17,7 +17,7 @@ public class URLConstants {
     /**
      * 测试服务器地址URL
      */
-    public static String SERVERURL = "http://api.keiousoft.shahaizi.com/";
+    public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
 
     /**
      * 请求地址URL
@@ -74,7 +74,7 @@ public class URLConstants {
     /**
      * 更改密码【手机】
      */
-    public static String USERRESTPWD = APIURL + "sys/edit.d";
+    public static String USERRESTPWD = APIURL + "sys/edit.do";
 
     /**
      * 申请成为店长

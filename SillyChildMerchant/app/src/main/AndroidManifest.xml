@@ -84,9 +84,14 @@
             android:name="com.yinglan.scm.loginregister.SelectCountryActivity"
             android:screenOrientation="portrait" />
 
-        <!--注册 忘记密码-->
+        <!--注册-->
         <activity
             android:name="com.yinglan.scm.loginregister.register.RegisterActivity"
+            android:screenOrientation="portrait" />
+
+        <!--注册 忘记密码-->
+        <activity
+            android:name="com.yinglan.scm.loginregister.forgotpassword.RetrievePasswordActivity"
             android:screenOrientation="portrait" />
 
         <!--注册 注册协议-->

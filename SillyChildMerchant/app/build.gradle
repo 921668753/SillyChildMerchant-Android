@@ -12,6 +12,10 @@ android {
         versionCode 37
         versionName "1.3.0.171201"
         multiDexEnabled true
+
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
+
         dataBinding {
             enabled = true
         }
@@ -95,10 +99,10 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             debuggable false
             jniDebuggable false
-            zipAlignEnabled false
-            shrinkResources false
+            zipAlignEnabled true
+            shrinkResources true
             // 是否进行混淆
-            minifyEnabled false
+            minifyEnabled true
             // 混淆文件的位置
             signingConfig signingConfigs.release
             buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""

@@ -44,7 +44,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("mobile", phone);
+        httpParams.put("phone", phone);
         RequestClient.postCaptcha(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -82,10 +82,10 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         //  Map<String, Object> map = new HashMap<String, Object>();
-        httpParams.put("mobile", phone);
-        httpParams.put("mobilecode", code);
+        httpParams.put("phone", phone);
+        httpParams.put("code", code);
         httpParams.put("password", pwd);
-        httpParams.put("push_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
+        httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         //  httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postRegister(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
