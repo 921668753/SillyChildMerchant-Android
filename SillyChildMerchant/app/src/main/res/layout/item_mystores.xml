@@ -7,6 +7,7 @@
 
 
     <ImageView
+        android:id="@+id/img_good"
         android:layout_width="@dimen/dimen105"
         android:layout_height="@dimen/dimen90"
         android:scaleType="fitXY"
@@ -29,6 +30,7 @@
                 android:textSize="@dimen/textsize14" />
 
             <TextView
+                android:id="@+id/tv_goodName"
                 style="@style/WrapWrap"
                 android:maxLines="2"
                 android:text="Dior口红52000"
@@ -48,6 +50,7 @@
                 android:textSize="@dimen/textsize14" />
 
             <TextView
+                android:id="@+id/tv_warehouseInventory"
                 style="@style/WrapWrap"
                 android:singleLine="true"
                 android:text="500件"
@@ -67,6 +70,7 @@
                 android:textSize="@dimen/textsize14" />
 
             <TextView
+                android:id="@+id/tv_commodityPrice"
                 style="@style/WrapWrap"
                 android:singleLine="true"
                 android:text="280.00"
@@ -83,6 +87,7 @@
         android:gravity="center_horizontal">
 
         <TextView
+            android:id="@+id/tv_inSale"
             style="@style/WrapWrap"
             android:paddingLeft="@dimen/dimen10"
             android:singleLine="true"

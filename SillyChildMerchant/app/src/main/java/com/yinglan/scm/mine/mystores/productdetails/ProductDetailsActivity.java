@@ -43,6 +43,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         mPresenter = presenter;
     }
 
+
     @Override
     public void getSuccess(String success, int flag) {
 
@@ -62,7 +63,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            showActivity(aty, LoginActivity.class);
+            skipActivity(aty, LoginActivity.class);
             return;
         }
         ViewInject.toast(msg);

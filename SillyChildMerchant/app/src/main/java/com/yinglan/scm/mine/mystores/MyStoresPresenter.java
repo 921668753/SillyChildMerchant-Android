@@ -24,12 +24,12 @@ public class MyStoresPresenter implements MyStoresContract.Presenter {
     }
 
     @Override
-    public void getGoodList(int catId, int type, String store, String price) {
+    public void getClassificationList() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("catId", catId);
-        httpParams.put("type", type);
-        httpParams.put("store", store);
-        httpParams.put("price", price);
+//        httpParams.put("catId", catId);
+//        httpParams.put("type", type);
+//        httpParams.put("store", store);
+//        httpParams.put("price", price);
         RequestClient.getGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -44,19 +44,40 @@ public class MyStoresPresenter implements MyStoresContract.Presenter {
     }
 
     @Override
-    public void postGoodUpAndDown(int goodsId, int marketEnable) {
+    public void getGoodList(int page, int catId, int type, String store, String price) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("page", page);
+        httpParams.put("catId", catId);
+        httpParams.put("type", type);
+        httpParams.put("store", store);
+        httpParams.put("price", price);
+        RequestClient.getGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+    }
+
+    @Override
+    public void postGoodUpAndDown(int goodsId, int marketEnable, int flag) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("goodsId", goodsId);
         httpParams.put("marketEnable", marketEnable);
         RequestClient.postGoodUpAndDown(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, flag);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, flag);
             }
         });
     }

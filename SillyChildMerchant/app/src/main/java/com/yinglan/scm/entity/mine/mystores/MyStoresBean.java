@@ -21,59 +21,122 @@ public class MyStoresBean extends BaseResult<List<MyStoresBean.DataBean>> {
          * imuser :
          * username : 17051335257
          */
-        private String userid;
-        private String face;
-        private String impass;
-        private String level;
-        private String imuser;
-        private String username;
+        private int goods_id;
+        private String name;
+        private String sn;
+        private int brand_id;
+        private int cat_id;
+        private String unit;
+        private String weight;
+        private int market_enable;
+        private String price;
+        private int store;
+        private int enable_store;
+        private String big;
+        private String small;
 
-        public String getUserid() {
-            return userid;
+        public int getGoods_id() {
+            return goods_id;
         }
 
-        public void setUserid(String userid) {
-            this.userid = userid;
+        public void setGoods_id(int goods_id) {
+            this.goods_id = goods_id;
         }
 
-        public String getFace() {
-            return face;
+        public String getName() {
+            return name;
         }
 
-        public void setFace(String face) {
-            this.face = face;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public String getImpass() {
-            return impass;
+        public String getSn() {
+            return sn;
         }
 
-        public void setImpass(String impass) {
-            this.impass = impass;
+        public void setSn(String sn) {
+            this.sn = sn;
         }
 
-        public String getLevel() {
-            return level;
+        public int getBrand_id() {
+            return brand_id;
         }
 
-        public void setLevel(String level) {
-            this.level = level;
+        public void setBrand_id(int brand_id) {
+            this.brand_id = brand_id;
         }
 
-        public String getImuser() {
-            return imuser;
+        public int getCat_id() {
+            return cat_id;
         }
 
-        public void setImuser(String imuser) {
-            this.imuser = imuser;
+        public void setCat_id(int cat_id) {
+            this.cat_id = cat_id;
         }
 
-        public String getUsername() {
-            return username;
+        public String getUnit() {
+            return unit;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setUnit(String unit) {
+            this.unit = unit;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
+
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public int getMarket_enable() {
+            return market_enable;
+        }
+
+        public void setMarket_enable(int market_enable) {
+            this.market_enable = market_enable;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public int getStore() {
+            return store;
+        }
+
+        public void setStore(int store) {
+            this.store = store;
+        }
+
+        public int getEnable_store() {
+            return enable_store;
+        }
+
+        public void setEnable_store(int enable_store) {
+            this.enable_store = enable_store;
+        }
+
+        public String getBig() {
+            return big;
+        }
+
+        public void setBig(String big) {
+            this.big = big;
+        }
+
+        public String getSmall() {
+            return small;
+        }
+
+        public void setSmall(String small) {
+            this.small = small;
         }
     }
 }

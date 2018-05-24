@@ -27,10 +27,18 @@ public class MyStoresViewAdapter extends BGAAdapterViewAdapter<DataBean> {
 
     @Override
     protected void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean model) {
-        GlideImageLoader.glideOrdinaryLoader(mContext, model.getFace(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
-        viewHolderHelper.setText(R.id.tv_goodtitle, model.getFace());
-        viewHolderHelper.setText(R.id.tv_number, model.getFace());
-        viewHolderHelper.setText(R.id.tv_goodDescribe, mContext.getString(R.string.renminbi) + 2 + mContext.getString(R.string.renminbi));
-        viewHolderHelper.setText(R.id.tv_money, model.getFace());
+        GlideImageLoader.glideOrdinaryLoader(mContext, model.getSmall(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
+        viewHolderHelper.setText(R.id.tv_goodName, model.getName());
+        viewHolderHelper.setText(R.id.tv_warehouseInventory, model.getStore() + model.getUnit());
+        viewHolderHelper.setText(R.id.tv_commodityPrice, model.getPrice());
+        if (model.getMarket_enable() == 1) {
+            viewHolderHelper.setText(R.id.tv_inSale, mContext.getString(R.string.inSale));
+            viewHolderHelper.setTextColorRes(R.id.tv_inSale, R.color.greenColors);
+        } else {
+            viewHolderHelper.setText(R.id.tv_inSale, mContext.getString(R.string.hasOffShelves));
+            viewHolderHelper.setTextColorRes(R.id.tv_inSale, R.color.hintColors);
+        }
+
+
     }
 }

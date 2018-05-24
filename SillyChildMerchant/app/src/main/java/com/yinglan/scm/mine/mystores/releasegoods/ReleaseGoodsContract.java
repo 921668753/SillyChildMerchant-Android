@@ -10,6 +10,12 @@ import com.common.cklibrary.common.BaseView;
 public interface ReleaseGoodsContract {
 
     interface Presenter extends BasePresenter {
+
+        /**
+         * 获取分类列表
+         */
+        void getClassificationList();
+
         /**
          * 新增修改商品
          */

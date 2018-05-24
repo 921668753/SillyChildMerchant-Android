@@ -21,6 +21,26 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
     }
 
     @Override
+    public void getClassificationList() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        httpParams.put("catId", catId);
+//        httpParams.put("type", type);
+//        httpParams.put("store", store);
+//        httpParams.put("price", price);
+        RequestClient.getGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+    @Override
     public void postGoodAddAndEdit(int goodsId, String name, String sn, int brand_id, int cat_id, String brief, String price, String params, String store, String enable_store, String big, String small) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("goodsId", goodsId);
@@ -40,12 +60,12 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
         RequestClient.postGoodAddAndEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, 1);
             }
         });
     }

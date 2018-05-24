@@ -2,6 +2,7 @@ package com.yinglan.scm.mine.mystores;
 
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,21 +13,25 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.MyStoresViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
+import com.yinglan.scm.entity.mine.mystores.MyStoresBean;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.mine.mystores.dialog.SubmitBouncedDialog;
 import com.yinglan.scm.mine.mystores.productdetails.ProductDetailsActivity;
 import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity;
 
+import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 
 /**
  * 我的店铺
  */
-public class MyStoresActivity extends BaseActivity implements MyStoresContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class MyStoresActivity extends BaseActivity implements MyStoresContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
 
     @BindView(id = R.id.mRefreshLayout, click = true)
     private BGARefreshLayout mRefreshLayout;
@@ -76,6 +81,15 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
      */
     private boolean isShowLoadingMore = false;
 
+    private SubmitBouncedDialog submitBouncedDialog = null;
+    private ImageView img_shelves;
+    private TextView tv_inSale;
+
+    private int catId = 0;
+    private int type = 1;
+    private String store = "DESC";
+    private String price = "DESC";
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_mystores);
@@ -86,7 +100,24 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         super.initData();
         mPresenter = new MyStoresPresenter(this);
         myStoresViewAdapter = new MyStoresViewAdapter(this);
+        initDialog();
     }
+
+    private void initDialog() {
+        submitBouncedDialog = new SubmitBouncedDialog(this) {
+            @Override
+            public void confirm(int id, int marketEnable) {
+                showLoadingDialog(getString(R.string.sendingLoad));
+                if (marketEnable == 0) {
+                    ((MyStoresContract.Presenter) mPresenter).postGoodUpAndDown(id, marketEnable, 2);
+                    return;
+                }
+                ((MyStoresContract.Presenter) mPresenter).postGoodUpAndDown(id, marketEnable, 3);
+            }
+        };
+
+    }
+
 
     @Override
     public void initWidget() {
@@ -95,6 +126,8 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         ActivityTitleUtils.initToolbar(aty, getString(R.string.myStores), true, R.id.titlebar);
         lv_myStores.setAdapter(myStoresViewAdapter);
         lv_myStores.setOnItemClickListener(this);
+        myStoresViewAdapter.setOnItemChildClickListener(this);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -105,13 +138,28 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
 
                 break;
             case R.id.ll_allState:
-
+                if (type == 1) {
+                    type = 0;
+                } else {
+                    type = 1;
+                }
+                mRefreshLayout.beginRefreshing();
                 break;
             case R.id.ll_inventory:
-
+                if (store.contains("DESC")) {
+                    store = "ASC";
+                } else {
+                    store = "DESC";
+                }
+                mRefreshLayout.beginRefreshing();
                 break;
             case R.id.ll_price:
-
+                if (price.contains("DESC")) {
+                    price = "ASC";
+                } else {
+                    price = "DESC";
+                }
+                mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_itemAdd:
                 showActivity(aty, ReleaseGoodsActivity.class);
@@ -134,11 +182,29 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     }
 
     @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.img_shelves) {
+            img_shelves = (ImageView) childView;
+            tv_inSale = (TextView) childView.getRootView().findViewById(R.id.tv_inSale);
+            if (submitBouncedDialog == null) {
+                initDialog();
+            }
+            if (submitBouncedDialog != null && !submitBouncedDialog.isShowing() && myStoresViewAdapter.getItem(position).getMarket_enable() == 0) {
+                submitBouncedDialog.show();
+                submitBouncedDialog.setContent(getString(R.string.sureOnShelf), myStoresViewAdapter.getItem(position).getGoods_id(), 1);
+            } else {
+                submitBouncedDialog.show();
+                submitBouncedDialog.setContent(getString(R.string.sureAboutProduct), myStoresViewAdapter.getItem(position).getGoods_id(), 0);
+            }
+        }
+    }
+
+    @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        //  ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+        ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, type, store, price);
     }
 
     @Override
@@ -150,7 +216,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        // ((MyCollectionContract.Presenter) mPresenter).getFavoriteGoodList(mMorePageNumber);
+        ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, type, store, price);
         return true;
     }
 
@@ -161,31 +227,42 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
 
     @Override
     public void getSuccess(String success, int flag) {
-        isShowLoadingMore = true;
-        mRefreshLayout.setPullDownRefreshEnable(true);
-        ll_commonError.setVisibility(View.GONE);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-//        MyCollectionBean myCollectionBean = (MyCollectionBean) JsonUtil.getInstance().json2Obj(success, MyCollectionBean.class);
-//        if (myCollectionBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-//                myCollectionBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            errorMsg(getString(R.string.noCollectedGoods), 1);
-//            return;
-//        } else if (myCollectionBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-//                myCollectionBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-//            ViewInject.toast(getString(R.string.noMoreData));
-//            isShowLoadingMore = false;
-//            dismissLoadingDialog();
-//            mRefreshLayout.endLoadingMore();
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(myCollectionBean.getData());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(myCollectionBean.getData());
-//        }
+        if (flag == 0) {
+        } else if (flag == 1) {
+            isShowLoadingMore = true;
+            mRefreshLayout.setPullDownRefreshEnable(true);
+            ll_commonError.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            MyStoresBean myStoresBean = (MyStoresBean) JsonUtil.getInstance().json2Obj(success, MyStoresBean.class);
+            if (myStoresBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                    myStoresBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                errorMsg(getString(R.string.notGetMerchandise), 1);
+                return;
+            } else if (myStoresBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                    myStoresBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                ViewInject.toast(getString(R.string.noMoreData));
+                isShowLoadingMore = false;
+                dismissLoadingDialog();
+                mRefreshLayout.endLoadingMore();
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                myStoresViewAdapter.clear();
+                myStoresViewAdapter.addNewData(myStoresBean.getData());
+            } else {
+                mRefreshLayout.endLoadingMore();
+                myStoresViewAdapter.addMoreData(myStoresBean.getData());
+            }
+        } else if (flag == 2) {
+            img_shelves.setImageResource(R.mipmap.shop_shelves_icon);
+            tv_inSale.setText(getString(R.string.hasOffShelves));
+            tv_inSale.setTextColor(getResources().getColor(R.color.hintColors));
+        } else if (flag == 3) {
+            img_shelves.setImageResource(R.mipmap.shop_the_shelves_icon);
+            tv_inSale.setText(getString(R.string.inSale));
+            tv_inSale.setTextColor(getResources().getColor(R.color.greenColors));
+        }
         dismissLoadingDialog();
     }
 
@@ -226,5 +303,14 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (submitBouncedDialog != null) {
+            submitBouncedDialog.cancel();
+        }
+        submitBouncedDialog = null;
+        myStoresViewAdapter.clear();
+        myStoresViewAdapter = null;
+    }
 }

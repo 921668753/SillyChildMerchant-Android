@@ -33,7 +33,7 @@
                 android:layout_width="@dimen/dimen7"
                 android:layout_height="@dimen/dimen7"
                 android:layout_marginLeft="@dimen/dimen15"
-                android:src="@mipmap/right_arrow" />
+                android:src="@mipmap/shop_down_arrow" />
 
         </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_width="@dimen/dimen7"
                 android:layout_height="@dimen/dimen7"
                 android:layout_marginLeft="@dimen/dimen15"
-                android:src="@mipmap/right_arrow" />
+                android:src="@mipmap/shop_down_arrow" />
 
         </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:layout_width="@dimen/dimen7"
                 android:layout_height="@dimen/dimen7"
                 android:layout_marginLeft="@dimen/dimen15"
-                android:src="@mipmap/right_arrow" />
+                android:src="@mipmap/shop_down_arrow" />
 
         </LinearLayout>
 
@@ -102,7 +102,7 @@
                 android:layout_width="@dimen/dimen7"
                 android:layout_height="@dimen/dimen7"
                 android:layout_marginLeft="@dimen/dimen15"
-                android:src="@mipmap/right_arrow" />
+                android:src="@mipmap/shop_down_arrow" />
 
         </LinearLayout>
 
