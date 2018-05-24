@@ -1,7 +1,5 @@
 package com.common.cklibrary.common;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.view.View;
 
 

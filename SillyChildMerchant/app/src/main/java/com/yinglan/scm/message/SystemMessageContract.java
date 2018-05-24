@@ -1,5 +1,7 @@
 package com.yinglan.scm.message;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -13,7 +15,7 @@ public interface SystemMessageContract {
         /**
          * 获取系统消息列表信息
          */
-        void getSystem(int page);
+        void getSystem(Context context, int page);
     }
 
     interface View extends BaseView<Presenter, String> {

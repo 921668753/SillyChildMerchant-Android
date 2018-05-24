@@ -173,6 +173,7 @@ public abstract class KJFragment extends Fragment implements View.OnClickListene
         transaction.commit();
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -5,30 +5,26 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/save" />
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch"
+        android:background="@color/background"
+        android:paddingTop="@dimen/dimen10">
 
+        <!-- item_systemmessage -->
+        <ListView
+            android:id="@+id/lv_systemMessage"
+            style="@style/MatchMatch"
+            android:divider="@color/background"
+            android:dividerHeight="@dimen/dimen10"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingRight="@dimen/dimen10"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_systemmessage" />
 
-    <!--<cn.bingoogolapple.refreshlayout.BGARefreshLayout-->
-    <!--android:id="@+id/mRefreshLayout"-->
-    <!--style="@style/MatchMatch"-->
-    <!--android:background="@color/background"-->
-    <!--android:paddingTop="@dimen/dimen10">-->
-
-    <!--&lt;!&ndash; item_systemmessage &ndash;&gt;-->
-    <!--<ListView-->
-    <!--android:id="@+id/lv_systemMessage"-->
-    <!--style="@style/MatchMatch"-->
-    <!--android:divider="@color/background"-->
-    <!--android:dividerHeight="@dimen/dimen10"-->
-    <!--android:overScrollMode="never"-->
-    <!--android:scrollbars="none"-->
-    <!--tools:listitem="@layout/item_systemmessage" />-->
-
-    <!--</cn.bingoogolapple.refreshlayout.BGARefreshLayout>-->
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
     <include layout="@layout/common_error" />
 

@@ -87,6 +87,21 @@ public class URLConstants {
     public static String REHOMEPAGE = APIURL + "member/rePost.do";
 
     /**
+     * 获取系统消息首页
+     */
+    public static String NEWLISTBUYTITLE = APIURL + "news/listByTitle.do";
+
+    /**
+     * 获取消息列表
+     */
+    public static String NEWTITLE = APIURL + "news/title.do";
+
+    /**
+     * 选中某条消息并设为已读
+     */
+    public static String NEWSELECT = APIURL + "news/select.do";
+
+    /**
      * 获取订单信息列表
      */
     public static String ORDERLIST = APIURL + "order/list.do";

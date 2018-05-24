@@ -21,7 +21,7 @@ import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.constant.StringNewConstants;
 import com.yinglan.scm.constant.URLConstants;
 import com.yinglan.scm.entity.loginregister.LoginBean;
-import com.yinglan.scm.message.rongcloud.util.UserUtil;
+import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -209,6 +209,61 @@ public class RequestClient {
                 }
                 httpParams.putHeaders("Cookie", cookies);
                 HttpRequest.requestPostFORMHttp(context, URLConstants.REHOMEPAGE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 获取系统消息首页
+     */
+    public static void getSystemMessage(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.NEWLISTBUYTITLE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 获取消息列表
+     */
+    public static void getSystemMessageList(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.NEWTITLE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 选中某条消息并设为已读
+     */
+    public static void getSystemMessageDetails(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.NEWSELECT, httpParams, listener);
             }
         }, listener);
     }

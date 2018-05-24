@@ -123,6 +123,13 @@
 
     <!--系统消息-->
     <string name="systemMessageDetails">消息详情</string>
+    <string name="noSystemMessage">亲，您还没有系统消息哟~</string>
+    <string name="orderM">订单</string>
+    <string name="system">系统</string>
+    <string name="delivery">物流</string>
+
+
+
 
     <!--我的订单-->
     <string name="myOrder">我的订单</string>

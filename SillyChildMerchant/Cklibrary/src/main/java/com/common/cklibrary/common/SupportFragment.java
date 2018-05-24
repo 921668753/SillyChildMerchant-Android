@@ -1,9 +1,5 @@
 package com.common.cklibrary.common;
 
-/**
- * Created by Administrator on 2017/3/7.
- */
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -16,8 +12,8 @@ import java.lang.ref.SoftReference;
 
 /**
  * 兼容v4包的Fragment
- *
- * @author kymjs (http://www.kymjs.com/) .
+ * <p>
+ * Created by Administrator on 2017/3/7.
  */
 public abstract class SupportFragment extends Fragment implements
         OnClickListener {
@@ -123,10 +119,12 @@ public abstract class SupportFragment extends Fragment implements
         }).start();
         return fragmentRootView;
     }
+
     @SuppressWarnings("unchecked")
     protected <T extends View> T bindView(int id) {
         return (T) fragmentRootView.findViewById(id);
     }
+
     @SuppressWarnings("unchecked")
     protected <T extends View> T bindView(int id, boolean click) {
         T view = (T) fragmentRootView.findViewById(id);
