@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,10 +33,10 @@ import com.yinglan.scm.entity.mine.personaldata.PersonalDataBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scm.mine.personaldata.setnickname.SetNickNameActivity;
+import com.yinglan.scm.mine.personaldata.setselfintroduction.SetSelfIntroductionActivity;
 import com.yinglan.scm.mine.personaldata.setsex.SetSexActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +48,7 @@ import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_PREVIEW;
 import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_SELECT;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_ADD;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_MINUS;
+import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_MINUSALL;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_PRODUCT;
 
@@ -78,8 +78,8 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @BindView(id = R.id.tv_gender)
     private TextView tv_gender;
 
-    @BindView(id = R.id.et_selfIntroduction)
-    private EditText et_selfIntroduction;
+    @BindView(id = R.id.ll_selfIntroduction, click = true)
+    private LinearLayout ll_selfIntroduction;
 
     @BindView(id = R.id.recyclerView)
     private RecyclerView recyclerView;
@@ -94,8 +94,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     private List<ImageItem> selImageList;
     private List<ImageItem> images;
-    private List<String> urllist;
+    // private List<String> urllist;
     private ImagePickerAdapter adapter;
+
+    private String selfIntroduction = "";
 
     @Override
     public void setRootView() {
@@ -108,7 +110,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         mPresenter = new PersonalDataPresenter(this);
         initImagePicker();
         selImageList = new ArrayList<>();
-        urllist = new ArrayList<>();
+        // urllist = new ArrayList<>();
         adapter = new ImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
         adapter.setOnItemClickListener(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
@@ -188,6 +190,11 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 setSexIntent.putExtra("sex", sex);
                 startActivityForResult(setSexIntent, RESULT_CODE_BASKET_MINUS);
                 break;
+            case R.id.ll_selfIntroduction:
+                Intent setSelfIntroductionIntent = new Intent(this, SetSelfIntroductionActivity.class);
+                setSelfIntroductionIntent.putExtra("selfIntroduction", selfIntroduction);
+                startActivityForResult(setSelfIntroductionIntent, RESULT_CODE_BASKET_MINUSALL);
+                break;
         }
     }
 
@@ -263,6 +270,20 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                         tv_gender.setText(getString(R.string.secret));
                     }
                     PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", sex);
+                    break;
+                case RESULT_CODE_BASKET_MINUSALL:
+                    selfIntroduction = data.getStringExtra("selfIntroduction");
+
+//                    int sex = data.getIntExtra("sex", 0);
+//                    if (sex == 1) {
+//                        tv_gender.setText(getString(R.string.man));
+//                    } else if (sex == 2) {
+//                        tv_gender.setText(getString(R.string.woman));
+//                    } else {
+//                        tv_gender.setText(getString(R.string.secret));
+//                    }
+//                    PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", sex);
+
                     break;
                 case REQUEST_CODE_SELECT:
                     if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) {
@@ -356,11 +377,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     } else {
                         tv_gender.setText(getString(R.string.secret));
                     }
-                    if (StringUtils.isEmpty(personalDataBean.getData().getRemark())) {
-                        et_selfIntroduction.setText("");
-                    } else {
-                        et_selfIntroduction.setText(personalDataBean.getData().getRemark());
-                    }
+                    selfIntroduction = personalDataBean.getData().getRemark();
 //                    photo
 //                    adapter.setImages(selImageList);
                 }

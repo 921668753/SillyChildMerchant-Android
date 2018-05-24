@@ -270,6 +270,12 @@
     <!-- 个人中心 设置性别-->
     <string name="setSex">设置性别</string>
 
+    <!-- 个人中心 设置自我简介-->
+    <string name="setSelfIntroduction">设置自我简介</string>
+    <string name="personalizedSelfIntroductionHint">一句话描述你的自我简介(最多30个字)</string>
+    <string name="fillSelfIntroduction">请填写您的自我简介</string>
+
+
     <!-- 个人中心 我的钱包-->
     <string name="accountBalance">账户余额</string>
     <string name="withdrawal">提现</string>

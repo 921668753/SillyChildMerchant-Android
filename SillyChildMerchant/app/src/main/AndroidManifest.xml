@@ -137,6 +137,21 @@
             android:name="com.yinglan.scm.mine.personaldata.PersonalDataActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的  个人资料  设置自我简介-->
+        <activity
+            android:name="com.yinglan.scm.mine.personaldata.setselfintroduction.SetSelfIntroductionActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  个人资料  设置性别-->
+        <activity
+            android:name="com.yinglan.scm.mine.personaldata.setsex.SetSexActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的  个人资料  设置昵称-->
+        <activity
+            android:name="com.yinglan.scm.mine.personaldata.setnickname.SetNickNameActivity"
+            android:screenOrientation="portrait" />
+
         <!--我的  我的店铺-->
         <activity
             android:name="com.yinglan.scm.mine.mystores.MyStoresActivity"

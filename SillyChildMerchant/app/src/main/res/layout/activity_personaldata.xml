@@ -118,27 +118,35 @@
                     android:src="@mipmap/right_arrow" />
             </LinearLayout>
 
+            <include layout="@layout/common_dividerwidth1" />
 
-            <TextView
-                style="@style/MatchWrap"
-                android:layout_marginTop="@dimen/dimen10"
+            <LinearLayout
+                android:id="@+id/ll_selfIntroduction"
+                style="@style/Match50"
                 android:background="@color/whiteColors"
-                android:paddingLeft="@dimen/dimen17"
-                android:paddingTop="@dimen/dimen18"
-                android:text="@string/selfIntroduction"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/textsize14" />
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
 
-            <EditText
-                android:id="@+id/et_selfIntroduction"
-                style="@style/MatchWrap"
-                android:background="@color/whiteColors"
-                android:minHeight="@dimen/dimen89"
-                android:paddingBottom="@dimen/dimen17"
-                android:paddingLeft="@dimen/dimen17"
-                android:paddingRight="@dimen/dimen17"
-                android:paddingTop="@dimen/dimen10"
-                android:textCursorDrawable="@drawable/shape_cursor" />
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/selfIntroduction"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize14" />
+
+
+                <TextView
+                    style="@style/AutoMatch"
+                    android:gravity="right|center_vertical"
+                    android:textColor="@color/hintColors"
+                    android:textSize="@dimen/textsize13" />
+
+
+                <ImageView
+                    style="@style/Image812"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:src="@mipmap/right_arrow" />
+            </LinearLayout>
 
 
             <TextView
@@ -149,7 +157,8 @@
                 android:paddingTop="@dimen/dimen18"
                 android:text="@string/myPhotoAlbum"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textsize14" />
+                android:textSize="@dimen/textsize14"
+                android:visibility="gone" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -164,6 +173,7 @@
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen25"
                 android:scrollbarStyle="outsideOverlay"
+                android:visibility="gone"
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="3"
                 tools:listitem="@layout/item_chooseimage1" />
