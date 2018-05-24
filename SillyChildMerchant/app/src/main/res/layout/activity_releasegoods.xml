@@ -49,9 +49,10 @@
                         android:textSize="@dimen/textsize13" />
 
                     <ImageView
-                        style="@style/WrapWrap"
+                        android:layout_width="@dimen/dimen7"
+                        android:layout_height="@dimen/dimen7"
                         android:layout_marginRight="@dimen/dimen15"
-                        android:src="@mipmap/back" />
+                        android:src="@mipmap/shop_down_arrow" />
 
                 </LinearLayout>
 
@@ -106,8 +107,8 @@
                     android:paddingLeft="@dimen/dimen11"
                     android:paddingRight="@dimen/dimen11"
                     android:paddingTop="@dimen/dimen5"
-                    android:textCursorDrawable="@drawable/shape_cursor"
                     android:textColor="@color/titletextcolors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
@@ -154,8 +155,8 @@
                             android:paddingLeft="@dimen/dimen11"
                             android:paddingRight="@dimen/dimen11"
                             android:paddingTop="@dimen/dimen5"
-                            android:textCursorDrawable="@drawable/shape_cursor"
                             android:textColor="@color/titletextcolors"
+                            android:textCursorDrawable="@drawable/shape_cursor"
                             android:textSize="@dimen/textsize13" />
 
                         <TextView
@@ -222,8 +223,8 @@
                             android:paddingRight="@dimen/dimen11"
                             android:paddingTop="@dimen/dimen5"
                             android:singleLine="true"
-                            android:textCursorDrawable="@drawable/shape_cursor"
                             android:textColor="@color/titletextcolors"
+                            android:textCursorDrawable="@drawable/shape_cursor"
                             android:textSize="@dimen/textsize13" />
 
                         <TextView
@@ -264,8 +265,8 @@
                     android:paddingLeft="@dimen/dimen11"
                     android:paddingRight="@dimen/dimen11"
                     android:paddingTop="@dimen/dimen5"
-                    android:textCursorDrawable="@drawable/shape_cursor"
                     android:textColor="@color/titletextcolors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
                     android:textSize="@dimen/textsize13" />
 
             </LinearLayout>
