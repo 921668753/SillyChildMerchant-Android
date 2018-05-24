@@ -6,6 +6,8 @@ package com.yinglan.scm.custominterfaces;
 
 public interface FragmentJumpBetween {
     void fragmentPosition();
+
     void doAttention();
+
     void doCancleAttention();
 }
