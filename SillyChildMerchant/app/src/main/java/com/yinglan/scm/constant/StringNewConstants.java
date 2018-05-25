@@ -9,7 +9,7 @@ public class StringNewConstants {
     /**
      * 存放的文件名
      */
-    public static String FILENAME = "shzyShare";
+    public static String FILENAME = "shzsShare";
     /**
      * 文件缓存路径存放的文件名-----图片以及URL请求缓存路径
      */
@@ -25,16 +25,27 @@ public class StringNewConstants {
     /**
      * 下载文件保存路径的文件夹名
      */
-    public static String DOWNLOADPATH = "SHZY/Download";
+    public static String DOWNLOADPATH = "SHZS/Download";
     /**
      * 错误日志存放位置ERRORLOG
      */
-    public static String ERRORLOG = "SHZY/PhoneLog";
+    public static String ERRORLOG = "SHZS/PhoneLog";
 
     /**
      * 安装包名字
      */
-    public static String APKNAME = "/SHZY.apk";
+    public static String APKNAME = "/SHZS.apk";
+
+    /**
+     * 七牛云 token签名所需字符串
+     */
+    public static final String MAC_NAME = "HmacSHA1";
+    public static final String ENCODING = "UTF-8";
+
+    /**
+     * 七牛空间名
+     */
+    public static final String SCOPE = "shahaizi";
 
 
     /**

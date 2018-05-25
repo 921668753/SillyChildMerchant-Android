@@ -3,11 +3,15 @@ package com.yinglan.scm.mine.personaldata.setnickname;
 import android.text.TextUtils;
 
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -21,7 +25,6 @@ public class SetNickNamePresenter implements SetNickNameContract.Presenter {
         mView.setPresenter(this);
     }
 
-
     @Override
     public void postMemberEdit(String nickName) {
         if (TextUtils.isEmpty(nickName)) {
@@ -29,7 +32,9 @@ public class SetNickNamePresenter implements SetNickNameContract.Presenter {
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("nickName", nickName);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("nickName", nickName);
+        httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postMemberEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

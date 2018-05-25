@@ -20,7 +20,8 @@ public interface PersonalDataContract {
         /**
          * 修改个人信息
          */
-        void postMemberEdit(String imgUrl, String sex, String nickName, String language, String remark, String photo);
+        void postMemberEdit(String imgUrl);
+        // void postMemberEdit(String imgUrl, String sex, String nickName, String language, String remark, String photo);
 
         /**
          * 上传图片

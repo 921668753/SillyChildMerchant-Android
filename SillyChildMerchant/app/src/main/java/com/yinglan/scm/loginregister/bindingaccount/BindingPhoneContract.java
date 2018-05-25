@@ -3,6 +3,7 @@ package com.yinglan.scm.loginregister.bindingaccount;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
+import com.yinglan.scm.entity.loginregister.LoginBean;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -28,6 +29,17 @@ interface BindingPhoneContract {
          */
         void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex);
 
+
+        /**
+         * 登录融云
+         */
+        void loginRongYun(String rongYunToken, LoginBean bean);
+
+
+        /**
+         * 获取上传图片token
+         */
+        void getQiNiuKey();
     }
 
     interface View extends BaseView<Presenter, String> {

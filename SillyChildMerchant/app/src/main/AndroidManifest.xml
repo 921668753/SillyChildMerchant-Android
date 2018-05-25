@@ -321,6 +321,71 @@
         <!--      友盟分享      -->
         <!--     友盟分享      -->
 
+
+
+
+        <!--融云start-->
+        <!--融云start-->
+        <!--融云start-->
+        <!--<activity-->
+        <!--android:name=".common.view.activity.MainActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateUnspecified|adjustPan">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+
+        <!--<data-->
+        <!--android:host="com.sillykid.app"-->
+        <!--android:pathPrefix="/push_message"-->
+        <!--android:scheme="rong" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+        <!--会话界面-->
+        <activity
+            android:name=".message.interactivemessage.rongcloud.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="@string/applicationId"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <!--聚合会话列表-->
+        <activity
+            android:name=".message.interactivemessage.rongcloud.SubConversationListActivtiy"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="@string/applicationId"
+                    android:pathPrefix="/subconversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <!--融云end-->
+        <!--融云end-->
+        <!--融云end-->
+
+
+
+
+
+
         <!--      极光推送      -->
         <!--      极光推送      -->
         <!-- User defined. 用户自定义的广播接收器-->
@@ -355,9 +420,9 @@
 
         <!--百度地图-->
         <!--百度地图-->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="${BAIDU_APPKEY}" />
+        <!--<meta-data-->
+            <!--android:name="com.baidu.lbsapi.API_KEY"-->
+            <!--android:value="${BAIDU_APPKEY}" />-->
         <!--<service-->
         <!--android:name="com.baidu.location.f"-->
         <!--android:enabled="true"-->
@@ -365,6 +430,13 @@
         <!--百度地图-->
         <!--百度地图-->
 
+        <!--融云即时通讯-->
+        <!--融云即时通讯-->
+        <meta-data
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="${RONGYUN_APPKEY}" />
+        <!--融云即时通讯-->
+        <!--融云即时通讯-->
 
         <!--Anrroid 7.0SD卡路径-->
         <!--Anrroid 7.0SD卡路径-->

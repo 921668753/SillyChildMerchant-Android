@@ -53,9 +53,7 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
         if (fileSize >= StringConstants.COMPRESSION_SIZE) {
             oldFile = BitmapCoreUtil.customCompression(oldFile);
         }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("file", oldFile);
-        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), httpParams, 0, new ResponseListener<String>() {
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), oldFile, 0, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

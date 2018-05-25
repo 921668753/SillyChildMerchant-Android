@@ -17,12 +17,18 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.constant.StringNewConstants;
 import com.yinglan.scm.constant.URLConstants;
 import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scm.retrofit.uploadimg.UploadManagerUtil;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,38 +43,53 @@ import static com.common.cklibrary.utils.httputil.HttpRequest.requestPostFORMHtt
 public class RequestClient {
 
     /**
-     * @param httpParams 上传头像图片
+     * 上传头像图片
      */
-    public static void upLoadImg(Context context, HttpParams httpParams, int type, ResponseListener<String> listener) {
-//        for (int i = 0; i < files.size(); i++) {
-//            File file = new File(files.get(i));
-//            params.put("file" + i, file);
-//        }
-//        httpParams.put("Content-Type", "application/x-www-form-urlencoded");
+    public static void upLoadImg(Context context, File file, int type, ResponseListener<String> listener) {
         doServer(context, new TokenCallback() {
             @Override
             public void execute() {
-//                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    listener.onFailure(NumericConstants.TOLINGIN + "");
-//                    return;
+                String token = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuToken");
+                //     if (type == 0) {
+                        //参数 图片路径,图片名,token,成功的回调
+                        UploadManagerUtil.getInstance().getUploadManager().put(file.getPath(), file.getName(), token, new UpCompletionHandler() {
+                            @Override
+                            public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
+                                Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
+                                if (responseInfo.isOK()) {
+                                    String headpicPath = "http://ovwiqces1.bkt.clouddn.com/" + key;
+                                    Log.i("ReadFragment", "complete: " + headpicPath);
+                                    listener.onSuccess(headpicPath);
+                                }
+                                //
+                            }
+                        }, null);
+
+//                } else {
 //                }
-//                httpParams.put("token", accessToken);
-//                HttpRequest.requestPostFORMHttp(URLConstants.UPLOADQFCTIMG, httpParams, listener);
-////                if (type == 0) {
-////                    HttpRequest.requestPostFORMHttp(URLConstants.UPLOADAVATAR, httpParams, listener);
-////                } else {
-////                    HttpRequest.requestPostFORMHttp(URLConstants.UPLOADQFCTIMG, httpParams, listener);
-////                }
-                String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
+
+            }
+        }, listener);
+    }
+
+    /**
+     * 获取七牛云Token
+     */
+
+    public static void getQiNiuKey(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
-//                httpParams.putHeaders("authorization-token", accessToken);
-                //    HttpRequest.requestPostFORMHttp(URLConstants.UPLOADQFCTIMG, httpParams, listener);
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.QINIUKEY, httpParams, listener);
             }
         }, listener);
+
     }
 
     /**
@@ -435,7 +456,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestPostFORMHttp(context, URLConstants.MEMBEREDIT, httpParams, listener);
+                HttpRequest.requestPostHttp(context, URLConstants.MEMBEREDIT, httpParams, listener);
             }
         }, listener);
     }
@@ -716,8 +737,7 @@ public class RequestClient {
         String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
         if (StringUtils.isEmpty(cookies)) {
             Log.d("tag", "onFailure");
-            PreferenceHelper.write(context, StringConstants.FILENAME, "userId", 0);
-            PreferenceHelper.write(context, StringConstants.FILENAME, "cookies", "");
+            UserUtil.clearUserInfo(context);
             listener.onFailure(NumericConstants.TOLINGIN + "");
             return;
         }
@@ -729,7 +749,7 @@ public class RequestClient {
         } else {
             expireTime1 = Long.decode(expireTime);
         }
-        long refreshTime = expireTime1 * 1000 - nowTime - -200000;
+        long refreshTime = expireTime1 * 1000 - nowTime - 200000;
         Log.d("tag", "onSuccess" + refreshTime);
         Log.d("tag", "onSuccess1" + nowTime);
         if (refreshTime >= 0) {

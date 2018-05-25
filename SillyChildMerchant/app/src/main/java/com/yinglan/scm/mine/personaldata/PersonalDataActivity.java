@@ -88,7 +88,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     private PictureSourceDialog pictureSourceDialog = null;
 
-    private String touxiangpath = null;
 
     private ImagePicker imagePicker;
 
@@ -130,7 +129,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
         imagePicker.setCrop(true);                           //允许裁剪（单选才有效）
         imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
-        imagePicker.setSelectLimit(NumericConstants.MAXPICTURE);              //选中数量限制
+        imagePicker.setSelectLimit(1);              //选中数量限制
         imagePicker.setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
         imagePicker.setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
         imagePicker.setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
@@ -206,8 +205,8 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             ImagePicker.getInstance().setShowCamera(false);//显示拍照按钮
             ImagePicker.getInstance().setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
             ImagePicker.getInstance().setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-            ImagePicker.getInstance().setOutPutX(0);                         //保存文件的宽度。单位像素
-            ImagePicker.getInstance().setOutPutY(0);                         //保存文件的高度。单位像素
+            ImagePicker.getInstance().setOutPutX(800);                         //保存文件的宽度。单位像素
+            ImagePicker.getInstance().setOutPutY(800);                         //保存文件的高度。单位像素
             PictureDialog();
         } else if (EasyPermissions.hasPermissions(this, perms) && code == RESULT_CODE_PRODUCT) {
             ImagePicker.getInstance().setSelectLimit(8);
@@ -245,7 +244,26 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
      */
     public void PictureDialog() {
         if (pictureSourceDialog == null) {
-            pictureSourceDialog = new PictureSourceDialog(aty);
+            pictureSourceDialog = new PictureSourceDialog(aty) {
+                @Override
+                public void takePhoto() {
+                    ImagePicker.getInstance().setSelectLimit(1);
+                    Intent intent = new Intent(PersonalDataActivity.this, ImageGridActivity.class);
+                    intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                }
+
+                @Override
+                public void chooseFromAlbum() {
+                    ImagePicker.getInstance().setSelectLimit(1);
+                    Intent intent = new Intent(PersonalDataActivity.this, ImageGridActivity.class);
+                    /* 如果需要进入选择的时候显示已经选中的图片，
+                     * 详情请查看ImagePickerActivity
+                     * */
+                    // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                }
+            };
         }
         pictureSourceDialog.show();
     }
@@ -273,17 +291,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     break;
                 case RESULT_CODE_BASKET_MINUSALL:
                     selfIntroduction = data.getStringExtra("selfIntroduction");
-
-//                    int sex = data.getIntExtra("sex", 0);
-//                    if (sex == 1) {
-//                        tv_gender.setText(getString(R.string.man));
-//                    } else if (sex == 2) {
-//                        tv_gender.setText(getString(R.string.woman));
-//                    } else {
-//                        tv_gender.setText(getString(R.string.secret));
-//                    }
-//                    PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", sex);
-
                     break;
                 case REQUEST_CODE_SELECT:
                     if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) {
@@ -292,7 +299,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                             ViewInject.toast(getString(R.string.noData));
                             return;
                         }
-                        touxiangpath = images.get(0).path;
+                        String touxiangpath = images.get(0).path;
                         showLoadingDialog(getString(R.string.saveLoad));
                         ((PersonalDataContract.Presenter) mPresenter).upPictures(touxiangpath);
                     } else {
@@ -349,26 +356,23 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         switch (flag) {
             case 0:
                 GlideCatchUtil.getInstance().cleanImageDisk();
-                UploadImageBean uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-                if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
-                    //   mPresenter.setupInfo("head_pic", uploadimagebean.getData().getFile().getUrl(), 3);
-                    showLoadingDialog(getString(R.string.saveLoad));
-                }
+                ((PersonalDataContract.Presenter) mPresenter).postMemberEdit(success);
+                showLoadingDialog(getString(R.string.saveLoad));
                 isRefresh = true;
                 break;
             case 1:
                 PersonalDataBean personalDataBean = (PersonalDataBean) JsonUtil.getInstance().json2Obj(success, PersonalDataBean.class);
                 if (personalDataBean != null && personalDataBean.getData() != null) {
-                    if (StringUtils.isEmpty(personalDataBean.getData().getImgUrl())) {
+                    if (StringUtils.isEmpty(personalDataBean.getData().getFace())) {
                         iv_headPortrait.setImageResource(R.mipmap.avatar);
                     } else {
-                        GlideImageLoader.glideLoader(aty, personalDataBean.getData().getImgUrl(), iv_headPortrait, 0, R.mipmap.avatar);
+                        GlideImageLoader.glideLoader(aty, personalDataBean.getData().getFace(), iv_headPortrait, 0, R.mipmap.avatar);
                     }
-                    if (StringUtils.isEmpty(personalDataBean.getData().getNickName())) {
+                    if (StringUtils.isEmpty(personalDataBean.getData().getNickname())) {
                         String mobile = PreferenceHelper.readString(aty, StringConstants.FILENAME, "mobile");
                         tv_nickname.setText(mobile);
                     } else {
-                        tv_nickname.setText(personalDataBean.getData().getNickName());
+                        tv_nickname.setText(personalDataBean.getData().getNickname());
                     }
                     if (personalDataBean.getData().getSex() == 1) {
                         tv_gender.setText(getString(R.string.man));
@@ -381,6 +385,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 //                    photo
 //                    adapter.setImages(selImageList);
                 }
+                break;
+            case 2:
+                GlideImageLoader.glideLoader(aty, success, iv_headPortrait, 0, R.mipmap.avatar);
                 break;
         }
         dismissLoadingDialog();

@@ -21,7 +21,7 @@ import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_SELECT;
  * Created by Administrator on 2018/5/8.
  */
 
-public class PictureSourceDialog extends Dialog implements View.OnClickListener {
+public abstract class PictureSourceDialog extends Dialog implements View.OnClickListener {
 
     private Activity context;
 
@@ -72,25 +72,25 @@ public class PictureSourceDialog extends Dialog implements View.OnClickListener 
     }
 
 
-    private void takePhoto() {
-        Intent intent = new Intent(context, ImageGridActivity.class);
-        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
-        context.startActivityForResult(intent, REQUEST_CODE_SELECT);
-    }
-
-    private void chooseFromAlbum() {
-        ImagePicker.getInstance().setSelectLimit(1);
-        Intent intent = new Intent(context, ImageGridActivity.class);
-        /* 如果需要进入选择的时候显示已经选中的图片，
-         * 详情请查看ImagePickerActivity
-         * */
-        // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
-        context.startActivityForResult(intent, REQUEST_CODE_SELECT);
-    }
-
-
-//    public abstract void takePhoto();
+//    private void takePhoto() {
+//        Intent intent = new Intent(context, ImageGridActivity.class);
+//        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+//        context.startActivityForResult(intent, REQUEST_CODE_SELECT);
+//    }
 //
-//    public abstract void chooseFromAlbum();
+//    private void chooseFromAlbum() {
+//        ImagePicker.getInstance().setSelectLimit(1);
+//        Intent intent = new Intent(context, ImageGridActivity.class);
+//        /* 如果需要进入选择的时候显示已经选中的图片，
+//         * 详情请查看ImagePickerActivity
+//         * */
+//        // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+//        context.startActivityForResult(intent, REQUEST_CODE_SELECT);
+//    }
+
+
+    public abstract void takePhoto();
+
+    public abstract void chooseFromAlbum();
 
 }

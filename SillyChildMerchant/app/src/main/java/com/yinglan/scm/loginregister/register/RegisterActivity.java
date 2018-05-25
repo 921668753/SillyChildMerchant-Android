@@ -181,18 +181,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             time.start();
         } else if (flag == 1) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "loginBean", s);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", UserUtil.getResTokenInfo(this));
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getData().getExpireTime());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getData().getCountroy_code());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getData().getHx_user_name());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getData().getHx_password());
-            ((RegisterContract.Presenter) mPresenter).loginRongYun(UserUtil.getResTokenInfo(this), bean);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
+            ((RegisterContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         } else if (flag == 2) {
+            ((RegisterContract.Presenter) mPresenter).getQiNiuKey();
+        } else if (flag == 3) {
             /**
              * 发送消息
              */
@@ -201,6 +197,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             dismissLoadingDialog();
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();
+
         }
     }
 

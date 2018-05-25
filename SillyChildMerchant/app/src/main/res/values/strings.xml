@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">傻孩子商家端</string>
+    <string name="applicationId">com.yinglan.scm</string>
+
+
 
     <!--网络请求-->
     <!--Dialog-->
@@ -97,7 +100,9 @@
     <string name="homePage">首页</string>
     <string name="message">消息</string>
     <string name="order">订单</string>
-    <string name="mine"> 我的</string>
+    <string name="mine">我的</string>
+    <string name="clickAgainExitProgram">再按一次退出程序</string>
+
 
     <!--首页-->
     <string name="sillyChildBusinessman">傻孩子商家端</string>
@@ -105,6 +110,10 @@
     <string name="enterNameStore">请输入店铺名称(建议少于10个字)</string>
     <string name="asManager">成为店长</string>
     <string name="certified">已认证</string>
+    <string name="audit">待审核</string>
+    <string name="audit1">账号待审核</string>
+    <string name="disabled">已禁用</string>
+    <string name="disabled1">账号被禁用</string>
     <string name="shopNum">店铺号：</string>
     <string name="manager">店长</string>
 
@@ -201,6 +210,10 @@
     <string name="setUp">设置</string>
     <string name="notLogged">您还没有登录</string>
     <string name="loginImmediately">立即登录</string>
+    <string name="merchants">商家</string>
+
+
+
 
 
     <!--  个人中心  我的店铺-->

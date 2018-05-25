@@ -37,6 +37,13 @@ public interface StartPageContract {
          * 获取未读司导消息数量
          */
         void getChatManagerListener();
+
+
+        /**
+         * 获取上传图片token
+         */
+        void getQiNiuKey();
+
     }
 
     @SuppressWarnings("unchecked")

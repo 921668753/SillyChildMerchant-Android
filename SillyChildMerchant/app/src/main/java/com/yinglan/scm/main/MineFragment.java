@@ -46,7 +46,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
 
     private MainActivity aty;
 
-    @BindView(id = R.id.mRefreshLayout, click = true)
+    @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
     @BindView(id = R.id.ll_mineTop, click = true)
@@ -170,10 +170,37 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 } else {
                     GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), img_head, 0, R.mipmap.avatar);
                 }
-                // tv_nature.setText(userInfoBean.getData().getUsername());
-                tv_ordersTotal.setText(userInfoBean.getData().getOrder_total());
-                tv_storeLevel.setText(userInfoBean.getData().getStore_level());
-                tv_businessLevel.setText(userInfoBean.getData().getLv_id());
+                String mobile = PreferenceHelper.readString(aty, StringConstants.FILENAME, "mobile");
+                if (!StringUtils.isEmpty(userInfoBean.getData().getNickname())) {
+                    tv_storesName.setText(userInfoBean.getData().getNickname());
+                } else {
+                    tv_storesName.setText(mobile);
+                }
+                int disabled = StringUtils.toInt(userInfoBean.getData().getDisabled(), 3);
+                if (disabled == 3) {
+                    tv_nature.setVisibility(View.GONE);
+                } else if (disabled == 0) {
+                    tv_nature.setVisibility(View.VISIBLE);
+                    tv_nature.setText(getString(R.string.audit1));
+                    tv_nature.setTextColor(getResources().getColor(R.color.textColor));
+                } else if (disabled == 1) {
+                    tv_nature.setVisibility(View.VISIBLE);
+                    tv_nature.setText(getString(R.string.merchants));
+                    tv_nature.setTextColor(getResources().getColor(R.color.greenColors));
+                } else if (disabled == 2) {
+                    tv_nature.setVisibility(View.VISIBLE);
+                    tv_nature.setText(getString(R.string.disabled1));
+                    tv_nature.setTextColor(getResources().getColor(R.color.fF0000Colors));
+                }
+                if (!StringUtils.isEmpty(userInfoBean.getData().getOrder_total())) {
+                    tv_ordersTotal.setText(userInfoBean.getData().getOrder_total());
+                }
+                if (!StringUtils.isEmpty(userInfoBean.getData().getStore_level())) {
+                    tv_storeLevel.setText(userInfoBean.getData().getStore_level());
+                }
+                if (!StringUtils.isEmpty(userInfoBean.getData().getLv_id())) {
+                    tv_businessLevel.setText(userInfoBean.getData().getLv_id());
+                }
             }
         } else if (flag == 1) {
             Intent personalDataIntent = new Intent(aty, PersonalDataActivity.class);
@@ -190,6 +217,10 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
             aty.showActivity(aty, SharePoliteActivity.class);
         } else if (flag == 6) {
             aty.showActivity(aty, SetUpActivity.class);
+        } else if (flag == 7) {
+            Intent intent = new Intent(aty, MainActivity.class);
+            intent.putExtra("newChageIcon", 0);
+            aty.showActivity(aty, intent);
         }
         dismissLoadingDialog();
     }
@@ -200,7 +231,7 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     private void saveUserInfo(UserInfoBean userInfoBean) {
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_name", userInfoBean.getData().getStore_name());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_id", userInfoBean.getData().getStore_id());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "disabled", userInfoBean.getData().getDisabled());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "disabled", StringUtils.toInt(userInfoBean.getData().getDisabled(), 3));
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_logo", userInfoBean.getData().getStore_logo());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "order_total", userInfoBean.getData().getOrder_total());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_level", userInfoBean.getData().getStore_level());

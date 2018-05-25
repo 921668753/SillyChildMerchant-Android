@@ -12,12 +12,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONException;
+import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.mine.personaldata.PersonalDataBean;
 import com.yinglan.scm.message.interactivemessage.rongcloud.SealAction;
 import com.yinglan.scm.message.interactivemessage.rongcloud.UserInfoEngine;
 import com.yinglan.scm.message.interactivemessage.rongcloud.db.BlackList;
@@ -231,16 +235,15 @@ public class SealUserInfoManager implements OnDataListener {
                 }
 
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                RequestClient.getInfo(mContext,httpParams, new ResponseListener<String>() {
+                RequestClient.getInfo(mContext, httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        UserInfo userInfo = (UserInfo) JsonUtil.getInstance().json2Obj(response, UserInfo.class);
-//                        if (info != null && RongIM.getInstance() != null) {
-//                            if (TextUtils.isEmpty(info.getPortraitUri() == null ? null : info.getPortraitUri().toString())) {
-//                                info.setPortraitUri(Uri.parse(RongGenerate.generateDefaultAvatar(info.getName(), info.getUserId())));
-//                            }
-                        RongIM.getInstance().refreshUserInfoCache(userInfo);
-                        //   }
+                        PersonalDataBean personalDataBean = (PersonalDataBean) JsonUtil.getInstance().json2Obj(response, PersonalDataBean.class);
+                        if (personalDataBean != null && RongIM.getInstance() != null) {
+                            String userid = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId");
+                            UserInfo userInfo = new UserInfo(userid, personalDataBean.getData().getNickname(), Uri.parse(personalDataBean.getData().getFace()));
+                            RongIM.getInstance().refreshUserInfoCache(userInfo);
+                        }
                     }
 
                     @Override
@@ -1556,7 +1559,7 @@ public class SealUserInfoManager implements OnDataListener {
 
                             @Override
                             public void onSuccess(String s) {
-                                UserUtil.saveRcTokenId(mContext,token,s);
+                                UserUtil.saveRcTokenId(mContext, token, s);
                             }
 
                             @Override

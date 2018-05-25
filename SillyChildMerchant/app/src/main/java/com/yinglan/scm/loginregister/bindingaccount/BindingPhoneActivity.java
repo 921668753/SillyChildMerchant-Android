@@ -12,10 +12,14 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
+import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.loginregister.SelectCountryActivity;
 import com.yinglan.scm.loginregister.register.RegistrationAgreementActivity;
 
 /**
@@ -143,37 +147,29 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
             ((BindingPhoneContract.Presenter) mPresenter).postThirdToLogin(getIntent().getStringExtra("openid"),
                     getIntent().getStringExtra("from"), getIntent().getStringExtra("nickname"), getIntent().getStringExtra("head_pic"), getIntent().getIntExtra("sex", 0));
         } else if (flag == 2) {
+            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_phone.getText().toString());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
+            ((BindingPhoneContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
+        } else if (flag == 3) {
+            ((BindingPhoneContract.Presenter) mPresenter).getQiNiuKey();
+        }else if (flag == 4) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+            MobclickAgent.onProfileSignIn(getIntent().getStringExtra("openid"));
             dismissLoadingDialog();
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();
-        } else if (flag == 3) {
-//            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "email", bean.getResult().getEmail());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", bean.getResult().getMobile());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getToken());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", true);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", false);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", bean.getResult().getMobile());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "head_pic", bean.getResult().getHead_pic());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "nickname", bean.getResult().getNickname());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "countroy_code", bean.getResult().getCountroy_code());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", bean.getResult().getUser_id());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_user_name", bean.getResult().getHx_user_name());
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "hx_password", bean.getResult().getHx_password());
-//            ((BindingPhoneContract.Presenter) mPresenter).loginHuanXin(bean.getResult().getHx_user_name(), bean.getResult().getHx_password());
         }
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-//        aty.runOnUiThread(new Runnable() {
-//            public void run() {
-//                ViewInject.toast(msg);
-//            }
-//        });
         ViewInject.toast(msg);
         tv_binding.setEnabled(true);
     }

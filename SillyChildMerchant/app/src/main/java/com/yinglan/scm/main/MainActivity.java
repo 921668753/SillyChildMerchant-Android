@@ -18,6 +18,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
 import com.kymjs.common.Log;
+import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.StringNewConstants;
 import com.yinglan.scm.custominterfaces.MainCallBack;
@@ -111,7 +112,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
         contentFragment3 = new MineFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
         registerMessageReceiver();  //   极光推送 used for receive msg
-        ((MainContract.Presenter) mPresenter).getChatManagerListener();
+        // ((MainContract.Presenter) mPresenter).getChatManagerListener();
 
         mainReceiver = new MainReceiver(this);
         IntentFilter intentFilter = new IntentFilter(StringNewConstants.MainServiceAction);
@@ -211,14 +212,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {
                     //如果两次按键时间间隔大于2秒，则不退出
-//                    Toast.makeText(this,"111111",Toast.LENGTH_SHORT).show();
-                    ViewInject.toast(this, "再按一次退出程序");
+                    ViewInject.toast(this, getString(R.string.clickAgainExitProgram));
                     firstTime = secondTime;//更新firstTime
                     return true;
                 } else {
                     //  int i = 1 / 0;
                     //   KjBitmapUtil.getInstance().getKjBitmap().cleanCache();
-                    //    MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
+                    MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
                     JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
                     //    MobclickAgent.onKillProcess(aty);
                     //第一个参数为是否解绑推送的devicetoken

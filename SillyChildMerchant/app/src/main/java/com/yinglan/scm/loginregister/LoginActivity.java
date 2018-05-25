@@ -19,6 +19,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareConfig;
 import com.yinglan.scm.R;
@@ -194,10 +195,26 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_accountNumber.getText().toString());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", UserUtil.getResTokenInfo(this));
-            ((LoginContract.Presenter) mPresenter).loginRongYun(UserUtil.getResTokenInfo(this), bean);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
+            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         } else if (flag == 1) {
-            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+            ((LoginContract.Presenter) mPresenter).getQiNiuKey();
+        } else if (flag == 2) {
+            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
+            if (bean.getData().getResultX().contains("false")) {
+                errorMsg("4000", 0);
+                return;
+            }
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
+            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
+        } else if (flag == 3) {
+            if (StringUtils.isEmpty(openid)) {
+                MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+            } else {
+                MobclickAgent.onProfileSignIn(openid);
+            }
             dismissLoadingDialog();
             /**
              * 发送消息
@@ -220,16 +237,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             showActivity(aty, intent);
             return;
         }
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", 0);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "accountNumber", "");
-        runOnUiThread(new Runnable() {
-            public void run() {
-                ViewInject.toast(msg);
-            }
-        });
+        UserUtil.clearUserInfo(this);
+        ViewInject.toast(msg);
     }
 
     @Override

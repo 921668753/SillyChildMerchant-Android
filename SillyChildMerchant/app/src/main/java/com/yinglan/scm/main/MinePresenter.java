@@ -2,8 +2,11 @@ package com.yinglan.scm.main;
 
 import android.content.Context;
 
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.retrofit.RequestClient;
 
@@ -41,6 +44,15 @@ public class MinePresenter implements MineContract.Presenter {
         RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
+                if (flag != 2 || flag != 3) {
+                    mView.getSuccess(response, flag);
+                    return;
+                }
+                int disabled = PreferenceHelper.readInt(context, StringConstants.FILENAME, "disabled", 3);
+                if (disabled != 0 || disabled != 1 || disabled != 2) {
+                    mView.getSuccess(response, 7);
+                    return;
+                }
                 mView.getSuccess(response, flag);
             }
 

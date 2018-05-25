@@ -11,14 +11,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.FileUtils;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.kymjs.okhttp3.OkHttpStack;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.http.RequestQueue;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.dialog.VIPPermissionsDialog;
+import com.yinglan.scm.entity.startpage.QiNiuKeyBean;
 import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.utils.activity.BaseInstrumentedActivity;
 
@@ -37,8 +40,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class StartPageActivity extends BaseInstrumentedActivity implements StartPageContract.View, EasyPermissions.PermissionCallbacks {
     private StartPageContract.Presenter mPresenter;
-   // private LocationClient mLocationClient;
-  //  private MyLocationListener myListener;
+    // private LocationClient mLocationClient;
+    //  private MyLocationListener myListener;
 
     /**
      * 高德定位
@@ -132,9 +135,9 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
                 return;
             }
             PreferenceHelper.write(aty, StringConstants.FILENAME, "selectCity", "");
-            jumpTo(true);
+//            jumpTo(true);
 //            ((StartPageContract.Presenter) mPresenter).getSystemMessage();
-//            ((StartPageContract.Presenter) mPresenter).getAppConfig();
+            ((StartPageContract.Presenter) mPresenter).getQiNiuKey();
         } else {
             // Ask for both permissions
             EasyPermissions.requestPermissions(this, getString(R.string.readAndWrite), NumericConstants.READ_AND_WRITE_CODE, perms);
@@ -172,29 +175,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 
     @Override
     public void getSuccess(String success, int flag) {
-//        AppConfigBean appConfigBean = (AppConfigBean) JsonUtil.getInstance().json2Obj(success, AppConfigBean.class);
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "lastApkUrl", appConfigBean.getResult().getLastApkUrl());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "lastApkVersion", appConfigBean.getResult().getLastApkVersion());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "lastApkVersionNum", appConfigBean.getResult().getLastApkVersionNum());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "defaultAvatar", appConfigBean.getResult().getDefaultAvatar());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "share_percent", appConfigBean.getResult().getShare_percent());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "grab_range", appConfigBean.getResult().getGrab_range());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "premium_rate", appConfigBean.getResult().getPremium_rate());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "bond_person_amount", appConfigBean.getResult().getBond_person_amount());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "bond_company_amount", appConfigBean.getResult().getBond_company_amount());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "withdraw_begintime", appConfigBean.getResult().getWithdraw_begintime());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "withdraw_endtime", appConfigBean.getResult().getWithdraw_endtime());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "custom_phone", appConfigBean.getResult().getCustom_phone());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "custom_email", appConfigBean.getResult().getCustom_email());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "complain_phone", appConfigBean.getResult().getComplain_phone());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "weixin_limit", appConfigBean.getResult().getWeixin_limit());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "alipay_limit", appConfigBean.getResult().getAlipay_limit());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "tran_account", appConfigBean.getResult().getTran_account());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "share_shipper", appConfigBean.getResult().getShare_shipper());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "share_shipper_description", appConfigBean.getResult().getShare_shipper_description());
-//        PreferenceHelper.write(this, StringConstants.FILENAME, "share_shipper_title", appConfigBean.getResult().getShare_shipper_title());
-//        jumpTo();
-//        dismissLoadingDialog();
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "qiNiuToken", success);
         jumpTo(true);
     }
 

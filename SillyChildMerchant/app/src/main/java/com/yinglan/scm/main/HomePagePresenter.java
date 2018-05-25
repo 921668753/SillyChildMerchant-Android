@@ -49,9 +49,7 @@ public class HomePagePresenter implements HomePageContract.Presenter {
         if (fileSize >= StringConstants.COMPRESSION_SIZE) {
             oldFile = BitmapCoreUtil.customCompression(oldFile);
         }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("file", oldFile);
-        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), httpParams, 0, new ResponseListener<String>() {
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), oldFile, 0, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -71,6 +69,23 @@ public class HomePagePresenter implements HomePageContract.Presenter {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+    }
+
+
+    @Override
+    public void getIsLogin(Context context, int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
             }
 
             @Override

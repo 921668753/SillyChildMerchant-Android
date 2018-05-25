@@ -92,29 +92,30 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                style="@style/WrapMatch"
-                android:layout_marginLeft="@dimen/dimen15"
+            <!--<LinearLayout-->
+            <!--style="@style/WrapMatch"-->
+            <!--android:layout_marginLeft="@dimen/dimen15"-->
+            <!--android:layout_marginRight="@dimen/dimen15"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <ImageView
+                android:id="@+id/img_certified"
+                android:layout_width="@dimen/dimen36"
+                android:layout_height="@dimen/dimen52"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="@dimen/dimen15"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:src="@mipmap/home_certified" />
 
-                <ImageView
-                    android:id="@+id/img_certified"
-                    android:layout_width="@dimen/dimen25"
-                    android:layout_height="@dimen/dimen25"
-                    android:src="@mipmap/home_authentication_icon" />
+            <!--<TextView-->
+            <!--android:id="@+id/tv_certified"-->
+            <!--style="@style/WrapWrap"-->
+            <!--android:layout_marginTop="@dimen/dimen15"-->
+            <!--android:text="@string/certified"-->
+            <!--android:textColor="@color/greenColors"-->
+            <!--android:textSize="@dimen/textsize12" />-->
 
-
-                <TextView
-                    android:id="@+id/tv_certified"
-                    style="@style/WrapWrap"
-                    android:layout_marginTop="@dimen/dimen15"
-                    android:text="@string/certified"
-                    android:textColor="@color/greenColors"
-                    android:textSize="@dimen/textsize12" />
-
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
 
         </LinearLayout>
@@ -131,8 +132,8 @@
         android:layout_marginTop="@dimen/dimen10"
         android:background="@drawable/shape_homepage"
         android:hint="@string/enterNameStore"
-        android:paddingLeft="@dimen/dimen11"
         android:maxLength="15"
+        android:paddingLeft="@dimen/dimen11"
         android:paddingRight="@dimen/dimen11"
         android:textColor="@color/titletextcolors"
         android:textColorHint="@color/hintColors"

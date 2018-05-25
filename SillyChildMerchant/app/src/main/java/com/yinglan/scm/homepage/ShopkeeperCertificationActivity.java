@@ -16,6 +16,7 @@ import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
@@ -123,7 +124,25 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
      */
     public void PictureDialog() {
         if (pictureSourceDialog == null) {
-            pictureSourceDialog = new PictureSourceDialog(aty);
+            pictureSourceDialog = new PictureSourceDialog(aty) {
+                @Override
+                public void takePhoto() {
+                    Intent intent = new Intent(aty, ImageGridActivity.class);
+                    intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                }
+
+                @Override
+                public void chooseFromAlbum() {
+                    ImagePicker.getInstance().setSelectLimit(1);
+                    Intent intent = new Intent(aty, ImageGridActivity.class);
+                    /* 如果需要进入选择的时候显示已经选中的图片，
+                     * 详情请查看ImagePickerActivity
+                     * */
+                    // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                }
+            };
         }
         pictureSourceDialog.show();
     }

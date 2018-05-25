@@ -5,19 +5,32 @@ import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.qiniu.android.utils.UrlSafeBase64;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.loginregister.LoginBean;
+import com.yinglan.scm.entity.startpage.QiNiuKeyBean;
 import com.yinglan.scm.retrofit.RequestClient;
+
+import org.json.JSONObject;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+
+import static com.yinglan.scm.constant.StringNewConstants.ENCODING;
+import static com.yinglan.scm.constant.StringNewConstants.MAC_NAME;
+import static com.yinglan.scm.constant.StringNewConstants.SCOPE;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -51,7 +64,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("username", phone);
+        httpParams.put("phone", phone);
         httpParams.put("password", pwd);
         httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         RequestClient.postLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
@@ -92,9 +105,9 @@ public class LoginPresenter implements LoginContract.Presenter {
                     /**
                      * 获取用户信息
                      */
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", 0);
-                    if (RongIM.getInstance() != null && bean.getData() != null && StringUtils.isEmpty(bean.getData().getUserid())) {
-                        UserInfo userInfo = new UserInfo(bean.getData().getUserid() + "", bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
+                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
+                    if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
+                        UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
                         RongIM.getInstance().setCurrentUserInfo(userInfo);
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                         mView.getSuccess("", 1);
@@ -114,22 +127,21 @@ public class LoginPresenter implements LoginContract.Presenter {
                     mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
                 }
             });
+        } else {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
         }
     }
 
     @Override
     public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("openid", openid);
-        httpParams.put("from", from);
-//        httpParams.put("nickname", nickname);
-//        httpParams.put("head_pic", head_pic);
-//        httpParams.put("sex", sex);
+        httpParams.put("openId", openid);
+        httpParams.put("type", from);
         httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 2);
             }
 
             @Override
@@ -139,4 +151,67 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
 
     }
+
+    @Override
+    public void getQiNiuKey() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getQiNiuKey(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                QiNiuKeyBean qiNiuKeyBean = (QiNiuKeyBean) JsonUtil.getInstance().json2Obj(response, QiNiuKeyBean.class);
+                if (qiNiuKeyBean != null && !StringUtils.isEmpty(qiNiuKeyBean.getData().getAccessKey())) {
+                    mView.getSuccess(getToken(qiNiuKeyBean.getData().getAccessKey(), qiNiuKeyBean.getData().getSecretKey()), 3);
+                }
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+    //获取七牛token
+    private String getToken(String AccessKey, String SecretKey) {
+        String token = null;
+        try {
+            // 1 构造上传策略
+            JSONObject _json = new JSONObject();
+            long _dataline = System.currentTimeMillis() / 1000 + 3600 * 24;
+            _json.put("deadline", _dataline);// 有效时间为一个小时
+            _json.put("scope", SCOPE);//七牛空间名
+            String _encodedPutPolicy = UrlSafeBase64.encodeToString(_json.toString().getBytes());
+            byte[] _sign = HmacSHA1Encrypt(_encodedPutPolicy, SecretKey);
+            String _encodedSign = UrlSafeBase64.encodeToString(_sign);
+            com.kymjs.common.Log.d("xxxx", _encodedSign);
+            token = AccessKey + ':' + _encodedSign + ':' + _encodedPutPolicy;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return token;
+        }
+        return token;
+    }
+
+
+    /**
+     * @param encryptText 被签名的字符串
+     * @param encryptKey  密钥
+     * @return
+     * @throws Exception
+     */
+    public static byte[] HmacSHA1Encrypt(String encryptText, String encryptKey)
+            throws Exception {
+        byte[] data = encryptKey.getBytes(ENCODING);
+        // 根据给定的字节数组构造一个密钥,第二参数指定一个密钥算法的名称
+        SecretKey secretKey = new SecretKeySpec(data, MAC_NAME);
+        // 生成一个指定 Mac 算法 的 Mac 对象
+        Mac mac = Mac.getInstance(MAC_NAME);
+        // 用给定密钥初始化 Mac 对象
+        mac.init(secretKey);
+        byte[] text = encryptText.getBytes(ENCODING);
+        // 完成 Mac 操作
+        return mac.doFinal(text);
+    }
+
 }

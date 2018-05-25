@@ -24,6 +24,7 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
@@ -74,8 +75,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @BindView(id = R.id.img_certified)
     private ImageView img_certified;
 
-    @BindView(id = R.id.tv_certified)
-    private TextView tv_certified;
 
     @BindView(id = R.id.et_enterNameStore)
     private EditText et_enterNameStore;
@@ -88,7 +87,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
 
 
     @Override
-
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
         return View.inflate(aty, R.layout.fragment_homepage, null);
@@ -141,13 +139,10 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_storeLogo:
-                choicePhotoWrapper();
+                ((HomePageContract.Presenter) mPresenter).getIsLogin(aty, 2);
                 break;
             case R.id.tv_asManager:
-                Intent intent = new Intent(aty, ShopkeeperCertificationActivity.class);
-                intent.putExtra("store_logo", store_logo);
-                intent.putExtra("store_name", et_enterNameStore.getText().toString().trim());
-                startActivityForResult(intent, RESULT_CODE_GET);
+                ((HomePageContract.Presenter) mPresenter).getIsLogin(aty, 3);
                 break;
             default:
                 break;
@@ -186,7 +181,25 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
      */
     public void PictureDialog() {
         if (pictureSourceDialog == null) {
-            pictureSourceDialog = new PictureSourceDialog(aty);
+            pictureSourceDialog = new PictureSourceDialog(aty) {
+                @Override
+                public void takePhoto() {
+                    Intent intent = new Intent(aty, ImageGridActivity.class);
+                    intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                }
+
+                @Override
+                public void chooseFromAlbum() {
+                    ImagePicker.getInstance().setSelectLimit(1);
+                    Intent intent = new Intent(aty, ImageGridActivity.class);
+                    /* 如果需要进入选择的时候显示已经选中的图片，
+                     * 详情请查看ImagePickerActivity
+                     * */
+                    // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                }
+            };
         }
         pictureSourceDialog.show();
     }
@@ -209,16 +222,43 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
             if (userInfoBean != null && userInfoBean.getData() != null) {
                 saveUserInfo(userInfoBean);
-                if (userInfoBean.getData().getDisabled() == 0) {
+                int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
+                if (disabled == -1) {
                     img_storeLogo.setVisibility(View.VISIBLE);
                     et_enterNameStore.setVisibility(View.VISIBLE);
                     tv_asManager.setVisibility(View.VISIBLE);
                     ll_seller.setVisibility(View.GONE);
-                } else if (userInfoBean.getData().getDisabled() == 1 || userInfoBean.getData().getDisabled() == 2 || userInfoBean.getData().getDisabled() == 3) {
+                    et_enterNameStore.setText(userInfoBean.getData().getStore_name());
+                    store_logo = userInfoBean.getData().getStore_logo();
+                    GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo, R.mipmap.home_add_shop_logo);
+                } else if (disabled == 0) {
+                    img_storeLogo.setVisibility(View.GONE);
+                    et_enterNameStore.setVisibility(View.GONE);
+                    tv_asManager.setVisibility(View.GONE);
+                    ll_seller.setVisibility(View.VISIBLE);
                     tv_storeName.setText(userInfoBean.getData().getStore_name());
-                    //  tv_type.setText(userInfoBean.getData().getStore_name());
                     store_logo = userInfoBean.getData().getStore_logo();
                     tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
+                    img_certified.setImageResource(R.mipmap.home_under_review);
+                } else if (disabled == 1) {
+                    img_storeLogo.setVisibility(View.GONE);
+                    et_enterNameStore.setVisibility(View.GONE);
+                    tv_asManager.setVisibility(View.GONE);
+                    ll_seller.setVisibility(View.VISIBLE);
+                    tv_storeName.setText(userInfoBean.getData().getStore_name());
+                    store_logo = userInfoBean.getData().getStore_logo();
+                    tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
+                    img_certified.setImageResource(R.mipmap.home_certified);
+                    GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo1, R.mipmap.home_add_shop_logo);
+                } else if (disabled == 2) {
+                    img_storeLogo.setVisibility(View.GONE);
+                    et_enterNameStore.setVisibility(View.GONE);
+                    tv_asManager.setVisibility(View.GONE);
+                    ll_seller.setVisibility(View.VISIBLE);
+                    tv_storeName.setText(userInfoBean.getData().getStore_name());
+                    store_logo = userInfoBean.getData().getStore_logo();
+                    tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
+                    img_certified.setImageResource(R.mipmap.home_disabled);
                     GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo1, R.mipmap.home_add_shop_logo);
                 } else {
                     img_storeLogo.setVisibility(View.VISIBLE);
@@ -227,6 +267,13 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     ll_seller.setVisibility(View.GONE);
                 }
             }
+        } else if (flag == 2) {
+            choicePhotoWrapper();
+        } else if (flag == 3) {
+            Intent intent = new Intent(aty, ShopkeeperCertificationActivity.class);
+            intent.putExtra("store_logo", store_logo);
+            intent.putExtra("store_name", et_enterNameStore.getText().toString().trim());
+            startActivityForResult(intent, RESULT_CODE_GET);
         }
         dismissLoadingDialog();
     }
@@ -237,7 +284,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     private void saveUserInfo(UserInfoBean userInfoBean) {
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_name", userInfoBean.getData().getStore_name());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_id", userInfoBean.getData().getStore_id());
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "disabled", userInfoBean.getData().getDisabled());
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "disabled", StringUtils.toInt(userInfoBean.getData().getDisabled(), 3));
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_logo", userInfoBean.getData().getStore_logo());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "order_total", userInfoBean.getData().getOrder_total());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "store_level", userInfoBean.getData().getStore_level());
@@ -251,7 +298,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (flag == 1 && isLogin(msg)) {
+        if (flag == 1 && isLogin(msg) || flag == 2 && isLogin(msg) || flag == 3 && isLogin(msg)) {
             aty.showActivity(aty, LoginActivity.class);
             return;
         }

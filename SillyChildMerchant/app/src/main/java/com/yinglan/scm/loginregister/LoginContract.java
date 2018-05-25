@@ -30,6 +30,13 @@ public interface LoginContract {
          * 第三方账号登录
          */
         void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex);
+
+
+        /**
+         * 获取上传图片token
+         */
+        void getQiNiuKey();
+
     }
 
     interface View extends BaseView<Presenter, String> {

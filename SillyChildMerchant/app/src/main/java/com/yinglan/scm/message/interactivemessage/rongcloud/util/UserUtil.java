@@ -24,6 +24,7 @@ public class UserUtil {
      */
     public static void clearUserInfo(Context context) {
         PreferenceHelper.write(context, StringConstants.FILENAME, "Cookie", "");
+        quitRc(context);
     }
 
 
@@ -97,7 +98,7 @@ public class UserUtil {
      *                退出融云
      */
     public static void quitRc(Context context) {
-        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunToken", "");
-        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunId", "");
+        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunToken", null);
+        PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunId", null);
     }
 }

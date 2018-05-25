@@ -5,21 +5,28 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
 
+import com.kymjs.common.StringUtils;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.yinglan.scm.BuildConfig;
+import com.yinglan.scm.message.interactivemessage.rongcloud.util.SealAppContext;
+import com.yinglan.scm.message.interactivemessage.rongcloud.util.SealUserInfoManager;
+import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
 
 import java.util.Iterator;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 import static com.umeng.socialize.utils.Log.LOGTAG;
 
@@ -56,7 +63,7 @@ public class MyApplication extends Application {
         instance = this;
         mContext = getApplicationContext();
         UMShareAPI.get(this);//友盟分享
-        initHuanXinSDK();
+        initRongCloud();
         testMemoryInfo();
     }
 
@@ -81,7 +88,7 @@ public class MyApplication extends Application {
         PlatformConfig.setWeixin(BuildConfig.WEIXIN_APPKEY, BuildConfig.WEIXIN_APPSECRET);
         // QQ和Qzone appid appkey
         PlatformConfig.setQQZone(BuildConfig.QQ_APPID, BuildConfig.QQ_APPKEY);
-        PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
+        //   PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
         Config.DEBUG = true;
     }
 
@@ -105,37 +112,98 @@ public class MyApplication extends Application {
      */
     private void initBaiDuSDK() {
         // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
-     //   SDKInitializer.initialize(this);
+        //   SDKInitializer.initialize(this);
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         // SDKInitializer.setCoordType(CoordType.BD09LL);
     }
 
-    /**
-     * 环信即时通讯客服所需
+    /* *
+     *调用融云初始化方法
      */
-    private void initHuanXinSDK() {
+    private void initRongCloud() {
+        RongIM.init(this);
+        SealAppContext.init(this);//初始化融云相关监听 事件集合类
+        openSealDBIfHasCachedToken();//打开融云本地数据库
+        String rcToken = UserUtil.getResTokenInfo(this);
+        if (!StringUtils.isEmpty(rcToken)) {
+            RongIM.connect(rcToken, new RongIMClient.ConnectCallback() {
 
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                }
+
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
+                    /**
+                     //                     * 获取用户信息
+                     //                     */
+//                    HttpParams httpParams = new HttpParams();
+//                    RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+//                        @Override
+//                        public void onSuccess(String response) {
+//                            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.json2Obj(response, UserInfoBean.class);
+//                            if (RongIM.getInstance() != null && userInfoBean.getResult() != null && userInfoBean.getResult().getUser_id() > 0) {
+//                                UserInfo userInfo = new UserInfo(userInfoBean.getResult().getUser_id() + "", userInfoBean.getResult().getHx_user_name(), Uri.parse(userInfoBean.getResult().getHead_pic()));
+//                                RongIM.getInstance().setCurrentUserInfo(userInfo);
+//                            }
+//                            RongIM.getInstance().setMessageAttachedUserInfo(true);
+//                        }
+//
+//                        @Override
+//                        public void onFailure(String msg) {
+//                            Log.d("RongYun", "onSuccess");
+//                            //  mView.errorMsg(msg, 0);
+//                        }
+//                    });
+//                    com.sillykid.app.mine.data.UserInfo.Data userData = UserUtil.getUserData(getApplicationContext());
+//                    if (RongIM.getInstance() != null && userData != null) {
+//                        RongIM.getInstance().setCurrentUserInfo(new io.rong.imlib.model.UserInfo(userData.i_id, userData.n_name, Uri.parse(Config.IMG_URL + userData.head_img)));
+//                    }
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.i("XJ", "--errorCode" + errorCode);
+                }
+            });
+        }
     }
 
-    private String getAppName(int pID) {
-        String processName = null;
-        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        List l = am.getRunningAppProcesses();
-        Iterator i = l.iterator();
-        PackageManager pm = getPackageManager();
-        while (i.hasNext()) {
-            ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
-            try {
-                if (info.pid == pID) {
-                    processName = info.processName;
-                    return processName;
-                }
-            } catch (Exception e) {
-                // Log.d("Process", "Error>> :"+ e.toString());
+    private void openSealDBIfHasCachedToken() {
+        String rcToken = UserUtil.getResTokenInfo(this);
+        if (!TextUtils.isEmpty(rcToken)) {
+            String current = getCurProcessName(this);
+            String mainProcessName = getPackageName();
+            if (mainProcessName.equals(current)) {
+                SealUserInfoManager.getInstance().openDB();
             }
         }
-        return processName;
+    }
+
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
 
 

@@ -1,6 +1,7 @@
 package com.yinglan.scm.entity.loginregister;
 
 import com.common.cklibrary.entity.BaseResult;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by ruitu on 2016/8/27.
@@ -9,33 +10,28 @@ import com.common.cklibrary.entity.BaseResult;
 public class LoginBean extends BaseResult<LoginBean.DataBean> {
 
 
-    /**
-     * result : 1
-     * message : null
-     * data : {"face":"","impass":"","level":"普通会员","imuser":"","username":"17051335257"}
-     */
-
     public class DataBean {
         /**
+         * result : true
          * face :
-         * impass :
          * level : 普通会员
-         * imuser :
+         * rong_cloud : uebBjWGteL5w0pcJ3K6KcFKqBBz4L12yws/FYu6flNARzmCj3SW3qSG/LbY2sBJ6F0iFqZ+9ojHueSr25fWEow==
          * username : 17051335257
          */
-        private String userid;
+
+        @SerializedName("result")
+        private String resultX;
         private String face;
-        private String impass;
         private String level;
-        private String imuser;
+        private String rong_cloud;
         private String username;
 
-        public String getUserid() {
-            return userid;
+        public String getResultX() {
+            return resultX;
         }
 
-        public void setUserid(String userid) {
-            this.userid = userid;
+        public void setResultX(String resultX) {
+            this.resultX = resultX;
         }
 
         public String getFace() {
@@ -46,14 +42,6 @@ public class LoginBean extends BaseResult<LoginBean.DataBean> {
             this.face = face;
         }
 
-        public String getImpass() {
-            return impass;
-        }
-
-        public void setImpass(String impass) {
-            this.impass = impass;
-        }
-
         public String getLevel() {
             return level;
         }
@@ -62,12 +50,12 @@ public class LoginBean extends BaseResult<LoginBean.DataBean> {
             this.level = level;
         }
 
-        public String getImuser() {
-            return imuser;
+        public String getRong_cloud() {
+            return rong_cloud;
         }
 
-        public void setImuser(String imuser) {
-            this.imuser = imuser;
+        public void setRong_cloud(String rong_cloud) {
+            this.rong_cloud = rong_cloud;
         }
 
         public String getUsername() {

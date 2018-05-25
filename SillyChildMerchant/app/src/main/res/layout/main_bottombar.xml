@@ -74,7 +74,7 @@
         <ImageView
             android:id="@+id/img_activities"
             style="@style/Image20"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/home_order_unselected" />
 
         <TextView
             android:id="@+id/tv_activities"

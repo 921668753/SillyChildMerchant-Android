@@ -25,6 +25,11 @@ public class URLConstants {
     public static String APIURL = SERVERURL + "api/seller/";
 
     /**
+     * 获取七牛云key-ok
+     */
+    public static String QINIUKEY = SERVERURL + "api/public/key/qiniu.do";
+
+    /**
      * 应用配置参数
      */
     public static String APPCONFIG = APIURL + "appConfig";
