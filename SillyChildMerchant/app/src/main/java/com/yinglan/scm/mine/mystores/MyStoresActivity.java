@@ -294,7 +294,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             img_err.setImageResource(R.mipmap.no_network);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.noOrder))) {
+        } else if (msg.contains(getString(R.string.notGetMerchandise))) {
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setVisibility(View.GONE);
