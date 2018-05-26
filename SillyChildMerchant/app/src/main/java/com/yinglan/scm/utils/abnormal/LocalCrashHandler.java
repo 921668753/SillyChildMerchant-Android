@@ -211,7 +211,7 @@ public class LocalCrashHandler implements UncaughtExceptionHandler {
 
             TelephonyManager mTelephonyMgr = (TelephonyManager) mContext
                     .getSystemService(Context.TELEPHONY_SERVICE);
-            String imei = mTelephonyMgr.getDeviceId();
+            @SuppressLint({"HardwareIds", "MissingPermission"}) String imei = mTelephonyMgr.getDeviceId();
             if (TextUtils.isEmpty(imei)) {
                 imei = "unknownimei";
             }

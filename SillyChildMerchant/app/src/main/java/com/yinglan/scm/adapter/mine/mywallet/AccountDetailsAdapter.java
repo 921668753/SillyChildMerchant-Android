@@ -5,8 +5,8 @@ import android.content.Context;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean.DataBean;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 /**
  * 我的  我的钱包 账户明细  适配器

@@ -8,8 +8,8 @@ import com.kymjs.common.Log;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.order.GoodOrderBean.DataBean.ListBean;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 /**
  * 商品订单列表 适配器

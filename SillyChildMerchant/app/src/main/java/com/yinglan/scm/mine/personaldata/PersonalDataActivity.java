@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
@@ -28,7 +26,6 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.personaldata.ImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
-import com.yinglan.scm.entity.UploadImageBean;
 import com.yinglan.scm.entity.mine.personaldata.PersonalDataBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
@@ -355,7 +352,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     public void getSuccess(String success, int flag) {
         switch (flag) {
             case 0:
-                GlideCatchUtil.getInstance().cleanImageDisk();
                 ((PersonalDataContract.Presenter) mPresenter).postMemberEdit(success);
                 showLoadingDialog(getString(R.string.saveLoad));
                 isRefresh = true;
@@ -410,8 +406,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             pictureSourceDialog.cancel();
         }
         pictureSourceDialog = null;
-        GlideCatchUtil.getInstance().cleanImageDisk();
-        GlideCatchUtil.getInstance().cleanCatchDisk();
     }
 
     /**

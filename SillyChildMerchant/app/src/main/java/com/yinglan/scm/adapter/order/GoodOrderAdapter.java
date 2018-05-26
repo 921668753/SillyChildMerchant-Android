@@ -7,8 +7,8 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.entity.order.GoodOrderBean.DataBean.ListBean;
 import com.yinglan.scm.utils.GlideImageLoader;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 /**
  * 商品列表 适配器

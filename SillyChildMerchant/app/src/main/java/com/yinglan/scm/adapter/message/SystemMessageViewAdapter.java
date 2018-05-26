@@ -5,8 +5,8 @@ import android.content.Context;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.message.SystemMessageBean.DataBean;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 /**
  * 系统消息 适配器

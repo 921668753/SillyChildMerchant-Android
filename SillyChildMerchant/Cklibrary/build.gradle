@@ -31,12 +31,12 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-  //  api "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    //  api "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
 
     //    compile 'com.android.support:support-fragment:26.0.1'
 
     //    compile 'com.android.support:support-annotations:26.0.1'
-  //  api "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    //  api "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     api 'com.kymjs.rxvolley:rxvolley:latest.release'
 
     //网络请求框架
@@ -56,15 +56,14 @@ dependencies {
     api 'com.github.f0ris.sweetalert:library:1.5.3'
 
     //图片选择器  https://github.com/jeasonlzy/ImagePicker
-   // api 'com.lzy.widget:imagepicker:0.6.1'
+    // api 'com.lzy.widget:imagepicker:0.6.1'
     api project(path: ':imagepicker')
-
 
     //图片压缩  https://github.com/nanchen2251/CompressHelper
     api 'com.github.nanchen2251:CompressHelper:1.0.5'
 
     //图片加载框架 https://github.com/bumptech/glide
-    api 'com.android.support:support-v4:27.1.1'
+    //  api "com.android.support:support-v4:$rootProject.supportLibraryVersion"
 
     //    compile 'com.android.support:support-fragment:26.+'
 
@@ -87,7 +86,7 @@ dependencies {
     api 'cn.bingoogolapple:bga-banner:2.1.9@aar'
 
     // adapter
-    api 'cn.bingoogolapple:bga-adapter:1.2.0@aar'
+    api 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
 
     //刷新框架
     api 'cn.bingoogolapple:bga-refreshlayout:1.1.8@aar'
@@ -121,7 +120,7 @@ dependencies {
      *   https://github.com/lipangit/JiaoZiVideoPlayer
      * 视频播放器
      */
-    api 'cn.jzvd:jiaozivideoplayer:6.1.2'
+    //  api 'cn.jzvd:jiaozivideoplayer:6.1.2'
 
     /**
      * https://github.com/Othershe/CalendarView
@@ -136,6 +135,5 @@ dependencies {
 
     api 'com.google.code.gson:gson:2.8.4'
 
-
-  //  api 'org.kymjs.kjframe:kjframe:2.6'
+    //  api 'org.kymjs.kjframe:kjframe:2.6'
 }

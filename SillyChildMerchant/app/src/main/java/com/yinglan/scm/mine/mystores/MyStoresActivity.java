@@ -24,7 +24,7 @@ import com.yinglan.scm.mine.mystores.dialog.SubmitBouncedDialog;
 import com.yinglan.scm.mine.mystores.productdetails.ProductDetailsActivity;
 import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 

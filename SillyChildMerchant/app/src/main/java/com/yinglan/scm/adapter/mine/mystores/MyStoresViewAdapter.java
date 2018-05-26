@@ -7,8 +7,8 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.entity.mine.mystores.MyStoresBean.DataBean;
 import com.yinglan.scm.utils.GlideImageLoader;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 /**
  * 我的店铺
