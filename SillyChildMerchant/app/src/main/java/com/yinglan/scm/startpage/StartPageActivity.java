@@ -175,7 +175,12 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 
     @Override
     public void getSuccess(String success, int flag) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "qiNiuToken", success);
+        QiNiuKeyBean qiNiuKeyBean = (QiNiuKeyBean) JsonUtil.getInstance().json2Obj(success, QiNiuKeyBean.class);
+        if (qiNiuKeyBean != null && !StringUtils.isEmpty(qiNiuKeyBean.getData().getAuthToken())) {
+            PreferenceHelper.write(this, StringConstants.FILENAME, "qiNiuToken", qiNiuKeyBean.getData().getAuthToken());
+            PreferenceHelper.write(this, StringConstants.FILENAME, "qiNiuImgHost", qiNiuKeyBean.getData().getHost());
+            PreferenceHelper.write(this, StringConstants.FILENAME, "qiNiuImgTime", String.valueOf(System.currentTimeMillis()));
+        }
         jumpTo(true);
     }
 

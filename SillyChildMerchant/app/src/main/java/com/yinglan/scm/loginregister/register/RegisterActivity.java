@@ -187,8 +187,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
             ((RegisterContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         } else if (flag == 2) {
-            ((RegisterContract.Presenter) mPresenter).getQiNiuKey();
-        } else if (flag == 3) {
             /**
              * 发送消息
              */
@@ -197,7 +195,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             dismissLoadingDialog();
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();
-
         }
     }
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -154,8 +153,6 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
             PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
             ((BindingPhoneContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         } else if (flag == 3) {
-            ((BindingPhoneContract.Presenter) mPresenter).getQiNiuKey();
-        }else if (flag == 4) {
             /**
              * 发送消息
              */

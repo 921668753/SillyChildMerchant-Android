@@ -164,10 +164,7 @@ public class StartPagePresenter implements StartPageContract.Presenter {
         RequestClient.getQiNiuKey(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                QiNiuKeyBean qiNiuKeyBean = (QiNiuKeyBean) JsonUtil.getInstance().json2Obj(response, QiNiuKeyBean.class);
-                if (qiNiuKeyBean != null && !StringUtils.isEmpty(qiNiuKeyBean.getData().getAccessKey())) {
-                    mView.getSuccess(getToken(qiNiuKeyBean.getData().getAccessKey(), qiNiuKeyBean.getData().getSecretKey()), 0);
-                }
+                mView.getSuccess(response,0);
 
             }
 

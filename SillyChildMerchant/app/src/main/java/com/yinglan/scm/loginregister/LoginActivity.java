@@ -198,18 +198,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
             ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         } else if (flag == 1) {
-            ((LoginContract.Presenter) mPresenter).getQiNiuKey();
-        } else if (flag == 2) {
-            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-            if (bean.getData().getResultX().contains("false")) {
-                errorMsg("4000", 0);
-                return;
-            }
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
-            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
-        } else if (flag == 3) {
             if (StringUtils.isEmpty(openid)) {
                 MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
             } else {
@@ -221,6 +209,16 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
              */
             RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             finish();
+        } else if (flag == 2) {
+            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
+            if (bean.getData().getResultX().contains("false")) {
+                errorMsg("4000", 0);
+                return;
+            }
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
+            ((LoginContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
         }
     }
 

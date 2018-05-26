@@ -19,10 +19,12 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.constant.StringNewConstants;
 import com.yinglan.scm.constant.URLConstants;
 import com.yinglan.scm.entity.loginregister.LoginBean;
+import com.yinglan.scm.entity.startpage.QiNiuKeyBean;
 import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
 import com.yinglan.scm.retrofit.uploadimg.UploadManagerUtil;
 
@@ -46,31 +48,64 @@ public class RequestClient {
      * 上传头像图片
      */
     public static void upLoadImg(Context context, File file, int type, ResponseListener<String> listener) {
-        doServer(context, new TokenCallback() {
+        long nowTime = System.currentTimeMillis();
+        String qiNiuImgTime = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgTime", "");
+        long qiNiuImgTime1 = 0;
+        if (StringUtils.isEmpty(qiNiuImgTime)) {
+            qiNiuImgTime1 = 0;
+        } else {
+            qiNiuImgTime1 = Long.decode(qiNiuImgTime);
+        }
+        long refreshTime = nowTime - qiNiuImgTime1 - (8 * 60 * 60 * 1000);
+        if (refreshTime <= 0) {
+            upLoadImgQiNiuYun(context, file, listener);
+            return;
+        }
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        getQiNiuKey(context, httpParams, new ResponseListener<String>() {
             @Override
-            public void execute() {
-                String token = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuToken");
-                //     if (type == 0) {
-                        //参数 图片路径,图片名,token,成功的回调
-                        UploadManagerUtil.getInstance().getUploadManager().put(file.getPath(), file.getName(), token, new UpCompletionHandler() {
-                            @Override
-                            public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
-                                Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
-                                if (responseInfo.isOK()) {
-                                    String headpicPath = "http://ovwiqces1.bkt.clouddn.com/" + key;
-                                    Log.i("ReadFragment", "complete: " + headpicPath);
-                                    listener.onSuccess(headpicPath);
-                                }
-                                //
-                            }
-                        }, null);
-
-//                } else {
-//                }
-
+            public void onSuccess(String response) {
+                QiNiuKeyBean qiNiuKeyBean = (QiNiuKeyBean) JsonUtil.getInstance().json2Obj(response, QiNiuKeyBean.class);
+                if (qiNiuKeyBean == null && StringUtils.isEmpty(qiNiuKeyBean.getData().getAuthToken())) {
+                    listener.onFailure(context.getString(R.string.serverReturnsDataNullJsonError));
+                    return;
+                }
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuToken", qiNiuKeyBean.getData().getAuthToken());
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuImgHost", qiNiuKeyBean.getData().getHost());
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuImgTime", String.valueOf(System.currentTimeMillis()));
+                upLoadImgQiNiuYun(context, file, listener);
             }
-        }, listener);
+
+            @Override
+            public void onFailure(String msg) {
+                listener.onFailure(msg);
+            }
+        });
+
     }
+
+
+    /**
+     * 获取七牛云Token
+     */
+    private static void upLoadImgQiNiuYun(Context context, File file, ResponseListener<String> listener) {
+        String token = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuToken");
+        //     if (type == 0) {
+        //参数 图片路径,图片名,token,成功的回调
+        UploadManagerUtil.getInstance().getUploadManager().put(file.getPath(), file.getName(), token, new UpCompletionHandler() {
+            @Override
+            public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
+                Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
+                if (responseInfo.isOK()) {
+                    String host = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgHost");
+                    String headpicPath = host + key;
+                    Log.i("ReadFragment", "complete: " + headpicPath);
+                    listener.onSuccess(headpicPath);
+                }
+            }
+        }, null);
+    }
+
 
     /**
      * 获取七牛云Token

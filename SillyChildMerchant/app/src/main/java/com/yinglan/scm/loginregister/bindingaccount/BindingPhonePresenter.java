@@ -185,25 +185,7 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
         }
     }
 
-    @Override
-    public void getQiNiuKey() {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getQiNiuKey(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                QiNiuKeyBean qiNiuKeyBean = (QiNiuKeyBean) JsonUtil.getInstance().json2Obj(response, QiNiuKeyBean.class);
-                if (qiNiuKeyBean != null && !StringUtils.isEmpty(qiNiuKeyBean.getData().getAccessKey())) {
-                    mView.getSuccess(getToken(qiNiuKeyBean.getData().getAccessKey(), qiNiuKeyBean.getData().getSecretKey()), 4);
-                }
 
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
-    }
 
     //获取七牛token
     private String getToken(String AccessKey, String SecretKey) {

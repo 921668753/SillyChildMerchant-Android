@@ -7,27 +7,27 @@ public class QiNiuKeyBean extends BaseResult<QiNiuKeyBean.DataBean> {
 
     public class DataBean {
         /**
-         * SecretKey : DszNIu8R_0H2T0bXI6He8b2TcPHK0uYBNE94sfbS
-         * AccessKey : dmrMa7omgEbJGmsv7vmRtg_g3zt1GjkpiIkWvtkW
+         * authToken : dmrMa7omgEbJGmsv7vmRtg_g3zt1GjkpiIkWvtkW:IZQIWZ1FAMd3MJrGZsVTmxoeaiw=:eyJpbnNlcnRPbmx5IjowLCJzY29wZSI6InNoYWhhaXppIiwicmV0dXJuQm9keSI6IntcIm5hbWVcIjogJChrZXkpLCBcIm9yaWdpbk5hbWVcIiA6ICQoZm5hbWUpLCBcIndpZHRoXCI6ICQoaW1hZ2VJbmZvLndpZHRoKSwgXCJoZWlnaHRcIjogJChpbWFnZUluZm8uaGVpZ2h0KSwgXCJzaXplXCI6ICQoZnNpemUpLCBcImluZGV4XCI6ICQoeDppbmRleCl9IiwiZnNpemVMaW1pdCI6MjA5NzE1MjAwLCJkZWFkbGluZSI6MTUyNzM2NTExNH0=
+         * host : http://ovwiqces1.bkt.clouddn.com/
          */
 
-        private String SecretKey;
-        private String AccessKey;
+        private String authToken;
+        private String host;
 
-        public String getSecretKey() {
-            return SecretKey;
+        public String getAuthToken() {
+            return authToken;
         }
 
-        public void setSecretKey(String SecretKey) {
-            this.SecretKey = SecretKey;
+        public void setAuthToken(String authToken) {
+            this.authToken = authToken;
         }
 
-        public String getAccessKey() {
-            return AccessKey;
+        public String getHost() {
+            return host;
         }
 
-        public void setAccessKey(String AccessKey) {
-            this.AccessKey = AccessKey;
+        public void setHost(String host) {
+            this.host = host;
         }
     }
 }

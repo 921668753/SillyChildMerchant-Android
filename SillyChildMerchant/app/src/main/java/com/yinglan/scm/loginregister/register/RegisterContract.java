@@ -27,10 +27,6 @@ interface RegisterContract {
          */
         void loginRongYun(String rongYunToken, LoginBean bean);
 
-        /**
-         * 获取上传图片token
-         */
-        void getQiNiuKey();
     }
 
     interface View extends BaseView<Presenter, String> {
