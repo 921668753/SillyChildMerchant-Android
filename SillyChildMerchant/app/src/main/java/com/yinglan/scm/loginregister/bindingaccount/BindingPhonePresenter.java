@@ -119,25 +119,6 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
 
 
     @Override
-    public void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("openId", openid);
-        httpParams.put("type", from);
-        httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        RequestClient.postThirdLogin(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
-
-    }
-    @Override
     public void loginRongYun(String rongYunToken, LoginBean bean) {
         RongIM.getInstance().logout();
         if (!StringUtils.isEmpty(rongYunToken)) {
@@ -167,7 +148,7 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                         UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
                         RongIM.getInstance().setCurrentUserInfo(userInfo);
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
-                        mView.getSuccess("", 3);
+                        mView.getSuccess("", 2);
                     }
                 }
 

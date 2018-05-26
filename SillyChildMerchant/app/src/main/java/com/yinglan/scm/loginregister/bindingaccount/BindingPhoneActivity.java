@@ -143,16 +143,13 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
             ViewInject.toast(getString(R.string.testget));
             time.start();
         } else if (flag == 1) {
-            ((BindingPhoneContract.Presenter) mPresenter).postThirdToLogin(getIntent().getStringExtra("openid"),
-                    getIntent().getStringExtra("from"), getIntent().getStringExtra("nickname"), getIntent().getStringExtra("head_pic"), getIntent().getIntExtra("sex", 0));
-        } else if (flag == 2) {
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "mobile", et_phone.getText().toString());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "face", bean.getData().getFace());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "username", bean.getData().getUsername());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "rongYunToken", bean.getData().getRong_cloud());
             ((BindingPhoneContract.Presenter) mPresenter).loginRongYun(bean.getData().getRong_cloud(), bean);
-        } else if (flag == 3) {
+        } else if (flag == 2) {
             /**
              * 发送消息
              */

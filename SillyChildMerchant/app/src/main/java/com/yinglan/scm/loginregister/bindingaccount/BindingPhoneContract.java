@@ -23,13 +23,6 @@ interface BindingPhoneContract {
          */
         void postBindingPhone(String openid, String from, String phone, String code, String recommendcode);
 
-
-        /**
-         * 第三方账号登录
-         */
-        void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex);
-
-
         /**
          * 登录融云
          */
