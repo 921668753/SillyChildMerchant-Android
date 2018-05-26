@@ -343,7 +343,7 @@
     <string name="ensureSamePerson">请确保姓名、身份证、银行卡开户人为同一个人</string>
     <string name="confirmAdd">确认添加</string>
     <string name="toResend">s后重发</string>
-    <string name="openingBank1">请输入开户行</string>
+    <string name="openingBank1">请选择开户行</string>
 
 
     <!-- 个人中心 我的钱包  账户明细-->

@@ -56,22 +56,22 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
     @Override
     public void getBank() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        RequestClient.getBank(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 1);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+        RequestClient.getBank(KJActivityStack.create().topActivity(),httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 
 
     @Override
-    public void postAddBankCard(String account_name, String id_number, int open_bank, String account_no, String phone, String verificationCode) {
+    public void postAddBankCard(String account_name, String id_number, String open_bank, String account_no, String phone, String verificationCode) {
         if (StringUtils.isEmpty(account_name)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.accountHolderName1), 0);
             return;
@@ -88,7 +88,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             return;
         }
 
-        if (open_bank < 1) {
+        if (StringUtils.isEmpty(open_bank)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.openingBank1), 0);
             return;
         }
@@ -96,16 +96,13 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.bankCardNumber1), 0);
             return;
         }
-//        if (StringUtils.isEmpty(open_bank)) {
-//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.openingBank1), 0);
-//            return;
-//        }
+
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.accountText), 0);
             return;
         }
         if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
             return;
         }
         if (StringUtils.isEmpty(verificationCode)) {
@@ -115,8 +112,8 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("account_name", account_name);
         httpParams.put("id_number", id_number);
-        httpParams.put("open_bank", "农业银行");
-        httpParams.put("bank", "农业银行");
+        httpParams.put("open_bank", open_bank);
+        httpParams.put("bank", open_bank);
         httpParams.put("account_no", account_no);
         httpParams.put("phone", phone);
         httpParams.put("captcha", verificationCode);

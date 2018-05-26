@@ -687,6 +687,27 @@ public class RequestClient {
         }, listener);
     }
 
+
+    /**
+     * 获取银行列表
+     */
+    public static void getBank(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getBank");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.PURSEBANK, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
     /**
      * 删除银行卡
      */

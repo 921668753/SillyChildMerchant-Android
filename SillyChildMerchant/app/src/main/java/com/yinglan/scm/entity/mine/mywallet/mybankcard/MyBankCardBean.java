@@ -7,7 +7,7 @@ import java.util.List;
 public class MyBankCardBean extends BaseResult<List<MyBankCardBean.DataBean>> {
 
 
-    public static class DataBean {
+    public class DataBean {
         /**
          * id : 1
          * member_id : 29

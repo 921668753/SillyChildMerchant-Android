@@ -22,8 +22,11 @@ import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.mine.mywallet.mybankcard.AddBankCardBean;
+import com.yinglan.scm.entity.mine.mywallet.mybankcard.BankBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
+
+import java.util.List;
 
 /**
  * 添加银行卡
@@ -90,7 +93,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     private TextView tv_prepaidImmediately;
 
     private OptionsPickerView pvOptions;
-    // private List<BankBean.ResultBean> bankList;
+
+    private List<BankBean.DataBean> bankList;
 
 
     private int bankCardId = 1;
@@ -105,16 +109,16 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         super.initData();
         mPresenter = new AddBankCardPresenter(this);
         time = new TimeCount(60000, 1000);// 构造CountDownTimer对象
-        //     selectBankName();
-//        showLoadingDialog(getString(R.string.dataLoad));
-//        ((AddBankCardContract.Presenter) mPresenter).getBank();
+        selectBankName();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((AddBankCardContract.Presenter) mPresenter).getBank();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.addBankCard), true, R.id.titlebar);
-        changeInputView(et_phone,tv_verificationCode);
+        changeInputView(et_phone, tv_verificationCode);
     }
 
     @Override
@@ -132,7 +136,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
             case R.id.tv_prepaidImmediately:
                 showLoadingDialog(getString(R.string.submissionLoad));
                 ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_idNumber.getText().toString().trim(),
-                        bankCardId, et_bankCardNumber.getText().toString().trim(), et_phone.getText().toString().trim(),
+                        tv_openingBank.getText().toString(), et_bankCardNumber.getText().toString().trim(), et_phone.getText().toString().trim(),
                         et_verificationCode.getText().toString().trim());
                 break;
         }
@@ -148,8 +152,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-//                bank_id = bankList.get(options1).getId();
-//                ((TextView) v).setText(bankList.get(options1).getBank());
+                //  bankName = bankList.get(options1).getId();
+                ((TextView) v).setText(bankList.get(options1).getName());
             }
         }).build();
     }
@@ -188,23 +192,22 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
             ViewInject.toast(getString(R.string.testget));
             time.start();
         } else if (flag == 1) {
-//            BankBean bankBean = (BankBean) JsonUtil.json2Obj(success, BankBean.class);
-//            bankList = bankBean.getResult();
-//            if (bankList != null && bankList.size() > 0) {
-//                pvOptions.setPicker(bankList);
-//            }
-            // dismissLoadingDialog();
+            BankBean bankBean = (BankBean) JsonUtil.json2Obj(success, BankBean.class);
+            bankList = bankBean.getData();
+            if (bankList != null && bankList.size() > 0) {
+                pvOptions.setPicker(bankList);
+            }
+            dismissLoadingDialog();
         } else if (flag == 2) {
             AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
             bankCardId = addBankCardBean.getData().getId();
             ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
         } else if (flag == 3) {
             dismissLoadingDialog();
-            AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
             Intent intent = getIntent();
             // 获取内容
             intent.putExtra("bankCardName", tv_openingBank.getText().toString());
-            intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 5));
+            intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 4));
             intent.putExtra("bankCardId", bankCardId);
             //设置结果 结果码，一个数据
             setResult(RESULT_OK, intent);

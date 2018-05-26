@@ -202,6 +202,11 @@ public class URLConstants {
     public static String PURSELIST = APIURL + "purse/list.do";
 
     /**
+     * 银行卡列表
+     */
+    public static String PURSEBANK = APIURL + "purse/banks.do";
+
+    /**
      * 删除银行卡
      */
     public static String PURSEREMOVE = APIURL + "purse/remove.do";
@@ -209,7 +214,7 @@ public class URLConstants {
     /**
      * 设置默认银行卡
      */
-    public static String PURSEDEFAULT = APIURL + "purse/default.di";
+    public static String PURSEDEFAULT = APIURL + "purse/default.do";
 
     /**
      * 添加银行卡(可添加支付宝账号)
