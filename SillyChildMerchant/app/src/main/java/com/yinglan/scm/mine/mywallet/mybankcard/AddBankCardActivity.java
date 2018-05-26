@@ -2,6 +2,8 @@ package com.yinglan.scm.mine.mywallet.mybankcard;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -91,7 +93,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     // private List<BankBean.ResultBean> bankList;
 
 
-    private int bankCardId = 0;
+    private int bankCardId = 1;
 
     @Override
     public void setRootView() {
@@ -103,15 +105,16 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         super.initData();
         mPresenter = new AddBankCardPresenter(this);
         time = new TimeCount(60000, 1000);// 构造CountDownTimer对象
-        selectBankName();
-        showLoadingDialog(getString(R.string.dataLoad));
-        ((AddBankCardContract.Presenter) mPresenter).getBank();
+        //     selectBankName();
+//        showLoadingDialog(getString(R.string.dataLoad));
+//        ((AddBankCardContract.Presenter) mPresenter).getBank();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.addBankCard), true, R.id.titlebar);
+        changeInputView(et_phone,tv_verificationCode);
     }
 
     @Override
@@ -128,9 +131,9 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
                 break;
             case R.id.tv_prepaidImmediately:
                 showLoadingDialog(getString(R.string.submissionLoad));
-//                ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_bankCardNumber.getText().toString().trim(),
-//                        bank_id, et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
-//                        et_verificationCode.getText().toString().trim());
+                ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_idNumber.getText().toString().trim(),
+                        bankCardId, et_bankCardNumber.getText().toString().trim(), et_phone.getText().toString().trim(),
+                        et_verificationCode.getText().toString().trim());
                 break;
         }
     }
@@ -161,14 +164,14 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         public void onFinish() {// 计时完毕时触发
             tv_verificationCode.setText(getString(R.string.revalidation));
             tv_verificationCode.setClickable(true);
-            // tv_verificationCode.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_verificationCode.setBackgroundResource(R.drawable.shape_login1);
         }
 
         @Override
         public void onTick(long millisUntilFinished) {// 计时过程显示
             tv_verificationCode.setClickable(false);
             tv_verificationCode.setText(millisUntilFinished / 1000 + getString(R.string.toResend));
-            //  tv_verificationCode.setTextColor(getResources().getColor(R.color.hintcolors));
+            tv_verificationCode.setBackgroundResource(R.drawable.shape_login);
         }
     }
 
@@ -180,19 +183,18 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 
     @Override
     public void getSuccess(String success, int flag) {
-
-//        if (flag == 0) {
-//            ViewInject.toast(getString(R.string.testget));
-//            time.start();
-//        } else if (flag == 1) {
+        if (flag == 0) {
+            dismissLoadingDialog();
+            ViewInject.toast(getString(R.string.testget));
+            time.start();
+        } else if (flag == 1) {
 //            BankBean bankBean = (BankBean) JsonUtil.json2Obj(success, BankBean.class);
 //            bankList = bankBean.getResult();
 //            if (bankList != null && bankList.size() > 0) {
 //                pvOptions.setPicker(bankList);
 //            }
-        // dismissLoadingDialog();
-//        } else
-        if (flag == 2) {
+            // dismissLoadingDialog();
+        } else if (flag == 2) {
             AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
             bankCardId = addBankCardBean.getData().getId();
             ((AddBankCardContract.Presenter) mPresenter).postPurseDefault(bankCardId);
@@ -220,4 +222,45 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         }
         ViewInject.toast(msg);
     }
+
+    /**
+     * 监听EditText输入改变
+     */
+    @SuppressWarnings("deprecation")
+    public void changeInputView(final EditText editText, final View view) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (editText.getText().toString().length() > 0) {
+                    if (view != null) {
+                        view.setVisibility(View.VISIBLE);
+                    }
+                    if (et_phone.getText().length() == 11) {
+                        tv_verificationCode.setClickable(true);
+                        tv_verificationCode.setBackgroundResource(R.drawable.shape_login1);
+                    } else {
+                        tv_verificationCode.setClickable(false);
+                        tv_verificationCode.setBackgroundResource(R.drawable.shape_login);
+                    }
+                } else {
+                    if (view != null) {
+                        view.setVisibility(View.GONE);
+                    }
+                    tv_verificationCode.setClickable(false);
+                    tv_verificationCode.setBackgroundResource(R.drawable.shape_login);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.yinglan.scm.homepage;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.BitmapCoreUtil;
@@ -27,7 +29,7 @@ public class ShopkeeperCertificationPresenter implements ShopkeeperCertification
     }
 
     @Override
-    public void upPictures(String path) {
+    public void upPictures(Context context, String path) {
         if (StringUtils.isEmpty(path)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 0);
             return;
@@ -47,7 +49,7 @@ public class ShopkeeperCertificationPresenter implements ShopkeeperCertification
         if (fileSize >= StringConstants.COMPRESSION_SIZE) {
             oldFile = BitmapCoreUtil.customCompression(oldFile);
         }
-        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), oldFile, 0, new ResponseListener<String>() {
+        RequestClient.upLoadImg(context, oldFile, 0, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -62,12 +64,16 @@ public class ShopkeeperCertificationPresenter implements ShopkeeperCertification
 
 
     @Override
-    public void postHomePage(String store_logo, String store_name, String id_img) {
+    public void postHomePage(Context context, String store_logo, String store_name, String id_img) {
+        if (StringUtils.isEmpty(id_img)) {
+            mView.errorMsg(context.getString(R.string.localIdentityCard1), 1);
+            return;
+        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("store_logo", store_logo);
         httpParams.put("store_name", store_name);
         httpParams.put("id_img", id_img);
-        RequestClient.postHomePage(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.postHomePage(context, httpParams, new ResponseListener<String>() {
 
             @Override
             public void onSuccess(String response) {
@@ -82,4 +88,28 @@ public class ShopkeeperCertificationPresenter implements ShopkeeperCertification
 
     }
 
+    @Override
+    public void postReHomePage(Context context, String store_logo, String store_name, String id_img) {
+        if (StringUtils.isEmpty(id_img)) {
+            mView.errorMsg(context.getString(R.string.localIdentityCard1), 1);
+            return;
+        }
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("store_logo", store_logo);
+        httpParams.put("store_name", store_name);
+        httpParams.put("id_img", id_img);
+        RequestClient.postReHomePage(context, httpParams, new ResponseListener<String>() {
+
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+
+    }
 }

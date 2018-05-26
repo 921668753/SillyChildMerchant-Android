@@ -85,7 +85,7 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     @BindView(id = R.id.tv_submit, click = true)
     private TextView tv_submit;
 
-    private String feedType = getString(R.string.dysfunction);
+    private String feedType;
 
     private int wordLimit;
 
@@ -112,6 +112,7 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     public void initWidget() {
         super.initWidget();
         initTitle();
+        feedType = getString(R.string.dysfunction);
         tv_feedbackType.setFocusable(true);
         tv_feedbackType.setFocusableInTouchMode(true);
         tv_feedbackType.requestFocus();
@@ -218,10 +219,6 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
         imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
         imagePicker.setSelectLimit(NumericConstants.MAXPICTURE);              //选中数量限制
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-//        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-//        imagePicker.setFocusHeight(400);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-//        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
-//        imagePicker.setOutPutY(500);                         //保存文件的高度。单位像素
         imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
         imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
         imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
@@ -293,14 +290,11 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            GlideCatchUtil.getInstance().cleanImageDisk();
-            UploadImageBean uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !StringUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
-                urllist.add(uploadimagebean.getData().getFile().getUrl());
-                selImageList.addAll(images);
-                adapter.setImages(selImageList);
-                dismissLoadingDialog();
-            }
+            urllist.add(success);
+            selImageList.addAll(images);
+            adapter.setImages(selImageList);
+            dismissLoadingDialog();
+
         } else if (flag == 1) {
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.submitSuccess));

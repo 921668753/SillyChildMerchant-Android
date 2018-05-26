@@ -26,11 +26,8 @@ public class MyStoresPresenter implements MyStoresContract.Presenter {
     @Override
     public void getClassificationList() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        httpParams.put("catId", catId);
-//        httpParams.put("type", type);
-//        httpParams.put("store", store);
-//        httpParams.put("price", price);
-        RequestClient.getGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        httpParams.put("typeId", "");
+        RequestClient.getGoodsParams(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

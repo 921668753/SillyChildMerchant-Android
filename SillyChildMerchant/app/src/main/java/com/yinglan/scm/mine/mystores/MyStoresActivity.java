@@ -101,6 +101,8 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         mPresenter = new MyStoresPresenter(this);
         myStoresViewAdapter = new MyStoresViewAdapter(this);
         initDialog();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((MyStoresContract.Presenter) mPresenter).getClassificationList();
     }
 
     private void initDialog() {

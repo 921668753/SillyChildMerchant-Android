@@ -152,6 +152,11 @@ public class URLConstants {
     public static String MEMBERINFO = APIURL + "member/get.do";
 
     /**
+     * 获取商品分类参数列表
+     */
+    public static String GOODSPARAMS = APIURL + "goods/params.do";
+
+    /**
      * 获取商品列表
      */
     public static String GOODLIST = APIURL + "goods/list.do";

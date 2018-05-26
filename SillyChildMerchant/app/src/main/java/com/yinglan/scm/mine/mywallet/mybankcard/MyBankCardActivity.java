@@ -3,12 +3,12 @@ package com.yinglan.scm.mine.mywallet.mybankcard;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildListView;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mywallet.mybankcard.MyBankCardViewAdapter;
@@ -33,7 +33,7 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
      * 银行卡列表
      */
     @BindView(id = R.id.lv_bankCard)
-    private ChildListView lv_bankCard;
+    private ListView lv_bankCard;
 
     private MyBankCardViewAdapter myBankCardViewAdapter;
 

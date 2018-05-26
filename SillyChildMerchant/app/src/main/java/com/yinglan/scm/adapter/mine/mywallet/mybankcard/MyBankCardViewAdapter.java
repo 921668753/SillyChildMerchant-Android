@@ -24,11 +24,11 @@ public class MyBankCardViewAdapter extends BGAAdapterViewAdapter<DataBean> {
     @Override
     public void fillData(BGAViewHolderHelper helper, int position, DataBean resultBean) {
         helper.setText(R.id.tv_cardName, resultBean.getAccount_name());
-        if (resultBean.getBank().contains(mContext.getString(R.string.chinaBank))) {
+        if (resultBean.getBank() != null && resultBean.getBank().contains(mContext.getString(R.string.chinaBank))) {
             helper.setImageResource(R.id.img_back, R.mipmap.bank_card_bank_china);
-        } else if (resultBean.getBank().contains(mContext.getString(R.string.ccdBank))) {
+        } else if (resultBean.getBank() != null && resultBean.getBank().contains(mContext.getString(R.string.ccdBank))) {
             helper.setImageResource(R.id.img_back, R.mipmap.bank_card_ccd);
-        } else if (resultBean.getBank().contains(mContext.getString(R.string.cmbBank))) {
+        } else if (resultBean.getBank() != null && resultBean.getBank().contains(mContext.getString(R.string.cmbBank))) {
             helper.setImageResource(R.id.img_back, R.mipmap.bank_card_china_merchants_bank);
         } else {
             helper.setImageResource(R.id.img_back, R.mipmap.bank_card_default);
@@ -38,7 +38,7 @@ public class MyBankCardViewAdapter extends BGAAdapterViewAdapter<DataBean> {
 //        } else {
         helper.setVisibility(R.id.img_check, View.GONE);
 //        }
-        helper.setText(R.id.tv_bankCardName, resultBean.getBank());
+        helper.setText(R.id.tv_bankCardName, resultBean.getOpen_bank());
         helper.setText(R.id.tv_tail, resultBean.getAccount_no());
     }
 }

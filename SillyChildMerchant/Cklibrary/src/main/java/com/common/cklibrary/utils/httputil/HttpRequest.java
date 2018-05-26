@@ -50,7 +50,6 @@ public class HttpRequest {
                 super.onSuccess(headers, t);
                 if (headers != null && headers.size() > 0 && !StringUtils.isEmpty(headers.get("Set-Cookie")) && headers.get("Set-Cookie").length() > 70) {
                     PreferenceHelper.write(context, StringConstants.FILENAME, "Cookie", headers.get("Set-Cookie"));
-                    Log.d("Cookies", JsonUtil.obj2JsonString(headers));
                 }
                 doSuccess(new String(t), responseListener);
             }

@@ -3,26 +3,25 @@ package com.yinglan.scm.homepage;
 import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.GlideCatchUtil;
-import com.common.cklibrary.utils.JsonUtil;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
-import com.yinglan.scm.entity.UploadImageBean;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.main.HomePageContract;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scm.utils.GlideImageLoader;
 
@@ -34,7 +33,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_SELECT;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
-import static com.yinglan.scm.constant.NumericConstants.STATUS;
 
 /**
  * 店主认证
@@ -49,10 +47,10 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
 
     private PictureSourceDialog pictureSourceDialog = null;
 
-    private String id_img = null;
+    private String id_img = "";
 
-    private String store_logo = null;
-    private String store_name = null;
+    private String store_logo = "";
+    private String store_name = "";
 
     @Override
     public void setRootView() {
@@ -85,8 +83,8 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
         imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
         imagePicker.setSelectLimit(1);              //选中数量限制
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-        imagePicker.setFocusWidth(720);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusWidth(840);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(720);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
 //        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
 //        imagePicker.setFocusHeight(800);                  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
 //        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
@@ -104,7 +102,12 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
                 break;
             case R.id.tv_submitAudit:
                 showLoadingDialog(getString(R.string.submissionLoad));
-                ((ShopkeeperCertificationContract.Presenter) mPresenter).postHomePage(store_logo, store_name, id_img);
+                int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
+                if (disabled != -1) {
+                    ((ShopkeeperCertificationContract.Presenter) mPresenter).postHomePage(this, store_logo, store_name, id_img);
+                } else {
+                    ((ShopkeeperCertificationContract.Presenter) mPresenter).postReHomePage(this, store_logo, store_name, id_img);
+                }
                 break;
         }
     }
@@ -172,18 +175,16 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
 
     @Override
     public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
         if (flag == 0) {
-            GlideCatchUtil.getInstance().cleanImageDisk();
-            UploadImageBean uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
-                id_img = uploadimagebean.getData().getFile().getUrl();
-                GlideImageLoader.glideLoader(aty, id_img, img_localIdentityCard, R.mipmap.home_add_shop_logo);
-            }
+            id_img = success;
+            GlideImageLoader.glideOrdinaryLoader(this, success, img_localIdentityCard, R.mipmap.home_add_pictures);
         } else if (flag == 1) {
+            ViewInject.toast(getString(R.string.submitAudit1));
             Intent intent = getIntent();
             setResult(RESULT_OK, intent);
+            finish();
         }
-        dismissLoadingDialog();
     }
 
     @Override
@@ -210,13 +211,9 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
                     }
                     String imgPath = images.get(0).path;
                     showLoadingDialog(getString(R.string.saveLoad));
-                    ((HomePageContract.Presenter) mPresenter).upPictures(imgPath);
+                    ((ShopkeeperCertificationContract.Presenter) mPresenter).upPictures(this, imgPath);
                 } else {
                     ViewInject.toast(getString(R.string.noData));
-                }
-                break;
-            case STATUS:
-                if (resultCode == STATUS && data != null) {
                 }
                 break;
         }

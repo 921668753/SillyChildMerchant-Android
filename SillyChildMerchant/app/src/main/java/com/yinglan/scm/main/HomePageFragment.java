@@ -83,7 +83,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     private TextView tv_asManager;
     private PictureSourceDialog pictureSourceDialog = null;
 
-    private String store_logo = null;
+    private String store_logo = "";
 
 
     @Override
@@ -123,10 +123,8 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
         imagePicker.setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
         imagePicker.setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-//        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-//        imagePicker.setFocusHeight(800);                  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-//        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
-//        imagePicker.setOutPutY(1000);                         //保存文件的高度。单位像素
+        imagePicker.setOutPutX(800);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(800);                         //保存文件的高度。单位像素
         imagePicker.setMultiMode(false);//设置为单选模式，默认多选
         imagePicker.setShowCamera(false);                      //显示拍照按钮
     }
@@ -212,12 +210,8 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            GlideCatchUtil.getInstance().cleanImageDisk();
-            UploadImageBean uploadimagebean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
-            if (uploadimagebean != null && uploadimagebean.getData() != null && uploadimagebean.getData().getFile() != null && !TextUtils.isEmpty(uploadimagebean.getData().getFile().getUrl())) {
-                store_logo = uploadimagebean.getData().getFile().getUrl();
-                GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo, R.mipmap.home_add_shop_logo);
-            }
+            store_logo = success;
+            GlideImageLoader.glideLoader(aty, success, img_storeLogo, 0, R.mipmap.home_add_shop_logo);
         } else if (flag == 1) {
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
             if (userInfoBean != null && userInfoBean.getData() != null) {
@@ -230,7 +224,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     ll_seller.setVisibility(View.GONE);
                     et_enterNameStore.setText(userInfoBean.getData().getStore_name());
                     store_logo = userInfoBean.getData().getStore_logo();
-                    GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo, R.mipmap.home_add_shop_logo);
                 } else if (disabled == 0) {
                     img_storeLogo.setVisibility(View.GONE);
                     et_enterNameStore.setVisibility(View.GONE);
@@ -249,7 +242,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     store_logo = userInfoBean.getData().getStore_logo();
                     tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
                     img_certified.setImageResource(R.mipmap.home_certified);
-                    GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo1, R.mipmap.home_add_shop_logo);
                 } else if (disabled == 2) {
                     img_storeLogo.setVisibility(View.GONE);
                     et_enterNameStore.setVisibility(View.GONE);
@@ -259,13 +251,13 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     store_logo = userInfoBean.getData().getStore_logo();
                     tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
                     img_certified.setImageResource(R.mipmap.home_disabled);
-                    GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo1, R.mipmap.home_add_shop_logo);
                 } else {
                     img_storeLogo.setVisibility(View.VISIBLE);
                     et_enterNameStore.setVisibility(View.VISIBLE);
                     tv_asManager.setVisibility(View.VISIBLE);
                     ll_seller.setVisibility(View.GONE);
                 }
+                GlideImageLoader.glideLoader(aty, store_logo, img_storeLogo1, 0, R.mipmap.avatar);
             }
         } else if (flag == 2) {
             choicePhotoWrapper();

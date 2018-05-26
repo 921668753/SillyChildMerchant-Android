@@ -1,5 +1,7 @@
 package com.yinglan.scm.homepage;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -13,12 +15,17 @@ public interface ShopkeeperCertificationContract {
         /**
          * 上传图片
          */
-        void upPictures(String paramname);
+        void upPictures(Context context, String paramname);
 
         /**
          * 申请成为店长
          */
-        void postHomePage(String store_logo, String store_name, String id_img);
+        void postHomePage(Context context, String store_logo, String store_name, String id_img);
+
+        /**
+         * 重新申请成为店长
+         */
+        void postReHomePage(Context context, String store_logo, String store_name, String id_img);
     }
 
     interface View extends BaseView<Presenter, String> {

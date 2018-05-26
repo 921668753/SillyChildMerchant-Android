@@ -38,17 +38,18 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        RequestClient.postCaptcha(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 0);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+        httpParams.put("phone", phone);
+        RequestClient.postCaptcha(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 
 
@@ -82,7 +83,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintName1), 0);
             return;
         }
-        if (id_number.length() != 15 || id_number.length() != 18) {
+        if (!(id_number.length() == 15 || id_number.length() == 18)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseidNumber), 0);
             return;
         }
@@ -114,7 +115,8 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("account_name", account_name);
         httpParams.put("id_number", id_number);
-        httpParams.put("open_bank", open_bank);
+        httpParams.put("open_bank", "农业银行");
+        httpParams.put("bank", "农业银行");
         httpParams.put("account_no", account_no);
         httpParams.put("phone", phone);
         httpParams.put("captcha", verificationCode);

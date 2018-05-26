@@ -122,8 +122,10 @@
     <string name="shopkeeperCertificat">店主认证</string>
     <string name="authenticationInformation">认证信息(必填)</string>
     <string name="localIdentityCard">手持当地身份证正面照</string>
+    <string name="localIdentityCard1">请上传手持当地身份证正面照</string>
     <string name="enterName">请输入您的姓名</string>
     <string name="submitAudit">提交审核</string>
+    <string name="submitAudit1">提交成功,请等待审核</string>
 
 
     <!--消息-->

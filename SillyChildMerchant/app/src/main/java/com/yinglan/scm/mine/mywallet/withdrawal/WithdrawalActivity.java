@@ -94,6 +94,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         tv_money.setText(withdrawalAmount);
         if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
             tv_withdrawalBank.setText(getString(R.string.noCard));
+            tv_poundage.setVisibility(View.GONE);
             return;
         }
         tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
@@ -169,6 +170,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
             bankCardName = data.getStringExtra("bankCardName");
             bankCardNun = data.getStringExtra("bankCardNun");
             bankCardId = data.getIntExtra("bankCardId", 0);
+            tv_poundage.setVisibility(View.VISIBLE);
             tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
         }
     }

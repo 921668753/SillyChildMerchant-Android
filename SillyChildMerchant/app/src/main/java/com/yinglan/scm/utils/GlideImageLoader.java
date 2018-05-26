@@ -94,7 +94,7 @@ public class GlideImageLoader implements ImageLoader {
         if (0 == tag) {
             Glide.with(context)
                     .load(url)
-                    //  .skipMemoryCache(true)//设置跳过内存缓存
+//                      .skipMemoryCache(true)//设置跳过内存缓存
 //                    .placeholder(R.mipmap.loading)
                     .error(R.mipmap.avatar)
                     .fallback(R.mipmap.avatar)

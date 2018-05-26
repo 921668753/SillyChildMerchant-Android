@@ -14,6 +14,8 @@ import com.common.cklibrary.entity.BaseResult;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.DataCleanManager;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.common.SystemTool;
@@ -247,6 +249,10 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
             File path = new File((String) baseResult.getData());
             FileNewUtil.installApkFile(this, path.getAbsolutePath());
         } else if (flag == 1) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             skipActivity(aty, LoginActivity.class);
         }
         dismissLoadingDialog();

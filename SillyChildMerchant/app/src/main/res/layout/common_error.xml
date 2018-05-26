@@ -3,13 +3,14 @@
     android:id="@+id/ll_commonError"
     style="@style/MatchAuto"
     android:background="@color/background"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:visibility="gone">
 
     <ImageView
         android:id="@+id/img_err"
         style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen100"
         android:src="@mipmap/no_network" />
 
     <TextView

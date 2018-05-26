@@ -233,6 +233,16 @@
             android:name="com.yinglan.scm.mine.setup.feedback.FeedbackActivity"
             android:screenOrientation="portrait" />
 
+
+
+        <activity
+            android:name="com.yinglan.scm.wxdemo.WxDemoActivity"
+            android:screenOrientation="portrait" />
+
+
+
+
+
         <!--支付宝支付-->
         <!--支付宝支付-->
         <!--支付宝支付-->

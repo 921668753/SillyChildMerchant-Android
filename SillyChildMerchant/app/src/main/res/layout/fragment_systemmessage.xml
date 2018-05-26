@@ -7,7 +7,7 @@
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
-        style="@style/MatchMatch"
+        style="@style/MatchAuto"
         android:background="@color/background"
         android:paddingTop="@dimen/dimen10">
 

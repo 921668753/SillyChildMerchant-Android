@@ -142,7 +142,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
-        intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+        intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
         aty.showActivity(aty, intent);
     }
 
@@ -154,11 +154,11 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         mRefreshLayout.setVisibility(View.VISIBLE);
         GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
         if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             errorMsg(getString(R.string.noOrder), 1);
             return;
         } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
             ViewInject.toast(getString(R.string.noMoreData));
             isShowLoadingMore = false;
             dismissLoadingDialog();
@@ -168,10 +168,10 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(goodOrderBean.getData());
+            mAdapter.addNewData(goodOrderBean.getData().getResultX());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(goodOrderBean.getData());
+            mAdapter.addMoreData(goodOrderBean.getData().getResultX());
         }
         dismissLoadingDialog();
     }
@@ -216,9 +216,9 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.tv_refused) {
-            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrder_id(), 2, "", mAdapter.getItem(position).getOrderprice());
+            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 2, "", mAdapter.getItem(position).getPaymoney());
         } else if (childView.getId() == R.id.tv_agreed) {
-            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrder_id(), 1, "", mAdapter.getItem(position).getOrderprice());
+            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 1, "", mAdapter.getItem(position).getPaymoney());
         }
     }
 }

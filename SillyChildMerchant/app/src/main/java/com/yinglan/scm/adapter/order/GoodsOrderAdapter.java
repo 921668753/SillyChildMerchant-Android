@@ -6,7 +6,7 @@ import android.util.SparseArray;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.Log;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.order.GoodOrderBean.DataBean;
+import com.yinglan.scm.entity.order.GoodOrderBean.DataBean.ListBean;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -16,7 +16,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class GoodsOrderAdapter extends BGAAdapterViewAdapter<DataBean> {
+public class GoodsOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
     private SparseArray<GoodOrderAdapter> countDownCounters;
@@ -36,11 +36,11 @@ public class GoodsOrderAdapter extends BGAAdapterViewAdapter<DataBean> {
     }
 
     @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean listBean) {
-        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getOrderprice());
-        viewHolderHelper.setText(R.id.tv_goodStatus, listBean.getOrderprice());
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean listBean) {
+        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getPaymoney());
+        viewHolderHelper.setText(R.id.tv_goodStatus, listBean.getPaymoney());
         viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + 2 + mContext.getString(R.string.goods));
-        viewHolderHelper.setText(R.id.tv_goodsMoney, listBean.getOrderprice());
+        viewHolderHelper.setText(R.id.tv_goodsMoney, listBean.getPaymoney());
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
         GoodOrderAdapter adapter = new GoodOrderAdapter(mContext);
         clv_shopgoods.setAdapter(adapter);
