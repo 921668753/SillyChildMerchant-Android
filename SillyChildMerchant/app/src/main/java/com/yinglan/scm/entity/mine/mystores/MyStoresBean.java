@@ -4,7 +4,7 @@ import com.common.cklibrary.entity.BaseResult;
 
 import java.util.List;
 
-public class MyStoresBean extends BaseResult<List<MyStoresBean.DataBean>> {
+public class MyStoresBean extends BaseResult<MyStoresBean.DataBean> {
 
 
     /**
@@ -15,128 +15,196 @@ public class MyStoresBean extends BaseResult<List<MyStoresBean.DataBean>> {
 
     public class DataBean {
         /**
-         * face :
-         * impass :
-         * level : 普通会员
-         * imuser :
-         * username : 17051335257
+         * pageSize : 20
+         * totalCount : 0
+         * currentPageNo : 1
+         * draw : 0
+         * totalPageCount : 0
+         * result : []
          */
-        private int goods_id;
-        private String name;
-        private String sn;
-        private int brand_id;
-        private int cat_id;
-        private String unit;
-        private String weight;
-        private int market_enable;
-        private String price;
-        private int store;
-        private int enable_store;
-        private String big;
-        private String small;
 
-        public int getGoods_id() {
-            return goods_id;
+        private int pageSize;
+        private int totalCount;
+        private int currentPageNo;
+        private int draw;
+        private int totalPageCount;
+        private List<ListBean> result;
+
+        public int getPageSize() {
+            return pageSize;
         }
 
-        public void setGoods_id(int goods_id) {
-            this.goods_id = goods_id;
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
         }
 
-        public String getName() {
-            return name;
+        public int getTotalCount() {
+            return totalCount;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setTotalCount(int totalCount) {
+            this.totalCount = totalCount;
         }
 
-        public String getSn() {
-            return sn;
+        public int getCurrentPageNo() {
+            return currentPageNo;
         }
 
-        public void setSn(String sn) {
-            this.sn = sn;
+        public void setCurrentPageNo(int currentPageNo) {
+            this.currentPageNo = currentPageNo;
         }
 
-        public int getBrand_id() {
-            return brand_id;
+        public int getDraw() {
+            return draw;
         }
 
-        public void setBrand_id(int brand_id) {
-            this.brand_id = brand_id;
+        public void setDraw(int draw) {
+            this.draw = draw;
         }
 
-        public int getCat_id() {
-            return cat_id;
+        public int getTotalPageCount() {
+            return totalPageCount;
         }
 
-        public void setCat_id(int cat_id) {
-            this.cat_id = cat_id;
+        public void setTotalPageCount(int totalPageCount) {
+            this.totalPageCount = totalPageCount;
         }
 
-        public String getUnit() {
-            return unit;
+        public List<ListBean> getResult() {
+            return result;
         }
 
-        public void setUnit(String unit) {
-            this.unit = unit;
+        public void setResult(List<ListBean> result) {
+            this.result = result;
         }
 
-        public String getWeight() {
-            return weight;
-        }
+        public class ListBean {
+            /**
+             * face :
+             * impass :
+             * level : 普通会员
+             * imuser :
+             * username : 17051335257
+             */
+            private int goods_id;
+            private String name;
+            private String sn;
+            private int brand_id;
+            private int cat_id;
+            private String unit;
+            private String weight;
+            private int market_enable;
+            private String price;
+            private int store;
+            private int enable_store;
+            private String big;
+            private String small;
 
-        public void setWeight(String weight) {
-            this.weight = weight;
-        }
+            public int getGoods_id() {
+                return goods_id;
+            }
 
-        public int getMarket_enable() {
-            return market_enable;
-        }
+            public void setGoods_id(int goods_id) {
+                this.goods_id = goods_id;
+            }
 
-        public void setMarket_enable(int market_enable) {
-            this.market_enable = market_enable;
-        }
+            public String getName() {
+                return name;
+            }
 
-        public String getPrice() {
-            return price;
-        }
+            public void setName(String name) {
+                this.name = name;
+            }
 
-        public void setPrice(String price) {
-            this.price = price;
-        }
+            public String getSn() {
+                return sn;
+            }
 
-        public int getStore() {
-            return store;
-        }
+            public void setSn(String sn) {
+                this.sn = sn;
+            }
 
-        public void setStore(int store) {
-            this.store = store;
-        }
+            public int getBrand_id() {
+                return brand_id;
+            }
 
-        public int getEnable_store() {
-            return enable_store;
-        }
+            public void setBrand_id(int brand_id) {
+                this.brand_id = brand_id;
+            }
 
-        public void setEnable_store(int enable_store) {
-            this.enable_store = enable_store;
-        }
+            public int getCat_id() {
+                return cat_id;
+            }
 
-        public String getBig() {
-            return big;
-        }
+            public void setCat_id(int cat_id) {
+                this.cat_id = cat_id;
+            }
 
-        public void setBig(String big) {
-            this.big = big;
-        }
+            public String getUnit() {
+                return unit;
+            }
 
-        public String getSmall() {
-            return small;
-        }
+            public void setUnit(String unit) {
+                this.unit = unit;
+            }
 
-        public void setSmall(String small) {
-            this.small = small;
+            public String getWeight() {
+                return weight;
+            }
+
+            public void setWeight(String weight) {
+                this.weight = weight;
+            }
+
+            public int getMarket_enable() {
+                return market_enable;
+            }
+
+            public void setMarket_enable(int market_enable) {
+                this.market_enable = market_enable;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public int getStore() {
+                return store;
+            }
+
+            public void setStore(int store) {
+                this.store = store;
+            }
+
+            public int getEnable_store() {
+                return enable_store;
+            }
+
+            public void setEnable_store(int enable_store) {
+                this.enable_store = enable_store;
+            }
+
+            public String getBig() {
+                return big;
+            }
+
+            public void setBig(String big) {
+                this.big = big;
+            }
+
+            public String getSmall() {
+                return small;
+            }
+
+            public void setSmall(String small) {
+                this.small = small;
+            }
+
+
         }
     }
 }

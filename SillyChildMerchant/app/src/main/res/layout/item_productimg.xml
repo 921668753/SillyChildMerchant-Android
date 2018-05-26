@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchWrap"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dimen10">
 
 
     <ImageView
+        android:id="@+id/iv_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen175"
+        android:padding="@dimen/dimen1"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/home_add_pictures" />
 
-
-</LinearLayout>
+</RelativeLayout>

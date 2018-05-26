@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:background="@color/background"
@@ -34,6 +35,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_classification"
                     style="@style/MatchMatch"
                     android:layout_marginBottom="@dimen/dimen10"
                     android:layout_marginLeft="@dimen/dimen15"
@@ -42,9 +44,10 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:id="@+id/tv_selectCommodityClassification"
                         style="@style/AutoWrap"
                         android:paddingLeft="@dimen/dimen15"
-                        android:text="1"
+                        android:text="@string/pleaseSelect"
                         android:textColor="@color/titletextcolors"
                         android:textSize="@dimen/textsize13" />
 
@@ -63,24 +66,28 @@
                 style="@style/MatchWrap"
                 android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/whiteColors"
-                android:paddingBottom="@dimen/dimen15"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingTop="@dimen/dimen15"
                 android:text="@string/commodityImages"
                 android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize15" />
 
-            <com.common.cklibrary.utils.myview.ChildListView
-                android:id="@+id/clv_productImg"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 style="@style/MatchWrap"
+                android:layout_marginBottom="@dimen/dimen5"
                 android:background="@color/whiteColors"
-                android:divider="@color/background"
-                android:dividerHeight="@dimen/dimen10"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:listSelector="@android:color/transparent"
+                android:paddingBottom="@dimen/dimen15"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen15"
-                android:visibility="gone"
+                android:scrollbarStyle="outsideOverlay"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="1"
                 tools:listitem="@layout/item_productimg" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -506,6 +513,7 @@
             <TextView
                 android:id="@+id/tv_releaseGoods"
                 style="@style/Match40"
+                android:layout_marginBottom="@dimen/dimen15"
                 android:layout_marginLeft="@dimen/dimen68"
                 android:layout_marginRight="@dimen/dimen68"
                 android:layout_marginTop="@dimen/dimen20"

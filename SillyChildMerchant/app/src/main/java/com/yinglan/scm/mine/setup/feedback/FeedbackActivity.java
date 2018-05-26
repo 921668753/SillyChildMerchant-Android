@@ -294,7 +294,6 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Image
             selImageList.addAll(images);
             adapter.setImages(selImageList);
             dismissLoadingDialog();
-
         } else if (flag == 1) {
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.submitSuccess));

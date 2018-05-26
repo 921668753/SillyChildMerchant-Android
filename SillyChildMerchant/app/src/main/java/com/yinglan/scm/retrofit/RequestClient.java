@@ -516,6 +516,25 @@ public class RequestClient {
     }
 
     /**
+     * 获取分类列表
+     */
+    public static void getGoodsType(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getGoodsType");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.GOODSTYPE, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 获取商品分类参数列表
      */
     public static void getGoodsParams(Context context, HttpParams httpParams, ResponseListener<String> listener) {

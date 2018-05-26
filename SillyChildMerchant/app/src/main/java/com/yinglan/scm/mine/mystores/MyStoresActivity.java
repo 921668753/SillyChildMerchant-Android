@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
@@ -18,11 +21,14 @@ import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.MyStoresViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
+import com.yinglan.scm.entity.mine.mystores.GoodsTypeBean;
 import com.yinglan.scm.entity.mine.mystores.MyStoresBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.mine.mystores.dialog.SubmitBouncedDialog;
 import com.yinglan.scm.mine.mystores.productdetails.ProductDetailsActivity;
 import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity;
+
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -38,6 +44,10 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
 
     @BindView(id = R.id.ll_classification, click = true)
     private LinearLayout ll_classification;
+
+    @BindView(id = R.id.tv_classification)
+    private TextView tv_classification;
+
 
     @BindView(id = R.id.ll_allState, click = true)
     private LinearLayout ll_allState;
@@ -90,6 +100,9 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     private String store = "DESC";
     private String price = "DESC";
 
+    private OptionsPickerView pvOptions;
+    private List<GoodsTypeBean.DataBean> typeList;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_mystores);
@@ -101,6 +114,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         mPresenter = new MyStoresPresenter(this);
         myStoresViewAdapter = new MyStoresViewAdapter(this);
         initDialog();
+        selectBankName();
         showLoadingDialog(getString(R.string.dataLoad));
         ((MyStoresContract.Presenter) mPresenter).getClassificationList();
     }
@@ -121,6 +135,22 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     }
 
 
+    /**
+     * 选择分类名称
+     */
+    @SuppressWarnings("unchecked")
+    private void selectBankName() {
+        pvOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                catId = typeList.get(options1).getCat_id();
+                ((TextView) v).setText(typeList.get(options1).getName());
+                mRefreshLayout.beginRefreshing();
+            }
+        }).build();
+    }
+
     @Override
     public void initWidget() {
         super.initWidget();
@@ -129,7 +159,6 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         lv_myStores.setAdapter(myStoresViewAdapter);
         lv_myStores.setOnItemClickListener(this);
         myStoresViewAdapter.setOnItemChildClickListener(this);
-        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -137,7 +166,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_classification:
-
+                pvOptions.show(tv_classification);
                 break;
             case R.id.ll_allState:
                 if (type == 1) {
@@ -230,6 +259,12 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
+            GoodsTypeBean goodsTypeBean = (GoodsTypeBean) JsonUtil.json2Obj(success, GoodsTypeBean.class);
+            if (goodsTypeBean.getData() != null && goodsTypeBean.getData().size() > 0) {
+                typeList = goodsTypeBean.getData();
+                pvOptions.setPicker(typeList);
+            }
+            mRefreshLayout.beginRefreshing();
         } else if (flag == 1) {
             isShowLoadingMore = true;
             mRefreshLayout.setPullDownRefreshEnable(true);
@@ -237,11 +272,11 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             mRefreshLayout.setVisibility(View.VISIBLE);
             MyStoresBean myStoresBean = (MyStoresBean) JsonUtil.getInstance().json2Obj(success, MyStoresBean.class);
             if (myStoresBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                    myStoresBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                    myStoresBean.getData().getResult().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 errorMsg(getString(R.string.notGetMerchandise), 1);
                 return;
             } else if (myStoresBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                    myStoresBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                    myStoresBean.getData().getResult().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
                 ViewInject.toast(getString(R.string.noMoreData));
                 isShowLoadingMore = false;
                 dismissLoadingDialog();
@@ -251,21 +286,24 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 myStoresViewAdapter.clear();
-                myStoresViewAdapter.addNewData(myStoresBean.getData());
+                myStoresViewAdapter.addNewData(myStoresBean.getData().getResult());
             } else {
                 mRefreshLayout.endLoadingMore();
-                myStoresViewAdapter.addMoreData(myStoresBean.getData());
+                myStoresViewAdapter.addMoreData(myStoresBean.getData().getResult());
             }
+            dismissLoadingDialog();
         } else if (flag == 2) {
             img_shelves.setImageResource(R.mipmap.shop_shelves_icon);
             tv_inSale.setText(getString(R.string.hasOffShelves));
             tv_inSale.setTextColor(getResources().getColor(R.color.hintColors));
+            dismissLoadingDialog();
         } else if (flag == 3) {
             img_shelves.setImageResource(R.mipmap.shop_the_shelves_icon);
             tv_inSale.setText(getString(R.string.inSale));
             tv_inSale.setTextColor(getResources().getColor(R.color.greenColors));
+            dismissLoadingDialog();
         }
-        dismissLoadingDialog();
+
     }
 
     @Override
@@ -304,6 +342,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             tv_button.setText(getString(R.string.retry));
         }
     }
+
 
     @Override
     protected void onDestroy() {

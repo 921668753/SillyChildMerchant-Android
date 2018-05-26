@@ -1,10 +1,18 @@
 package com.yinglan.scm.mine.mystores.releasegoods;
 
 import com.common.cklibrary.common.KJActivityStack;
+import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.utils.BitmapCoreUtil;
+import com.common.cklibrary.utils.DataCleanManager;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.nanchen.compresshelper.FileUtil;
+import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
+
+import java.io.File;
 
 
 /**
@@ -23,11 +31,7 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
     @Override
     public void getClassificationList() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-//        httpParams.put("catId", catId);
-//        httpParams.put("type", type);
-//        httpParams.put("store", store);
-//        httpParams.put("price", price);
-        RequestClient.getGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.getGoodsType(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -36,6 +40,57 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
             @Override
             public void onFailure(String msg) {
                 mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+    @Override
+    public void getGoodsParams(int typeId) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("typeId", typeId);
+        RequestClient.getGoodsType(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 1);
+            }
+        });
+    }
+
+    @Override
+    public void upPictures(String imgPath) {
+        if (StringUtils.isEmpty(imgPath)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 0);
+            return;
+        }
+        File oldFile = new File(imgPath);
+        if (!(FileUtil.isFileExists(oldFile))) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.imagePathError), 0);
+            return;
+        }
+        long fileSize = 0;
+        try {
+            fileSize = DataCleanManager.getFileSize(oldFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileSize = 0;
+        }
+        if (fileSize >= StringConstants.COMPRESSION_SIZE) {
+            oldFile = BitmapCoreUtil.customCompression(oldFile);
+        }
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), oldFile, 0, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 2);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 2);
             }
         });
     }
@@ -60,12 +115,12 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
         RequestClient.postGoodAddAndEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
+                mView.getSuccess(response, 3);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
+                mView.errorMsg(msg, 3);
             }
         });
     }

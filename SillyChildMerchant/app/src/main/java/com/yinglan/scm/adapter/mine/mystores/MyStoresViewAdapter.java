@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.mine.mystores.MyStoresBean.DataBean;
+import com.yinglan.scm.entity.mine.mystores.MyStoresBean.DataBean.ListBean;
 import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
@@ -13,7 +13,7 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 /**
  * 我的店铺
  */
-public class MyStoresViewAdapter extends BGAAdapterViewAdapter<DataBean> {
+public class MyStoresViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
     public MyStoresViewAdapter(Context context) {
         super(context, R.layout.item_mystores);
@@ -26,7 +26,7 @@ public class MyStoresViewAdapter extends BGAAdapterViewAdapter<DataBean> {
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper viewHolderHelper, int position, DataBean model) {
+    protected void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean model) {
         GlideImageLoader.glideOrdinaryLoader(mContext, model.getSmall(), (ImageView) viewHolderHelper.getView(R.id.img_good), R.mipmap.placeholderfigure1);
         viewHolderHelper.setText(R.id.tv_goodName, model.getName());
         viewHolderHelper.setText(R.id.tv_warehouseInventory, model.getStore() + model.getUnit());
