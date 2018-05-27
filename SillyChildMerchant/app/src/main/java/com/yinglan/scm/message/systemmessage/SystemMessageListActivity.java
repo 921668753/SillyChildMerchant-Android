@@ -36,7 +36,7 @@ import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE;
 public class SystemMessageListActivity extends BaseActivity implements SystemMessageListContract.View, BGARefreshLayout.BGARefreshLayoutDelegate, AdapterView.OnItemClickListener {
 
     @BindView(id = R.id.mRefreshLayout)
-    private static BGARefreshLayout mRefreshLayout;
+    private BGARefreshLayout mRefreshLayout;
 
     private SystemMessageListViewAdapter mAdapter;
 

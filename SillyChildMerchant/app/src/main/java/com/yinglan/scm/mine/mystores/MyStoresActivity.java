@@ -39,7 +39,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  */
 public class MyStoresActivity extends BaseActivity implements MyStoresContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
 
-    @BindView(id = R.id.mRefreshLayout, click = true)
+    @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
     @BindView(id = R.id.ll_classification, click = true)
