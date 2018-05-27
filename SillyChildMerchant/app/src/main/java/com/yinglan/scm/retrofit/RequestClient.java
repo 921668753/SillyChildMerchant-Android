@@ -653,7 +653,7 @@ public class RequestClient {
      * 获取钱包余额
      */
     public static void getMyWallet(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        Log.d("tag", "getInfo");
+        Log.d("tag", "getMyWallet");
         doServer(context, new TokenCallback() {
             @Override
             public void execute() {

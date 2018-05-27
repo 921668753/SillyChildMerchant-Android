@@ -118,7 +118,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.addBankCard), true, R.id.titlebar);
-        changeInputView(et_phone, tv_verificationCode);
+        changeInputView(et_phone);
     }
 
     @Override
@@ -230,7 +230,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
      * 监听EditText输入改变
      */
     @SuppressWarnings("deprecation")
-    public void changeInputView(final EditText editText, final View view) {
+    public void changeInputView(EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -239,21 +239,10 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (editText.getText().toString().length() > 0) {
-                    if (view != null) {
-                        view.setVisibility(View.VISIBLE);
-                    }
-                    if (et_phone.getText().length() == 11) {
-                        tv_verificationCode.setClickable(true);
-                        tv_verificationCode.setBackgroundResource(R.drawable.shape_login1);
-                    } else {
-                        tv_verificationCode.setClickable(false);
-                        tv_verificationCode.setBackgroundResource(R.drawable.shape_login);
-                    }
+                if (editText.getText().toString().length() == 11) {
+                    tv_verificationCode.setClickable(true);
+                    tv_verificationCode.setBackgroundResource(R.drawable.shape_login1);
                 } else {
-                    if (view != null) {
-                        view.setVisibility(View.GONE);
-                    }
                     tv_verificationCode.setClickable(false);
                     tv_verificationCode.setBackgroundResource(R.drawable.shape_login);
                 }

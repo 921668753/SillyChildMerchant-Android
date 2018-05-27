@@ -158,6 +158,7 @@ public class MyApplication extends Application {
                      */
                     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
                     HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                    httpParams.put("rong_cloud", userid);
                     RequestClient.getRongCloud(getContext(), httpParams, new ResponseListener<String>() {
                         @Override
                         public void onSuccess(String response) {

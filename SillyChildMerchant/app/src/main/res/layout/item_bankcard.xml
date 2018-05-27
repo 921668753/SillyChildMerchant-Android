@@ -19,7 +19,7 @@
         android:id="@+id/tv_cardName"
         style="@style/WrapWrap"
         android:paddingLeft="@dimen/dimen78"
-        android:paddingTop="@dimen/dimen30"
+        android:paddingTop="@dimen/dimen25"
         android:text="*某"
         android:textColor="@color/whiteColors"
         android:textSize="@dimen/textsize17" />
@@ -37,8 +37,9 @@
     <TextView
         android:id="@+id/tv_tail"
         style="@style/WrapWrap"
-        android:layout_below="@id/tv_bankCardName"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/dimen35"
+        android:paddingBottom="@dimen/dimen20"
         android:paddingLeft="@dimen/dimen78"
         android:paddingTop="@dimen/dimen5"
         android:text="621700**********6342"
