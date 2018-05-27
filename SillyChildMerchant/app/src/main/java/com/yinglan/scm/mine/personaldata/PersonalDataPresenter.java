@@ -67,7 +67,7 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
     @Override
     public void getInfo() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getStoreInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.getInfo(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
@@ -97,8 +97,6 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
                 mView.errorMsg(msg, 2);
             }
         });
-
-
     }
 
 

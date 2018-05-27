@@ -78,6 +78,9 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @BindView(id = R.id.ll_selfIntroduction, click = true)
     private LinearLayout ll_selfIntroduction;
 
+    @BindView(id = R.id.tv_selfIntroduction)
+    private TextView tv_selfIntroduction;
+
     @BindView(id = R.id.recyclerView)
     private RecyclerView recyclerView;
 
@@ -378,6 +381,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                         tv_gender.setText(getString(R.string.secret));
                     }
                     selfIntroduction = personalDataBean.getData().getRemark();
+                    tv_selfIntroduction.setText(personalDataBean.getData().getRemark());
 //                    photo
 //                    adapter.setImages(selImageList);
                 }

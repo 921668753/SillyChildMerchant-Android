@@ -134,13 +134,14 @@
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize14" />
 
-
                 <TextView
+                    android:id="@+id/tv_selfIntroduction"
                     style="@style/AutoMatch"
                     android:gravity="right|center_vertical"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:singleLine="true"
                     android:textColor="@color/hintColors"
                     android:textSize="@dimen/textsize13" />
-
 
                 <ImageView
                     style="@style/Image812"
