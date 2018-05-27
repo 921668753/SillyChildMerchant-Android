@@ -19,8 +19,10 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.RongCloudBean;
 import com.yinglan.scm.entity.mine.personaldata.PersonalDataBean;
 import com.yinglan.scm.message.interactivemessage.rongcloud.SealAction;
 import com.yinglan.scm.message.interactivemessage.rongcloud.UserInfoEngine;
@@ -233,22 +235,21 @@ public class SealUserInfoManager implements OnDataListener {
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
                     return;
                 }
-
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                RequestClient.getInfo(mContext, httpParams, new ResponseListener<String>() {
+                httpParams.put("rong_cloud", userId);
+                RequestClient.getRongCloud(mContext, httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        PersonalDataBean personalDataBean = (PersonalDataBean) JsonUtil.getInstance().json2Obj(response, PersonalDataBean.class);
-                        if (personalDataBean != null && RongIM.getInstance() != null) {
-                            String userid = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId");
-                            UserInfo userInfo = new UserInfo(userid, personalDataBean.getData().getNickname(), Uri.parse(personalDataBean.getData().getFace()));
+                        RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
+                        if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
+                            UserInfo userInfo = new UserInfo(userId + "", rongCloudBean.getData().getNickName(), Uri.parse(rongCloudBean.getData().getFace()));
                             RongIM.getInstance().refreshUserInfoCache(userInfo);
                         }
                     }
-
                     @Override
                     public void onFailure(String msg) {
-                        ViewInject.toast(mContext.getString(R.string.failedCloudInformation));
+                        Log.d("RongYun", "onFailure");
+                        ViewInject.toast(mContext, mContext.getString(R.string.failedCloudInformation));
                     }
                 });
             }

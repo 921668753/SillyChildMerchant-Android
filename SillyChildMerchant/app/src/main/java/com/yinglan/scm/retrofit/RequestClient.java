@@ -91,8 +91,10 @@ public class RequestClient {
     private static void upLoadImgQiNiuYun(Context context, File file, ResponseListener<String> listener) {
         String token = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuToken");
         //     if (type == 0) {
+        String key = "SHZS_" + UserUtil.getRcId(context) + "_" + file.getName();
+        Log.d("ReadFragment", "key" + key);
         //参数 图片路径,图片名,token,成功的回调
-        UploadManagerUtil.getInstance().getUploadManager().put(file.getPath(), file.getName(), token, new UpCompletionHandler() {
+        UploadManagerUtil.getInstance().getUploadManager().put(file.getPath(), key, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
                 Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
@@ -169,6 +171,24 @@ public class RequestClient {
      */
     public static void getAppConfig(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         HttpRequest.requestGetHttp(context, URLConstants.APPCONFIG, httpParams, listener);
+    }
+
+    /**
+     * 根据融云token获取头像性别昵称
+     */
+    public static void getRongCloud(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.SYSRONGCLOUD, httpParams, listener);
+            }
+        }, listener);
     }
 
     /**

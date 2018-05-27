@@ -35,6 +35,11 @@ public class URLConstants {
     public static String APPCONFIG = APIURL + "appConfig";
 
     /**
+     * 根据融云token获取头像性别昵称
+     */
+    public static String SYSRONGCLOUD = APIURL + "sys/rongCloud.do";
+
+    /**
      * 置换Token  get请求
      */
     public static String REFRESHTOKEN = APIURL + "m=Api&c=User&a=flashToken";
