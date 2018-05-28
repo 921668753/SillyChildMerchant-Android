@@ -22,10 +22,10 @@ public interface ShopkeeperCertificationContract {
          */
         void postHomePage(Context context, String store_logo, String store_name, String id_img);
 
-        /**
-         * 重新申请成为店长
-         */
-        void postReHomePage(Context context, String store_logo, String store_name, String id_img);
+//        /**
+//         * 重新申请成为店长
+//         */
+//        void postReHomePage(Context context, String store_logo, String store_name, String id_img);
     }
 
     interface View extends BaseView<Presenter, String> {

@@ -88,28 +88,28 @@ public class ShopkeeperCertificationPresenter implements ShopkeeperCertification
 
     }
 
-    @Override
-    public void postReHomePage(Context context, String store_logo, String store_name, String id_img) {
-        if (StringUtils.isEmpty(id_img)) {
-            mView.errorMsg(context.getString(R.string.localIdentityCard1), 1);
-            return;
-        }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("store_logo", store_logo);
-        httpParams.put("store_name", store_name);
-        httpParams.put("id_img", id_img);
-        RequestClient.postReHomePage(context, httpParams, new ResponseListener<String>() {
-
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
-            }
-        });
-
-    }
+//    @Override
+//    public void postReHomePage(Context context, String store_logo, String store_name, String id_img) {
+//        if (StringUtils.isEmpty(id_img)) {
+//            mView.errorMsg(context.getString(R.string.localIdentityCard1), 1);
+//            return;
+//        }
+//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        httpParams.put("store_logo", store_logo);
+//        httpParams.put("store_name", store_name);
+//        httpParams.put("id_img", id_img);
+//        RequestClient.postReHomePage(context, httpParams, new ResponseListener<String>() {
+//
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 1);
+//            }
+//        });
+//
+//    }
 }

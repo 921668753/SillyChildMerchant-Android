@@ -92,6 +92,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private ImagePicker imagePicker;
 
     private List<ImageItem> selImageList;
+
     private List<ImageItem> images;
     // private List<String> urllist;
     private ImagePickerAdapter adapter;

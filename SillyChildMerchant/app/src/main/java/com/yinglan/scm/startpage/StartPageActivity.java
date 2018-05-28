@@ -39,7 +39,6 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 public class StartPageActivity extends BaseInstrumentedActivity implements StartPageContract.View, EasyPermissions.PermissionCallbacks {
-    private StartPageContract.Presenter mPresenter;
     // private LocationClient mLocationClient;
     //  private MyLocationListener myListener;
 

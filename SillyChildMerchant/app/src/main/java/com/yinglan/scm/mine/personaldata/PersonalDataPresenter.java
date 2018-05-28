@@ -84,7 +84,7 @@ public class PersonalDataPresenter implements PersonalDataContract.Presenter {
     public void postMemberEdit(String imgUrl) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("imgUrl", imgUrl);
+        map.put("face", imgUrl);
         httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postMemberEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override

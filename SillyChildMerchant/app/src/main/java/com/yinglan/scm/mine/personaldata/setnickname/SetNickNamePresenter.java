@@ -33,7 +33,7 @@ public class SetNickNamePresenter implements SetNickNameContract.Presenter {
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("nickName", nickName);
+        map.put("nickname", nickName);
         httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postMemberEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override

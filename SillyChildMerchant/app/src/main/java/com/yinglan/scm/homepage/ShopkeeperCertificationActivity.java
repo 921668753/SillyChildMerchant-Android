@@ -102,12 +102,7 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
                 break;
             case R.id.tv_submitAudit:
                 showLoadingDialog(getString(R.string.submissionLoad));
-                int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
-                if (disabled != -1) {
-                    ((ShopkeeperCertificationContract.Presenter) mPresenter).postHomePage(this, store_logo, store_name, id_img);
-                } else {
-                    ((ShopkeeperCertificationContract.Presenter) mPresenter).postReHomePage(this, store_logo, store_name, id_img);
-                }
+                ((ShopkeeperCertificationContract.Presenter) mPresenter).postHomePage(this, store_logo, store_name, id_img);
                 break;
         }
     }

@@ -7,13 +7,13 @@
         style="@style/MatchWrap"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        android:padding="@dimen/dimen10"
+        android:padding="@dimen/dimen7"
         android:src="@mipmap/feedback_add_pictures" />
 
     <ImageView
         android:id="@+id/iv_delete"
-        android:layout_width="@dimen/dimen20"
-        android:layout_height="@dimen/dimen20"
+        android:layout_width="@dimen/dimen14"
+        android:layout_height="@dimen/dimen14"
         android:layout_alignParentRight="true"
         android:src="@mipmap/mine_dislodge" />
 

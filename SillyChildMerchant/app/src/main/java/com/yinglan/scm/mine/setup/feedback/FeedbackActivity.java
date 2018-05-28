@@ -17,9 +17,6 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ImagePreviewNoDelActivity;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
-import com.common.cklibrary.utils.GlideCatchUtil;
-import com.common.cklibrary.utils.JsonUtil;
-import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -28,7 +25,6 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.ImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
-import com.yinglan.scm.entity.UploadImageBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 

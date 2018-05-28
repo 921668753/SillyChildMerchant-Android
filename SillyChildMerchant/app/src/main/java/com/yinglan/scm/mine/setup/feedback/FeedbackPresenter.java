@@ -76,9 +76,16 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("type", feedType);
         if (imgs.size() > 0) {
-            String[] imgsStr = new String[imgs.size()];
-            imgs.toArray(imgsStr);
-            httpParams.put("imgUrls", JsonUtil.getInstance().obj2JsonString(imgsStr));
+//            String[] imgsStr = new String[imgs.size()];
+//            imgs.toArray(imgsStr);
+//            httpParams.put("imgUrls", JsonUtil.getInstance().obj2JsonString(imgsStr));
+            if (imgs.size() > 0) {
+                String imgsStr = "";
+                for (int i = 0; i < imgs.size(); i++) {
+                    imgsStr = imgsStr + "," + imgs.get(i);
+                }
+                httpParams.put("imgUrls", imgsStr.substring(1));
+            }
         }
         httpParams.put("text", content);
         RequestClient.postAdvice(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
