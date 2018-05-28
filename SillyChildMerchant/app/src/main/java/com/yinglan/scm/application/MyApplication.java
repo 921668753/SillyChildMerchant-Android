@@ -30,6 +30,7 @@ import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -155,17 +156,6 @@ public class MyApplication extends Application {
                      * 获取用户信息
                      */
                     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
-
-                    /**
-                     * 设置用户信息的提供者，供 RongIM 调用获取用户名称和头像信息。
-                     *
-                     * @param userInfoProvider 用户信息提供者。
-                     * @param isCacheUserInfo  设置是否由 IMKit 来缓存用户信息。<br>
-                     *                         如果 App 提供的 UserInfoProvider
-                     *                         每次都需要通过网络请求用户数据，而不是将用户数据缓存到本地内存，会影响用户信息的加载速度；<br>
-                     *                         此时最好将本参数设置为 true，由 IMKit 将用户信息缓存到本地内存中。
-                     * @see UserInfoProvider
-                     */
                     RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                         @Override
                         public UserInfo getUserInfo(String userId) {
@@ -177,7 +167,8 @@ public class MyApplication extends Application {
                                     RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
                                     if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
                                         UserInfo userInfo = new UserInfo(userId + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
-                                        RongIM.getInstance().refreshUserInfoCache(userInfo);;
+                                        RongIM.getInstance().refreshUserInfoCache(userInfo);
+                                        RongContext.getInstance().setCurrentUserInfo(userInfo);
                                     }
                                 }
 
@@ -189,7 +180,7 @@ public class MyApplication extends Application {
                             return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
                         }
 
-                    }, true);
+                    }, false);
                 }
 
                 /**

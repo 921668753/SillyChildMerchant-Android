@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.common.cklibrary.common.BaseSupportFragment;
+import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
@@ -42,7 +42,7 @@ import static com.yinglan.scm.main.MainActivity.MESSAGE_RECEIVED_ACTION;
  * Created by Admin on 2017/8/17.
  */
 
-public class SystemMessageFragment extends BaseSupportFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class SystemMessageFragment extends BaseFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
     private static BGARefreshLayout mRefreshLayout;

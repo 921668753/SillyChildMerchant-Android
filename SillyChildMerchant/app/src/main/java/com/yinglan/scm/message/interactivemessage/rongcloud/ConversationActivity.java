@@ -21,16 +21,24 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.httputil.HttpUtilParams;
+import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.StringUtils;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.RongCloudBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.message.interactivemessage.rongcloud.ui.ConversationFragmentEx;
 import com.yinglan.scm.message.interactivemessage.rongcloud.ui.RongBaseActivity;
 import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scm.retrofit.RequestClient;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongKitIntent;
 import io.rong.imkit.fragment.UriFragment;
@@ -51,7 +59,7 @@ import io.rong.message.VoiceMessage;
  * 2，加载会话页面
  * 3，push 和 通知 判断
  */
-public class ConversationActivity extends RongBaseActivity implements View.OnClickListener {
+public class ConversationActivity extends RongBaseActivity implements View.OnClickListener,RongIM.UserInfoProvider {
 
     private String TAG = ConversationActivity.class.getSimpleName();
     /**
@@ -122,7 +130,7 @@ public class ConversationActivity extends RongBaseActivity implements View.OnCli
 
         setActionBarTitle(mConversationType, mTargetId);
 
-
+        RongIM.setUserInfoProvider(this, true);
         if (mConversationType.equals(Conversation.ConversationType.GROUP)) {
             mRightButton.setBackground(getResources().getDrawable(R.mipmap.icon2_menu));
         } else if (mConversationType.equals(Conversation.ConversationType.PRIVATE)
@@ -630,5 +638,10 @@ public class ConversationActivity extends RongBaseActivity implements View.OnCli
                 KJActivityStack.create().finishActivity(this);
             }
         }
+    }
+
+    @Override
+    public UserInfo getUserInfo(String userId) {
+        return RongContext.getInstance().getUserInfoFromCache(userId);
     }
 }

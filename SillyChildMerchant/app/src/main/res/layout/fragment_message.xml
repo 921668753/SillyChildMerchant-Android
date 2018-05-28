@@ -42,19 +42,19 @@
 
     <TextView style="@style/DividerWidth" />
 
-    <!--<FrameLayout-->
-    <!--android:id="@+id/main_content"-->
-    <!--style="@style/MatchAuto" />-->
+    <FrameLayout
+        android:id="@+id/main_content"
+        style="@style/MatchAuto" />
 
-    <LinearLayout
-        android:id="@+id/ll_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical" />
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/background"-->
+    <!--android:orientation="vertical" />-->
 
 
-    <include layout="@layout/common_error" />
+    <!--<include layout="@layout/common_error" />-->
 
 
 </LinearLayout>
