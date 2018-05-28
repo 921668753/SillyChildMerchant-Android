@@ -236,15 +236,15 @@ public class SealUserInfoManager implements OnDataListener {
                     return;
                 }
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                httpParams.put("rong_cloud", userId);
+                httpParams.put("userId", userId);
                 RequestClient.getRongCloud(mContext, httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
                         RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
                         if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
-                            UserInfo userInfo = new UserInfo(userId + "", rongCloudBean.getData().getNickName(), Uri.parse(rongCloudBean.getData().getFace()));
-                            RongIM.getInstance().refreshUserInfoCache(userInfo);
+                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(userId + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace())));
                         }
+
                     }
                     @Override
                     public void onFailure(String msg) {

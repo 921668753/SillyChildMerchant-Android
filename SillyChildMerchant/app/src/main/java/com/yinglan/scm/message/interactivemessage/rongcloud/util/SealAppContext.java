@@ -75,12 +75,12 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
 
     private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
 
-  //  private static ArrayList<Activity> mActivities;
+    //  private static ArrayList<Activity> mActivities;
 
     public SealAppContext(Context mContext) {
         this.mContext = mContext;
         initListener();
-      //  mActivities = new ArrayList<>();
+        //  mActivities = new ArrayList<>();
         SealUserInfoManager.init(mContext);
     }
 
@@ -377,7 +377,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
      */
     @Override
     public UserInfo getUserInfo(String s) {
-     //   UserInfoEngine.getInstance(mContext).startEngine(s);
+        //   UserInfoEngine.getInstance(mContext).startEngine(s);
         SealUserInfoManager.getInstance().getUserInfo(s);
         return null;
     }
@@ -391,7 +391,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
 
     @Override
     public GroupUserInfo getGroupUserInfo(String groupId, String userId) {
-        //return GroupUserInfoEngine.getInstance(mContext).startEngine(groupId, userId);
+        // return GroupUserInfoEngine.getInstance(mContext).startEngine(groupId, userId);
         return null;
     }
 

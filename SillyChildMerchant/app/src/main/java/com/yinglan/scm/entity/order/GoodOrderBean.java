@@ -8,7 +8,7 @@ import java.util.List;
 public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
 
 
-    public static class DataBean {
+    public class DataBean {
         /**
          * result : []
          * pageSize : 20

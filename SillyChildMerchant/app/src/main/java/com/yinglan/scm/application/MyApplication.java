@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.GlideCatchUtil;
 
 import com.common.cklibrary.utils.JsonUtil;
@@ -21,6 +22,7 @@ import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.yinglan.scm.BuildConfig;
+import com.yinglan.scm.R;
 import com.yinglan.scm.entity.RongCloudBean;
 import com.yinglan.scm.message.interactivemessage.rongcloud.util.SealAppContext;
 import com.yinglan.scm.message.interactivemessage.rongcloud.util.SealUserInfoManager;
@@ -130,6 +132,7 @@ public class MyApplication extends Application {
         SealAppContext.init(this);//初始化融云相关监听 事件集合类
         openSealDBIfHasCachedToken();//打开融云本地数据库
         String rcToken = UserUtil.getResTokenInfo(this);
+        Log.i("XJ", "application--RongIM.connect--onSuccess" + rcToken);
         if (!StringUtils.isEmpty(rcToken)) {
             RongIM.connect(rcToken, new RongIMClient.ConnectCallback() {
 
@@ -153,14 +156,13 @@ public class MyApplication extends Application {
                      */
                     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
                     HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                    httpParams.put("rong_cloud", userid);
+                    httpParams.put("userId", userid);
                     RequestClient.getRongCloud(getApplicationContext(), httpParams, new ResponseListener<String>() {
                         @Override
                         public void onSuccess(String response) {
                             RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
-
                             if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
-                                UserInfo userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickName(), Uri.parse(rongCloudBean.getData().getFace()));
+                                UserInfo userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
                                 RongIM.getInstance().setCurrentUserInfo(userInfo);
                             }
                             RongIM.getInstance().setMessageAttachedUserInfo(true);
@@ -184,6 +186,9 @@ public class MyApplication extends Application {
             });
         }
     }
+
+
+
 
     private void openSealDBIfHasCachedToken() {
         String rcToken = UserUtil.getResTokenInfo(this);

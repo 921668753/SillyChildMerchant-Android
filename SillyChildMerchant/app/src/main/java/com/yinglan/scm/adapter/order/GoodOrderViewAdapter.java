@@ -15,9 +15,9 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class GoodOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
+public class GoodOrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
-    public GoodOrderAdapter(Context context) {
+    public GoodOrderViewAdapter(Context context) {
         super(context, R.layout.item_shopgoodsup);
     }
 

@@ -17,16 +17,13 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scm.R;
-import com.yinglan.scm.adapter.order.GoodsOrderAdapter;
+import com.yinglan.scm.adapter.order.GoodsOrderViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.entity.order.GoodOrderBean;
-import com.yinglan.scm.entity.order.GoodOrderBean.DataBean;
 import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
 import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
-
-import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -40,7 +37,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
 
     private MainActivity aty;
 
-    private GoodsOrderAdapter mAdapter;
+    private GoodsOrderViewAdapter mAdapter;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -88,7 +85,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     protected void initData() {
         super.initData();
         mPresenter = new GoodOrderPresenter(this);
-        mAdapter = new GoodsOrderAdapter(aty);
+        mAdapter = new GoodsOrderViewAdapter(aty);
     }
 
     @Override

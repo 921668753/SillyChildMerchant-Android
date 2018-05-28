@@ -17,7 +17,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.yinglan.scm.R;
-import com.yinglan.scm.adapter.order.GoodsOrderAdapter;
+import com.yinglan.scm.adapter.order.GoodsOrderViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.order.GoodOrderBean;
 import com.yinglan.scm.loginregister.LoginActivity;
@@ -36,7 +36,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
 
     private MainActivity aty;
 
-    private GoodsOrderAdapter mAdapter;
+    private GoodsOrderViewAdapter mAdapter;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -85,7 +85,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
     protected void initData() {
         super.initData();
         mPresenter = new GoodOrderPresenter(this);
-        mAdapter = new GoodsOrderAdapter(aty);
+        mAdapter = new GoodsOrderViewAdapter(aty);
     }
 
     @Override

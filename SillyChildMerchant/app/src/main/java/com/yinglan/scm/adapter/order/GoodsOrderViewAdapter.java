@@ -16,12 +16,12 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
  * Created by Admin on 2017/8/15.
  */
 
-public class GoodsOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
+public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
-    private SparseArray<GoodOrderAdapter> countDownCounters;
+    private SparseArray<GoodOrderViewAdapter> countDownCounters;
 
-    public GoodsOrderAdapter(Context context) {
+    public GoodsOrderViewAdapter(Context context) {
         super(context, R.layout.item_goodsorder);
         this.countDownCounters = new SparseArray<>();
     }
@@ -42,7 +42,7 @@ public class GoodsOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
         viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + 2 + mContext.getString(R.string.goods));
         viewHolderHelper.setText(R.id.tv_goodsMoney, listBean.getPaymoney());
         ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
-        GoodOrderAdapter adapter = new GoodOrderAdapter(mContext);
+        GoodOrderViewAdapter adapter = new GoodOrderViewAdapter(mContext);
         clv_shopgoods.setAdapter(adapter);
         adapter.clear();
         //   adapter.addNewData(charterOrderBean.getResult().getList());
@@ -83,7 +83,7 @@ public class GoodsOrderAdapter extends BGAAdapterViewAdapter<ListBean> {
         }
         Log.e("TAG", "size :  " + countDownCounters.size());
         for (int i = 0, length = countDownCounters.size(); i < length; i++) {
-            GoodOrderAdapter cdt = countDownCounters.get(countDownCounters.keyAt(i));
+            GoodOrderViewAdapter cdt = countDownCounters.get(countDownCounters.keyAt(i));
             if (cdt != null) {
                 cdt.clear();
                 cdt = null;

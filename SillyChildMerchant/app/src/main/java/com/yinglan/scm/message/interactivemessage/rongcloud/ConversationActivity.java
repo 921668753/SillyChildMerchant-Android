@@ -124,21 +124,21 @@ public class ConversationActivity extends RongBaseActivity implements View.OnCli
 
 
         if (mConversationType.equals(Conversation.ConversationType.GROUP)) {
-             mRightButton.setBackground(getResources().getDrawable(R.mipmap.icon2_menu));
+            mRightButton.setBackground(getResources().getDrawable(R.mipmap.icon2_menu));
         } else if (mConversationType.equals(Conversation.ConversationType.PRIVATE)
                 || mConversationType.equals(Conversation.ConversationType.PUBLIC_SERVICE)
                 || mConversationType.equals(Conversation.ConversationType.APP_PUBLIC_SERVICE)
                 || mConversationType.equals(Conversation.ConversationType.DISCUSSION)) {
-               mRightButton.setBackground(getResources().getDrawable(R.mipmap.icon1_menu));
+            mRightButton.setBackground(getResources().getDrawable(R.mipmap.icon1_menu));
         } else {
             mRightButton.setVisibility(View.GONE);
             mRightButton.setClickable(false);
         }
-          mRightButton.setOnClickListener(this);
+        mRightButton.setOnClickListener(this);
 
         isPushMessage(intent);
         if (mConversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)) {
-               setAnnounceListener();
+            setAnnounceListener();
         }
 
         mHandler = new Handler(new Handler.Callback() {
@@ -309,7 +309,7 @@ public class ConversationActivity extends RongBaseActivity implements View.OnCli
             //   Log.e("ConversationActivity push", "push2");
             startActivity(new Intent(ConversationActivity.this, LoginActivity.class));
             KJActivityStack.create().finishAllActivity();
-          //  SealAppContext.getInstance().popAllActivity();
+            //  SealAppContext.getInstance().popAllActivity();
         } else {
             //  LogUtil.e("ConversationActivity push", "push3");
             if (!TextUtils.isEmpty(token)) {
@@ -558,7 +558,7 @@ public class ConversationActivity extends RongBaseActivity implements View.OnCli
 
         if (resultCode == 501) {
             KJActivityStack.create().finishAllActivity();
-           // SealAppContext.getInstance().popAllActivity();
+            // SealAppContext.getInstance().popAllActivity();
         }
     }
 
@@ -586,9 +586,9 @@ public class ConversationActivity extends RongBaseActivity implements View.OnCli
                     }
                     if (mConversationType.equals(Conversation.ConversationType.CHATROOM)
                             || mConversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)) {
-                     //   KJActivityStack.create().finishActivity(this);
+                        //   KJActivityStack.create().finishActivity(this);
                     } else {
-                     //   KJActivityStack.create().finishActivity(this);
+                        //   KJActivityStack.create().finishActivity(this);
                     }
                 }
             }
@@ -626,7 +626,7 @@ public class ConversationActivity extends RongBaseActivity implements View.OnCli
                     || mConversationType.equals(Conversation.ConversationType.CUSTOMER_SERVICE)) {
                 KJActivityStack.create().finishActivity(this);
             } else {
-              //  KJActivityStack.create().finishAllActivity();
+                //  KJActivityStack.create().finishAllActivity();
                 KJActivityStack.create().finishActivity(this);
             }
         }

@@ -20,11 +20,9 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.order.GoodOrderBean;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.adapter.order.GoodsOrderAdapter;
+import com.yinglan.scm.adapter.order.GoodsOrderViewAdapter;
 import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
-
-import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
@@ -37,7 +35,7 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
 
     private MainActivity aty;
 
-    private GoodsOrderAdapter mAdapter;
+    private GoodsOrderViewAdapter mAdapter;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -85,7 +83,7 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
     protected void initData() {
         super.initData();
         mPresenter = new GoodOrderPresenter(this);
-        mAdapter = new GoodsOrderAdapter(aty);
+        mAdapter = new GoodsOrderViewAdapter(aty);
     }
 
     @Override
