@@ -215,13 +215,13 @@ public class MessageFragment extends BaseFragment {
                     .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
                     .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
                     .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
-                    .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                 //   .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                     .build();
             mConversationsTypes = new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE,
                     Conversation.ConversationType.GROUP,
                     Conversation.ConversationType.PUBLIC_SERVICE,
                     Conversation.ConversationType.APP_PUBLIC_SERVICE,
-                    Conversation.ConversationType.SYSTEM
+                 //   Conversation.ConversationType.SYSTEM
             };
             listFragment.setUri(uri);
             mConversationListFragment = listFragment;

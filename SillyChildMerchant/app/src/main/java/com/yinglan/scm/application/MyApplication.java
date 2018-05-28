@@ -129,8 +129,8 @@ public class MyApplication extends Application {
      */
     private void initRongCloud() {
         RongIM.init(this);
-        SealAppContext.init(this);//初始化融云相关监听 事件集合类
-        openSealDBIfHasCachedToken();//打开融云本地数据库
+//        SealAppContext.init(this);//初始化融云相关监听 事件集合类
+//        openSealDBIfHasCachedToken();//打开融云本地数据库
         String rcToken = UserUtil.getResTokenInfo(this);
         Log.i("XJ", "application--RongIM.connect--onSuccess" + rcToken);
         if (!StringUtils.isEmpty(rcToken)) {
@@ -155,24 +155,41 @@ public class MyApplication extends Application {
                      * 获取用户信息
                      */
                     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
-                    HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-                    httpParams.put("userId", userid);
-                    RequestClient.getRongCloud(getApplicationContext(), httpParams, new ResponseListener<String>() {
+
+                    /**
+                     * 设置用户信息的提供者，供 RongIM 调用获取用户名称和头像信息。
+                     *
+                     * @param userInfoProvider 用户信息提供者。
+                     * @param isCacheUserInfo  设置是否由 IMKit 来缓存用户信息。<br>
+                     *                         如果 App 提供的 UserInfoProvider
+                     *                         每次都需要通过网络请求用户数据，而不是将用户数据缓存到本地内存，会影响用户信息的加载速度；<br>
+                     *                         此时最好将本参数设置为 true，由 IMKit 将用户信息缓存到本地内存中。
+                     * @see UserInfoProvider
+                     */
+                    RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                         @Override
-                        public void onSuccess(String response) {
-                            RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
-                            if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
-                                UserInfo userInfo = new UserInfo(userid + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
-                                RongIM.getInstance().setCurrentUserInfo(userInfo);
-                            }
-                            RongIM.getInstance().setMessageAttachedUserInfo(true);
+                        public UserInfo getUserInfo(String userId) {
+                            HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                            httpParams.put("userId", userId);
+                            RequestClient.getRongCloud(getApplicationContext(), httpParams, new ResponseListener<String>() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
+                                    if (RongIM.getInstance() != null && rongCloudBean.getData() != null && StringUtils.isEmpty(rongCloudBean.getData().getFace())) {
+                                        UserInfo userInfo = new UserInfo(userId + "", rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
+                                        RongIM.getInstance().refreshUserInfoCache(userInfo);;
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(String msg) {
+                                    Log.d("RongYun", "onFailure");
+                                }
+                            });
+                            return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
                         }
 
-                        @Override
-                        public void onFailure(String msg) {
-                            Log.d("RongYun", "onFailure");
-                        }
-                    });
+                    }, true);
                 }
 
                 /**
@@ -186,7 +203,6 @@ public class MyApplication extends Application {
             });
         }
     }
-
 
 
 
