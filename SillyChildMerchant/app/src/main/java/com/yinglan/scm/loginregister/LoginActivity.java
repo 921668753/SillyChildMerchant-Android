@@ -27,7 +27,7 @@ import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.loginregister.bindingaccount.BindingPhoneActivity;
 import com.yinglan.scm.loginregister.forgotpassword.RetrievePasswordActivity;
 import com.yinglan.scm.loginregister.register.RegisterActivity;
-import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;

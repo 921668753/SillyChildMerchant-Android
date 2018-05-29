@@ -310,7 +310,7 @@
     <string name="addCard">添加</string>
     <string name="tail">尾号</string>
     <string name="withdrawalRecord">提现记录</string>
-    <string name="accountingDate">到账需要2个工作日</string>
+    <string name="accountingDate">到账需要3~5个工作日</string>
     <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
     <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
     <string name="withdrawalsBank1">请输入提现银行</string>

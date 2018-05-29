@@ -20,7 +20,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;

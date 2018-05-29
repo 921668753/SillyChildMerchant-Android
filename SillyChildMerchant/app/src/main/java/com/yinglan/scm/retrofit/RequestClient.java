@@ -25,7 +25,7 @@ import com.yinglan.scm.constant.StringNewConstants;
 import com.yinglan.scm.constant.URLConstants;
 import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.entity.startpage.QiNiuKeyBean;
-import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.retrofit.uploadimg.UploadManagerUtil;
 
 import org.json.JSONObject;

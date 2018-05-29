@@ -23,7 +23,7 @@ import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.main.UserInfoBean;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.message.interactivemessage.rongcloud.util.UserUtil;
+import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.mine.mystores.MyStoresActivity;
 import com.yinglan.scm.mine.mywallet.MyWalletActivity;
 import com.yinglan.scm.mine.personaldata.PersonalDataActivity;

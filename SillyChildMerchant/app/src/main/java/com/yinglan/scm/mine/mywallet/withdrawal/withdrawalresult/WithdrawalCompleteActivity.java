@@ -7,8 +7,9 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scm.R;
-import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.mine.mywallet.withdrawal.WithdrawalActivity;
 
 /**
@@ -57,6 +58,7 @@ public class WithdrawalCompleteActivity extends BaseActivity {
         estimatedTimeArrival = getIntent().getStringExtra("estimatedTimeArrival");
         cashCard = getIntent().getStringExtra("cashCard");
         withdrawalAmount = getIntent().getStringExtra("withdrawalAmount");
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
     }
 
     @Override

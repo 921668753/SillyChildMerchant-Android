@@ -348,7 +348,7 @@
         <!--</activity>-->
         <!--会话界面-->
         <activity
-            android:name=".message.interactivemessage.rongcloud.ConversationActivity"
+            android:name=".message.interactivemessage.ConversationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
@@ -365,22 +365,22 @@
         </activity>
 
         <!--聚合会话列表-->
-        <activity
-            android:name=".message.interactivemessage.rongcloud.SubConversationListActivtiy"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+        <!--<activity-->
+            <!--android:name=".message.interactivemessage.rongcloud.SubConversationListActivtiy"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <data
-                    android:host="@string/applicationId"
-                    android:pathPrefix="/subconversationlist"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+                <!--<data-->
+                    <!--android:host="@string/applicationId"-->
+                    <!--android:pathPrefix="/subconversationlist"-->
+                    <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <!--融云end-->
         <!--融云end-->
         <!--融云end-->

@@ -170,7 +170,6 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
             mAdapter.addMoreData(goodOrderBean.getData());
         }
         dismissLoadingDialog();
-        dismissLoadingDialog();
     }
 
     @Override
@@ -206,7 +205,6 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
         }
-
     }
 
     @Override

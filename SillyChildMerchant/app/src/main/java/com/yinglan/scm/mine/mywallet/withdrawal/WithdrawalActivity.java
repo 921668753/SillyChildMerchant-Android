@@ -161,9 +161,8 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {
-            //   ViewInject.toast(getString(R.string.confirmSubmit2));
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
-            finish();
+            String withdrawalAmount = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdrawalAmount");
+            tv_money.setText(withdrawalAmount);
         } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             bankCardName = data.getStringExtra("bankCardName");
             bankCardNun = data.getStringExtra("bankCardNun");

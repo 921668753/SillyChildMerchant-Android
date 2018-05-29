@@ -10,6 +10,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mywallet.mybankcard.MyBankCardViewAdapter;
 import com.yinglan.scm.entity.mine.mywallet.mybankcard.MyBankCardBean;
@@ -145,10 +146,11 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
             Intent intent = getIntent();
             // 获取内容
             intent.putExtra("bankCardName", dataBean.getAccount_name());
-            intent.putExtra("bankCardNun", dataBean.getAccount_no());
+            intent.putExtra("bankCardNun", dataBean.getAccount_no().substring(dataBean.getAccount_no().length() - 4));
             intent.putExtra("bankCardId", dataBean.getId());
             // 设置结果 结果码，一个数据
             setResult(RESULT_OK, intent);
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
             // 结束该activity 结束之后，前面的activity才可以处理结果
             aty.finish();
             return;

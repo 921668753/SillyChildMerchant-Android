@@ -11,6 +11,7 @@ import com.common.cklibrary.common.BindView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.message.InteractiveMessageFragment;
 import com.yinglan.scm.message.SystemMessageFragment;
+import com.yinglan.scm.message.interactivemessage.imuitl.RongIMUtil;
 
 /**
  * 消息
@@ -57,6 +58,7 @@ public class MessageFragment extends BaseFragment {
             chageIcon = 20;
             cleanColors(20);
             changeFragment(contentFragment);
+            RongIMUtil.connectRongIM(getActivity());
         } else if (chageIcon == 21) {
             chageIcon = 21;
             cleanColors(21);
@@ -65,6 +67,7 @@ public class MessageFragment extends BaseFragment {
             chageIcon = 20;
             cleanColors(20);
             changeFragment(contentFragment);
+            RongIMUtil.connectRongIM(getActivity());
         }
     }
 
@@ -172,7 +175,7 @@ public class MessageFragment extends BaseFragment {
      * 登陆成功后 刷新系统消息
      */
     public void refreshSystemMsg() {
-     //   SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
+        //   SystemMessageFragment systemMsgFragment = (SystemMessageFragment) fragmentManager.findFragmentByTag(TAB_SYSTEM_MSG);
 //        if (systemMsgFragment != null) {
 //            //  systemMsgFragment.refreshAutoData();
 //        }

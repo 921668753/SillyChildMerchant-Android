@@ -1,4 +1,4 @@
-package com.yinglan.scm.message.interactivemessage.rongcloud.util;
+package com.yinglan.scm.message.interactivemessage.imuitl;
 
 import android.content.Context;
 import android.net.Uri;
