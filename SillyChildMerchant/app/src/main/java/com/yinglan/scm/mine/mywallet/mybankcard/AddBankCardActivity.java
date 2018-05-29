@@ -205,13 +205,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         } else if (flag == 3) {
             dismissLoadingDialog();
             Intent intent = getIntent();
-            // 获取内容
-            intent.putExtra("bankCardName", tv_openingBank.getText().toString());
-            intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 4));
-            intent.putExtra("bankCardId", bankCardId);
             //设置结果 结果码，一个数据
             setResult(RESULT_OK, intent);
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
             finish();
         }
     }

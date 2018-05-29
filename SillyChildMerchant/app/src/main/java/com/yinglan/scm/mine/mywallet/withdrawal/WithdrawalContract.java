@@ -11,6 +11,12 @@ import com.common.cklibrary.common.BaseView;
 public interface WithdrawalContract {
 
     interface Presenter extends BasePresenter {
+
+        /**
+         * 获取钱包余额
+         */
+        void getMyWallet();
+
         /**
          * 发送提现信息
          */

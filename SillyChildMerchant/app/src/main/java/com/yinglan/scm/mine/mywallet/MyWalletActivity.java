@@ -99,13 +99,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_withdraw:
-                Intent intent = new Intent(aty, WithdrawalActivity.class);
-                intent.putExtra("bankCardName", bankCardName);
-                intent.putExtra("bankCardNun", bankCardNun);
-                intent.putExtra("bankCardId", bankCardId);
-                intent.putExtra("fee", fee);
-                intent.putExtra("get_time", get_time);
-                showActivity(aty, intent);
+                showActivity(aty, WithdrawalActivity.class);
                 break;
             case R.id.ll_bankCard:
                 showActivity(aty, MyBankCardActivity.class);
@@ -152,7 +146,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusWithdrawalEvent") || ((String) msgEvent.getData()).equals("RxBusAddBankCardEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusWithdrawalEvent")) {
             ((MyWalletContract.Presenter) mPresenter).getMyWallet();
         }
     }

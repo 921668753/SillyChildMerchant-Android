@@ -26,6 +26,22 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
     }
 
     @Override
+    public void getMyWallet() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getMyWallet(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+    @Override
     public void postWithdrawal(String withdrawalAmount, int bankId) {
         if (StringUtils.isEmpty(withdrawalAmount)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.notHigherWithdrawalLimit1), 0);
@@ -54,7 +70,7 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
                 RequestClient.postWithdrawal(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        mView.getSuccess(response, 0);
+                        mView.getSuccess(response, 1);
                     }
 
                     @Override
@@ -66,6 +82,7 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
         };
         submitBouncedDialog.show();
     }
+
 
     @Override
     public void getIsLogin(int flag) {

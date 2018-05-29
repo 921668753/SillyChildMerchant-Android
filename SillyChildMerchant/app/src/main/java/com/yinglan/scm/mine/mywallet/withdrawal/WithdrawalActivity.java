@@ -13,11 +13,10 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.MathUtil;
-import com.common.cklibrary.utils.rx.MsgEvent;
-import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.mine.mywallet.MyWalletBean;
 import com.yinglan.scm.entity.mine.mywallet.withdrawal.WithdrawalBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.mine.mywallet.mybankcard.AddBankCardActivity;
@@ -88,27 +87,14 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     public void initData() {
         super.initData();
         mPresenter = new WithdrawalPresenter(this);
-        bankCardName = getIntent().getStringExtra("bankCardName");
-        bankCardNun = getIntent().getStringExtra("bankCardNun");
-        fee = getIntent().getStringExtra("fee");
-        get_time = getIntent().getStringExtra("get_time");
-        bankCardId = getIntent().getIntExtra("bankCardId", 0);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((WithdrawalContract.Presenter) mPresenter).getMyWallet();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal), true, R.id.titlebar);
-        String withdrawalAmount = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdrawalAmount");
-        tv_money.setText(withdrawalAmount);
-        tv_accountingDate.setText(getString(R.string.accountingDate) + get_time + getString(R.string.accountingDate1));
-        if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
-            tv_withdrawalBank.setText(getString(R.string.noCard));
-            tv_poundage.setVisibility(View.GONE);
-            return;
-        }
-        tv_withdrawalBank.setText(bankCardName + "  (" + bankCardNun + ")");
-        tv_poundage.setText(getString(R.string.withdrawalTo) + bankCardName + getString(R.string.procedureRrates) + fee);
     }
 
 
@@ -117,16 +103,9 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_bank:
-                ((WithdrawalContract.Presenter) mPresenter).getIsLogin(1);
+                ((WithdrawalContract.Presenter) mPresenter).getIsLogin(2);
                 break;
             case R.id.tv_confirmSubmit:
-//                int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
-//                if (is_pay_password == 0) {
-//                    //    ViewInject.toast(getString(R.string.notPaymentPassword));
-//                    //  Intent intent = new Intent(aty, SetPaymentPasswordActivity.class);
-//                    //  startActivity(intent);
-//                    return;
-//                }
                 ((WithdrawalContract.Presenter) mPresenter).postWithdrawal(et_withdrawalAmount1.getText().toString().trim(), bankCardId);
                 break;
         }
@@ -142,6 +121,28 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         if (flag == 0) {
+            MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(success, MyWalletBean.class);
+            if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "withdrawalAmount", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
+                if (!StringUtils.isEmpty(myWalletBean.getData().getOpen_bank()) && !StringUtils.isEmpty(myWalletBean.getData().getAccount_no())) {
+                    bankCardName = myWalletBean.getData().getOpen_bank();
+                    bankCardNun = myWalletBean.getData().getAccount_no();
+                    bankCardNun = bankCardNun.substring(bankCardNun.length() - 4);
+                    bankCardId = myWalletBean.getData().getBank_id();
+                    fee = myWalletBean.getData().getFee() + "%";
+                    get_time = myWalletBean.getData().getGet_time();
+                }
+                tv_money.setText(MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
+                tv_accountingDate.setText(getString(R.string.accountingDate) + get_time + getString(R.string.accountingDate1));
+                if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
+                    tv_withdrawalBank.setText(getString(R.string.noCard));
+                    tv_poundage.setVisibility(View.GONE);
+                    return;
+                }
+                tv_withdrawalBank.setText(bankCardName + "  (" + bankCardNun + ")");
+                tv_poundage.setText(getString(R.string.withdrawalTo) + bankCardName + getString(R.string.procedureRrates) + fee);
+            }
+        } else if (flag == 1) {
             WithdrawalBean withdrawalBean = (WithdrawalBean) JsonUtil.json2Obj(success, WithdrawalBean.class);
             Intent intent = new Intent(aty, WithdrawalCompleteActivity.class);
             intent.putExtra("estimatedTimeArrival", withdrawalBean.getData().getTime());
@@ -150,7 +151,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
                     StringUtils.toDouble(withdrawalBean.getData().getFee_amount())) + getString(R.string.serviceChargeDeducted));
             intent.putExtra("get_time", get_time);
             startActivityForResult(intent, REQUEST_CODE_SELECT);
-        } else if (flag == 1) {
+        } else if (flag == 2) {
             if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
                 Intent intent = new Intent(aty, AddBankCardActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
@@ -167,6 +168,9 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
+            if (flag == 0) {
+                finish();
+            }
             return;
         }
         ViewInject.toast(msg);
@@ -181,12 +185,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
             tv_money.setText(withdrawalAmount);
             et_withdrawalAmount1.setText("");
         } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
-            bankCardName = data.getStringExtra("bankCardName");
-            bankCardNun = data.getStringExtra("bankCardNun");
-            bankCardId = data.getIntExtra("bankCardId", 0);
-            fee = data.getStringExtra("fee");
-            tv_poundage.setText(getString(R.string.withdrawalTo) + bankCardName + getString(R.string.procedureRrates) + fee);
-            tv_withdrawalBank.setText(bankCardName + "  (" + bankCardNun + ")");
+            ((WithdrawalContract.Presenter) mPresenter).getMyWallet();
         }
     }
 
