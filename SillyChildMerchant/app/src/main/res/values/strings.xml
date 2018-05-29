@@ -3,7 +3,6 @@
     <string name="applicationId">com.yinglan.scm</string>
 
 
-
     <!--网络请求-->
     <!--Dialog-->
     <string name="loggingLoad">登录中&#8230;</string>
@@ -135,11 +134,9 @@
     <!--系统消息-->
     <string name="systemMessageDetails">消息详情</string>
     <string name="noSystemMessage">亲，您还没有系统消息哟~</string>
-    <string name="orderM">订单</string>
-    <string name="system">系统</string>
-    <string name="delivery">物流</string>
-
-
+    <string name="orderMessage">订单消息</string>
+    <string name="deliveryMessage">物流消息</string>
+    <string name="noMessage">亲，您还没有消息哟~</string>
 
 
     <!--我的订单-->
@@ -215,9 +212,6 @@
     <string name="merchants">商家</string>
 
 
-
-
-
     <!--  个人中心  我的店铺-->
     <string name="classification">分类</string>
     <string name="allState">全部状态</string>
@@ -261,10 +255,12 @@
     <!--提现成功-->
     <string name="withdrawalRequestSucceeded">提现申请成功</string>
     <string name="withdrawalRequestSubmissionSuccess">提现申请提交成功</string>
-    <string name="withdrawalRequestSubmissionSuccess1">我们将在3个工作日内处理您的提现申请</string>
+    <string name="withdrawalRequestSubmissionSuccess1">我们将在</string>
+    <string name="withdrawalRequestSubmissionSuccess2">个工作日内处理您的提现申请</string>
     <string name="estimatedTimeArrival">预计到账时间：</string>
     <string name="cashCard">储蓄卡：</string>
-    <string name="withdrawalAmount">提现金额：</string>
+    <string name="withdrawalAmount">到账金额：</string>
+    <string name="serviceChargeDeducted">(已扣除手续费)</string>
 
     <!--  个人中心 个人资料 -->
     <string name="personalData">个人资料</string>
@@ -310,12 +306,16 @@
     <string name="addCard">添加</string>
     <string name="tail">尾号</string>
     <string name="withdrawalRecord">提现记录</string>
-    <string name="accountingDate">到账需要3~5个工作日</string>
+    <string name="accountingDate">到账需要</string>
+    <string name="accountingDate1">个工作日</string>
     <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
     <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
     <string name="withdrawalsBank1">请输入提现银行</string>
     <string name="cancel">取消</string>
     <string name="withdrawCash">确定要提现吗</string>
+    <string name="withdrawalTo">提现到</string>
+    <string name="procedureRrates">，手续费率</string>
+
 
     <!-- 个人中心 我的钱包  我的银行卡列表-->
     <string name="myBankCard">我的银行卡</string>

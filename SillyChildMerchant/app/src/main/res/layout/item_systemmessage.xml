@@ -16,6 +16,7 @@
             android:layout_width="@dimen/dimen40"
             android:layout_height="@dimen/dimen40"
             android:layout_centerVertical="true"
+            android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher" />
 
         <TextView

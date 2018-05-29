@@ -31,6 +31,7 @@
             android:textSize="@dimen/textsize15" />
 
         <TextView
+            android:id="@+id/tv_withdrawalRequestSubmissionSuccess"
             style="@style/WrapWrap"
             android:layout_marginBottom="@dimen/dimen15"
             android:paddingTop="@dimen/dimen5"

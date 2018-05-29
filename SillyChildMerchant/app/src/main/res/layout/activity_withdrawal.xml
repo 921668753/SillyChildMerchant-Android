@@ -139,6 +139,7 @@
             android:textSize="@dimen/textsize13" />
 
         <TextView
+            android:id="@+id/tv_accountingDate"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen31"
             android:text="@string/accountingDate"

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.message.SystemMessageBean.DataBean;
+import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
@@ -25,7 +26,7 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 头像
          */
-        viewHolderHelper.setText(R.id.img_head, listBean.getNews_text());
+        GlideImageLoader.glideLoader(mContext, listBean.getNews_text(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
 
         /**
          * 未读消息数
@@ -35,17 +36,24 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 标题
          */
-        viewHolderHelper.setText(R.id.tv_title, listBean.getNews_title());
+        if (listBean.getNews_title().contains("order")) {
+            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.orderMessage));
+        } else if (listBean.getNews_title().contains("delivery")) {
+            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.deliveryMessage));
+        } else {
+            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.systemMessage));
+        }
+
 
         /**
          * 内容
          */
-        viewHolderHelper.setText(R.id.tv_title, listBean.getNews_text());
+        viewHolderHelper.setText(R.id.tv_content, listBean.getNews_text());
 
         /**
          * 时间
          */
-        viewHolderHelper.setText(R.id.tv_time, listBean.getLastTime());
+        viewHolderHelper.setText(R.id.tv_time, listBean.getLasttime());
 
     }
 

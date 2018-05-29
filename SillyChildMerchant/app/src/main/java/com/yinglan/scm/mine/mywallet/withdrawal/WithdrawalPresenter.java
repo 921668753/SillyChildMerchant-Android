@@ -54,7 +54,7 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
                 RequestClient.postWithdrawal(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        mView.getSuccess("", 0);
+                        mView.getSuccess(response, 0);
                     }
 
                     @Override

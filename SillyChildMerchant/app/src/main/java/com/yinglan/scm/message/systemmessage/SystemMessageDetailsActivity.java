@@ -2,7 +2,6 @@ package com.yinglan.scm.message.systemmessage;
 
 import android.content.Intent;
 import android.view.KeyEvent;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -27,11 +26,11 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
     @BindView(id = R.id.tv_title)
     private TextView tv_title;
 
-    @BindView(id = R.id.tv_time)
-    private TextView tv_time;
+    @BindView(id = R.id.tv_content)
+    private TextView tv_content;
 
-    @BindView(id = R.id.web_content)
-    private WebView web_content;
+//    @BindView(id = R.id.web_content)
+//    private WebView web_content;
 
     private int id = 0;
 
@@ -85,14 +84,14 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
 
     @Override
     public void getSuccess(String success, int flag) {
-
         dismissLoadingDialog();
         isRefresh = true;
         SystemMessageDetailsBean systemMessageDetailsBean = (SystemMessageDetailsBean) JsonUtil.json2Obj(success, SystemMessageDetailsBean.class);
-        tv_title.setText(systemMessageDetailsBean.getData().getNews_title());
-        tv_time.setText(systemMessageDetailsBean.getData().getPush_time());
-        String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + systemMessageDetailsBean.getData().getNews_text() + "</body></html>";
-        web_content.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
+        tv_title.setText(systemMessageDetailsBean.getData().getNews_subject());
+        tv_content.setText(systemMessageDetailsBean.getData().getNews_text());
+        // tv_time.setText(systemMessageDetailsBean.getData().getPush_time());
+//        String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + systemMessageDetailsBean.getData().getNews_text() + "</body></html>";
+//        web_content.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
     }
 
     @Override

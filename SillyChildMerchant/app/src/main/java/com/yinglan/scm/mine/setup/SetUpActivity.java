@@ -148,7 +148,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
      */
     public void queryCache() {
         try {
-            tv_cache.setText("(" + DataCleanManager.getTotalCacheSize(aty) + ")");
+            tv_cache.setText(DataCleanManager.getTotalCacheSize(aty));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -164,7 +164,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
                 @Override
                 public void clearCacheDo() {
                     DataCleanManager.clearAllCache(aty);
-                    tv_cache.setText("(0KB)");
+                    tv_cache.setText("0KB");
                     ViewInject.toast(getString(R.string.clearSuccess));
                 }
             };

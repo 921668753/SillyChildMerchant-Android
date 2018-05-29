@@ -5,27 +5,26 @@ import com.common.cklibrary.entity.BaseResult;
 public class SystemMessageDetailsBean extends BaseResult<SystemMessageDetailsBean.DataBean> {
 
 
-    /**
-     * result : 1
-     * message : null
-     * data : {"face":"","impass":"","level":"普通会员","imuser":"","username":"17051335257"}
-     */
-
     public class DataBean {
         /**
-         * face :
-         * impass :
-         * level : 普通会员
-         * imuser :
-         * username : 17051335257
+         * news_id : 2
+         * member_id : 29
+         * news_title : order
+         * news_text : 傻孩子测试消息
+         * push_tima : null
+         * is_read : 1
+         * news_subject : 测试主题1
+         * news_img : http://ovwiqces1.bkt.clouddn.com/SHZS_29_IMG_20180528_193922.jpg
          */
+
         private int news_id;
         private int member_id;
         private String news_title;
-        private String push_time;
         private String news_text;
+        private String push_tima;
         private int is_read;
-
+        private String news_subject;
+        private String news_img;
 
         public int getNews_id() {
             return news_id;
@@ -51,14 +50,6 @@ public class SystemMessageDetailsBean extends BaseResult<SystemMessageDetailsBea
             this.news_title = news_title;
         }
 
-        public String getPush_time() {
-            return push_time;
-        }
-
-        public void setPush_time(String push_time) {
-            this.push_time = push_time;
-        }
-
         public String getNews_text() {
             return news_text;
         }
@@ -67,12 +58,36 @@ public class SystemMessageDetailsBean extends BaseResult<SystemMessageDetailsBea
             this.news_text = news_text;
         }
 
+        public String getPush_tima() {
+            return push_tima;
+        }
+
+        public void setPush_tima(String push_tima) {
+            this.push_tima = push_tima;
+        }
+
         public int getIs_read() {
             return is_read;
         }
 
         public void setIs_read(int is_read) {
             this.is_read = is_read;
+        }
+
+        public String getNews_subject() {
+            return news_subject;
+        }
+
+        public void setNews_subject(String news_subject) {
+            this.news_subject = news_subject;
+        }
+
+        public String getNews_img() {
+            return news_img;
+        }
+
+        public void setNews_img(String news_img) {
+            this.news_img = news_img;
         }
     }
 }

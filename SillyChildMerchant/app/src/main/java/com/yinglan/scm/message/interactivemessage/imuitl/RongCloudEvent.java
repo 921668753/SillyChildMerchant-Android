@@ -86,7 +86,7 @@ public final class RongCloudEvent implements
     public void setOtherListener() {
         RongIM.setOnReceiveMessageListener(this);// 设置发出消息接收监听器.
         RongIM.setConnectionStatusListener(this);// 设置连接状态监听器。
-      //  RongIM.setOnReceiveMessageListener(this);// 设置消息接收监听器。
+        //  RongIM.setOnReceiveMessageListener(this);// 设置消息接收监听器。
         setUserInfoEngineListener();   //用户信息提供者回调监听
 //    setGroupInfoEngineListener();  //群组信息提供者回调监听
     }
@@ -102,11 +102,21 @@ public final class RongCloudEvent implements
 
     @Override
     public void onChanged(ConnectionStatus connectionStatus) {
-
         switch (connectionStatus) {
+            case CONNECTED://连接成功。
+
+                break;
+            case DISCONNECTED://断开连接。
+
+                break;
+            case CONNECTING://连接中。
+
+                break;
+            case NETWORK_UNAVAILABLE://网络不可用。
+
+                break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
                 //   ActivityUtil.reLogout(IHealthActivity.INSTANCE);
-
 
                 break;
         }

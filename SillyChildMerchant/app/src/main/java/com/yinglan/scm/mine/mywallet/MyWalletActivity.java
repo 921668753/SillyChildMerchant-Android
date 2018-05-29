@@ -45,7 +45,9 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
 
     private String bankCardName;
     private String bankCardNun;
+    private String fee;
     private int bankCardId = 0;
+    private String get_time;
 
 
     @Override
@@ -101,6 +103,8 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
                 intent.putExtra("bankCardName", bankCardName);
                 intent.putExtra("bankCardNun", bankCardNun);
                 intent.putExtra("bankCardId", bankCardId);
+                intent.putExtra("fee", fee);
+                intent.putExtra("get_time", get_time);
                 showActivity(aty, intent);
                 break;
             case R.id.ll_bankCard:
@@ -126,6 +130,8 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
                     bankCardNun = myWalletBean.getData().getAccount_no();
                     bankCardNun = bankCardNun.substring(bankCardNun.length() - 4);
                     bankCardId = myWalletBean.getData().getBank_id();
+                    fee = myWalletBean.getData().getFee() + "%";
+                    get_time = myWalletBean.getData().getGet_time();
                 }
             }
         }

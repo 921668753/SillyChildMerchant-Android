@@ -31,6 +31,7 @@ public class MyBankCardBean extends BaseResult<List<MyBankCardBean.DataBean>> {
         private String phone;
         private int is_default;
         private String id_number;
+        private String fee;
 
         public int getId() {
             return id;
@@ -110,6 +111,14 @@ public class MyBankCardBean extends BaseResult<List<MyBankCardBean.DataBean>> {
 
         public void setId_number(String id_number) {
             this.id_number = id_number;
+        }
+
+        public String getFee() {
+            return fee;
+        }
+
+        public void setFee(String fee) {
+            this.fee = fee;
         }
     }
 }

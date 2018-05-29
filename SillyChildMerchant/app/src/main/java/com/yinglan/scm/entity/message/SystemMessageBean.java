@@ -7,23 +7,17 @@ import java.util.List;
 public class SystemMessageBean extends BaseResult<List<SystemMessageBean.DataBean>> {
 
 
-    /**
-     * result : 1
-     * message : null
-     * data : {"face":"","impass":"","level":"普通会员","imuser":"","username":"17051335257"}
-     */
-
     public class DataBean {
         /**
-         * face :
-         * impass :
-         * level : 普通会员
-         * imuser :
-         * username : 17051335257
+         * num : 1
+         * news_title : 测试消息
+         * lasttime : 2018-05-29
+         * news_text : 傻孩子测试消息
          */
+
         private int num;
         private String news_title;
-        private String lastTime;
+        private String lasttime;
         private String news_text;
 
         public int getNum() {
@@ -42,12 +36,12 @@ public class SystemMessageBean extends BaseResult<List<SystemMessageBean.DataBea
             this.news_title = news_title;
         }
 
-        public String getLastTime() {
-            return lastTime;
+        public String getLasttime() {
+            return lasttime;
         }
 
-        public void setLastTime(String lastTime) {
-            this.lastTime = lastTime;
+        public void setLasttime(String lasttime) {
+            this.lasttime = lasttime;
         }
 
         public String getNews_text() {

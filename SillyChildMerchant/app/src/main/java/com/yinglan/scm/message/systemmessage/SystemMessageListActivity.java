@@ -40,8 +40,6 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
 
     private SystemMessageListViewAdapter mAdapter;
 
-    private MainActivity aty;
-
     @BindView(id = R.id.lv_systemMessage)
     private ListView lv_systemMessage;
 
@@ -78,6 +76,8 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
 
     private String title = "";
 
+    private String type = "";
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_systemmessagelist);
@@ -89,6 +89,7 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
         mPresenter = new SystemMessageListPresenter(this);
         mAdapter = new SystemMessageListViewAdapter(this);
         title = getIntent().getStringExtra("news_title");
+        type = getIntent().getStringExtra("type");
     }
 
     @Override
@@ -118,7 +119,7 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
                 super.onClickRightCtv();
             }
         };
-        ActivityTitleUtils.initToolbar(aty, getIntent().getStringExtra("news_title"), "", R.id.titlebar, simpleDelegate);
+        ActivityTitleUtils.initToolbar(aty, title, "", R.id.titlebar, simpleDelegate);
     }
 
     @Override
@@ -130,7 +131,7 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
                     mRefreshLayout.beginRefreshing();
                     return;
                 }
-                aty.showActivity(aty, LoginActivity.class);
+                showActivity(aty, LoginActivity.class);
                 break;
         }
     }
@@ -147,7 +148,7 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((SystemMessageListContract.Presenter) mPresenter).getSystemMessageList(title, mMorePageNumber);
+        ((SystemMessageListContract.Presenter) mPresenter).getSystemMessageList(type, mMorePageNumber);
     }
 
     @Override
@@ -159,7 +160,7 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((SystemMessageListContract.Presenter) mPresenter).getSystemMessageList(title, mMorePageNumber);
+        ((SystemMessageListContract.Presenter) mPresenter).getSystemMessageList(type, mMorePageNumber);
         return true;
     }
 
@@ -178,7 +179,7 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
         SystemMessageListBean systemMessageListBean = (SystemMessageListBean) JsonUtil.getInstance().json2Obj(success, SystemMessageListBean.class);
         if (systemMessageListBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
                 systemMessageListBean.getData().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            errorMsg(getString(R.string.noSystemMessage), 1);
+            errorMsg(getString(R.string.noMessage), 1);
             return;
         } else if (systemMessageListBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
                 systemMessageListBean.getData().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
@@ -219,13 +220,13 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
             tv_hintText.setVisibility(View.GONE);
             tv_button.setText(getString(R.string.login));
             // ViewInject.toast(getString(R.string.reloginPrompting));
-            aty.showActivity(aty, LoginActivity.class);
+            showActivity(aty, LoginActivity.class);
             return;
         } else if (msg.contains(getString(R.string.checkNetwork))) {
             img_err.setImageResource(R.mipmap.no_network);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.noSystemMessage))) {
+        } else if (msg.contains(getString(R.string.noMessage))) {
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setVisibility(View.GONE);
@@ -263,6 +264,5 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
         mAdapter.clear();
         mAdapter = null;
     }
-
 
 }

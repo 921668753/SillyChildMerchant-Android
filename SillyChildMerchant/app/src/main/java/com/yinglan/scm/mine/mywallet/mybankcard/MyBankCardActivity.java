@@ -148,6 +148,7 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
             intent.putExtra("bankCardName", dataBean.getAccount_name());
             intent.putExtra("bankCardNun", dataBean.getAccount_no().substring(dataBean.getAccount_no().length() - 4));
             intent.putExtra("bankCardId", dataBean.getId());
+            intent.putExtra("fee", dataBean.getFee() + "%");
             // 设置结果 结果码，一个数据
             setResult(RESULT_OK, intent);
             RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));

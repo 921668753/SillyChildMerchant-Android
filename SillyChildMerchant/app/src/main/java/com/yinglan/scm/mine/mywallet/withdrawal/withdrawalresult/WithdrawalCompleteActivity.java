@@ -17,6 +17,11 @@ import com.yinglan.scm.mine.mywallet.withdrawal.WithdrawalActivity;
  */
 public class WithdrawalCompleteActivity extends BaseActivity {
 
+
+    @BindView(id = R.id.tv_withdrawalRequestSubmissionSuccess)
+    private TextView tv_withdrawalRequestSubmissionSuccess;
+
+
     /**
      * 预计到账时间
      */
@@ -46,6 +51,7 @@ public class WithdrawalCompleteActivity extends BaseActivity {
     private String cashCard = "";
 
     private String withdrawalAmount = "";
+    private String get_time = "";
 
     @Override
     public void setRootView() {
@@ -59,12 +65,14 @@ public class WithdrawalCompleteActivity extends BaseActivity {
         cashCard = getIntent().getStringExtra("cashCard");
         withdrawalAmount = getIntent().getStringExtra("withdrawalAmount");
         RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
+        get_time = getIntent().getStringExtra("get_time");
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
         initTitle();
+        tv_withdrawalRequestSubmissionSuccess.setText(getString(R.string.withdrawalRequestSubmissionSuccess1) + get_time + getString(R.string.withdrawalRequestSubmissionSuccess2));
         tv_estimatedTimeArrival.setText(estimatedTimeArrival);
         tv_cashCard.setText(cashCard);
         tv_withdrawalAmount.setText(withdrawalAmount);

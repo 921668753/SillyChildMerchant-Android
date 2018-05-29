@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.message.systemmessage.SystemMessageListBean.DataBean;
+import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
@@ -26,7 +27,7 @@ public class SystemMessageListViewAdapter extends BGAAdapterViewAdapter<DataBean
         /**
          * 头像
          */
-        viewHolderHelper.setText(R.id.img_head, listBean.getNews_text());
+        GlideImageLoader.glideLoader(mContext, listBean.getNews_text(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
 
         /**
          * 未读消息数
@@ -40,12 +41,12 @@ public class SystemMessageListViewAdapter extends BGAAdapterViewAdapter<DataBean
         /**
          * 标题
          */
-        viewHolderHelper.setText(R.id.tv_title, listBean.getNews_title());
+        viewHolderHelper.setText(R.id.tv_title, listBean.getNews_subject());
 
         /**
          * 内容
          */
-        viewHolderHelper.setText(R.id.tv_title, listBean.getNews_text());
+        viewHolderHelper.setText(R.id.tv_content, listBean.getNews_text());
 
         /**
          * 时间

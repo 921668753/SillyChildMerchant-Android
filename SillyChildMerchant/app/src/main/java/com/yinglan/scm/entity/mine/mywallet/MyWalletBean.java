@@ -9,17 +9,19 @@ public class MyWalletBean extends BaseResult<MyWalletBean.DataBean> {
         /**
          * id : 3
          * member_id : 29
-         * balance : 0
+         * balance : 495
          * freeze_amount : 0
          * bank : 中国工商银行
          * open_bank : 中国工商银行
-         * account_no : 123456783
-         * account_name : 吃饭
+         * account_no : 12345678912
+         * account_name : 啦啦啦
          * is_deleted : false
-         * phone : 17051335257
+         * phone : 17051333525
          * is_default : 1
          * id_number : 111111111111111111
-         * bank_id : 20
+         * fee : 5
+         * get_time : 5
+         * bank_id : 21
          */
 
         private int id;
@@ -34,6 +36,8 @@ public class MyWalletBean extends BaseResult<MyWalletBean.DataBean> {
         private String phone;
         private int is_default;
         private String id_number;
+        private String fee;
+        private String get_time;
         private int bank_id;
 
         public int getId() {
@@ -130,6 +134,22 @@ public class MyWalletBean extends BaseResult<MyWalletBean.DataBean> {
 
         public void setId_number(String id_number) {
             this.id_number = id_number;
+        }
+
+        public String getFee() {
+            return fee;
+        }
+
+        public void setFee(String fee) {
+            this.fee = fee;
+        }
+
+        public String getGet_time() {
+            return get_time;
+        }
+
+        public void setGet_time(String get_time) {
+            this.get_time = get_time;
         }
 
         public int getBank_id() {
