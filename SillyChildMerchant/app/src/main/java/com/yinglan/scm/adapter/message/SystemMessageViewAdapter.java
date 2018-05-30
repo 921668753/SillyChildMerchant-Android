@@ -27,7 +27,7 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 头像
          */
-        GlideImageLoader.glideLoader(mContext, listBean.getNews_text(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
+        GlideImageLoader.glideLoader(mContext, listBean.getTitle_img(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
 
         /**
          * 未读消息数
@@ -42,13 +42,7 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 标题
          */
-        if (listBean.getNews_title().contains("order")) {
-            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.orderMessage));
-        } else if (listBean.getNews_title().contains("delivery")) {
-            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.deliveryMessage));
-        } else {
-            viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.systemMessage));
-        }
+        viewHolderHelper.setText(R.id.tv_title, listBean.getNews_title());
 
         /**
          * 内容

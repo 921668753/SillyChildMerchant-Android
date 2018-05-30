@@ -107,14 +107,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         DataBean dataBean = mAdapter.getItem(i);
         Intent intent = new Intent(aty, SystemMessageListActivity.class);
-        intent.putExtra("type", dataBean.getNews_title());
-        if (dataBean.getNews_title().contains("order")) {
-            intent.putExtra("news_title", getString(R.string.orderMessage));
-        } else if (dataBean.getNews_title().contains("delivery")) {
-            intent.putExtra("news_title", getString(R.string.deliveryMessage));
-        } else {
-            intent.putExtra("news_title", getString(R.string.systemMessage));
-        }
+        intent.putExtra("news_title", dataBean.getNews_title());
         startActivityForResult(intent, REQUEST_CODE);
     }
 

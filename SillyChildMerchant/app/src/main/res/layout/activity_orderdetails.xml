@@ -120,7 +120,7 @@
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen10"
                 android:paddingTop="@dimen/dimen14"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -150,7 +150,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen15"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="@dimen/dimen12"
@@ -194,8 +194,7 @@
                 android:paddingTop="@dimen/dimen14"
                 android:text="@string/commodityInformation"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/textsize14"
-                android:visibility="gone" />
+                android:textSize="@dimen/textsize14" />
 
             <View style="@style/DividerWidth" />
 
@@ -206,7 +205,6 @@
                 android:dividerHeight="@dimen/dimen1"
                 android:overScrollMode="never"
                 android:scrollbars="none"
-                android:visibility="gone"
                 tools:listitem="@layout/item_shopgoodsup" />
 
             <TextView

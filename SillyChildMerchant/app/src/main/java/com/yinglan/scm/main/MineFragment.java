@@ -135,13 +135,13 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 ((MineContract.Presenter) mPresenter).getIsLogin(aty, 3);
                 break;
             case R.id.ll_sillyChildCollege:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 4);
+                aty.showActivity(aty, SillyChildCollegeActivity.class);
                 break;
             case R.id.ll_sharePolite:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 5);
+                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 4);
                 break;
             case R.id.ll_setUp:
-                ((MineContract.Presenter) mPresenter).getIsLogin(aty, 6);
+                aty.showActivity(aty, SetUpActivity.class);
                 break;
         }
     }
@@ -212,12 +212,8 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
         } else if (flag == 3) {
             aty.showActivity(aty, MyWalletActivity.class);
         } else if (flag == 4) {
-            aty.showActivity(aty, SillyChildCollegeActivity.class);
-        } else if (flag == 5) {
             aty.showActivity(aty, SharePoliteActivity.class);
         } else if (flag == 6) {
-            aty.showActivity(aty, SetUpActivity.class);
-        } else if (flag == 7) {
             Intent intent = new Intent(aty, MainActivity.class);
             intent.putExtra("newChageIcon", 0);
             aty.showActivity(aty, intent);

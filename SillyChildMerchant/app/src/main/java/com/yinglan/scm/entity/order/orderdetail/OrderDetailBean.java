@@ -14,20 +14,20 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
 
     public class DataBean {
         /**
-         * order_id : 46
+         * order_id : 64
          * status : 1
          * shipInfo : {"message":"暂无物流信息"}
-         * itemList : [{"item_id":7,"order_id":46,"goods_id":11,"product_id":11,"name":"66减30伊赛西门塔尔牛腩块500g新鲜牛肉冷冻生鲜 ","specs":"5kg","num":1,"sn":"0010","price":52.9,"image":"http://ovwiqces1.bkt.clouddn.com/attachment//store/15/goods/2018/5/12/16//00220278.jpg"}]
-         * ship_name : toys
-         * ship_mobile : 13111111111
-         * shipping_area : 上海-崇明县-堡镇
-         * order_amount : 52.9
+         * itemList : [{"item_id":15,"order_id":64,"goods_id":1,"product_id":1,"name":"可口可乐汽水330ml*24罐/箱碳酸饮料","specs":null,"num":1,"sn":"0001","price":25.9,"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/15/goods/2017/6/13/20//56319127_thumbnail.jpg"}]
+         * ship_name : 隔壁老王
+         * ship_mobile : 13656888888
+         * shipping_area : 北京-海淀区-三环以内
+         * order_amount : 25.9
          * ship_money : null
          * ship_no : null
          * bouns_money : 0
          * activity : 0
-         * sn : DD152766104333-1
-         * create_time : 2018-05-30 14:17:24
+         * sn : DD152768113539-1
+         * create_time : 2018-05-30 19:52:15
          * payment_type : onlinePay
          * paymoney : 0
          * pay_time :
@@ -36,6 +36,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
          * backMoney : null
          * total : null
          * backTime : null
+         * lastTime : 0
          */
 
         private int order_id;
@@ -59,6 +60,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
         private String backMoney;
         private String total;
         private String backTime;
+        private String lastTime;
         private List<ItemListBean> itemList;
 
         public int getOrder_id() {
@@ -229,6 +231,14 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
             this.backTime = backTime;
         }
 
+        public String getLastTime() {
+            return lastTime;
+        }
+
+        public void setLastTime(String lastTime) {
+            this.lastTime = lastTime;
+        }
+
         public List<ItemListBean> getItemList() {
             return itemList;
         }
@@ -239,16 +249,16 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
 
         public class ItemListBean {
             /**
-             * item_id : 7
-             * order_id : 46
-             * goods_id : 11
-             * product_id : 11
-             * name : 66减30伊赛西门塔尔牛腩块500g新鲜牛肉冷冻生鲜
-             * specs : 5kg
+             * item_id : 15
+             * order_id : 64
+             * goods_id : 1
+             * product_id : 1
+             * name : 可口可乐汽水330ml*24罐/箱碳酸饮料
+             * specs : null
              * num : 1
-             * sn : 0010
-             * price : 52.9
-             * image : http://ovwiqces1.bkt.clouddn.com/attachment//store/15/goods/2018/5/12/16//00220278.jpg
+             * sn : 0001
+             * price : 25.9
+             * image : http://static.b2b2cv2.javamall.com.cn/attachment//store/15/goods/2017/6/13/20//56319127_thumbnail.jpg
              */
 
             private int item_id;
@@ -257,7 +267,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
             private int product_id;
             private String name;
             private String specs;
-            private int num;
+            private String num;
             private String sn;
             private String price;
             private String image;
@@ -310,11 +320,11 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
                 this.specs = specs;
             }
 
-            public int getNum() {
+            public String getNum() {
                 return num;
             }
 
-            public void setNum(int num) {
+            public void setNum(String num) {
                 this.num = num;
             }
 

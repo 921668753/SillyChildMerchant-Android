@@ -50,7 +50,7 @@ public class MinePresenter implements MineContract.Presenter {
                 }
                 int disabled = PreferenceHelper.readInt(context, StringConstants.FILENAME, "disabled", 3);
                 if (disabled != 0 || disabled != 1 || disabled != 2) {
-                    mView.getSuccess(response, 7);
+                    mView.getSuccess(response, 6);
                     return;
                 }
                 mView.getSuccess(response, flag);

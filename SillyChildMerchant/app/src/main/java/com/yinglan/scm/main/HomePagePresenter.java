@@ -90,7 +90,7 @@ public class HomePagePresenter implements HomePageContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
+                mView.errorMsg(msg, flag);
             }
         });
     }

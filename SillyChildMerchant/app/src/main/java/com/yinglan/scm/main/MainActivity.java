@@ -186,8 +186,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 break;
             case R.id.bottombar_message:
                 ((MainContract.Presenter) mPresenter).getIsLogin(aty, 0);
+                break;
             case R.id.bottombar_activities:
-                cleanColors(2);
+                ((MainContract.Presenter) mPresenter).getIsLogin(aty, 1);
                 break;
             case R.id.bottombar_mine:
                 cleanColors(3);
@@ -197,37 +198,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
         }
     }
 
-
-    /**
-     * 退出应用
-     *
-     * @param keyCode
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                long secondTime = System.currentTimeMillis();
-                if (secondTime - firstTime > 2000) {
-                    //如果两次按键时间间隔大于2秒，则不退出
-                    ViewInject.toast(this, getString(R.string.clickAgainExitProgram));
-                    firstTime = secondTime;//更新firstTime
-                    return true;
-                } else {
-                    //  int i = 1 / 0;
-                    //   KjBitmapUtil.getInstance().getKjBitmap().cleanCache();
-                    MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
-                    JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
-                    //    MobclickAgent.onKillProcess(aty);
-                    //第一个参数为是否解绑推送的devicetoken
-                    KJActivityStack.create().appExit(aty);
-                }
-                break;
-        }
-        return super.onKeyUp(keyCode, event);
-    }
 
     @Override
     protected void onDestroy() {
@@ -359,7 +329,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (flag == 0 && isLogin(msg) || flag == 1 && flag == 0 && isLogin(msg)) {
+        if (flag == 0 && isLogin(msg) || flag == 1 && isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
         } else if (flag == 0) {
             cleanColors(1);
@@ -381,6 +351,37 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 //            }
 //        });
 //        thread.start();
+    }
+
+    /**
+     * 退出应用
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - firstTime > 2000) {
+                    //如果两次按键时间间隔大于2秒，则不退出
+                    ViewInject.toast(this, getString(R.string.clickAgainExitProgram));
+                    firstTime = secondTime;//更新firstTime
+                    return true;
+                } else {
+                    //  int i = 1 / 0;
+                    //   KjBitmapUtil.getInstance().getKjBitmap().cleanCache();
+                    MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
+                    JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
+                    //    MobclickAgent.onKillProcess(aty);
+                    //第一个参数为是否解绑推送的devicetoken
+                    KJActivityStack.create().appExit(aty);
+                }
+                break;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
 

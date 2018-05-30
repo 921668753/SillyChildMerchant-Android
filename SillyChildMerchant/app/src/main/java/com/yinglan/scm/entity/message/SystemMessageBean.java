@@ -9,11 +9,11 @@ public class SystemMessageBean extends BaseResult<List<SystemMessageBean.DataBea
 
     public class DataBean {
         /**
-         * news_id : 12
-         * news_title : order
+         * news_id : 9
+         * news_title : 系统消息
          * news_text : 傻孩子测试消息
          * lastTime : 2018-05-29 00:00:00.0
-         * num : 0
+         * num : 1
          * title_img : http://ovwiqces1.bkt.clouddn.com/SHZS_29_IMG_20180528_193922.jpg
          */
 

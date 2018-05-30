@@ -72,16 +72,16 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @BindView(id = R.id.tv_shopNum)
     private TextView tv_shopNum;
 
-
     @BindView(id = R.id.img_certified)
     private ImageView img_certified;
-
 
     @BindView(id = R.id.et_enterNameStore)
     private EditText et_enterNameStore;
 
     @BindView(id = R.id.tv_asManager, click = true)
     private TextView tv_asManager;
+
+
     private PictureSourceDialog pictureSourceDialog = null;
 
     private String store_logo = "";

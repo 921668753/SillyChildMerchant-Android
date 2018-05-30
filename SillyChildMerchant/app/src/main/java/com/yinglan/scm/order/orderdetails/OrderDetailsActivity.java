@@ -12,7 +12,10 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
+import com.common.cklibrary.utils.TimeCount;
 import com.common.cklibrary.utils.myview.ChildListView;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.order.orderdetails.OrderDetailGoodAdapter;
 import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean;
@@ -24,7 +27,7 @@ import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
  * Created by Administrator on 2017/9/2.
  */
 
-public class OrderDetailsActivity extends BaseActivity implements OrderDetailsContract.View {
+public class OrderDetailsActivity extends BaseActivity implements OrderDetailsContract.View, TimeCount.TimeCountCallBack {
 
     /**
      * 等待买家付款
@@ -265,6 +268,13 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
      */
     private String amountRealPay = "0.00";
 
+
+    /**
+     * 倒计时内部类
+     */
+    private TimeCount time;
+
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_orderdetails);
@@ -275,6 +285,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         super.initData();
         mPresenter = new OrderDetailsPresenter(this);
         mAdapter = new OrderDetailGoodAdapter(this);
+        time = new TimeCount();
         orderId = getIntent().getIntExtra("orderId", 0);
     }
 
@@ -282,6 +293,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     public void initWidget() {
         super.initWidget();
         initTitle();
+        time.setTimeCountCallBack(this);
         lv_shopGoods.setAdapter(mAdapter);
         showLoadingDialog(getString(R.string.dataLoad));
         ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
@@ -329,7 +341,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 1) {
             ll_waitingPayment.setVisibility(View.VISIBLE);
             tv_waitingPayment.setText(getString(R.string.waitingPayment));
-            tv_lateCancelled.setText("");
             ll_waitSending.setVisibility(View.GONE);
             tv_orderCourierInformation.setVisibility(View.GONE);
             tv_orderCourierTime.setVisibility(View.GONE);
@@ -345,6 +356,12 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_confirmDelivery1.setVisibility(View.GONE);
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
+            if (StringUtils.toLong(orderDetailBean.getData().getLastTime()) > 0) {
+                time.setMillisCountDown(StringUtils.toLong(orderDetailBean.getData().getLastTime()), 60000);
+                time.start();
+            }
+
+
         } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 2) {
             ll_waitingPayment.setVisibility(View.GONE);
             ll_waitSending.setVisibility(View.VISIBLE);
@@ -457,15 +474,24 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         }
 
 
+        tv_name.setText(orderDetailBean.getData().getShip_name());
+        tv_phone.setText(orderDetailBean.getData().getShip_mobile());
+        tv_address.setText(orderDetailBean.getData().getShipping_area());
+        tv_detailedAddress.setText(orderDetailBean.getData().getShip_mobile());
+        if (orderDetailBean.getData().getItemList() != null && orderDetailBean.getData().getItemList().size() > 0) {
+            mAdapter.clear();
+            mAdapter.addMoreData(orderDetailBean.getData().getItemList());
+        }
+        tv_goodsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney())));
+        tv_freightMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getShip_money())));
+        tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
+        tv_preferentialActivities.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
+        tv_orderCode.setText(orderDetailBean.getData().getSn());
+        tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
+        if (orderDetailBean.getData().getPayment_type().contains("onlinePay")) {
+            tv_modePayment.setText(getString(R.string.balancePay));
+        }
 
-
-//        tv_name.setText();
-//        tv_phone.setText();
-//        tv_address.setText();
-//        tv_detailedAddress.setText();
-//        tv_goodsMoney.setText();
-//        tv_freightMoney.setText();
-//        tv_couponsMoney.setText();
 //        tv_preferentialActivities.setText();
 //        tv_orderCode.setText();
 //        tv_submitTime.setText();
@@ -483,5 +509,22 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             return;
         }
         ViewInject.toast(msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        time.cancel();
+        time = null;
+    }
+
+    @Override
+    public void onFinishTime() {
+        ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+    }
+
+    @Override
+    public void onTick(long millisUntilFinished) {
+        tv_lateCancelled.setText(String.valueOf(millisUntilFinished / 60000));
     }
 }

@@ -234,7 +234,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
             clearCacheDialog.cancel();
         }
         clearCacheDialog = null;
-        if (sweetAlertDialog != null) {
+        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
             sweetAlertDialog.cancel();
         }
         sweetAlertDialog = null;
