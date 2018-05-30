@@ -27,7 +27,7 @@ public class SystemMessageListViewAdapter extends BGAAdapterViewAdapter<DataBean
         /**
          * 头像
          */
-        GlideImageLoader.glideLoader(mContext, listBean.getNews_text(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
+        GlideImageLoader.glideLoader(mContext, listBean.getNews_img(), viewHolderHelper.getImageView(R.id.img_head), 0, R.mipmap.avatar);
 
         /**
          * 未读消息数
