@@ -1,6 +1,5 @@
 package com.yinglan.scm.mine.mywallet;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.View;
