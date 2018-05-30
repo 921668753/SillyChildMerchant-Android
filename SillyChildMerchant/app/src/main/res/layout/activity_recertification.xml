@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:layout_marginRight="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/shape_homepage"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/MatchWrap"
+            android:gravity="center"
+            android:padding="@dimen/dimen15"
+            android:text="@string/myIdentity"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView style="@style/DividerWidth" />
+
+        <ImageView
+            android:id="@+id/img_storeLogo"
+            android:layout_width="@dimen/dimen93"
+            android:layout_height="@dimen/dimen93"
+            android:layout_marginBottom="@dimen/dimen20"
+            android:layout_marginTop="@dimen/dimen20"
+            android:src="@mipmap/home_add_shop_logo"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/et_enterNameStore"
+        style="@style/Match44"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:layout_marginRight="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/shape_homepage"
+        android:hint="@string/enterNameStore"
+        android:maxLength="12"
+        android:paddingLeft="@dimen/dimen11"
+        android:paddingRight="@dimen/dimen11"
+        android:textColor="@color/titletextcolors"
+        android:textColorHint="@color/hintColors"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textSize="@dimen/textsize14" />
+
+
+    <TextView
+        android:id="@+id/tv_asManager"
+        style="@style/Match40"
+        android:layout_marginLeft="@dimen/dimen73"
+        android:layout_marginRight="@dimen/dimen73"
+        android:layout_marginTop="@dimen/dimen15"
+        android:background="@drawable/shape_homepagebtn"
+        android:gravity="center"
+        android:text="@string/asManager"
+        android:textColor="@color/whiteColors"
+        android:textSize="@dimen/textsize16" />
+
+
+</LinearLayout>

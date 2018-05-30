@@ -30,6 +30,7 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.UploadImageBean;
 import com.yinglan.scm.entity.main.UserInfoBean;
+import com.yinglan.scm.homepage.RecertificationActivity;
 import com.yinglan.scm.homepage.ShopkeeperCertificationActivity;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
@@ -140,6 +141,14 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                 ((HomePageContract.Presenter) mPresenter).getIsLogin(aty, 2);
                 break;
             case R.id.tv_asManager:
+                int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
+                if (disabled == -1) {
+                    Intent intent = new Intent(aty, RecertificationActivity.class);
+                    intent.putExtra("store_logo", store_logo);
+                    intent.putExtra("store_name", et_enterNameStore.getText().toString().trim());
+                    startActivityForResult(intent, RESULT_CODE_GET);
+                    return;
+                }
                 ((HomePageContract.Presenter) mPresenter).getIsLogin(aty, 3);
                 break;
             default:
@@ -218,12 +227,15 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                 saveUserInfo(userInfoBean);
                 int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
                 if (disabled == -1) {
-                    img_storeLogo.setVisibility(View.VISIBLE);
-                    et_enterNameStore.setVisibility(View.VISIBLE);
+                    img_storeLogo.setVisibility(View.GONE);
+                    et_enterNameStore.setVisibility(View.GONE);
                     tv_asManager.setVisibility(View.VISIBLE);
-                    ll_seller.setVisibility(View.GONE);
-                    et_enterNameStore.setText(userInfoBean.getData().getStore_name());
+                    ll_seller.setVisibility(View.VISIBLE);
+                    tv_storeName.setText(userInfoBean.getData().getStore_name());
                     store_logo = userInfoBean.getData().getStore_logo();
+                    tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
+                    img_certified.setImageResource(R.mipmap.home_not_through);
+                    tv_asManager.setText(getString(R.string.recertification));
                 } else if (disabled == 0) {
                     img_storeLogo.setVisibility(View.GONE);
                     et_enterNameStore.setVisibility(View.GONE);
@@ -290,8 +302,11 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (flag == 1 && isLogin(msg) || flag == 2 && isLogin(msg) || flag == 3 && isLogin(msg)) {
+        if (flag == 2 && isLogin(msg) || flag == 3 && isLogin(msg)) {
             aty.showActivity(aty, LoginActivity.class);
+            return;
+        }
+        if (flag == 1 && isLogin(msg)) {
             return;
         }
         ViewInject.toast(msg);
@@ -341,12 +356,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
             ((HomePageContract.Presenter) mPresenter).getHomePage(aty);
-        } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
-            String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
-            if (!StringUtils.isEmpty(avatar)) {
-//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
-//                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
-            }
         }
     }
 
@@ -360,8 +369,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
             pictureSourceDialog.cancel();
         }
         pictureSourceDialog = null;
-        GlideCatchUtil.getInstance().cleanImageDisk();
-        GlideCatchUtil.getInstance().cleanCatchDisk();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.yinglan.scm.mine.setup;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
@@ -93,10 +94,25 @@ public class SetUpPresenter implements SetUpContract.Presenter {
         //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
         PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "read_message_count", true);
         //清除融云信息，退出登陆
-     //   SealUserInfoManager.getInstance().closeDB();
+        //   SealUserInfoManager.getInstance().closeDB();
         RongIM.getInstance().logout();
         mView.getSuccess("", 1);
     }
 
+    @Override
+    public void getIsLogin(Context context, int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, flag);
+            }
+        });
+    }
 
 }

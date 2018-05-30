@@ -1,40 +1,34 @@
-package com.yinglan.scm.mine.setup;
+package com.yinglan.scm.homepage;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
 /**
- * Created by Administrator on 2017/2/11.
+ * Created by ruitu on 2016/9/24.
  */
 
-public interface SetUpContract {
+public interface RecertificationContract {
+
 
     interface Presenter extends BasePresenter {
-        /**
-         * 检测更新app
-         */
-        void getUpdateApp();
+
 
         /**
-         * 下载app
+         * 上传图片
          */
-        void downloadApp(String updateAppUrl);
+        void upPictures(String paramname);
 
         /**
          * 获取会员登录状态
          */
         void getIsLogin(Context context, int flag);
-
-        /**
-         * 退出APP登录
-         */
-        void logOutAPP(Activity activity);
     }
 
     interface View extends BaseView<Presenter, String> {
     }
 
 }
+
+

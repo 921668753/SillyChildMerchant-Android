@@ -85,7 +85,6 @@
     <string name="agreement">《傻孩子注册协议》</string>
     <string name="determine">确定</string>
 
-
     <!--app权限-->
     <string name="readAndWrite">这款应用需要获取读写权限，才能使用</string>
     <string name="sdPermission">您拒绝了「SD卡读写权限」所需要的相关权限!请到「设置」开启权限</string>
@@ -115,6 +114,7 @@
     <string name="disabled1">账号被禁用</string>
     <string name="shopNum">店铺号：</string>
     <string name="manager">店长</string>
+    <string name="recertification">重新认证</string>
 
 
     <!--店主认证-->
@@ -145,7 +145,7 @@
     <string name="sendGoods">待发货</string>
     <string name="waitGoods">待收货</string>
     <string name="completed">已完成</string>
-    <string name="closed">已关闭</string>
+    <string name="closed">交易关闭</string>
     <string name="afterSale">售后</string>
     <string name="all">全部</string>
     <string name="confirmDelivery">确认发货</string>

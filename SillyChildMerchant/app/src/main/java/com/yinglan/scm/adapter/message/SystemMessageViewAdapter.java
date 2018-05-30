@@ -1,6 +1,7 @@
 package com.yinglan.scm.adapter.message;
 
 import android.content.Context;
+import android.view.View;
 
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.message.SystemMessageBean.DataBean;
@@ -31,7 +32,12 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 未读消息数
          */
-        viewHolderHelper.setText(R.id.tv_messageTag, String.valueOf(listBean.getNum()));
+        if (listBean.getNum() <= 0) {
+            viewHolderHelper.setVisibility(R.id.tv_messageTag, View.GONE);
+        } else {
+            viewHolderHelper.setVisibility(R.id.tv_messageTag, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_messageTag, String.valueOf(listBean.getNum()));
+        }
 
         /**
          * 标题
@@ -44,7 +50,6 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
             viewHolderHelper.setText(R.id.tv_title, mContext.getString(R.string.systemMessage));
         }
 
-
         /**
          * 内容
          */
@@ -53,7 +58,7 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 时间
          */
-        viewHolderHelper.setText(R.id.tv_time, listBean.getLasttime());
+        viewHolderHelper.setText(R.id.tv_time, listBean.getLastTime());
 
     }
 

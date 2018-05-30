@@ -1,5 +1,7 @@
 package com.yinglan.scm.main;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.JsonUtil;
@@ -23,6 +25,21 @@ public class MainPresenter implements MainContract.Presenter {
         mView.setPresenter(this);
     }
 
+    @Override
+    public void getIsLogin(Context context, int flag) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, flag);
+            }
+        });
+    }
 
     @Override
     public void getSystemMessage() {
@@ -80,7 +97,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void getChatManagerListener() {
-      //  EMClient.getInstance().chatManager().addMessageListener(msgListener);
+        //  EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
 //    EMMessageListener msgListener = new EMMessageListener() {
@@ -148,4 +165,6 @@ public class MainPresenter implements MainContract.Presenter {
 //        }
         return false;
     }
+
+
 }

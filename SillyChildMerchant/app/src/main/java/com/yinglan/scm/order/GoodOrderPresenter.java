@@ -23,7 +23,7 @@ public class GoodOrderPresenter implements GoodOrderContract.Presenter {
     @Override
     public void getOrderList(String status, int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("page", page);
+        httpParams.put("pageNo", page);
         if (!StringUtils.isEmpty(status)) {
             httpParams.put("status", status);
         }

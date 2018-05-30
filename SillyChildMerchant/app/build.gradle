@@ -83,8 +83,8 @@ android {
             // 混淆文件的位置
             signingConfig signingConfigs.debug
             buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""
-            buildConfigField "String", "WEIXIN_APPKEY", "\"wx444bb74a6d803478\""
-            buildConfigField "String", "WEIXIN_APPSECRET", "\"6378e75dd1f12ee6aec861ba39929494\""
+            buildConfigField "String", "WEIXIN_APPKEY", "\"wx287c0db55098301b\""
+            buildConfigField "String", "WEIXIN_APPSECRET", "\"ffd075c202c8aee81e629efbb9c9156b\""
 //            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
 //            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
             buildConfigField "String", "QQ_APPID", "\"1106793234\""
@@ -103,8 +103,8 @@ android {
             // 混淆文件的位置
             signingConfig signingConfigs.release
             buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""
-            buildConfigField "String", "WEIXIN_APPKEY", "\"wx444bb74a6d803478\""
-            buildConfigField "String", "WEIXIN_APPSECRET", "\"6378e75dd1f12ee6aec861ba39929494\""
+            buildConfigField "String", "WEIXIN_APPKEY", "\"wx287c0db55098301b\""
+            buildConfigField "String", "WEIXIN_APPSECRET", "\"ffd075c202c8aee81e629efbb9c9156b\""
 //            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
 //            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
             buildConfigField "String", "QQ_APPID", "\"1106793234\""

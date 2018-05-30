@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +12,6 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
-import com.common.cklibrary.utils.GlideCatchUtil;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -19,6 +19,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.main.HomePageContract;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scm.utils.GlideImageLoader;
 
@@ -32,34 +33,33 @@ import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_SELECT;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
 
 /**
- * 店主认证
+ * 重新认证
  */
-public class ShopkeeperCertificationActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks, ShopkeeperCertificationContract.View {
+public class RecertificationActivity extends BaseActivity implements RecertificationContract.View, EasyPermissions.PermissionCallbacks {
 
-    @BindView(id = R.id.img_localIdentityCard, click = true)
-    private ImageView img_localIdentityCard;
 
-    @BindView(id = R.id.tv_submitAudit, click = true)
-    private TextView tv_submitAudit;
+    @BindView(id = R.id.img_storeLogo, click = true)
+    private ImageView img_storeLogo;
+
+    @BindView(id = R.id.et_enterNameStore)
+    private EditText et_enterNameStore;
+
+    @BindView(id = R.id.tv_asManager, click = true)
+    private TextView tv_asManager;
 
     private PictureSourceDialog pictureSourceDialog = null;
 
-    private String id_img = "";
-
     private String store_logo = "";
-    private String store_name = "";
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_shopkeepercertificat);
+        setContentView(R.layout.activity_recertification);
     }
 
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new ShopkeeperCertificationPresenter(this);
-        store_logo = getIntent().getStringExtra("store_logo");
-        store_name = getIntent().getStringExtra("store_name");
+        mPresenter = new RecertificationPresenter(this);
     }
 
     @Override
@@ -68,6 +68,7 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
         ActivityTitleUtils.initToolbar(aty, getString(R.string.shopkeeperCertificat), true, R.id.titlebar);
         initImagePicker();
     }
+
 
     /**
      * 初始化图片选择器
@@ -80,33 +81,56 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
         imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
         imagePicker.setSelectLimit(1);              //选中数量限制
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-        imagePicker.setFocusWidth(840);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setFocusHeight(720);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(800);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(800);                         //保存文件的高度。单位像素
         imagePicker.setMultiMode(false);//设置为单选模式，默认多选
         imagePicker.setShowCamera(false);                      //显示拍照按钮
     }
 
+    /**
+     * @param v 控件监听事件
+     */
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.img_localIdentityCard:
-                choicePhotoWrapper(RESULT_CODE_GET);
+            case R.id.img_storeLogo:
+                ((RecertificationContract.Presenter) mPresenter).getIsLogin(aty, 1);
                 break;
-            case R.id.tv_submitAudit:
-                showLoadingDialog(getString(R.string.submissionLoad));
-                ((ShopkeeperCertificationContract.Presenter) mPresenter).postHomePage(this, store_logo, store_name, id_img);
+            case R.id.tv_asManager:
+                ((RecertificationContract.Presenter) mPresenter).getIsLogin(aty, 2);
+                break;
+            default:
                 break;
         }
     }
 
     @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
-    private void choicePhotoWrapper(int code) {
+    private void choicePhotoWrapper() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-        if (EasyPermissions.hasPermissions(aty, perms) && code == RESULT_CODE_GET) {
+        if (EasyPermissions.hasPermissions(aty, perms)) {
             PictureDialog();
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.needPermission), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (requestCode == NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER) {
+            ViewInject.toast(getString(R.string.denyPermission));
         }
     }
 
@@ -139,46 +163,30 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if (requestCode == NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER) {
-            ViewInject.toast(getString(R.string.denyPermission));
-        }
-    }
-
-
-    @Override
-    public void setPresenter(ShopkeeperCertificationContract.Presenter presenter) {
+    public void setPresenter(RecertificationContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
-        dismissLoadingDialog();
         if (flag == 0) {
-            id_img = success;
-            GlideImageLoader.glideOrdinaryLoader(this, success, img_localIdentityCard, R.mipmap.home_add_pictures);
+            store_logo = success;
+            GlideImageLoader.glideLoader(aty, success, img_storeLogo, 0, R.mipmap.home_add_shop_logo);
         } else if (flag == 1) {
-            ViewInject.toast(getString(R.string.submitAudit1));
-            Intent intent = getIntent();
-            setResult(RESULT_OK, intent);
-            finish();
+            choicePhotoWrapper();
+        } else if (flag == 2) {
+            Intent intent = new Intent(aty, ShopkeeperCertificationActivity.class);
+            intent.putExtra("store_logo", store_logo);
+            intent.putExtra("store_name", et_enterNameStore.getText().toString().trim());
+            startActivityForResult(intent, RESULT_CODE_GET);
         }
+        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (flag == 1 && isLogin(msg)) {
+        if (flag == 1 && isLogin(msg) || flag == 2 && isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
             return;
         }
@@ -199,22 +207,30 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
                     }
                     String imgPath = images.get(0).path;
                     showLoadingDialog(getString(R.string.saveLoad));
-                    ((ShopkeeperCertificationContract.Presenter) mPresenter).upPictures(this, imgPath);
+                    ((HomePageContract.Presenter) mPresenter).upPictures(imgPath);
                 } else {
                     ViewInject.toast(getString(R.string.noData));
                 }
                 break;
+            case RESULT_CODE_GET:
+                Intent intent = getIntent();
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
         }
     }
 
+
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         if (pictureSourceDialog != null) {
             pictureSourceDialog.cancel();
         }
         pictureSourceDialog = null;
-        GlideCatchUtil.getInstance().cleanImageDisk();
-        GlideCatchUtil.getInstance().cleanCatchDisk();
     }
+
 }
+
+
+

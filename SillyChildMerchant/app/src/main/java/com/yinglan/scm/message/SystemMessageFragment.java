@@ -44,12 +44,12 @@ import static com.yinglan.scm.main.MainActivity.MESSAGE_RECEIVED_ACTION;
 
 public class SystemMessageFragment extends BaseFragment implements SystemMessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    @BindView(id = R.id.mRefreshLayout)
-    private static BGARefreshLayout mRefreshLayout;
-
     private SystemMessageViewAdapter mAdapter;
 
     private MainActivity aty;
+
+    @BindView(id = R.id.mRefreshLayout)
+    private BGARefreshLayout mRefreshLayout;
 
     @BindView(id = R.id.lv_systemMessage)
     private ListView lv_systemMessage;
@@ -74,6 +74,11 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
+    /**
+     * 消息总数
+     */
+    private int sum = 0;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -164,6 +169,13 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
+//            for (int i = 0; i < systemMessageBean.getData().size(); i++) {
+//                sum = sum + systemMessageBean.getData().get(i).getNum();
+//            }
+//            if (sum == 0) {
+//                errorMsg(getString(R.string.noSystemMessage), 1);
+//                return;
+//            }
             mAdapter.addNewData(systemMessageBean.getData());
         } else {
             mRefreshLayout.endLoadingMore();

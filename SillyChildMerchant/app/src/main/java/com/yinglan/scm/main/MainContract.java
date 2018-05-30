@@ -1,5 +1,7 @@
 package com.yinglan.scm.main;
 
+import android.content.Context;
+
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
@@ -9,6 +11,10 @@ import com.common.cklibrary.common.BaseView;
 
 public interface MainContract {
     interface Presenter extends BasePresenter {
+        /**
+         * 获取会员登录状态
+         */
+        void getIsLogin(Context context, int flag);
 
         /**
          * 获取未读系统消息数量

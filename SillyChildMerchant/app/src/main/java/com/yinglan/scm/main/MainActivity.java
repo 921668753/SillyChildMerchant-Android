@@ -22,6 +22,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.StringNewConstants;
 import com.yinglan.scm.custominterfaces.MainCallBack;
+import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.message.SystemMessageFragment.MessageReceiver;
 import com.yinglan.scm.receivers.MainReceiver;
 import com.yinglan.scm.services.MainService;
@@ -184,8 +185,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 cleanColors(0);
                 break;
             case R.id.bottombar_message:
-                cleanColors(1);
-                break;
+                ((MainContract.Presenter) mPresenter).getIsLogin(aty, 0);
             case R.id.bottombar_activities:
                 cleanColors(2);
                 break;
@@ -350,16 +350,23 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     @Override
     public void getSuccess(String success, int flag) {
-//        if (flag == 0) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    tv_messageTag.setVisibility(View.VISIBLE);
-//                }
-//            });
-//        }
+        if (flag == 0) {
+            cleanColors(1);
+        } else if (flag == 1) {
+            cleanColors(2);
+        }
     }
 
+    @Override
+    public void errorMsg(String msg, int flag) {
+        if (flag == 0 && isLogin(msg) || flag == 1 && flag == 0 && isLogin(msg)) {
+            showActivity(aty, LoginActivity.class);
+        } else if (flag == 0) {
+            cleanColors(1);
+        } else if (flag == 1) {
+            cleanColors(2);
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -376,17 +383,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 //        thread.start();
     }
 
-    @Override
-    public void errorMsg(String msg, int flag) {
-//        if (flag == 0) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    tv_messageTag.setVisibility(View.GONE);
-//                }
-//            });
-//        }
-    }
 
     @Override
     public void msgStyle(boolean havemsg) {

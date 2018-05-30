@@ -2,6 +2,8 @@ package com.yinglan.scm.entity.order.orderdetail;
 
 import com.common.cklibrary.entity.BaseResult;
 
+import java.util.List;
+
 
 /**
  * Created by Admin on 2017/8/17.
@@ -9,36 +11,55 @@ import com.common.cklibrary.entity.BaseResult;
 
 public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
 
+
     public class DataBean {
         /**
-         * avatar : 2222
-         * name : 2222
-         * bonus : 2222
+         * order_id : 46
+         * status : 1
+         * shipInfo : {"message":"暂无物流信息"}
+         * itemList : [{"item_id":7,"order_id":46,"goods_id":11,"product_id":11,"name":"66减30伊赛西门塔尔牛腩块500g新鲜牛肉冷冻生鲜 ","specs":"5kg","num":1,"sn":"0010","price":52.9,"image":"http://ovwiqces1.bkt.clouddn.com/attachment//store/15/goods/2018/5/12/16//00220278.jpg"}]
+         * ship_name : toys
+         * ship_mobile : 13111111111
+         * shipping_area : 上海-崇明县-堡镇
+         * order_amount : 52.9
+         * ship_money : null
+         * ship_no : null
+         * bouns_money : 0
+         * activity : 0
+         * sn : DD152766104333-1
+         * create_time : 2018-05-30 14:17:24
+         * payment_type : onlinePay
+         * paymoney : 0
+         * pay_time :
+         * allocation_time :
+         * reason : null
+         * backMoney : null
+         * total : null
+         * backTime : null
          */
+
         private int order_id;
-        private int orderStatus;
-        private String act_discount;
-        private String activity_point;
-        private String address_id;
-        private String allocation_time;
-        private int bonus_id;
-        private String cancel_reason;
+        private int status;
+        private OrderDetailBean shipInfo;
+        private String ship_name;
+        private String ship_mobile;
+        private String shipping_area;
+        private String order_amount;
+        private String ship_money;
+        private String ship_no;
+        private String bouns_money;
+        private String activity;
+        private String sn;
         private String create_time;
-        private String consumepoint;
-        private int depotid;
-        private int disabled;
-        private String discount;
-        private String gainedpoint;
-        private String gift_id;
-        private String goods;
-        private String goods_amount;
-        private String goods_num;
-        private String isCod;
-        private String isOnlinePay;
-        private String is_cancel;
-        private String is_comment;
-        private String is_online;
-        private String is_protect;
+        private String payment_type;
+        private String paymoney;
+        private String pay_time;
+        private String allocation_time;
+        private String reason;
+        private String backMoney;
+        private String total;
+        private String backTime;
+        private List<ItemListBean> itemList;
 
         public int getOrder_id() {
             return order_id;
@@ -48,60 +69,92 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
             this.order_id = order_id;
         }
 
-        public int getOrderStatus() {
-            return orderStatus;
+        public int getStatus() {
+            return status;
         }
 
-        public void setOrderStatus(int orderStatus) {
-            this.orderStatus = orderStatus;
+        public void setStatus(int status) {
+            this.status = status;
         }
 
-        public String getAct_discount() {
-            return act_discount;
+        public OrderDetailBean getShipInfo() {
+            return shipInfo;
         }
 
-        public void setAct_discount(String act_discount) {
-            this.act_discount = act_discount;
+        public void setShipInfo(OrderDetailBean shipInfo) {
+            this.shipInfo = shipInfo;
         }
 
-        public String getActivity_point() {
-            return activity_point;
+        public String getShip_name() {
+            return ship_name;
         }
 
-        public void setActivity_point(String activity_point) {
-            this.activity_point = activity_point;
+        public void setShip_name(String ship_name) {
+            this.ship_name = ship_name;
         }
 
-        public String getAddress_id() {
-            return address_id;
+        public String getShip_mobile() {
+            return ship_mobile;
         }
 
-        public void setAddress_id(String address_id) {
-            this.address_id = address_id;
+        public void setShip_mobile(String ship_mobile) {
+            this.ship_mobile = ship_mobile;
         }
 
-        public String getAllocation_time() {
-            return allocation_time;
+        public String getShipping_area() {
+            return shipping_area;
         }
 
-        public void setAllocation_time(String allocation_time) {
-            this.allocation_time = allocation_time;
+        public void setShipping_area(String shipping_area) {
+            this.shipping_area = shipping_area;
         }
 
-        public int getBonus_id() {
-            return bonus_id;
+        public String getOrder_amount() {
+            return order_amount;
         }
 
-        public void setBonus_id(int bonus_id) {
-            this.bonus_id = bonus_id;
+        public void setOrder_amount(String order_amount) {
+            this.order_amount = order_amount;
         }
 
-        public String getCancel_reason() {
-            return cancel_reason;
+        public String getShip_money() {
+            return ship_money;
         }
 
-        public void setCancel_reason(String cancel_reason) {
-            this.cancel_reason = cancel_reason;
+        public void setShip_money(String ship_money) {
+            this.ship_money = ship_money;
+        }
+
+        public String getShip_no() {
+            return ship_no;
+        }
+
+        public void setShip_no(String ship_no) {
+            this.ship_no = ship_no;
+        }
+
+        public String getBouns_money() {
+            return bouns_money;
+        }
+
+        public void setBouns_money(String bouns_money) {
+            this.bouns_money = bouns_money;
+        }
+
+        public String getActivity() {
+            return activity;
+        }
+
+        public void setActivity(String activity) {
+            this.activity = activity;
+        }
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
         }
 
         public String getCreate_time() {
@@ -112,126 +165,182 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
             this.create_time = create_time;
         }
 
-        public String getConsumepoint() {
-            return consumepoint;
+        public String getPayment_type() {
+            return payment_type;
         }
 
-        public void setConsumepoint(String consumepoint) {
-            this.consumepoint = consumepoint;
+        public void setPayment_type(String payment_type) {
+            this.payment_type = payment_type;
         }
 
-        public int getDepotid() {
-            return depotid;
+        public String getPaymoney() {
+            return paymoney;
         }
 
-        public void setDepotid(int depotid) {
-            this.depotid = depotid;
+        public void setPaymoney(String paymoney) {
+            this.paymoney = paymoney;
         }
 
-        public int getDisabled() {
-            return disabled;
+        public String getPay_time() {
+            return pay_time;
         }
 
-        public void setDisabled(int disabled) {
-            this.disabled = disabled;
+        public void setPay_time(String pay_time) {
+            this.pay_time = pay_time;
         }
 
-        public String getDiscount() {
-            return discount;
+        public String getAllocation_time() {
+            return allocation_time;
         }
 
-        public void setDiscount(String discount) {
-            this.discount = discount;
+        public void setAllocation_time(String allocation_time) {
+            this.allocation_time = allocation_time;
         }
 
-        public String getGainedpoint() {
-            return gainedpoint;
+        public String getReason() {
+            return reason;
         }
 
-        public void setGainedpoint(String gainedpoint) {
-            this.gainedpoint = gainedpoint;
+        public void setReason(String reason) {
+            this.reason = reason;
         }
 
-        public String getGift_id() {
-            return gift_id;
+        public String getBackMoney() {
+            return backMoney;
         }
 
-        public void setGift_id(String gift_id) {
-            this.gift_id = gift_id;
+        public void setBackMoney(String backMoney) {
+            this.backMoney = backMoney;
         }
 
-        public String getGoods() {
-            return goods;
+        public String getTotal() {
+            return total;
         }
 
-        public void setGoods(String goods) {
-            this.goods = goods;
+        public void setTotal(String total) {
+            this.total = total;
         }
 
-        public String getGoods_amount() {
-            return goods_amount;
+        public String getBackTime() {
+            return backTime;
         }
 
-        public void setGoods_amount(String goods_amount) {
-            this.goods_amount = goods_amount;
+        public void setBackTime(String backTime) {
+            this.backTime = backTime;
         }
 
-        public String getGoods_num() {
-            return goods_num;
+        public List<ItemListBean> getItemList() {
+            return itemList;
         }
 
-        public void setGoods_num(String goods_num) {
-            this.goods_num = goods_num;
+        public void setItemList(List<ItemListBean> itemList) {
+            this.itemList = itemList;
         }
 
-        public String getIsCod() {
-            return isCod;
-        }
+        public class ItemListBean {
+            /**
+             * item_id : 7
+             * order_id : 46
+             * goods_id : 11
+             * product_id : 11
+             * name : 66减30伊赛西门塔尔牛腩块500g新鲜牛肉冷冻生鲜
+             * specs : 5kg
+             * num : 1
+             * sn : 0010
+             * price : 52.9
+             * image : http://ovwiqces1.bkt.clouddn.com/attachment//store/15/goods/2018/5/12/16//00220278.jpg
+             */
 
-        public void setIsCod(String isCod) {
-            this.isCod = isCod;
-        }
+            private int item_id;
+            private int order_id;
+            private int goods_id;
+            private int product_id;
+            private String name;
+            private String specs;
+            private int num;
+            private String sn;
+            private String price;
+            private String image;
 
-        public String getIsOnlinePay() {
-            return isOnlinePay;
-        }
+            public int getItem_id() {
+                return item_id;
+            }
 
-        public void setIsOnlinePay(String isOnlinePay) {
-            this.isOnlinePay = isOnlinePay;
-        }
+            public void setItem_id(int item_id) {
+                this.item_id = item_id;
+            }
 
-        public String getIs_cancel() {
-            return is_cancel;
-        }
+            public int getOrder_id() {
+                return order_id;
+            }
 
-        public void setIs_cancel(String is_cancel) {
-            this.is_cancel = is_cancel;
-        }
+            public void setOrder_id(int order_id) {
+                this.order_id = order_id;
+            }
 
-        public String getIs_comment() {
-            return is_comment;
-        }
+            public int getGoods_id() {
+                return goods_id;
+            }
 
-        public void setIs_comment(String is_comment) {
-            this.is_comment = is_comment;
-        }
+            public void setGoods_id(int goods_id) {
+                this.goods_id = goods_id;
+            }
 
-        public String getIs_online() {
-            return is_online;
-        }
+            public int getProduct_id() {
+                return product_id;
+            }
 
-        public void setIs_online(String is_online) {
-            this.is_online = is_online;
-        }
+            public void setProduct_id(int product_id) {
+                this.product_id = product_id;
+            }
 
-        public String getIs_protect() {
-            return is_protect;
-        }
+            public String getName() {
+                return name;
+            }
 
-        public void setIs_protect(String is_protect) {
-            this.is_protect = is_protect;
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getSpecs() {
+                return specs;
+            }
+
+            public void setSpecs(String specs) {
+                this.specs = specs;
+            }
+
+            public int getNum() {
+                return num;
+            }
+
+            public void setNum(int num) {
+                this.num = num;
+            }
+
+            public String getSn() {
+                return sn;
+            }
+
+            public void setSn(String sn) {
+                this.sn = sn;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
         }
     }
-
-
 }

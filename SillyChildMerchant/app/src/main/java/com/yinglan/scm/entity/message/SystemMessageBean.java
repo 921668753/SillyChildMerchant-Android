@@ -9,23 +9,27 @@ public class SystemMessageBean extends BaseResult<List<SystemMessageBean.DataBea
 
     public class DataBean {
         /**
-         * num : 1
-         * news_title : 测试消息
-         * lasttime : 2018-05-29
+         * news_id : 12
+         * news_title : order
          * news_text : 傻孩子测试消息
+         * lastTime : 2018-05-29 00:00:00.0
+         * num : 0
+         * title_img : http://ovwiqces1.bkt.clouddn.com/SHZS_29_IMG_20180528_193922.jpg
          */
 
-        private int num;
+        private int news_id;
         private String news_title;
-        private String lasttime;
         private String news_text;
+        private String lastTime;
+        private int num;
+        private String title_img;
 
-        public int getNum() {
-            return num;
+        public int getNews_id() {
+            return news_id;
         }
 
-        public void setNum(int num) {
-            this.num = num;
+        public void setNews_id(int news_id) {
+            this.news_id = news_id;
         }
 
         public String getNews_title() {
@@ -36,20 +40,36 @@ public class SystemMessageBean extends BaseResult<List<SystemMessageBean.DataBea
             this.news_title = news_title;
         }
 
-        public String getLasttime() {
-            return lasttime;
-        }
-
-        public void setLasttime(String lasttime) {
-            this.lasttime = lasttime;
-        }
-
         public String getNews_text() {
             return news_text;
         }
 
         public void setNews_text(String news_text) {
             this.news_text = news_text;
+        }
+
+        public String getLastTime() {
+            return lastTime;
+        }
+
+        public void setLastTime(String lastTime) {
+            this.lastTime = lastTime;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
+
+        public String getTitle_img() {
+            return title_img;
+        }
+
+        public void setTitle_img(String title_img) {
+            this.title_img = title_img;
         }
     }
 }

@@ -326,7 +326,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @Override
     public void getSuccess(String success, int flag) {
         OrderDetailBean orderDetailBean = (OrderDetailBean) JsonUtil.getInstance().json2Obj(success, OrderDetailBean.class);
-        if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getOrderStatus() == 1) {
+        if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 1) {
             ll_waitingPayment.setVisibility(View.VISIBLE);
             tv_waitingPayment.setText(getString(R.string.waitingPayment));
             tv_lateCancelled.setText("");
@@ -345,7 +345,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_confirmDelivery1.setVisibility(View.GONE);
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getOrderStatus() == 2) {
+        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 2) {
             ll_waitingPayment.setVisibility(View.GONE);
             ll_waitSending.setVisibility(View.VISIBLE);
             img_waitSending.setImageResource(R.mipmap.order_to_be_shipped_icon);
@@ -364,7 +364,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_confirmDelivery1.setVisibility(View.VISIBLE);
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getOrderStatus() == 3) {
+        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 3) {
             ll_waitingPayment.setVisibility(View.GONE);
             ll_waitSending.setVisibility(View.VISIBLE);
             img_waitSending.setImageResource(R.mipmap.order_shipped_icon);
@@ -387,7 +387,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_confirmDelivery1.setVisibility(View.GONE);
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getOrderStatus() == 5) {
+        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
             ll_waitingPayment.setVisibility(View.GONE);
             ll_waitSending.setVisibility(View.VISIBLE);
             img_waitSending.setImageResource(R.mipmap.order_complete_icon);
@@ -410,7 +410,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_confirmDelivery1.setVisibility(View.GONE);
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getOrderStatus() == 7) {
+        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
             ll_waitingPayment.setVisibility(View.GONE);
             ll_waitSending.setVisibility(View.VISIBLE);
             img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
@@ -455,6 +455,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
         }
+
+
+
+
 //        tv_name.setText();
 //        tv_phone.setText();
 //        tv_address.setText();

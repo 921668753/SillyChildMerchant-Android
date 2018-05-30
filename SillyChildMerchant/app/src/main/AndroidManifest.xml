@@ -112,6 +112,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <!--首页  重新认证-->
+        <activity
+            android:name="com.yinglan.scm.homepage.RecertificationActivity"
+            android:screenOrientation="portrait" />
+
         <!--首页  店主认证-->
         <activity
             android:name="com.yinglan.scm.homepage.ShopkeeperCertificationActivity"
@@ -234,9 +239,6 @@
             android:screenOrientation="portrait" />
 
 
-
-
-
         <!--支付宝支付-->
         <!--支付宝支付-->
         <!--支付宝支付-->
@@ -326,8 +328,6 @@
         <!--     友盟分享      -->
 
 
-
-
         <!--融云start-->
         <!--融云start-->
         <!--融云start-->
@@ -366,28 +366,24 @@
 
         <!--聚合会话列表-->
         <!--<activity-->
-            <!--android:name=".message.interactivemessage.rongcloud.SubConversationListActivtiy"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
+        <!--android:name=".message.interactivemessage.rongcloud.SubConversationListActivtiy"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <!--<data-->
-                    <!--android:host="@string/applicationId"-->
-                    <!--android:pathPrefix="/subconversationlist"-->
-                    <!--android:scheme="rong" />-->
-            <!--</intent-filter>-->
+        <!--<data-->
+        <!--android:host="@string/applicationId"-->
+        <!--android:pathPrefix="/subconversationlist"-->
+        <!--android:scheme="rong" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <!--融云end-->
         <!--融云end-->
         <!--融云end-->
-
-
-
-
 
 
         <!--      极光推送      -->
@@ -425,8 +421,8 @@
         <!--百度地图-->
         <!--百度地图-->
         <!--<meta-data-->
-            <!--android:name="com.baidu.lbsapi.API_KEY"-->
-            <!--android:value="${BAIDU_APPKEY}" />-->
+        <!--android:name="com.baidu.lbsapi.API_KEY"-->
+        <!--android:value="${BAIDU_APPKEY}" />-->
         <!--<service-->
         <!--android:name="com.baidu.location.f"-->
         <!--android:enabled="true"-->

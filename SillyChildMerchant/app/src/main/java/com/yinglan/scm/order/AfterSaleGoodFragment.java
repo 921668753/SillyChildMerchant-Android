@@ -13,15 +13,20 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.order.GoodsOrderViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.order.GoodOrderBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.main.MainActivity;
+import com.yinglan.scm.main.MineContract;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
@@ -32,7 +37,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View ,BGAOnItemChildClickListener {
+public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View, BGAOnItemChildClickListener {
 
     private MainActivity aty;
 
@@ -142,7 +147,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
-        intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+        intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
         aty.showActivity(aty, intent);
     }
 
@@ -219,6 +224,18 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
             ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 2, "", mAdapter.getItem(position).getPaymoney());
         } else if (childView.getId() == R.id.tv_agreed) {
             ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 1, "", mAdapter.getItem(position).getPaymoney());
+        }
+    }
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
         }
     }
 }

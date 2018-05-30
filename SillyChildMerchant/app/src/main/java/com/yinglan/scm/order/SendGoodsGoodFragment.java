@@ -16,6 +16,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.order.GoodsOrderViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
@@ -141,7 +142,7 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
-        intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+        intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
         aty.showActivity(aty, intent);
     }
 
@@ -218,6 +219,18 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
             Intent intent = new Intent(aty, OrderDetailsActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
             aty.showActivity(aty, intent);
+        }
+    }
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
         }
     }
 }
