@@ -3,8 +3,10 @@ package com.yinglan.scm.adapter.message;
 import android.content.Context;
 import android.view.View;
 
+import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.message.SystemMessageBean.DataBean;
+import com.yinglan.scm.utils.DataUtil;
 import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
@@ -52,7 +54,7 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<DataBean> {
         /**
          * 时间
          */
-        viewHolderHelper.setText(R.id.tv_time, listBean.getLastTime());
+        viewHolderHelper.setText(R.id.tv_time, DataUtil.formatData(StringUtils.toLong(listBean.getLastTime()), "yyyy-MM-dd HH:mm"));
 
     }
 

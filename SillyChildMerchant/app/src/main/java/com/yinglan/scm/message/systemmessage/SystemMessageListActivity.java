@@ -137,6 +137,8 @@ public class SystemMessageListActivity extends BaseActivity implements SystemMes
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(aty, SystemMessageDetailsActivity.class);
         intent.putExtra("news_id", mAdapter.getItem(position).getNews_id());
+        intent.putExtra("push_time", mAdapter.getItem(position).getPush_time());
+        intent.putExtra("is_read", mAdapter.getItem(position).getIs_read());
         startActivityForResult(intent, REQUEST_CODE);
     }
 

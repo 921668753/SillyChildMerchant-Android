@@ -39,7 +39,6 @@ public class OrderFragment extends BaseFragment {
     @BindView(id = R.id.tv_good_afterSale, click = true)
     private TextView tv_good_afterSale;
 
-
     @BindView(id = R.id.tv_good_all, click = true)
     private TextView tv_good_all;
 

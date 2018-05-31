@@ -463,6 +463,7 @@
             <LinearLayout
                 android:id="@+id/ll_deliveryTime"
                 style="@style/MatchWrap"
+                android:layout_marginBottom="@dimen/dimen10"
                 android:background="@color/whiteColors"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
@@ -489,7 +490,6 @@
             <LinearLayout
                 android:id="@+id/ll_expressNumber"
                 style="@style/Match49"
-                android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/whiteColors"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -555,6 +555,7 @@
             <TextView
                 android:id="@+id/tv_confirmDelivery1"
                 style="@style/Match40"
+                android:layout_marginBottom="@dimen/dimen14"
                 android:layout_marginLeft="@dimen/dimen73"
                 android:layout_marginRight="@dimen/dimen73"
                 android:layout_marginTop="@dimen/dimen15"

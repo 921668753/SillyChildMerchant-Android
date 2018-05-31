@@ -52,18 +52,33 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
         } else if (listBean.getStatus() == 3) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.waitGoods));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
+        } else if (listBean.getStatus() == 4) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
         } else if (listBean.getStatus() == 5) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
-            viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
         } else if (listBean.getStatus() == 7) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_refused, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.VISIBLE);

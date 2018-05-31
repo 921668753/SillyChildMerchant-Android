@@ -7,16 +7,16 @@ import java.util.List;
 public class SystemMessageListBean extends BaseResult<List<SystemMessageListBean.DataBean>> {
 
 
-    public class DataBean {
+    public static class DataBean {
         /**
-         * news_id : 2
-         * member_id : 29
-         * news_title : order
+         * news_id : 14
+         * member_id : 30
+         * news_title : 系统消息
          * news_text : 傻孩子测试消息
-         * push_time : 2018-05-29
+         * push_time : 1527523200
          * is_read : 0
          * news_img : http://ovwiqces1.bkt.clouddn.com/SHZS_29_IMG_20180528_193922.jpg
-         * news_subject : 测试主题1
+         * news_subject : 测试主题8
          */
 
         private int news_id;

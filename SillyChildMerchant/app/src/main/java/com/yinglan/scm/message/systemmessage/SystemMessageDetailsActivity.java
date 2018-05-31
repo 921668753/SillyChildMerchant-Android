@@ -9,9 +9,11 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.message.systemmessage.SystemMessageDetailsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.utils.DataUtil;
 
 import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
 
@@ -26,15 +28,19 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
     @BindView(id = R.id.tv_title)
     private TextView tv_title;
 
+
     @BindView(id = R.id.tv_content)
     private TextView tv_content;
+
+    @BindView(id = R.id.tv_time)
+    private TextView tv_time;
 
 //    @BindView(id = R.id.web_content)
 //    private WebView web_content;
 
     private int id = 0;
-
-    private boolean isRefresh = false;
+    private int is_read = 0;
+    private String push_time;
 
 
     @Override
@@ -47,6 +53,8 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
         super.initData();
         mPresenter = new SystemMessageDetailsPresenter(this);
         id = getIntent().getIntExtra("news_id", 0);
+        is_read = getIntent().getIntExtra("is_read", 0);
+        push_time = getIntent().getStringExtra("push_time");
         showLoadingDialog(getString(R.string.dataLoad));
         ((SystemMessageDetailsContract.Presenter) mPresenter).getSystemMessageDetails(id);
     }
@@ -62,7 +70,7 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
             @Override
             public void onClickLeftCtv() {
                 super.onClickLeftCtv();
-                if (isRefresh) {
+                if (is_read == 0) {
                     Intent intent = getIntent();
                     setResult(RESULT_OK, intent);
                 }
@@ -85,10 +93,15 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        isRefresh = true;
         SystemMessageDetailsBean systemMessageDetailsBean = (SystemMessageDetailsBean) JsonUtil.json2Obj(success, SystemMessageDetailsBean.class);
         tv_title.setText(systemMessageDetailsBean.getData().getNews_subject());
+        tv_time.setText(DataUtil.formatData(StringUtils.toLong(push_time), "yyyy-MM-dd HH:mm"));
         tv_content.setText(systemMessageDetailsBean.getData().getNews_text());
+        if (is_read != systemMessageDetailsBean.getData().getIs_read()) {
+            is_read = 0;
+        } else {
+            is_read = 1;
+        }
         // tv_time.setText(systemMessageDetailsBean.getData().getPush_time());
 //        String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title></title></head><body>" + systemMessageDetailsBean.getData().getNews_text() + "</body></html>";
 //        web_content.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
@@ -108,7 +121,7 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
      */
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && isRefresh) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && is_read == 0) {
             Intent intent = getIntent();
             setResult(RESULT_OK, intent);
         }

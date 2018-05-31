@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.main.MainActivity;
+import com.yinglan.scm.main.MineContract;
 
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
@@ -123,6 +125,18 @@ public class InteractiveMessageFragment extends BaseFragment implements Interact
             img_err.setImageResource(R.mipmap.no_data);
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
+        }
+    }
+
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+            ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty);
         }
     }
 }

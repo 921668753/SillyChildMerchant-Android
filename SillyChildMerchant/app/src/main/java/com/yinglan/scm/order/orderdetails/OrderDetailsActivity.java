@@ -357,11 +357,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
             if (StringUtils.toLong(orderDetailBean.getData().getLastTime()) > 0) {
-                time.setMillisCountDown(StringUtils.toLong(orderDetailBean.getData().getLastTime()), 60000);
+                time.setMillisCountDown(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000, 60000);
                 time.start();
             }
-
-
         } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 2) {
             ll_waitingPayment.setVisibility(View.GONE);
             ll_waitSending.setVisibility(View.VISIBLE);
@@ -393,12 +391,35 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             ll_modePayment.setVisibility(View.VISIBLE);
             ll_amountRealPay.setVisibility(View.VISIBLE);
             ll_paymentTime.setVisibility(View.VISIBLE);
-            ll_deliveryTime.setVisibility(View.GONE);
+            ll_deliveryTime.setVisibility(View.VISIBLE);
             ll_bottom.setVisibility(View.GONE);
 //            tv_confirmDelivery.setVisibility(View.VISIBLE);
 //            tv_seeEvaluation.setVisibility(View.GONE);
 //            tv_refused.setVisibility(View.GONE);
 //            tv_agreed.setVisibility(View.GONE);
+            ll_expressNumber.setVisibility(View.GONE);
+            ll_courierCompany.setVisibility(View.GONE);
+            tv_confirmDelivery1.setVisibility(View.GONE);
+            tv_afterWhy.setVisibility(View.GONE);
+            tv_afterWhy1.setVisibility(View.GONE);
+        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 4) {
+            ll_waitingPayment.setVisibility(View.GONE);
+            ll_waitSending.setVisibility(View.VISIBLE);
+            img_waitSending.setImageResource(R.mipmap.order_complete_icon);
+            tv_waitSending.setText(getString(R.string.transactionCompleted));
+            tv_orderCourierInformation.setVisibility(View.VISIBLE);
+            tv_orderCourierTime.setVisibility(View.VISIBLE);
+            ll_name.setVisibility(View.VISIBLE);
+            ll_address.setVisibility(View.VISIBLE);
+            ll_modePayment.setVisibility(View.VISIBLE);
+            ll_amountRealPay.setVisibility(View.VISIBLE);
+            ll_paymentTime.setVisibility(View.VISIBLE);
+            ll_deliveryTime.setVisibility(View.VISIBLE);
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_confirmDelivery.setVisibility(View.GONE);
+            tv_seeEvaluation.setVisibility(View.VISIBLE);
+            tv_refused.setVisibility(View.GONE);
+            tv_agreed.setVisibility(View.GONE);
             ll_expressNumber.setVisibility(View.GONE);
             ll_courierCompany.setVisibility(View.GONE);
             tv_confirmDelivery1.setVisibility(View.GONE);
@@ -451,28 +472,26 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
             tv_afterWhy.setVisibility(View.VISIBLE);
             tv_afterWhy1.setVisibility(View.VISIBLE);
-
-
         } else {
             ll_waitingPayment.setVisibility(View.VISIBLE);
-            tv_lateCancelled.setText("");
-            ll_waitSending.setVisibility(View.VISIBLE);
-            tv_orderCourierInformation.setVisibility(View.VISIBLE);
-            tv_orderCourierTime.setVisibility(View.VISIBLE);
-            ll_modePayment.setVisibility(View.VISIBLE);
-            ll_amountRealPay.setVisibility(View.VISIBLE);
-            ll_paymentTime.setVisibility(View.VISIBLE);
-            ll_deliveryTime.setVisibility(View.VISIBLE);
+            tv_waitingPayment.setText(getString(R.string.closed));
+            tv_lateCancelled.setVisibility(View.GONE);
+            ll_waitSending.setVisibility(View.GONE);
+            tv_orderCourierInformation.setVisibility(View.GONE);
+            tv_orderCourierTime.setVisibility(View.GONE);
+            ll_name.setVisibility(View.VISIBLE);
+            ll_address.setVisibility(View.VISIBLE);
+            ll_modePayment.setVisibility(View.GONE);
+            ll_amountRealPay.setVisibility(View.GONE);
+            ll_paymentTime.setVisibility(View.GONE);
+            ll_deliveryTime.setVisibility(View.GONE);
             ll_bottom.setVisibility(View.GONE);
-
             ll_expressNumber.setVisibility(View.GONE);
             ll_courierCompany.setVisibility(View.GONE);
             tv_confirmDelivery1.setVisibility(View.GONE);
-
             tv_afterWhy.setVisibility(View.GONE);
             tv_afterWhy1.setVisibility(View.GONE);
         }
-
 
         tv_name.setText(orderDetailBean.getData().getShip_name());
         tv_phone.setText(orderDetailBean.getData().getShip_mobile());
@@ -482,10 +501,18 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             mAdapter.clear();
             mAdapter.addMoreData(orderDetailBean.getData().getItemList());
         }
-        tv_goodsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney())));
+        tv_goodsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getOrder_amount())));
         tv_freightMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getShip_money())));
-        tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
-        tv_preferentialActivities.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
+        if (StringUtils.toDouble(orderDetailBean.getData().getBouns_money()) <= 0) {
+            tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
+        } else {
+            tv_couponsMoney.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
+        }
+        if (StringUtils.toDouble(orderDetailBean.getData().getActivity()) <= 0) {
+            tv_preferentialActivities.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
+        } else {
+            tv_preferentialActivities.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
+        }
         tv_orderCode.setText(orderDetailBean.getData().getSn());
         tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
         if (orderDetailBean.getData().getPayment_type().contains("onlinePay")) {
@@ -493,9 +520,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         } else if (orderDetailBean.getData().getPayment_type().contains("wechatMobilePlugin")) {
             tv_modePayment.setText(getString(R.string.weChatPay));
         }
-        tv_amountRealPay.setText(MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney())));
+        tv_amountRealPay.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney())));
         tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
-//        tv_preferentialActivities.setText();
+        tv_deliveryTime.setText(orderDetailBean.getData().getAllocation_time());
+
 //        tv_orderCode.setText();
 //        tv_submitTime.setText();
         dismissLoadingDialog();

@@ -149,6 +149,7 @@
     <string name="afterSale">售后</string>
     <string name="all">全部</string>
     <string name="confirmDelivery">确认发货</string>
+    <string name="noEvaluation">未评价</string>
     <string name="seeEvaluation">查看评价</string>
     <string name="refused">拒绝</string>
     <string name="agreed">同意</string>

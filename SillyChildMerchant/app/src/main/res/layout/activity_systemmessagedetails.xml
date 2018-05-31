@@ -23,6 +23,7 @@
         android:id="@+id/tv_time"
         style="@style/MatchWrap"
         android:background="@android:color/white"
+        android:gravity="right"
         android:paddingBottom="@dimen/dimen15"
         android:paddingLeft="@dimen/dimen15"
         android:paddingRight="@dimen/dimen15"
@@ -31,7 +32,7 @@
         android:text="--"
         android:textColor="@color/hintColors"
         android:textSize="@dimen/textsize13"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <include layout="@layout/common_dividerwidth" />
 

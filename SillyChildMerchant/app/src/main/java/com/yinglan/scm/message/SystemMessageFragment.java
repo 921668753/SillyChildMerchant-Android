@@ -19,6 +19,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.message.SystemMessageViewAdapter;
@@ -27,6 +28,7 @@ import com.yinglan.scm.entity.message.SystemMessageBean;
 import com.yinglan.scm.entity.message.SystemMessageBean.DataBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.main.MainActivity;
+import com.yinglan.scm.main.MineContract;
 import com.yinglan.scm.message.systemmessage.SystemMessageListActivity;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -78,8 +80,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     /**
      * 消息总数
      */
-    private int sum = 0;
-
+    // private int sum = 0;
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
@@ -253,11 +254,24 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     }
 
 
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+            ((MineContract.Presenter) mPresenter).getInfo(aty);
+        }
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            mRefreshLayout.beginRefreshing();
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((SystemMessageContract.Presenter) mPresenter).getSystem(aty, mMorePageNumber);
         }
     }
 

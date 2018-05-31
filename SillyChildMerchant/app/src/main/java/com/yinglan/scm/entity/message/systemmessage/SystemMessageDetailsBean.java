@@ -7,13 +7,13 @@ public class SystemMessageDetailsBean extends BaseResult<SystemMessageDetailsBea
 
     public class DataBean {
         /**
-         * news_id : 2
-         * member_id : 29
-         * news_title : order
+         * news_id : 14
+         * member_id : 30
+         * news_title : 系统消息
          * news_text : 傻孩子测试消息
          * push_tima : null
          * is_read : 1
-         * news_subject : 测试主题1
+         * news_subject : 测试主题8
          * news_img : http://ovwiqces1.bkt.clouddn.com/SHZS_29_IMG_20180528_193922.jpg
          */
 
