@@ -96,7 +96,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
     private List<BankBean.DataBean> bankList;
 
 
-    private int bankCardId = 1;
+    private int bankCardId = 0;
 
     @Override
     public void setRootView() {
