@@ -258,7 +258,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
             /**
              * 发送消息
              */
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
             skipActivity(aty, LoginActivity.class);
         } else if (flag == 2) {
             tv_logOut.setVisibility(View.VISIBLE);

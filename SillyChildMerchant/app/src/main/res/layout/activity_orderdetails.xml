@@ -493,7 +493,7 @@
                 android:background="@color/whiteColors"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     style="@style/WrapWrap"
@@ -507,10 +507,12 @@
                     style="@style/MatchMatch"
                     android:layout_marginBottom="@dimen/dimen10"
                     android:layout_marginLeft="@dimen/dimen15"
-                    android:layout_marginRight="@dimen/dimen58"
+                    android:layout_marginRight="@dimen/dimen48"
                     android:layout_marginTop="@dimen/dimen10"
                     android:background="@drawable/shape_express"
                     android:digits="@string/number0"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:paddingRight="@dimen/dimen10"
                     android:textColor="@color/titletextcolors"
                     android:textCursorDrawable="@drawable/shape_cursor"
                     android:textSize="@dimen/textsize13" />
@@ -539,10 +541,10 @@
                     style="@style/MatchMatch"
                     android:layout_marginBottom="@dimen/dimen10"
                     android:layout_marginLeft="@dimen/dimen15"
-                    android:layout_marginRight="@dimen/dimen58"
+                    android:layout_marginRight="@dimen/dimen48"
                     android:layout_marginTop="@dimen/dimen10"
                     android:background="@drawable/shape_express"
-                    android:digits="@string/number0"
+                    android:inputType="text"
                     android:textColor="@color/titletextcolors"
                     android:textCursorDrawable="@drawable/shape_cursor"
                     android:textSize="@dimen/textsize13" />

@@ -367,8 +367,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             ll_waitSending.setVisibility(View.VISIBLE);
             img_waitSending.setImageResource(R.mipmap.order_to_be_shipped_icon);
             tv_waitSending.setText(getString(R.string.waitSending));
-            tv_orderCourierInformation.setVisibility(View.VISIBLE);
-            tv_orderCourierTime.setVisibility(View.VISIBLE);
+            tv_orderCourierInformation.setVisibility(View.GONE);
+            tv_orderCourierTime.setVisibility(View.GONE);
             ll_name.setVisibility(View.VISIBLE);
             ll_address.setVisibility(View.VISIBLE);
             ll_modePayment.setVisibility(View.VISIBLE);
@@ -490,8 +490,11 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
         if (orderDetailBean.getData().getPayment_type().contains("onlinePay")) {
             tv_modePayment.setText(getString(R.string.balancePay));
+        } else if (orderDetailBean.getData().getPayment_type().contains("wechatMobilePlugin")) {
+            tv_modePayment.setText(getString(R.string.weChatPay));
         }
-
+        tv_amountRealPay.setText(MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney())));
+        tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
 //        tv_preferentialActivities.setText();
 //        tv_orderCode.setText();
 //        tv_submitTime.setText();

@@ -307,6 +307,11 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
             return;
         }
         if (flag == 1 && isLogin(msg)) {
+            img_storeLogo.setVisibility(View.VISIBLE);
+            img_storeLogo.setImageResource(R.mipmap.home_add_shop_logo);
+            et_enterNameStore.setVisibility(View.VISIBLE);
+            tv_asManager.setVisibility(View.VISIBLE);
+            ll_seller.setVisibility(View.GONE);
             return;
         }
         ViewInject.toast(msg);
@@ -354,7 +359,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
             ((HomePageContract.Presenter) mPresenter).getHomePage(aty);
         }
     }
