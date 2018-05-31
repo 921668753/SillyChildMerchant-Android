@@ -415,11 +415,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             ll_amountRealPay.setVisibility(View.VISIBLE);
             ll_paymentTime.setVisibility(View.VISIBLE);
             ll_deliveryTime.setVisibility(View.VISIBLE);
-            ll_bottom.setVisibility(View.VISIBLE);
-            tv_confirmDelivery.setVisibility(View.GONE);
-            tv_seeEvaluation.setVisibility(View.VISIBLE);
-            tv_refused.setVisibility(View.GONE);
-            tv_agreed.setVisibility(View.GONE);
+            ll_bottom.setVisibility(View.GONE);
             ll_expressNumber.setVisibility(View.GONE);
             ll_courierCompany.setVisibility(View.GONE);
             tv_confirmDelivery1.setVisibility(View.GONE);

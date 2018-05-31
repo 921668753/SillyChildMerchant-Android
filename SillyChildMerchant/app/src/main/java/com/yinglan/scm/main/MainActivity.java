@@ -123,10 +123,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     @Override
     public void initWidget() {
         super.initWidget();
-        boolean isShow = getIntent().getBooleanExtra("isShow", false);
-        if (isShow) {
-            tv_messageTag.setVisibility(View.VISIBLE);
-        }
+//        boolean isShow = getIntent().getBooleanExtra("isShow", false);
+//        if (isShow) {
+//            tv_messageTag.setVisibility(View.VISIBLE);
+//        }
         initColors();
     }
 
@@ -387,11 +387,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     @Override
     public void msgStyle(boolean havemsg) {
-        if (havemsg) {
-            tv_messageTag.setVisibility(View.VISIBLE);
-        } else {
-            tv_messageTag.setVisibility(View.GONE);
-        }
+//        if (havemsg) {
+//            tv_messageTag.setVisibility(View.VISIBLE);
+//        } else {
+//            tv_messageTag.setVisibility(View.GONE);
+//        }
     }
 
     public int getChageIcon() {

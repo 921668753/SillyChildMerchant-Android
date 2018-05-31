@@ -196,7 +196,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
             tv_hintText.setVisibility(View.GONE);
             tv_button.setText(getString(R.string.login));
             // ViewInject.toast(getString(R.string.reloginPrompting));
-            aty.showActivity(aty, LoginActivity.class);
+         //   aty.showActivity(aty, LoginActivity.class);
             return;
         } else if (msg.contains(getString(R.string.checkNetwork))) {
             img_err.setImageResource(R.mipmap.no_network);
@@ -261,7 +261,8 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
-            ((MineContract.Presenter) mPresenter).getInfo(aty);
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((SystemMessageContract.Presenter) mPresenter).getSystem(aty, mMorePageNumber);
         }
     }
 

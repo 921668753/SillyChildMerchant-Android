@@ -74,7 +74,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     /**
      * 订单状态
      */
-    private String status = "5";
+    private String status = "4";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {

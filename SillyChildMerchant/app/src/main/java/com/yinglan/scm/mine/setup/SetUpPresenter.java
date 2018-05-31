@@ -92,7 +92,6 @@ public class SetUpPresenter implements SetUpContract.Presenter {
         //清除本app所有用户信息
         UserUtil.clearUserInfo(activity);
         //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
-        PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "read_message_count", true);
         //清除融云信息，退出登陆
         //   SealUserInfoManager.getInstance().closeDB();
         RongIM.getInstance().logout();
