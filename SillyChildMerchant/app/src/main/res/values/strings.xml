@@ -190,8 +190,12 @@
     <string name="unionpayPay">银联支付</string>
     <string name="balancePay">余额支付</string>
     <string name="expressNumber">填写快递单号</string>
+    <string name="expressNumber1">请填写快递单号</string>
     <string name="courierCompany">快递公司名称</string>
+    <string name="courierCompany1">请选择快递公司名称</string>
     <string name="afterWhy">售后原因</string>
+    <string name="successfulDelivery">发货成功</string>
+    <string name="notfillAfterSaleReason">未填写售后原因</string>
 
 
     <string name="reloginPrompting">登录超时，或者在其它设备上登录了，请重新登录！</string>

@@ -536,17 +536,18 @@
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize13" />
 
-                <EditText
-                    android:id="@+id/et_courierCompany"
+                <TextView
+                    android:id="@+id/tv_courierCompany"
                     style="@style/MatchMatch"
                     android:layout_marginBottom="@dimen/dimen10"
                     android:layout_marginLeft="@dimen/dimen15"
                     android:layout_marginRight="@dimen/dimen48"
                     android:layout_marginTop="@dimen/dimen10"
                     android:background="@drawable/shape_express"
-                    android:inputType="text"
-                    android:textColor="@color/titletextcolors"
-                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="@string/pleaseSelect"
+                    android:textColor="@color/hintColors"
                     android:textSize="@dimen/textsize13" />
 
             </LinearLayout>

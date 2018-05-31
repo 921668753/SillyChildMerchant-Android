@@ -363,6 +363,16 @@ public class RequestClient {
         }, listener);
     }
 
+
+    /**
+     * 获取快递公司接口
+     */
+    public static void getLogis(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getLogis");
+        HttpRequest.requestGetHttp(context, URLConstants.ORDERLOGIS, httpParams, listener);
+    }
+
+
     /**
      * 确认发货
      */

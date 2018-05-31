@@ -57,7 +57,9 @@ public class SeeEvaluationActivity extends BaseActivity implements SeeEvaluation
     private ArrayList<ImageItem> images = null;
     private int anonymous = 0;//0:不匿名。1：匿名
     private int anonymousguide = 0;//0:不匿名。1：匿名
-    private String orderid;
+
+    private int orderId = 0;
+
     private List<String> urllist;//图片网址
     private String urls = "";//图片网址
     private List<String> urllistguide;
@@ -80,12 +82,9 @@ public class SeeEvaluationActivity extends BaseActivity implements SeeEvaluation
     public void initData() {
         super.initData();
         mPresenter = new SeeEvaluationPresenter(this);
-        orderid = getIntent().getStringExtra("air_id");
-        type = getIntent().getIntExtra("type", 0);
-        if (type == 3) {
-            line_id = getIntent().getStringExtra("line_id");
-            seller_id = getIntent().getStringExtra("seller_id");
-        }
+        orderId = getIntent().getIntExtra("orderId", 0);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((SeeEvaluationContract.Presenter) mPresenter).seeEvaluation(orderId);
     }
 
     @Override

@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
@@ -18,9 +21,13 @@ import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.order.orderdetails.OrderDetailGoodAdapter;
+import com.yinglan.scm.entity.order.orderdetail.LogisBean;
 import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
+import com.yinglan.scm.utils.SoftKeyboardUtils;
+
+import java.util.List;
 
 /**
  * 我的订单---订单详情
@@ -207,8 +214,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @BindView(id = R.id.ll_courierCompany)
     private LinearLayout ll_courierCompany;
 
-    @BindView(id = R.id.et_courierCompany)
-    private EditText et_courierCompany;
+    @BindView(id = R.id.tv_courierCompany, click = true)
+    private TextView tv_courierCompany;
 
     /**
      * 确认发货
@@ -236,7 +243,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     /**
      * 确认发货
      */
-    @BindView(id = R.id.tv_confirmDelivery, click = true)
+    @BindView(id = R.id.tv_confirmDelivery)
     private TextView tv_confirmDelivery;
 
     /**
@@ -275,6 +282,17 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private TimeCount time;
 
 
+    private OptionsPickerView<LogisBean.DataBean> pvOptions = null;
+
+
+    private List<LogisBean.DataBean> logisList;
+
+    /**
+     * 快递公司id
+     */
+    private String logiId = "";
+
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_orderdetails);
@@ -287,7 +305,24 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         mAdapter = new OrderDetailGoodAdapter(this);
         time = new TimeCount();
         orderId = getIntent().getIntExtra("orderId", 0);
+        selectLogis();
     }
+
+    /**
+     * 选择物流公司
+     */
+    @SuppressWarnings("unchecked")
+    private void selectLogis() {
+        pvOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                logiId = logisList.get(options1).getId();
+                ((TextView) v).setText(logisList.get(options1).getName());
+            }
+        }).build();
+    }
+
 
     @Override
     public void initWidget() {
@@ -306,13 +341,18 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ActivityTitleUtils.initToolbar(aty, getString(R.string.orderDetails), true, R.id.titlebar);
     }
 
+
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.tv_confirmDelivery:
+            case R.id.tv_courierCompany:
+                SoftKeyboardUtils.packUpKeyboard(this);
+                pvOptions.show(tv_courierCompany);
+                break;
+            case R.id.tv_confirmDelivery1:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((OrderDetailsContract.Presenter) mPresenter).postOrderShip(orderId);
+                ((OrderDetailsContract.Presenter) mPresenter).postOrderShip(orderId, et_expressNumber.getText().toString().trim(), logiId, tv_courierCompany.getText().toString().trim());
                 break;
             case R.id.tv_seeEvaluation:
                 Intent intent = new Intent(aty, SeeEvaluationActivity.class);
@@ -321,11 +361,11 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 break;
             case R.id.tv_refused:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((OrderDetailsContract.Presenter) mPresenter).postOrderBack(orderId, status, "", amountRealPay);
+                ((OrderDetailsContract.Presenter) mPresenter).postOrderBack(orderId, 2, "2", amountRealPay);
                 break;
             case R.id.tv_agreed:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((OrderDetailsContract.Presenter) mPresenter).postOrderBack(orderId, status, "", amountRealPay);
+                ((OrderDetailsContract.Presenter) mPresenter).postOrderBack(orderId, 1, "1", amountRealPay);
                 break;
         }
     }
@@ -337,194 +377,239 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     @Override
     public void getSuccess(String success, int flag) {
-        OrderDetailBean orderDetailBean = (OrderDetailBean) JsonUtil.getInstance().json2Obj(success, OrderDetailBean.class);
-        if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 1) {
-            ll_waitingPayment.setVisibility(View.VISIBLE);
-            tv_waitingPayment.setText(getString(R.string.waitingPayment));
-            ll_waitSending.setVisibility(View.GONE);
-            tv_orderCourierInformation.setVisibility(View.GONE);
-            tv_orderCourierTime.setVisibility(View.GONE);
-            ll_name.setVisibility(View.VISIBLE);
-            ll_address.setVisibility(View.VISIBLE);
-            ll_modePayment.setVisibility(View.GONE);
-            ll_amountRealPay.setVisibility(View.GONE);
-            ll_paymentTime.setVisibility(View.GONE);
-            ll_deliveryTime.setVisibility(View.GONE);
-            ll_bottom.setVisibility(View.GONE);
-            ll_expressNumber.setVisibility(View.GONE);
-            ll_courierCompany.setVisibility(View.GONE);
-            tv_confirmDelivery1.setVisibility(View.GONE);
-            tv_afterWhy.setVisibility(View.GONE);
-            tv_afterWhy1.setVisibility(View.GONE);
-            if (StringUtils.toLong(orderDetailBean.getData().getLastTime()) > 0) {
-                time.setMillisCountDown(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000, 60000);
-                time.start();
+        if (flag == 0) {
+            OrderDetailBean orderDetailBean = (OrderDetailBean) JsonUtil.getInstance().json2Obj(success, OrderDetailBean.class);
+            if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 1) {
+                obligationGood(orderDetailBean);
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 2) {
+                sendGoodsGood();
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 3) {
+                waitGoodsGood();
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 4) {
+                completedGood(orderDetailBean, 0);
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
+                completedGood(orderDetailBean, 1);
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
+                afterSaleGood(orderDetailBean);
+            } else {
+                tradingClosedGood();
             }
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 2) {
-            ll_waitingPayment.setVisibility(View.GONE);
-            ll_waitSending.setVisibility(View.VISIBLE);
-            img_waitSending.setImageResource(R.mipmap.order_to_be_shipped_icon);
-            tv_waitSending.setText(getString(R.string.waitSending));
-            tv_orderCourierInformation.setVisibility(View.GONE);
-            tv_orderCourierTime.setVisibility(View.GONE);
-            ll_name.setVisibility(View.VISIBLE);
-            ll_address.setVisibility(View.VISIBLE);
-            ll_modePayment.setVisibility(View.VISIBLE);
-            ll_amountRealPay.setVisibility(View.VISIBLE);
-            ll_paymentTime.setVisibility(View.VISIBLE);
-            ll_deliveryTime.setVisibility(View.GONE);
-            ll_bottom.setVisibility(View.GONE);
-            ll_expressNumber.setVisibility(View.VISIBLE);
-            ll_courierCompany.setVisibility(View.VISIBLE);
-            tv_confirmDelivery1.setVisibility(View.VISIBLE);
-            tv_afterWhy.setVisibility(View.GONE);
-            tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 3) {
-            ll_waitingPayment.setVisibility(View.GONE);
-            ll_waitSending.setVisibility(View.VISIBLE);
-            img_waitSending.setImageResource(R.mipmap.order_shipped_icon);
-            tv_waitSending.setText(getString(R.string.sellerShippedGoods));
-            tv_orderCourierInformation.setVisibility(View.VISIBLE);
-            tv_orderCourierTime.setVisibility(View.VISIBLE);
-            ll_name.setVisibility(View.VISIBLE);
-            ll_address.setVisibility(View.VISIBLE);
-            ll_modePayment.setVisibility(View.VISIBLE);
-            ll_amountRealPay.setVisibility(View.VISIBLE);
-            ll_paymentTime.setVisibility(View.VISIBLE);
-            ll_deliveryTime.setVisibility(View.VISIBLE);
-            ll_bottom.setVisibility(View.GONE);
+            tv_name.setText(orderDetailBean.getData().getShip_name());
+            tv_phone.setText(orderDetailBean.getData().getShip_mobile());
+            tv_address.setText(orderDetailBean.getData().getShipping_area());
+            tv_detailedAddress.setText(orderDetailBean.getData().getShip_mobile());
+            if (orderDetailBean.getData().getItemList() != null && orderDetailBean.getData().getItemList().size() > 0) {
+                mAdapter.clear();
+                mAdapter.addMoreData(orderDetailBean.getData().getItemList());
+            }
+            tv_goodsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getOrder_amount())));
+            tv_freightMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getShip_money())));
+            if (StringUtils.toDouble(orderDetailBean.getData().getBouns_money()) <= 0) {
+                tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
+            } else {
+                tv_couponsMoney.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
+            }
+            if (StringUtils.toDouble(orderDetailBean.getData().getActivity()) <= 0) {
+                tv_preferentialActivities.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
+            } else {
+                tv_preferentialActivities.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
+            }
+            tv_orderCode.setText(orderDetailBean.getData().getSn());
+            tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
+            if (orderDetailBean.getData().getPayment_type().contains("onlinePay")) {
+                tv_modePayment.setText(getString(R.string.balancePay));
+            } else if (orderDetailBean.getData().getPayment_type().contains("wechatMobilePlugin")) {
+                tv_modePayment.setText(getString(R.string.weChatPay));
+            }
+            amountRealPay = MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney()));
+            tv_amountRealPay.setText(getString(R.string.renminbi) + amountRealPay);
+            tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
+            tv_deliveryTime.setText(orderDetailBean.getData().getAllocation_time());
+            if (StringUtils.isEmpty(orderDetailBean.getData().getReason())) {
+                tv_afterWhy1.setText(getString(R.string.notfillAfterSaleReason));
+            } else {
+                tv_afterWhy1.setText(orderDetailBean.getData().getReason());
+            }
+            dismissLoadingDialog();
+        } else if (flag == 1) {
+            LogisBean logisBean = (LogisBean) JsonUtil.getInstance().json2Obj(success, LogisBean.class);
+            logisList = logisBean.getData();
+            if (logisList != null && logisList.size() > 0) {
+                pvOptions.setPicker(logisList);
+            }
+        } else if (flag == 2) {
+            ViewInject.toast(getString(R.string.successfulDelivery));
+            ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+        }
+    }
+
+    /**
+     * 待付款
+     */
+    private void obligationGood(OrderDetailBean orderDetailBean) {
+        ll_waitingPayment.setVisibility(View.VISIBLE);
+        tv_waitingPayment.setText(getString(R.string.waitingPayment));
+        ll_waitSending.setVisibility(View.GONE);
+        tv_orderCourierInformation.setVisibility(View.GONE);
+        tv_orderCourierTime.setVisibility(View.GONE);
+        ll_name.setVisibility(View.VISIBLE);
+        ll_address.setVisibility(View.VISIBLE);
+        ll_modePayment.setVisibility(View.GONE);
+        ll_amountRealPay.setVisibility(View.GONE);
+        ll_paymentTime.setVisibility(View.GONE);
+        ll_deliveryTime.setVisibility(View.GONE);
+        ll_bottom.setVisibility(View.GONE);
+        ll_expressNumber.setVisibility(View.GONE);
+        ll_courierCompany.setVisibility(View.GONE);
+        tv_confirmDelivery1.setVisibility(View.GONE);
+        tv_afterWhy.setVisibility(View.GONE);
+        tv_afterWhy1.setVisibility(View.GONE);
+        if (StringUtils.toLong(orderDetailBean.getData().getLastTime()) > 0) {
+            time.setMillisCountDown(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000, 60000);
+            time.start();
+        }
+    }
+
+    /**
+     * 待发货
+     */
+    private void sendGoodsGood() {
+        ll_waitingPayment.setVisibility(View.GONE);
+        ll_waitSending.setVisibility(View.VISIBLE);
+        img_waitSending.setImageResource(R.mipmap.order_to_be_shipped_icon);
+        tv_waitSending.setText(getString(R.string.waitSending));
+        tv_orderCourierInformation.setVisibility(View.GONE);
+        tv_orderCourierTime.setVisibility(View.GONE);
+        ll_name.setVisibility(View.VISIBLE);
+        ll_address.setVisibility(View.VISIBLE);
+        ll_modePayment.setVisibility(View.VISIBLE);
+        ll_amountRealPay.setVisibility(View.VISIBLE);
+        ll_paymentTime.setVisibility(View.VISIBLE);
+        ll_deliveryTime.setVisibility(View.GONE);
+        ll_bottom.setVisibility(View.GONE);
+        ll_expressNumber.setVisibility(View.VISIBLE);
+        ll_courierCompany.setVisibility(View.VISIBLE);
+        tv_confirmDelivery1.setVisibility(View.VISIBLE);
+        tv_afterWhy.setVisibility(View.GONE);
+        tv_afterWhy1.setVisibility(View.GONE);
+        ((OrderDetailsContract.Presenter) mPresenter).getLogis();
+    }
+
+    /**
+     * 待收货
+     */
+    private void waitGoodsGood() {
+
+        ll_waitingPayment.setVisibility(View.GONE);
+        ll_waitSending.setVisibility(View.VISIBLE);
+        img_waitSending.setImageResource(R.mipmap.order_shipped_icon);
+        tv_waitSending.setText(getString(R.string.sellerShippedGoods));
+        tv_orderCourierInformation.setVisibility(View.VISIBLE);
+        tv_orderCourierTime.setVisibility(View.VISIBLE);
+        ll_name.setVisibility(View.VISIBLE);
+        ll_address.setVisibility(View.VISIBLE);
+        ll_modePayment.setVisibility(View.VISIBLE);
+        ll_amountRealPay.setVisibility(View.VISIBLE);
+        ll_paymentTime.setVisibility(View.VISIBLE);
+        ll_deliveryTime.setVisibility(View.VISIBLE);
+        ll_bottom.setVisibility(View.GONE);
 //            tv_confirmDelivery.setVisibility(View.VISIBLE);
 //            tv_seeEvaluation.setVisibility(View.GONE);
 //            tv_refused.setVisibility(View.GONE);
 //            tv_agreed.setVisibility(View.GONE);
-            ll_expressNumber.setVisibility(View.GONE);
-            ll_courierCompany.setVisibility(View.GONE);
-            tv_confirmDelivery1.setVisibility(View.GONE);
-            tv_afterWhy.setVisibility(View.GONE);
-            tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 4) {
-            ll_waitingPayment.setVisibility(View.GONE);
-            ll_waitSending.setVisibility(View.VISIBLE);
-            img_waitSending.setImageResource(R.mipmap.order_complete_icon);
-            tv_waitSending.setText(getString(R.string.transactionCompleted));
-            tv_orderCourierInformation.setVisibility(View.VISIBLE);
-            tv_orderCourierTime.setVisibility(View.VISIBLE);
-            ll_name.setVisibility(View.VISIBLE);
-            ll_address.setVisibility(View.VISIBLE);
-            ll_modePayment.setVisibility(View.VISIBLE);
-            ll_amountRealPay.setVisibility(View.VISIBLE);
-            ll_paymentTime.setVisibility(View.VISIBLE);
-            ll_deliveryTime.setVisibility(View.VISIBLE);
+        ll_expressNumber.setVisibility(View.GONE);
+        ll_courierCompany.setVisibility(View.GONE);
+        tv_confirmDelivery1.setVisibility(View.GONE);
+        tv_afterWhy.setVisibility(View.GONE);
+        tv_afterWhy1.setVisibility(View.GONE);
+    }
+
+    /**
+     * 已完成---0 未平价 1 已评价
+     */
+    private void completedGood(OrderDetailBean orderDetailBean, int flag) {
+        ll_waitingPayment.setVisibility(View.GONE);
+        ll_waitSending.setVisibility(View.VISIBLE);
+        img_waitSending.setImageResource(R.mipmap.order_complete_icon);
+        tv_waitSending.setText(getString(R.string.transactionCompleted));
+        tv_orderCourierInformation.setVisibility(View.VISIBLE);
+        tv_orderCourierTime.setVisibility(View.VISIBLE);
+        ll_name.setVisibility(View.VISIBLE);
+        ll_address.setVisibility(View.VISIBLE);
+        ll_modePayment.setVisibility(View.VISIBLE);
+        ll_amountRealPay.setVisibility(View.VISIBLE);
+        ll_paymentTime.setVisibility(View.VISIBLE);
+        ll_deliveryTime.setVisibility(View.VISIBLE);
+        ll_expressNumber.setVisibility(View.GONE);
+        ll_courierCompany.setVisibility(View.GONE);
+        tv_confirmDelivery1.setVisibility(View.GONE);
+        tv_afterWhy.setVisibility(View.GONE);
+        tv_afterWhy1.setVisibility(View.GONE);
+        if (flag == 0) {
             ll_bottom.setVisibility(View.GONE);
-            ll_expressNumber.setVisibility(View.GONE);
-            ll_courierCompany.setVisibility(View.GONE);
-            tv_confirmDelivery1.setVisibility(View.GONE);
-            tv_afterWhy.setVisibility(View.GONE);
-            tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
-            ll_waitingPayment.setVisibility(View.GONE);
-            ll_waitSending.setVisibility(View.VISIBLE);
-            img_waitSending.setImageResource(R.mipmap.order_complete_icon);
-            tv_waitSending.setText(getString(R.string.transactionCompleted));
-            tv_orderCourierInformation.setVisibility(View.VISIBLE);
-            tv_orderCourierTime.setVisibility(View.VISIBLE);
-            ll_name.setVisibility(View.VISIBLE);
-            ll_address.setVisibility(View.VISIBLE);
-            ll_modePayment.setVisibility(View.VISIBLE);
-            ll_amountRealPay.setVisibility(View.VISIBLE);
-            ll_paymentTime.setVisibility(View.VISIBLE);
-            ll_deliveryTime.setVisibility(View.VISIBLE);
+        } else {
             ll_bottom.setVisibility(View.VISIBLE);
             tv_confirmDelivery.setVisibility(View.GONE);
             tv_seeEvaluation.setVisibility(View.VISIBLE);
             tv_refused.setVisibility(View.GONE);
             tv_agreed.setVisibility(View.GONE);
-            ll_expressNumber.setVisibility(View.GONE);
-            ll_courierCompany.setVisibility(View.GONE);
-            tv_confirmDelivery1.setVisibility(View.GONE);
-            tv_afterWhy.setVisibility(View.GONE);
-            tv_afterWhy1.setVisibility(View.GONE);
-        } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
-            ll_waitingPayment.setVisibility(View.GONE);
-            ll_waitSending.setVisibility(View.VISIBLE);
-            img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
-            tv_waitSending.setText(getString(R.string.applyAfterSales));
-            tv_orderCourierInformation.setVisibility(View.GONE);
-            tv_orderCourierTime.setVisibility(View.GONE);
-            ll_name.setVisibility(View.GONE);
-            ll_address.setVisibility(View.GONE);
-            ll_modePayment.setVisibility(View.GONE);
-            ll_amountRealPay.setVisibility(View.GONE);
-            ll_paymentTime.setVisibility(View.GONE);
-            ll_deliveryTime.setVisibility(View.GONE);
-            ll_bottom.setVisibility(View.VISIBLE);
-            tv_confirmDelivery.setVisibility(View.GONE);
-            tv_seeEvaluation.setVisibility(View.GONE);
-            tv_refused.setVisibility(View.VISIBLE);
-            tv_agreed.setVisibility(View.VISIBLE);
-            ll_expressNumber.setVisibility(View.GONE);
-            ll_courierCompany.setVisibility(View.GONE);
-            tv_confirmDelivery1.setVisibility(View.GONE);
-
-            tv_afterWhy.setVisibility(View.VISIBLE);
-            tv_afterWhy1.setVisibility(View.VISIBLE);
-        } else {
-            ll_waitingPayment.setVisibility(View.VISIBLE);
-            tv_waitingPayment.setText(getString(R.string.closed));
-            tv_lateCancelled.setVisibility(View.GONE);
-            ll_waitSending.setVisibility(View.GONE);
-            tv_orderCourierInformation.setVisibility(View.GONE);
-            tv_orderCourierTime.setVisibility(View.GONE);
-            ll_name.setVisibility(View.VISIBLE);
-            ll_address.setVisibility(View.VISIBLE);
-            ll_modePayment.setVisibility(View.GONE);
-            ll_amountRealPay.setVisibility(View.GONE);
-            ll_paymentTime.setVisibility(View.GONE);
-            ll_deliveryTime.setVisibility(View.GONE);
-            ll_bottom.setVisibility(View.GONE);
-            ll_expressNumber.setVisibility(View.GONE);
-            ll_courierCompany.setVisibility(View.GONE);
-            tv_confirmDelivery1.setVisibility(View.GONE);
-            tv_afterWhy.setVisibility(View.GONE);
-            tv_afterWhy1.setVisibility(View.GONE);
         }
-
-        tv_name.setText(orderDetailBean.getData().getShip_name());
-        tv_phone.setText(orderDetailBean.getData().getShip_mobile());
-        tv_address.setText(orderDetailBean.getData().getShipping_area());
-        tv_detailedAddress.setText(orderDetailBean.getData().getShip_mobile());
-        if (orderDetailBean.getData().getItemList() != null && orderDetailBean.getData().getItemList().size() > 0) {
-            mAdapter.clear();
-            mAdapter.addMoreData(orderDetailBean.getData().getItemList());
-        }
-        tv_goodsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getOrder_amount())));
-        tv_freightMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getShip_money())));
-        if (StringUtils.toDouble(orderDetailBean.getData().getBouns_money()) <= 0) {
-            tv_couponsMoney.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
-        } else {
-            tv_couponsMoney.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getBouns_money())));
-        }
-        if (StringUtils.toDouble(orderDetailBean.getData().getActivity()) <= 0) {
-            tv_preferentialActivities.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
-        } else {
-            tv_preferentialActivities.setText(getString(R.string.renminbi) + "-" + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getActivity())));
-        }
-        tv_orderCode.setText(orderDetailBean.getData().getSn());
-        tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
-        if (orderDetailBean.getData().getPayment_type().contains("onlinePay")) {
-            tv_modePayment.setText(getString(R.string.balancePay));
-        } else if (orderDetailBean.getData().getPayment_type().contains("wechatMobilePlugin")) {
-            tv_modePayment.setText(getString(R.string.weChatPay));
-        }
-        tv_amountRealPay.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney())));
-        tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
-        tv_deliveryTime.setText(orderDetailBean.getData().getAllocation_time());
-
-//        tv_orderCode.setText();
-//        tv_submitTime.setText();
-        dismissLoadingDialog();
-
     }
+
+    /**
+     * 售后
+     */
+    private void afterSaleGood(OrderDetailBean orderDetailBean) {
+        ll_waitingPayment.setVisibility(View.GONE);
+        ll_waitSending.setVisibility(View.VISIBLE);
+        img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
+        tv_waitSending.setText(getString(R.string.applyAfterSales));
+        tv_orderCourierInformation.setVisibility(View.GONE);
+        tv_orderCourierTime.setVisibility(View.GONE);
+        ll_name.setVisibility(View.GONE);
+        ll_address.setVisibility(View.GONE);
+        ll_modePayment.setVisibility(View.GONE);
+        ll_amountRealPay.setVisibility(View.GONE);
+        ll_paymentTime.setVisibility(View.GONE);
+        ll_deliveryTime.setVisibility(View.GONE);
+        ll_bottom.setVisibility(View.VISIBLE);
+        tv_confirmDelivery.setVisibility(View.GONE);
+        tv_seeEvaluation.setVisibility(View.GONE);
+        tv_refused.setVisibility(View.VISIBLE);
+        tv_agreed.setVisibility(View.VISIBLE);
+        ll_expressNumber.setVisibility(View.GONE);
+        ll_courierCompany.setVisibility(View.GONE);
+        tv_confirmDelivery1.setVisibility(View.GONE);
+
+        tv_afterWhy.setVisibility(View.VISIBLE);
+        tv_afterWhy1.setVisibility(View.VISIBLE);
+    }
+
+
+    /**
+     * 交易关闭
+     */
+    private void tradingClosedGood() {
+        ll_waitingPayment.setVisibility(View.VISIBLE);
+        tv_waitingPayment.setText(getString(R.string.closed));
+        tv_lateCancelled.setVisibility(View.GONE);
+        ll_waitSending.setVisibility(View.GONE);
+        tv_orderCourierInformation.setVisibility(View.GONE);
+        tv_orderCourierTime.setVisibility(View.GONE);
+        ll_name.setVisibility(View.VISIBLE);
+        ll_address.setVisibility(View.VISIBLE);
+        ll_modePayment.setVisibility(View.GONE);
+        ll_amountRealPay.setVisibility(View.GONE);
+        ll_paymentTime.setVisibility(View.GONE);
+        ll_deliveryTime.setVisibility(View.GONE);
+        ll_bottom.setVisibility(View.GONE);
+        ll_expressNumber.setVisibility(View.GONE);
+        ll_courierCompany.setVisibility(View.GONE);
+        tv_confirmDelivery1.setVisibility(View.GONE);
+        tv_afterWhy.setVisibility(View.GONE);
+        tv_afterWhy1.setVisibility(View.GONE);
+    }
+
 
     @Override
     public void errorMsg(String msg, int flag) {
@@ -532,7 +617,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         if (isLogin(msg)) {
             //  ViewInject.toast(getString(R.string.reloginPrompting));
             showActivity(this, LoginActivity.class);
-            finish();
+            if (flag == 0) {
+                finish();
+            }
             return;
         }
         ViewInject.toast(msg);
@@ -541,6 +628,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        pvOptions = null;
         time.cancel();
         time = null;
     }

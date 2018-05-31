@@ -25,7 +25,7 @@ public class SeeEvaluationPresenter implements SeeEvaluationContract.Presenter {
     }
 
     @Override
-    public void seeEvaluation(String orderid) {
+    public void seeEvaluation(int orderid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("orderId", orderid);
         RequestClient.postOrderRate(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
@@ -40,6 +40,4 @@ public class SeeEvaluationPresenter implements SeeEvaluationContract.Presenter {
             }
         });
     }
-
-
 }

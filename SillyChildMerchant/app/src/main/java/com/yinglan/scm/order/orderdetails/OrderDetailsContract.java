@@ -15,9 +15,15 @@ public interface OrderDetailsContract {
         void getOrderDetails(int orderId);
 
         /**
+         * 获取快递公司接口
+         */
+        void getLogis();
+
+
+        /**
          * 确认发货
          */
-        void postOrderShip(int orderId);
+        void postOrderShip(int orderId, String shipNo, String logiId, String logiName);
 
         /**
          * 订单售后

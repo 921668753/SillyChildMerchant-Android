@@ -219,11 +219,11 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.tv_confirmDelivery) {
             Intent intent = new Intent(aty, OrderDetailsActivity.class);
-            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+            intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
             aty.showActivity(aty, intent);
         } else if (childView.getId() == R.id.tv_seeEvaluation) {
             Intent intent = new Intent(aty, SeeEvaluationActivity.class);
-            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+            intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
             aty.showActivity(aty, intent);
         } else if (childView.getId() == R.id.tv_refused) {
             ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 2, "", mAdapter.getItem(position).getPaymoney());

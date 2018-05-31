@@ -15,7 +15,7 @@ public interface SeeEvaluationContract {
         /**
          * 查看评论
          */
-        void seeEvaluation(String orderid);
+        void seeEvaluation(int orderid);
 
     }
 

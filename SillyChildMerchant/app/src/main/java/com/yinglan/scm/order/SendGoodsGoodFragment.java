@@ -217,7 +217,7 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.tv_confirmDelivery) {
             Intent intent = new Intent(aty, OrderDetailsActivity.class);
-            intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+            intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
             aty.showActivity(aty, intent);
         }
     }

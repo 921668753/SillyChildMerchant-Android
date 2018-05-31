@@ -117,6 +117,11 @@ public class URLConstants {
     public static String ORDERLIST = APIURL + "order/list.do";
 
     /**
+     * 获取快递公司接口
+     */
+    public static String ORDERLOGIS = APIURL + "order/logis.do";
+
+    /**
      * 确认发货
      */
     public static String ORDERSHIP = APIURL + "order/ship.do";
