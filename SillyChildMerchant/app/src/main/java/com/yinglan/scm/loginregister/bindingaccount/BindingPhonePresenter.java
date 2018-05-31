@@ -104,7 +104,7 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
         httpParams.put("phone", phone);
         httpParams.put("code", code);
         httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        RequestClient.postBindingPhone(httpParams, new ResponseListener<String>() {
+        RequestClient.postBindingPhone(KJActivityStack.create().topActivity(),httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
