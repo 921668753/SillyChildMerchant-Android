@@ -139,6 +139,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
                     tv_poundage.setVisibility(View.GONE);
                     return;
                 }
+                tv_poundage.setVisibility(View.VISIBLE);
                 tv_withdrawalBank.setText(bankCardName + "  (" + bankCardNun + ")");
                 tv_poundage.setText(getString(R.string.withdrawalTo) + bankCardName + getString(R.string.procedureRrates) + fee);
             }

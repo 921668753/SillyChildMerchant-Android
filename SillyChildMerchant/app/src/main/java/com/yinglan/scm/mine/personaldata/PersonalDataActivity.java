@@ -292,6 +292,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     break;
                 case RESULT_CODE_BASKET_MINUSALL:
                     selfIntroduction = data.getStringExtra("selfIntroduction");
+                    tv_selfIntroduction.setText(selfIntroduction);
                     break;
                 case REQUEST_CODE_SELECT:
                     if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) {
