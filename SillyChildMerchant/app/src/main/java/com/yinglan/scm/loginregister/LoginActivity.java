@@ -331,12 +331,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             } else {
                 sex = 0;
             }
-            //openid = map.get("uid");
-            openid = map.get("openid");
+            openid = map.get("uid");
+            //  openid = map.get("openid");
             Log.d("tag111", openid);
             from = share_media.toString();
             if (from != null && from.equals("WEIXIN")) {
-                from = "wx";
+                from = "weinxin";
             } else {
                 from = "qq";
             }

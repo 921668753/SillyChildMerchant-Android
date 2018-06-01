@@ -87,7 +87,7 @@ android {
             buildConfigField "String", "WEIXIN_APPSECRET", "\"ffd075c202c8aee81e629efbb9c9156b\""
 //            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
 //            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
-            buildConfigField "String", "QQ_APPID", "\"1106793234\""
+            buildConfigField "String", "QQ_APPID", "\"1106871195\""
             buildConfigField "String", "QQ_APPKEY", "\"Zb9UOFfeMfSrg1uq\""
             buildConfigField "String", "RONGYUN_APPKEY", "\"bmdehs6pbrfqs\""
             proguardFiles 'proguard-rules.pro'
@@ -107,8 +107,8 @@ android {
             buildConfigField "String", "WEIXIN_APPSECRET", "\"ffd075c202c8aee81e629efbb9c9156b\""
 //            buildConfigField "String", "SiNA_WEIBOKEY", "\"2695656281\""
 //            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c45c1c7feb3bfc2c2b1da20cd3594a19\""
-            buildConfigField "String", "QQ_APPID", "\"1106793234\""
-            buildConfigField "String", "QQ_APPKEY", "\"Zb9UOFfeMfSrg1uq\""
+            buildConfigField "String", "QQ_APPID", "\"1106871195\""
+            buildConfigField "String", "QQ_APPKEY", "\"fjyo2xMLmXIU6NIi\""
             buildConfigField "String", "RONGYUN_APPKEY", "\"bmdehs6pbrfqs\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // proguardFiles 'proguard-rules.pro'

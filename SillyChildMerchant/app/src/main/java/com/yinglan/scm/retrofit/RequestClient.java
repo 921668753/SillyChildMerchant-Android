@@ -198,6 +198,15 @@ public class RequestClient {
         HttpRequest.requestPostFORMHttp(context, URLConstants.USERLOGIN, httpParams, listener);
     }
 
+
+    /**
+     * 获取第三方登录验证码
+     */
+    public static void postThirdCode(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestPostFORMHttp(context, URLConstants.THIRDCODE, httpParams, listener);
+    }
+
+
     /**
      * 第三方登录
      */

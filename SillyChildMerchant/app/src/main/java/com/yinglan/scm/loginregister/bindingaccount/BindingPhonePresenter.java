@@ -67,7 +67,7 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
 //        httpParams.put("validationId", validationId);
 //        httpParams.put("opt", opt);
         // httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postCaptcha(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.postThirdCode(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -99,12 +99,12 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
         }
 
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("openId", openid);
+        httpParams.put("open_id", openid);
         httpParams.put("type", from);
         httpParams.put("phone", phone);
         httpParams.put("code", code);
         httpParams.put("registration_id", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
-        RequestClient.postBindingPhone(KJActivityStack.create().topActivity(),httpParams, new ResponseListener<String>() {
+        RequestClient.postBindingPhone(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
@@ -165,7 +165,6 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
             });
         }
     }
-
 
 
     //获取七牛token
