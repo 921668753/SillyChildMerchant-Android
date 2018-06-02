@@ -12,6 +12,8 @@ import com.kymjs.common.PreferenceHelper;
 import java.io.File;
 import java.io.IOException;
 
+import io.rong.imkit.RongIM;
+
 /**
  * Created by Administrator on 2018/3/29 0029.
  */
@@ -100,5 +102,8 @@ public class UserUtil {
     public static void quitRc(Context context) {
         PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunToken", null);
         PreferenceHelper.write(context, StringConstants.FILENAME, "rongYunId", null);
+        //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
+        //清除融云信息，退出登陆
+        RongIM.getInstance().logout();
     }
 }
