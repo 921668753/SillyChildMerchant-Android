@@ -42,11 +42,11 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     private LinearLayout ll_bankCard;
 
 
-    private String bankCardName;
-    private String bankCardNun;
-    private String fee;
-    private int bankCardId = 0;
-    private String get_time;
+//    private String bankCardName;
+//    private String bankCardNun;
+//    private String fee;
+//    private int bankCardId = 0;
+//    private String get_time;
 
 
     @Override
@@ -118,14 +118,14 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
             if (!StringUtils.isEmpty(myWalletBean.getData().getBalance())) {
                 tv_yue.setText(getString(R.string.renminbi) + MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
                 PreferenceHelper.write(this, StringConstants.FILENAME, "withdrawalAmount", MathUtil.keepTwo(StringUtils.toDouble(myWalletBean.getData().getBalance())));
-                if (!StringUtils.isEmpty(myWalletBean.getData().getOpen_bank()) && !StringUtils.isEmpty(myWalletBean.getData().getAccount_no())) {
-                    bankCardName = myWalletBean.getData().getOpen_bank();
-                    bankCardNun = myWalletBean.getData().getAccount_no();
-                    bankCardNun = bankCardNun.substring(bankCardNun.length() - 4);
-                    bankCardId = myWalletBean.getData().getBank_id();
-                    fee = myWalletBean.getData().getFee() + "%";
-                    get_time = myWalletBean.getData().getGet_time();
-                }
+//                if (!StringUtils.isEmpty(myWalletBean.getData().getOpen_bank()) && !StringUtils.isEmpty(myWalletBean.getData().getAccount_no())) {
+//                    bankCardName = myWalletBean.getData().getOpen_bank();
+//                    bankCardNun = myWalletBean.getData().getAccount_no();
+//                    bankCardNun = bankCardNun.substring(bankCardNun.length() - 4);
+//                    bankCardId = myWalletBean.getData().getBank_id();
+//                    fee = myWalletBean.getData().getFee() + "%";
+//                    get_time = myWalletBean.getData().getGet_time();
+//                }
             }
         }
         dismissLoadingDialog();
