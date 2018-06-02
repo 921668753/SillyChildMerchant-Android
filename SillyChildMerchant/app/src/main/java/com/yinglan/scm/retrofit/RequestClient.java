@@ -8,6 +8,8 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpRequest;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.FileUtils;
 import com.kymjs.common.Log;
 import com.kymjs.common.NetworkUtils;
@@ -824,6 +826,10 @@ public class RequestClient {
     public static void getIsLogin(Context context, HttpParams httpParams, ResponseListener<String> listener) {
         String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
         if (StringUtils.isEmpty(cookies)) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
             listener.onFailure(NumericConstants.TOLINGIN + "");
             return;
         }
@@ -865,6 +871,10 @@ public class RequestClient {
         if (StringUtils.isEmpty(cookies)) {
             Log.d("tag", "onFailure");
             UserUtil.clearUserInfo(context);
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
             listener.onFailure(NumericConstants.TOLINGIN + "");
             return;
         }
@@ -899,6 +909,10 @@ public class RequestClient {
                 @Override
                 public void onFailure(String msg) {
                     UserUtil.clearUserInfo(context);
+                    /**
+                     * 发送消息
+                     */
+                    RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                 }
             });
