@@ -909,10 +909,12 @@ public class RequestClient {
                 @Override
                 public void onFailure(String msg) {
                     UserUtil.clearUserInfo(context);
-                    /**
-                     * 发送消息
-                     */
-                    RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
+                    if (!(context.getClass().getName().contains("MainActivity") || context.getClass().getName().contains("MineFragment"))) {
+                        /**
+                         * 发送消息
+                         */
+                        RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
+                    }
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                 }
             });
