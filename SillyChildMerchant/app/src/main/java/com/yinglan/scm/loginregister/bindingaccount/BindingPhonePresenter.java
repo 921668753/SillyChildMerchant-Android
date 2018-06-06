@@ -146,7 +146,9 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                         RongIM.getInstance().setCurrentUserInfo(userInfo);
                         RongIM.getInstance().setMessageAttachedUserInfo(true);
                         mView.getSuccess("", 2);
+                        return;
                     }
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
                 }
 
                 /**
