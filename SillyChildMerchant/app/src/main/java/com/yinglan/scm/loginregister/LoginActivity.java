@@ -336,7 +336,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             Log.d("tag111", openid);
             from = share_media.toString();
             if (from != null && from.equals("WEIXIN")) {
-                from = "weinxin";
+                from = "weixin";
             } else {
                 from = "qq";
             }
