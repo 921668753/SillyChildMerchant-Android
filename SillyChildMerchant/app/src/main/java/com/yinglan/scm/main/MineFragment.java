@@ -246,9 +246,9 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
             return;
         } else if (isLogin(msg)) {
             aty.showActivity(aty, LoginActivity.class);
-        } else {
-            ViewInject.toast(msg);
+            return;
         }
+        ViewInject.toast(msg);
     }
 
     /**
