@@ -7,7 +7,7 @@ import java.util.List;
 public class SystemMessageListBean extends BaseResult<List<SystemMessageListBean.DataBean>> {
 
 
-    public static class DataBean {
+    public class DataBean {
         /**
          * news_id : 14
          * member_id : 30

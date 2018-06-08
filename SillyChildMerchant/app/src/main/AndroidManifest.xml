@@ -77,6 +77,7 @@
         <!--登录-->
         <activity
             android:name="com.yinglan.scm.loginregister.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--选择国家或地区-->
@@ -184,7 +185,7 @@
 
         <!--我的  我的钱包 账户明细-->
         <activity
-            android:name="com.yinglan.scm.mine.mywallet.AccountDetailsActivity"
+            android:name="com.yinglan.scm.mine.mywallet.accountdetails.AccountDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的钱包 提现-->

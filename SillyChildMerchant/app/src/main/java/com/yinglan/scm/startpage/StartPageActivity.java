@@ -102,10 +102,10 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
             PreferenceHelper.write(this, StringConstants.FILENAME, "firstOpen", false);
             jumpIntent.setClass(this, GuideViewActivity.class);
         } else {
+            jumpIntent.setClass(this, MainActivity.class);
             jumpIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             jumpIntent.setAction("android.intent.action.MAIN");
             jumpIntent.addCategory("android.intent.category.LAUNCHER");
-            jumpIntent.setClass(this, MainActivity.class);
             jumpIntent.putExtra("isShow", isShow);
         }
         skipActivity(aty, jumpIntent);

@@ -19,6 +19,7 @@ import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.mine.mywallet.MyWalletBean;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.mine.mywallet.accountdetails.AccountDetailsActivity;
 import com.yinglan.scm.mine.mywallet.mybankcard.MyBankCardActivity;
 import com.yinglan.scm.mine.mywallet.withdrawal.WithdrawalActivity;
 

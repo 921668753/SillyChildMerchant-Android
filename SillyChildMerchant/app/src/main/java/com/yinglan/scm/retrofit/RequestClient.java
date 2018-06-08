@@ -684,6 +684,25 @@ public class RequestClient {
     }
 
     /**
+     * 获取账户钱包明细
+     */
+    public static void getAccountDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getAccountDetail");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.PURSEDETAIL, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 提现
      */
     public static void postWithdrawal(Context context, HttpParams httpParams, ResponseListener<String> listener) {
@@ -871,10 +890,12 @@ public class RequestClient {
         if (StringUtils.isEmpty(cookies)) {
             Log.d("tag", "onFailure");
             UserUtil.clearUserInfo(context);
-            /**
-             * 发送消息
-             */
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
+            if (!(context.getClass().getName().contains("MainActivity") || context.getClass().getName().contains("HomePageFragment") || context.getClass().getName().contains("MineFragment"))) {
+                /**
+                 * 发送消息
+                 */
+                RxBus.getInstance().post(new MsgEvent<String>("RxBusLogOutEvent"));
+            }
             listener.onFailure(NumericConstants.TOLINGIN + "");
             return;
         }

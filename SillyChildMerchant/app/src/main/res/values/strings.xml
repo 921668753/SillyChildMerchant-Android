@@ -299,6 +299,16 @@
     <string name="withdrawalRuleDescription">提现规则说明</string>
     <string name="withdrawalRuleDescription1">1、提现次数：供货商不限制提现次数，到账规则详见“提现周期”规定。\n2、提现账户：可以选择工商银行、农业银行、中国银行、建设银行、邮政银行、招商银行、支付宝、财付通账户。\n3、提现费率：提现费率：0.1%，提现手续费将从余额中扣除。\n4、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</string>
 
+
+    <!--个人中心 我的钱包 账户明细 -->
+    <string name="transactionAmount">交易金额</string>
+    <string name="accountNotClarified">亲，您的账户还没有明细哟~</string>
+    <string name="recharge">充值</string>
+    <string name="consumption">消费</string>
+    <string name="refund">退款</string>
+    <string name="accountDetails">账户明细</string>
+
+
     <!-- 个人中心 我的钱包  余额提现-->
     <string name="balanceWithdrawal">余额提现</string>
     <string name="withdrawalRecord1">请输入提现金额</string>
@@ -350,9 +360,6 @@
     <string name="toResend">s后重发</string>
     <string name="openingBank1">请选择开户行</string>
 
-
-    <!-- 个人中心 我的钱包  账户明细-->
-    <string name="accountDetails">账户明细</string>
 
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>
