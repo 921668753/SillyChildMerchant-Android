@@ -31,25 +31,49 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ResultBean> {
          * 明细类型
          */
 
-        if (model.getType() == 1) {
+        if (model.getType() == 1 && model.getStatus() == 0) {
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.recharge) + " " + mContext.getString(R.string.ongoing));
+            /**
+             * 交易金额
+             */
+            helper.setText(R.id.tv_balance, "+" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
+        } else if (model.getType() == 1 && model.getStatus() == 1) {
             helper.setText(R.id.tv_detailsType, mContext.getString(R.string.recharge));
             /**
              * 交易金额
              */
             helper.setText(R.id.tv_balance, "+" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
-        } else if (model.getType() == 2) {
+        } else if (model.getType() == 2 && model.getStatus() == 0) {
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.withdrawal) + " " + mContext.getString(R.string.ongoing));
+            /**
+             * 交易金额
+             */
+            helper.setText(R.id.tv_balance, "-" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
+        } else if (model.getType() == 2 && model.getStatus() == 1) {
             helper.setText(R.id.tv_detailsType, mContext.getString(R.string.withdrawal));
             /**
              * 交易金额
              */
             helper.setText(R.id.tv_balance, "-" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
-        } else if (model.getType() == 3) {
+        } else if (model.getType() == 3 && model.getStatus() == 0) {
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.consumption) + " " + mContext.getString(R.string.ongoing));
+            /**
+             * 交易金额
+             */
+            helper.setText(R.id.tv_balance, "-" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
+        } else if (model.getType() == 3 && model.getStatus() == 1) {
             helper.setText(R.id.tv_detailsType, mContext.getString(R.string.consumption));
             /**
              * 交易金额
              */
             helper.setText(R.id.tv_balance, "-" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
-        } else if (model.getType() == 4) {
+        } else if (model.getType() == 4 && model.getStatus() == 0) {
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.refund) + " " + mContext.getString(R.string.ongoing));
+            /**
+             * 交易金额
+             */
+            helper.setText(R.id.tv_balance, "+" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
+        } else if (model.getType() == 4 && model.getStatus() == 1) {
             helper.setText(R.id.tv_detailsType, mContext.getString(R.string.refund));
             /**
              * 交易金额

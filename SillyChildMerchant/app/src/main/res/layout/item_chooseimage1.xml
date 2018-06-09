@@ -9,7 +9,7 @@
         android:adjustViewBounds="true"
         android:paddingBottom="@dimen/dimen10"
         android:paddingLeft="@dimen/dimen10"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/feedback_add_pictures" />
 
 
 </RelativeLayout>

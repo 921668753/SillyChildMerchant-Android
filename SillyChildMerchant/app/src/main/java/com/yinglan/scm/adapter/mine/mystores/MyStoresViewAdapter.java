@@ -34,9 +34,11 @@ public class MyStoresViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         if (model.getMarket_enable() == 1) {
             viewHolderHelper.setText(R.id.tv_inSale, mContext.getString(R.string.inSale));
             viewHolderHelper.setTextColorRes(R.id.tv_inSale, R.color.greenColors);
+            viewHolderHelper.setImageResource(R.id.img_shelves, R.mipmap.shop_shelves_icon);
         } else {
             viewHolderHelper.setText(R.id.tv_inSale, mContext.getString(R.string.hasOffShelves));
             viewHolderHelper.setTextColorRes(R.id.tv_inSale, R.color.hintColors);
+            viewHolderHelper.setImageResource(R.id.img_shelves, R.mipmap.shop_the_shelves_icon);
         }
 
 

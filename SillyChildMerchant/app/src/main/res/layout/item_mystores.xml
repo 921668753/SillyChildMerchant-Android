@@ -11,7 +11,7 @@
         android:layout_width="@dimen/dimen105"
         android:layout_height="@dimen/dimen90"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/placeholderfigure1" />
 
     <LinearLayout
         style="@style/AutoMatch"
@@ -98,14 +98,14 @@
 
         <ImageView
             android:id="@+id/img_shelves"
-            android:layout_width="@dimen/dimen35"
+            android:layout_width="@dimen/dimen45"
             android:layout_height="@dimen/dimen30"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:paddingLeft="@dimen/dimen10"
             android:paddingTop="@dimen/dimen10"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/shop_shelves_icon" />
 
 
     </RelativeLayout>

@@ -3,6 +3,8 @@ package com.yinglan.scm.mine.mystores.releasegoods;
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/2/11.
  */
@@ -31,7 +33,7 @@ public interface ReleaseGoodsContract {
         /**
          * 新增修改商品
          */
-        void postGoodAddAndEdit(int goodsId, String name, String sn, int brand_id, int cat_id, String brief, String price, String params, String store, String enable_store, String big, String small);
+        void postGoodAddAndEdit(String name, int cat_id, String brief, String price, String store, String enable_store, List<String> urllist, String params, String specs);
 
     }
 

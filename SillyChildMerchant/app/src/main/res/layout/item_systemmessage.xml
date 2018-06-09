@@ -17,7 +17,7 @@
             android:layout_height="@dimen/dimen40"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/avatar" />
 
         <TextView
             android:id="@+id/tv_messageTag"

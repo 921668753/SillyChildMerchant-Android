@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchWrap"
+    android:gravity="center"
+    android:paddingBottom="@dimen/dimen15"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/img_checkBox"
+        android:layout_width="@dimen/dimen29"
+        android:paddingRight="@dimen/dimen7"
+        android:paddingLeft="@dimen/dimen10"
+        android:layout_height="@dimen/dimen12"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_productSpecifications"
+        style="@style/WrapWrap"
+        android:text="商品规格"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/textsize12" />
+
+</LinearLayout>

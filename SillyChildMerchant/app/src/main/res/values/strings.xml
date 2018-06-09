@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">傻孩子商家端</string>
+    <string name="app_name">傻孩志商家端</string>
     <string name="applicationId">com.yinglan.scm</string>
 
 
@@ -254,8 +254,17 @@
     <string name="warehouseInventory1">仓库库存</string>
     <string name="jian">/件</string>
 
+
     <!--  个人中心  我的店铺   发布商品-->
     <string name="releaseGoods">发布商品</string>
+    <string name="jian1">件</string>
+    <string name="addSpecification">添加规格</string>
+    <string name="productSpecifications1">商品规格</string>
+    <string name="leaseEnterNameProduct">请输入商品名称</string>
+    <string name="enterProductDescription">请输入商品介绍</string>
+    <string name="enterPriceGoods">请输入商品价格</string>
+    <string name="enterGoodsWarehouseInventory">请输入商品仓库库存</string>
+
 
     <!--提现成功-->
     <string name="withdrawalRequestSucceeded">提现申请成功</string>
@@ -301,12 +310,13 @@
 
 
     <!--个人中心 我的钱包 账户明细 -->
+    <string name="accountDetails">账户明细</string>
     <string name="transactionAmount">交易金额</string>
     <string name="accountNotClarified">亲，您的账户还没有明细哟~</string>
     <string name="recharge">充值</string>
     <string name="consumption">消费</string>
     <string name="refund">退款</string>
-    <string name="accountDetails">账户明细</string>
+    <string name="ongoing">进行中</string>
 
 
     <!-- 个人中心 我的钱包  余额提现-->

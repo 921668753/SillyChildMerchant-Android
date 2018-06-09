@@ -48,7 +48,7 @@
 
     <!--用户端-->
     <application
-        android:name="com.yinglan.scm.application.MyApplication"
+        android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -60,7 +60,7 @@
 
         <!--启动页-->
         <activity
-            android:name="com.yinglan.scm.startpage.StartPageActivity"
+            android:name=".startpage.StartPageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppStartLoadTranslucent">
             <intent-filter>
@@ -71,172 +71,172 @@
 
         <!--引导页-->
         <activity
-            android:name="com.yinglan.scm.startpage.GuideViewActivity"
+            android:name=".startpage.GuideViewActivity"
             android:screenOrientation="portrait" />
 
         <!--登录-->
         <activity
-            android:name="com.yinglan.scm.loginregister.LoginActivity"
+            android:name=".loginregister.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--选择国家或地区-->
         <activity
-            android:name="com.yinglan.scm.loginregister.SelectCountryActivity"
+            android:name=".loginregister.SelectCountryActivity"
             android:screenOrientation="portrait" />
 
         <!--注册-->
         <activity
-            android:name="com.yinglan.scm.loginregister.register.RegisterActivity"
+            android:name=".loginregister.register.RegisterActivity"
             android:screenOrientation="portrait" />
 
         <!--注册 忘记密码-->
         <activity
-            android:name="com.yinglan.scm.loginregister.forgotpassword.RetrievePasswordActivity"
+            android:name=".loginregister.forgotpassword.RetrievePasswordActivity"
             android:screenOrientation="portrait" />
 
         <!--注册 注册协议-->
         <activity
-            android:name="com.yinglan.scm.loginregister.register.RegistrationAgreementActivity"
+            android:name=".loginregister.register.RegistrationAgreementActivity"
             android:screenOrientation="portrait" />
 
 
         <!--注册 綁定账号-->
         <activity
-            android:name="com.yinglan.scm.loginregister.bindingaccount.BindingPhoneActivity"
+            android:name=".loginregister.bindingaccount.BindingPhoneActivity"
             android:screenOrientation="portrait" />
 
         <!--主界面-->
         <activity
-            android:name="com.yinglan.scm.main.MainActivity"
+            android:name=".main.MainActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--首页  重新认证-->
         <activity
-            android:name="com.yinglan.scm.homepage.RecertificationActivity"
+            android:name=".homepage.RecertificationActivity"
             android:screenOrientation="portrait" />
 
         <!--首页  店主认证-->
         <activity
-            android:name="com.yinglan.scm.homepage.ShopkeeperCertificationActivity"
+            android:name=".homepage.ShopkeeperCertificationActivity"
             android:screenOrientation="portrait" />
 
         <!--消息  系统消息列表-->
         <activity
-            android:name="com.yinglan.scm.message.systemmessage.SystemMessageListActivity"
+            android:name=".message.systemmessage.SystemMessageListActivity"
             android:screenOrientation="portrait" />
 
         <!--消息  系统消息列表  系统消息详情-->
         <activity
-            android:name="com.yinglan.scm.message.systemmessage.SystemMessageDetailsActivity"
+            android:name=".message.systemmessage.SystemMessageDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--订单  订单详情-->
         <activity
-            android:name="com.yinglan.scm.order.orderdetails.OrderDetailsActivity"
+            android:name=".order.orderdetails.OrderDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--订单  订单评价-->
         <activity
-            android:name="com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity"
+            android:name=".order.orderevaluation.SeeEvaluationActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  个人资料-->
         <activity
-            android:name="com.yinglan.scm.mine.personaldata.PersonalDataActivity"
+            android:name=".mine.personaldata.PersonalDataActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  个人资料  设置自我简介-->
         <activity
-            android:name="com.yinglan.scm.mine.personaldata.setselfintroduction.SetSelfIntroductionActivity"
+            android:name=".mine.personaldata.setselfintroduction.SetSelfIntroductionActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  个人资料  设置性别-->
         <activity
-            android:name="com.yinglan.scm.mine.personaldata.setsex.SetSexActivity"
+            android:name=".mine.personaldata.setsex.SetSexActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  个人资料  设置昵称-->
         <activity
-            android:name="com.yinglan.scm.mine.personaldata.setnickname.SetNickNameActivity"
+            android:name=".mine.personaldata.setnickname.SetNickNameActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的店铺-->
         <activity
-            android:name="com.yinglan.scm.mine.mystores.MyStoresActivity"
+            android:name=".mine.mystores.MyStoresActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的店铺  发布商品-->
         <activity
-            android:name="com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity"
+            android:name=".mine.mystores.releasegoods.ReleaseGoodsActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的店铺  产品详情-->
         <activity
-            android:name="com.yinglan.scm.mine.mystores.productdetails.ProductDetailsActivity"
+            android:name=".mine.mystores.productdetails.ProductDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的钱包-->
         <activity
-            android:name="com.yinglan.scm.mine.mywallet.MyWalletActivity"
+            android:name=".mine.mywallet.MyWalletActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的钱包 账户明细-->
         <activity
-            android:name="com.yinglan.scm.mine.mywallet.accountdetails.AccountDetailsActivity"
+            android:name=".mine.mywallet.accountdetails.AccountDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的钱包 提现-->
         <activity
-            android:name="com.yinglan.scm.mine.mywallet.withdrawal.WithdrawalActivity"
+            android:name=".mine.mywallet.withdrawal.WithdrawalActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的钱包 提现成功-->
         <activity
-            android:name="com.yinglan.scm.mine.mywallet.withdrawal.withdrawalresult.WithdrawalCompleteActivity"
+            android:name=".mine.mywallet.withdrawal.withdrawalresult.WithdrawalCompleteActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的钱包 提现 我的银行卡-->
         <activity
-            android:name="com.yinglan.scm.mine.mywallet.mybankcard.MyBankCardActivity"
+            android:name=".mine.mywallet.mybankcard.MyBankCardActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  我的钱包 提现 我的银行卡  添加银行卡-->
         <activity
-            android:name="com.yinglan.scm.mine.mywallet.mybankcard.AddBankCardActivity"
+            android:name=".mine.mywallet.mybankcard.AddBankCardActivity"
             android:screenOrientation="portrait" />
 
 
         <!--我的  傻孩子学院-->
         <activity
-            android:name="com.yinglan.scm.mine.sillychildcollege.SillyChildCollegeActivity"
+            android:name=".mine.sillychildcollege.SillyChildCollegeActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  分享有礼-->
         <activity
-            android:name="com.yinglan.scm.mine.sharepolite.SharePoliteActivity"
+            android:name=".mine.sharepolite.SharePoliteActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  设置-->
         <activity
-            android:name="com.yinglan.scm.mine.setup.SetUpActivity"
+            android:name=".mine.setup.SetUpActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  设置  关于我们-->
         <activity
-            android:name="com.yinglan.scm.mine.setup.AboutUsActivity"
+            android:name=".mine.setup.AboutUsActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  设置  帮助中心-->
         <activity
-            android:name="com.yinglan.scm.mine.setup.HelpCenterActivity"
+            android:name=".mine.setup.HelpCenterActivity"
             android:screenOrientation="portrait" />
 
         <!--我的  设置  设置中的意见反馈-->
         <activity
-            android:name="com.yinglan.scm.mine.setup.feedback.FeedbackActivity"
+            android:name=".mine.setup.feedback.FeedbackActivity"
             android:screenOrientation="portrait" />
 
 
@@ -263,7 +263,7 @@
         <!-- 微信支付 -->
         <!-- 微信支付 -->
         <activity
-            android:name="com.yinglan.scm.wxapi.WXPayEntryActivity"
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
         <!-- 微信支付 -->
@@ -276,7 +276,7 @@
         <!--     友盟分享      -->
         <!--      微信 分享     -->
         <activity
-            android:name="com.yinglan.scm.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -391,7 +391,7 @@
         <!--      极光推送      -->
         <!-- User defined. 用户自定义的广播接收器-->
         <receiver
-            android:name="com.yinglan.scm.loginregister.MyReceiver"
+            android:name=".loginregister.MyReceiver"
             android:enabled="true">
             <intent-filter>
                 <!--Required 用户注册SDK的intent-->

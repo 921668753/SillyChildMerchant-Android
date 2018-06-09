@@ -53,9 +53,6 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
 
 
 
-
-
-
         dismissLoadingDialog();
     }
 

@@ -48,9 +48,9 @@
                         style="@style/AutoMatch"
                         android:layout_marginLeft="@dimen/dimen25"
                         android:background="@color/whiteColors"
-
+                        android:digits="@string/number0"
+                        android:inputType="phone"
                         android:hint="@string/hintAccountText"
-
                         android:maxLength="11"
                         android:paddingTop="@dimen/dimen10"
                         android:singleLine="true"
@@ -58,8 +58,7 @@
                         android:textColorHint="@color/hintColors"
                         android:textCursorDrawable="@drawable/shape_cursor"
                         android:textSize="@dimen/textsize13" />
-                    <!--android:inputType="phone"-->
-                    <!--android:digits="@string/number0"-->
+
                     <ImageView
                         android:id="@+id/img_quxiao"
                         android:layout_width="@dimen/dimen35"

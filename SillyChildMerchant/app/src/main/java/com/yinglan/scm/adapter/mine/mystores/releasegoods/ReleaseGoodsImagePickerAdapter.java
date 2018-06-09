@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
- *发布商品
+ * 发布商品----选择图片
  */
 public class ReleaseGoodsImagePickerAdapter extends RecyclerView.Adapter<ReleaseGoodsImagePickerAdapter.SelectedPicViewHolder> {
     private int maxImgCount;
