@@ -3,6 +3,13 @@ package com.yinglan.scm.message.interactivemessage.imuitl;
 import android.content.Context;
 import android.view.View;
 
+import com.yinglan.scm.message.interactivemessage.imuitl.moudle.SealExtensionModule;
+
+import java.util.List;
+
+import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.IExtensionModule;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.model.UIConversation;
@@ -89,7 +96,37 @@ public final class RongCloudEvent implements
         //  RongIM.setOnReceiveMessageListener(this);// 设置消息接收监听器。
         setUserInfoEngineListener();   //用户信息提供者回调监听
 //    setGroupInfoEngineListener();  //群组信息提供者回调监听
+        setInputProvider();
     }
+
+    private void setReadReceiptConversationType() {
+        Conversation.ConversationType[] types = new Conversation.ConversationType[]{
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP,
+                Conversation.ConversationType.DISCUSSION
+        };
+        RongIM.getInstance().setReadReceiptConversationTypeList(types);
+    }
+
+    private void setInputProvider() {
+        RongIM.setOnReceiveMessageListener(this);
+
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+        IExtensionModule defaultModule = null;
+        if (moduleList != null) {
+            for (IExtensionModule module : moduleList) {
+                if (module instanceof DefaultExtensionModule) {
+                    defaultModule = module;
+                    break;
+                }
+            }
+            if (defaultModule != null) {
+                RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
+                RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule());
+            }
+        }
+    }
+
 
     /**
      * 获取RongCloud 实例。
