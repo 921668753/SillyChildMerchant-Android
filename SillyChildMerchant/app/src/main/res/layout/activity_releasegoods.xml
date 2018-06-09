@@ -80,7 +80,6 @@
                 android:choiceMode="singleChoice"
                 android:divider="@null"
                 android:fadingEdge="none"
-                android:visibility="gone"
                 android:listSelector="@android:color/transparent"
                 android:paddingBottom="@dimen/dimen15"
                 android:paddingLeft="@dimen/dimen15"
