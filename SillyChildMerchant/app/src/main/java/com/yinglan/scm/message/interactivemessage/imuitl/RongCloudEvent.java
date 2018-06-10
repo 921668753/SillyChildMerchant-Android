@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
+import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.GroupUserInfo;
@@ -109,9 +110,8 @@ public final class RongCloudEvent implements
     }
 
     private void setInputProvider() {
-        RongIM.setOnReceiveMessageListener(this);
-
-        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+     //   RongIM.setOnReceiveMessageListener(this);
+        List<IExtensionModule> moduleList =  RongExtensionManager.getInstance().getExtensionModules();;
         IExtensionModule defaultModule = null;
         if (moduleList != null) {
             for (IExtensionModule module : moduleList) {

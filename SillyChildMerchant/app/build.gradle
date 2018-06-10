@@ -162,7 +162,7 @@ dependencies {
 
     //融云-----start-----
     api project(':IMKit')
-    api project(':RedPacket')
+//    api project(path: ':CallKit')
     //融云-----end-----
 
     /**
@@ -193,4 +193,5 @@ dependencies {
     api files('libs/greendao-1.3.7.jar')
     api files('libs/org.apache.http.legacy.jar')
     api files('libs/fastjson-1.2.5.jar')
+    api files('libs/alipaySdk-20180316.jar')
 }

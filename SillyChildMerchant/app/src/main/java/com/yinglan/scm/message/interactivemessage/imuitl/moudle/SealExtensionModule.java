@@ -49,13 +49,33 @@ public class SealExtensionModule extends DefaultExtensionModule {
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
-        if (conversationType.equals(Conversation.ConversationType.PUBLIC_SERVICE)) {
+        if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
             List<IPluginModule> pluginModuleList = new ArrayList<>();
-            ImagePlugin image = new ImagePlugin();
-            FilePlugin filePlugin = new FilePlugin();
-           // IPluginModule locationPlugin = new DefaultLocationPlugin();
+            IPluginModule image = new ImagePlugin();
+            IPluginModule file = new FilePlugin();
+            //IPluginModule locationPlugin = new DefaultLocationPlugin();
             pluginModuleList.add(image);
-            pluginModuleList.add(filePlugin);
+            pluginModuleList.add(file);
+            //  pluginModuleList.add(locationPlugin);
+//            try {
+//                String clsName = "com.iflytek.cloud.SpeechUtility";
+//                Class<?> cls = Class.forName(clsName);
+//                if (cls != null) {
+//                    cls = Class.forName("io.rong.recognizer.RecognizePlugin");
+//                    Constructor<?> constructor = cls.getConstructor();
+//                    IPluginModule recognizer = (IPluginModule) constructor.newInstance();
+//                    pluginModuleList.add(recognizer);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+            return pluginModuleList;
+        } else if (conversationType.equals(Conversation.ConversationType.PUBLIC_SERVICE)) {
+            List<IPluginModule> pluginModuleList = new ArrayList<>();
+            IPluginModule image = new ImagePlugin();
+            IPluginModule locationPlugin = new DefaultLocationPlugin();
+            pluginModuleList.add(image);
+            pluginModuleList.add(locationPlugin);
             try {
                 String clsName = "com.iflytek.cloud.SpeechUtility";
                 Class<?> cls = Class.forName(clsName);

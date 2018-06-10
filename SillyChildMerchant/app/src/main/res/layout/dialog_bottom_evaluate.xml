@@ -268,6 +268,6 @@
         android:background="@color/greenColors"
         android:gravity="center"
         android:text="@string/cs_submit_evaluation"
-        android:textColor="@color/white"
+        android:textColor="@color/whiteColors"
         android:textSize="18sp" />
 </LinearLayout>

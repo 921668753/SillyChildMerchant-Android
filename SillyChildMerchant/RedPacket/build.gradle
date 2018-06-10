@@ -28,5 +28,4 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
 //    compile 'com.google.code.gson:gson:2.2.4'
-    api files('libs/alipaySdk-20180316.jar')
 }
