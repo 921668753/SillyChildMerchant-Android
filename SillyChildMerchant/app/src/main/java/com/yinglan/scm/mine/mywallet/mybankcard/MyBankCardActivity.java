@@ -9,8 +9,6 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.rx.MsgEvent;
-import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mywallet.mybankcard.MyBankCardViewAdapter;
 import com.yinglan.scm.entity.mine.mywallet.mybankcard.MyBankCardBean;

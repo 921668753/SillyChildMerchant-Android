@@ -28,14 +28,47 @@ public class AboutUsActivity extends BaseActivity {
         super.initData();
     }
 
+
+    //    @Override
+//    public void initWidget() {
+//        super.initWidget();
+//        initTitle();
+//        webViewLayout.setTitleVisibility(false);
+//     //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
+//
+//    }
+
+    /**
+     * 渲染view
+     */
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
-        webViewLayout.setTitleVisibility(false);
-     //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
-
+        initView();
     }
+
+
+    public void initView() {
+        //   String title = getIntent().getStringExtra("title");
+        //     String url = getIntent().getStringExtra("url");
+           webViewLayout.setTitleText(getString(R.string.aboutUs));
+        webViewLayout.setBackImgResource(R.mipmap.back);
+        webViewLayout.setTitleVisibility(true);
+        webViewLayout.setWebViewCallBack(new WebViewLayout.WebViewCallBack() {
+            @Override
+            public void backOnclick() {
+                AboutUsActivity.this.finish();
+            }
+
+            @Override
+            public void loadFailedError() {
+            }
+        });
+        //  if (!StringUtils.isEmpty(url)) {
+        // webViewLayout.loadUrl(APIURLFORPAY + "/web/user/regProtocol");
+        //    }
+    }
+
 
     @Override
     public void widgetClick(View v) {
@@ -48,12 +81,4 @@ public class AboutUsActivity extends BaseActivity {
         webViewLayout.removeAllViews();
         webViewLayout = null;
     }
-
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.aboutUs), true, R.id.titlebar);
-    }
-
 }

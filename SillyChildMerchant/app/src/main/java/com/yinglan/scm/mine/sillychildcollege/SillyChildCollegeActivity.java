@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.myview.WebViewLayout;
 import com.yinglan.scm.R;
 
@@ -21,19 +20,54 @@ public class SillyChildCollegeActivity extends BaseActivity {
     public void setRootView() {
         setContentView(R.layout.activity_helpcenter);
     }
+
+
     @Override
     public void initData() {
         super.initData();
     }
 
+
+    //    @Override
+//    public void initWidget() {
+//        super.initWidget();
+//        initTitle();
+//        webViewLayout.setTitleVisibility(false);
+//     //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
+//
+//    }
+
+    /**
+     * 渲染view
+     */
     @Override
     public void initWidget() {
         super.initWidget();
-        initTitle();
-        webViewLayout.setTitleVisibility(false);
-        //   webViewLayout.loadUrl(URLConstants.ABOUTUSURL);
-
+        initView();
     }
+
+
+    public void initView() {
+        //   String title = getIntent().getStringExtra("title");
+        //     String url = getIntent().getStringExtra("url");
+        webViewLayout.setTitleText(getString(R.string.sillyChildCollege));
+        webViewLayout.setBackImgResource(R.mipmap.back);
+        webViewLayout.setTitleVisibility(true);
+        webViewLayout.setWebViewCallBack(new WebViewLayout.WebViewCallBack() {
+            @Override
+            public void backOnclick() {
+                SillyChildCollegeActivity.this.finish();
+            }
+
+            @Override
+            public void loadFailedError() {
+            }
+        });
+        //  if (!StringUtils.isEmpty(url)) {
+        // webViewLayout.loadUrl(APIURLFORPAY + "/web/user/regProtocol");
+        //    }
+    }
+
 
     @Override
     public void widgetClick(View v) {
@@ -45,12 +79,5 @@ public class SillyChildCollegeActivity extends BaseActivity {
         super.onDestroy();
         webViewLayout.removeAllViews();
         webViewLayout = null;
-    }
-
-    /**
-     * 设置标题
-     */
-    public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.sillyChildCollege), true, R.id.titlebar);
     }
 }
