@@ -569,6 +569,27 @@ public class RequestClient {
         }, listener);
     }
 
+
+    /**
+     * 获取品牌列表
+     */
+    public static void getGoodsBrands(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getGoodsBrands");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.GOODSBRANDS, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
     /**
      * 获取商品分类参数列表
      */

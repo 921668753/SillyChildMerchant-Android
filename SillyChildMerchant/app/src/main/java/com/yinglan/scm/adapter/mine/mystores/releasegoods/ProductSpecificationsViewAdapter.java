@@ -78,19 +78,16 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
         if (mAdapterCounters.get(noScrollGridView.hashCode()) != null) {
             productSpecificationsGvViewAdapter = mAdapterCounters.get(noScrollGridView.hashCode());
             if (model.getSpec1() != null && model.getSpec1().size() > 0) {
-                helper.setVisibility(R.id.tv_divider, View.VISIBLE);
                 helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
                 noScrollGridView.setVisibility(View.VISIBLE);
                 productSpecificationsGvViewAdapter.clear();
                 productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
             } else {
-                helper.setVisibility(R.id.tv_divider, View.GONE);
                 helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
                 noScrollGridView.setVisibility(View.GONE);
             }
         } else {
             if (model.getSpec1() != null && model.getSpec1().size() > 0) {
-                helper.setVisibility(R.id.tv_divider, View.VISIBLE);
                 helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
                 noScrollGridView.setVisibility(View.VISIBLE);
                 productSpecificationsGvViewAdapter = new ProductSpecificationsGvViewAdapter(mContext);
@@ -105,7 +102,6 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
                 productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
                 mAdapterCounters.put(noScrollGridView.hashCode(), productSpecificationsGvViewAdapter);
             } else {
-                helper.setVisibility(R.id.tv_divider, View.GONE);
                 helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
                 noScrollGridView.setVisibility(View.GONE);
             }

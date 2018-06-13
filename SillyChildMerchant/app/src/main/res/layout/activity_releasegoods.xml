@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
-    android:background="@color/background"
+    android:background="@color/whiteColors"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -19,52 +19,81 @@
             style="@style/MatchMatch"
             android:orientation="vertical">
 
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen32"
+                android:text="@string/selectCommodityClassification"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
+
             <LinearLayout
-                style="@style/Match50"
-                android:background="@color/whiteColors"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15">
+                android:id="@+id/ll_classification"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen38"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginRight="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_express"
+                android:gravity="center_vertical">
 
                 <TextView
-                    style="@style/WrapWrap"
-                    android:text="@string/selectCommodityClassification"
+                    android:id="@+id/tv_selectCommodityClassification"
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:text="@string/pleaseSelect"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize13" />
 
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen7"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:src="@mipmap/shop_down_arrow" />
 
-                <LinearLayout
-                    android:id="@+id/ll_classification"
-                    style="@style/MatchMatch"
-                    android:layout_marginBottom="@dimen/dimen10"
-                    android:layout_marginLeft="@dimen/dimen15"
-                    android:layout_marginTop="@dimen/dimen10"
-                    android:background="@drawable/shape_express"
-                    android:gravity="center_vertical">
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_selectCommodityClassification"
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen15"
-                        android:text="@string/pleaseSelect"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize13" />
 
-                    <ImageView
-                        android:layout_width="@dimen/dimen7"
-                        android:layout_height="@dimen/dimen7"
-                        android:layout_marginRight="@dimen/dimen15"
-                        android:src="@mipmap/shop_down_arrow" />
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen15"
+                android:text="@string/chooseBrand"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize13" />
 
-                </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_chooseBrand"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen38"
+                android:layout_marginBottom="@dimen/dimen10"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginRight="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_express"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_selectChooseBrand"
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:text="@string/pleaseSelect"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen7"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:src="@mipmap/shop_down_arrow" />
 
             </LinearLayout>
 
 
             <TextView
                 style="@style/MatchWrap"
-                android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/whiteColors"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingTop="@dimen/dimen15"
@@ -72,76 +101,125 @@
                 android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize15" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                style="@style/MatchWrap"
-                android:layout_marginBottom="@dimen/dimen5"
-                android:background="@color/whiteColors"
-                android:choiceMode="singleChoice"
-                android:divider="@null"
-                android:fadingEdge="none"
-                android:listSelector="@android:color/transparent"
-                android:paddingBottom="@dimen/dimen15"
-                android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15"
-                android:scrollbarStyle="outsideOverlay"
-                app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                app:spanCount="1"
-                tools:listitem="@layout/item_productimg" />
+            <RelativeLayout style="@style/MatchWrap">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    style="@style/MatchWrap"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:background="@color/whiteColors"
+                    android:choiceMode="singleChoice"
+                    android:divider="@null"
+                    android:fadingEdge="none"
+                    android:listSelector="@android:color/transparent"
+                    android:paddingBottom="@dimen/dimen15"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:paddingRight="@dimen/dimen15"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:visibility="visible"
+                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                    app:spanCount="1"
+                    tools:listitem="@layout/item_productimg" />
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen68"
+                style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
-                android:layout_marginTop="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen5"
                 android:background="@drawable/shape_homepage"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen10"
                 android:paddingRight="@dimen/dimen10">
 
                 <TextView
                     style="@style/WrapWrap"
-                    android:paddingTop="@dimen/dimen10"
+                    android:paddingBottom="@dimen/dimen4"
+                    android:paddingTop="@dimen/dimen5"
                     android:text="@string/productName"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
 
-                <EditText
-                    android:id="@+id/et_goodName"
-                    style="@style/MatchWrap"
-                    android:background="@color/whiteColors"
-                    android:paddingLeft="@dimen/dimen11"
-                    android:paddingRight="@dimen/dimen11"
-                    android:paddingTop="@dimen/dimen5"
-                    android:textColor="@color/titletextcolors"
-                    android:textCursorDrawable="@drawable/shape_cursor"
-                    android:textSize="@dimen/textsize13" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="vertical">
 
-                <TextView
-                    style="@style/DividerWidth"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4" />
+                    <EditText
+                        android:id="@+id/et_goodName"
+                        style="@style/MatchWrap"
+                        android:background="@color/whiteColors"
+                        android:paddingLeft="@dimen/dimen20"
+                        android:paddingRight="@dimen/dimen11"
+                        android:paddingTop="@dimen/dimen5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/titletextcolors"
+                        android:textCursorDrawable="@drawable/shape_cursor"
+                        android:textSize="@dimen/textsize13" />
 
+                    <TextView
+                        style="@style/DividerWidth"
+                        android:layout_marginLeft="@dimen/dimen10"
+                        android:layout_marginRight="@dimen/dimen10"
+                        android:layout_marginTop="@dimen/dimen4" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
-                android:layout_marginTop="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen34"
                 android:background="@drawable/shape_homepage"
-                android:minHeight="@dimen/dimen96"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen10"
-                android:paddingRight="@dimen/dimen10">
+                android:paddingRight="@dimen/dimen10"
+                android:visibility="visible">
 
                 <TextView
                     style="@style/WrapWrap"
-                    android:paddingTop="@dimen/dimen10"
+                    android:paddingBottom="@dimen/dimen10"
+                    android:text="@string/productIntroduction"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <EditText
+                    android:id="@+id/et_productIntroduction"
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen16"
+                    android:layout_marginRight="@dimen/dimen16"
+                    android:background="@drawable/shape_express"
+                    android:gravity="left|top"
+                    android:minHeight="@dimen/dimen156"
+                    android:paddingLeft="@dimen/dimen11"
+                    android:paddingRight="@dimen/dimen11"
+                    android:paddingTop="@dimen/dimen5"
+                    android:textColor="@color/titletextcolors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize10" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen34"
+                android:background="@drawable/shape_homepage"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingBottom="@dimen/dimen10"
                     android:text="@string/introduction"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
@@ -149,119 +227,65 @@
                 <EditText
                     android:id="@+id/et_introduction"
                     style="@style/MatchWrap"
-                    android:background="@color/whiteColors"
-                    android:minHeight="@dimen/dimen57"
+                    android:layout_marginLeft="@dimen/dimen16"
+                    android:layout_marginRight="@dimen/dimen16"
+                    android:background="@drawable/shape_express"
+                    android:gravity="left|top"
+                    android:minHeight="@dimen/dimen156"
                     android:paddingLeft="@dimen/dimen11"
                     android:paddingRight="@dimen/dimen11"
                     android:paddingTop="@dimen/dimen5"
                     android:textColor="@color/titletextcolors"
                     android:textCursorDrawable="@drawable/shape_cursor"
-                    android:textSize="@dimen/textsize13" />
+                    android:textSize="@dimen/textsize10" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_productParameters"
-                style="@style/MatchWrap"
-                android:layout_marginLeft="@dimen/dimen10"
-                android:layout_marginRight="@dimen/dimen10"
-                android:layout_marginTop="@dimen/dimen10"
-                android:background="@drawable/shape_homepage"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dimen10"
-                android:paddingLeft="@dimen/dimen10"
-                android:paddingRight="@dimen/dimen10"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_productParameters"
-                    style="@style/WrapWrap"
-                    android:paddingTop="@dimen/dimen10"
-                    android:text="@string/productParameters"
-                    android:textColor="@color/titletextcolors"
-                    android:textSize="@dimen/textsize15" />
-
-                <com.common.cklibrary.utils.myview.ChildListView
-                    android:id="@+id/clv_productParameters"
-                    style="@style/MatchWrap"
-                    android:divider="@color/whiteColors"
-                    android:dividerHeight="@dimen/dimen4"
-                    android:overScrollMode="never"
-                    android:paddingTop="@dimen/dimen4"
-                    android:scrollbars="none"
-                    tools:listitem="@layout/item_productparameters" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_productSpecifications"
-                style="@style/MatchWrap"
-                android:layout_marginLeft="@dimen/dimen10"
-                android:layout_marginRight="@dimen/dimen10"
-                android:layout_marginTop="@dimen/dimen10"
-                android:background="@drawable/shape_homepage"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:paddingLeft="@dimen/dimen10"
-                    android:paddingRight="@dimen/dimen10"
-                    android:paddingTop="@dimen/dimen10"
-                    android:text="@string/productSpecifications1"
-                    android:textColor="@color/titletextcolors"
-                    android:textSize="@dimen/textsize15" />
-
-                <TextView
-                    style="@style/DividerWidth"
-                    android:layout_marginTop="@dimen/dimen10" />
-
-                <com.common.cklibrary.utils.myview.ChildListView
-                    android:id="@+id/clv_productSpecifications"
-                    style="@style/MatchWrap"
-                    android:divider="@color/dividercolors2"
-                    android:dividerHeight="@dimen/dimen1"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    android:visibility="visible"
-                    tools:listitem="@layout/item_productspecifications" />
-
-                <TextView
-                    android:id="@+id/tv_divider"
-                    style="@style/DividerWidth" />
-
-                <TextView
-                    android:id="@+id/tv_addSpecification"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen40"
-                    android:layout_marginBottom="@dimen/dimen15"
-                    android:layout_marginLeft="@dimen/dimen57"
-                    android:layout_marginRight="@dimen/dimen57"
-                    android:layout_marginTop="@dimen/dimen15"
-                    android:background="@drawable/shape_goodbtn"
-                    android:gravity="center"
-                    android:text="@string/addSpecification"
-                    android:textColor="@color/greenColors"
-                    android:textSize="@dimen/textsize15" />
-
-            </LinearLayout>
-
 
             <TextView
-                android:id="@+id/tv_releaseGoods"
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15"
+                android:text="@string/detailsPictures"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize15" />
+
+            <RelativeLayout style="@style/MatchWrap">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView1"
+                    style="@style/MatchWrap"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:background="@color/whiteColors"
+                    android:choiceMode="singleChoice"
+                    android:divider="@null"
+                    android:fadingEdge="none"
+                    android:listSelector="@android:color/transparent"
+                    android:paddingBottom="@dimen/dimen15"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:paddingRight="@dimen/dimen15"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:visibility="visible"
+                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                    app:spanCount="1"
+                    tools:listitem="@layout/item_productimg" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_nextStep"
                 style="@style/Match40"
                 android:layout_marginBottom="@dimen/dimen15"
                 android:layout_marginLeft="@dimen/dimen68"
                 android:layout_marginRight="@dimen/dimen68"
                 android:layout_marginTop="@dimen/dimen20"
-                android:background="@drawable/shape_homepagebtn"
+                android:background="@drawable/shape_login1"
                 android:gravity="center"
-                android:text="@string/releaseGoods"
+                android:text="@string/nextStep"
                 android:textColor="@color/whiteColors"
                 android:textSize="@dimen/textsize16" />
 
         </LinearLayout>
-
 
     </ScrollView>
 

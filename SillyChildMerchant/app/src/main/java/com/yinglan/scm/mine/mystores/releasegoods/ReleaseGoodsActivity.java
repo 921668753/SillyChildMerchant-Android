@@ -3,6 +3,7 @@ package com.yinglan.scm.mine.mystores.releasegoods;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,21 +17,19 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.myview.ChildListView;
+import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
-import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductParametersViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsGvViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ReleaseGoodsImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.mine.mystores.GoodsTypeBean;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.GoodsBrandsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
@@ -41,19 +40,41 @@ import java.util.List;
 /**
  * 发布商品
  */
-public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsContract.View, ReleaseGoodsImagePickerAdapter.OnRecyclerViewItemClickListener, ProductSpecificationsViewAdapter.OnStatusListener {
+public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsContract.View, ReleaseGoodsImagePickerAdapter.OnRecyclerViewItemClickListener {
 
+
+    /**
+     * 分类
+     */
     @BindView(id = R.id.ll_classification, click = true)
     private LinearLayout ll_classification;
 
     @BindView(id = R.id.tv_selectCommodityClassification)
     private TextView tv_selectCommodityClassification;
 
+    private OptionsPickerView pvOptions;
+
+    private List<GoodsTypeBean.DataBean> options1Items = new ArrayList<>();
+    private ArrayList<ArrayList<GoodsTypeBean.DataBean.ChildrenBeanX>> options2Items = new ArrayList<>();
+    private ArrayList<ArrayList<ArrayList<GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean>>> options3Items = new ArrayList<>();
+
+    /**
+     * 品牌
+     */
+    @BindView(id = R.id.ll_chooseBrand, click = true)
+    private LinearLayout ll_chooseBrand;
+
+    @BindView(id = R.id.tv_selectChooseBrand)
+    private TextView tv_selectChooseBrand;
+
+    private OptionsPickerView brandsOptions;
+
+    /**
+     * 商品图片
+     */
     @BindView(id = R.id.recyclerView)
     private RecyclerView recyclerView;
 
-    private OptionsPickerView pvOptions;
-    private List<GoodsTypeBean.DataBean> typeList;
 
     /**
      * 商品名字
@@ -62,44 +83,28 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
     private EditText et_goodName;
 
     /**
+     * 商品简介
+     */
+    @BindView(id = R.id.et_productIntroduction)
+    private EditText et_productIntroduction;
+
+    /**
      * 商品介绍
      */
     @BindView(id = R.id.et_introduction)
     private EditText et_introduction;
 
     /**
-     * 商品参数
+     * 商品详图
      */
-    @BindView(id = R.id.ll_productParameters)
-    private LinearLayout ll_productParameters;
-
-    @BindView(id = R.id.tv_productParameters)
-    private TextView tv_productParameters;
-
-    @BindView(id = R.id.clv_productParameters)
-    private ChildListView clv_productParameters;
+    @BindView(id = R.id.recyclerView1)
+    private RecyclerView recyclerView1;
 
     /**
-     * 规格参数
+     * 下一步
      */
-    @BindView(id = R.id.ll_productSpecifications)
-    private LinearLayout ll_productSpecifications;
-
-    @BindView(id = R.id.clv_productSpecifications)
-    private ChildListView clv_productSpecifications;
-
-    @BindView(id = R.id.tv_divider)
-    private TextView tv_divider;
-
-    @BindView(id = R.id.tv_addSpecification, click = true)
-    private TextView tv_addSpecification;
-
-    /**
-     * 发布商品
-     */
-    @BindView(id = R.id.tv_releaseGoods, click = true)
-    private TextView tv_releaseGoods;
-
+    @BindView(id = R.id.tv_nextStep, click = true)
+    private TextView tv_nextStep;
 
     private int catId;
 
@@ -109,13 +114,23 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
 
     private List<String> urllist;
 
+    private List<ImageItem> selImageList1;
+
+    private List<ImageItem> images1;
+
+    private List<String> urllist1;
+
+    private int type_id = 0;
+
+    private int brand_id = 0;
+
+    private ReleaseGoodsImagePickerAdapter adapter1;
+
+
     private ReleaseGoodsImagePickerAdapter adapter;
 
-    private ProductParametersViewAdapter productParametersViewAdapter = null;
+    private List<GoodsBrandsBean.DataBean> goodsBrandsList;
 
-    private ProductSpecificationsViewAdapter productSpecificationsViewAdapter = null;
-
-    private List<SpecsBean> list;
 
     @Override
     public void setRootView() {
@@ -126,16 +141,19 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
     public void initData() {
         super.initData();
         mPresenter = new ReleaseGoodsPresenter(this);
-        selectBankName();
+        selectCategoryName();
+        selectBrandsName();
         initImagePicker();
-        list = new ArrayList<>();
         selImageList = new ArrayList<>();
         urllist = new ArrayList<String>();
         adapter = new ReleaseGoodsImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
-        productSpecificationsViewAdapter = new ProductSpecificationsViewAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
-        productParametersViewAdapter = new ProductParametersViewAdapter(this);
+        selImageList1 = new ArrayList<>();
+        urllist1 = new ArrayList<String>();
+        adapter1 = new ReleaseGoodsImagePickerAdapter(this, selImageList1, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
+        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 1);
+        recyclerView1.setLayoutManager(gridLayoutManager1);
         showLoadingDialog(getString(R.string.dataLoad));
         ((ReleaseGoodsContract.Presenter) mPresenter).getClassificationList();
     }
@@ -161,14 +179,29 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
      * 选择分类名称
      */
     @SuppressWarnings("unchecked")
-    private void selectBankName() {
+    private void selectCategoryName() {
         pvOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                catId = typeList.get(options1).getCat_id();
-                ((TextView) v).setText(typeList.get(options1).getName());
-                ((ReleaseGoodsContract.Presenter) mPresenter).getGoodsParams(typeList.get(options1).getType_id());
+                catId = options3Items.get(options1).get(option2).get(options3).getCat_id();
+                type_id = options3Items.get(options1).get(option2).get(options3).getType_id();
+                ((TextView) v).setText(options1Items.get(options1).getName() + options2Items.get(options1).get(option2).getName() + options3Items.get(options1).get(option2).get(options3).getName());
+            }
+        }).build();
+    }
+
+    /**
+     * 选择品牌名称
+     */
+    @SuppressWarnings("unchecked")
+    private void selectBrandsName() {
+        brandsOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                brand_id = goodsBrandsList.get(options1).getBrand_id();
+                ((TextView) v).setText(goodsBrandsList.get(options1).getName());
             }
         }).build();
     }
@@ -178,12 +211,14 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.releaseGoods), true, R.id.titlebar);
-        clv_productParameters.setAdapter(productParametersViewAdapter);
         adapter.setOnItemClickListener(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        clv_productSpecifications.setAdapter(productSpecificationsViewAdapter);
-        productSpecificationsViewAdapter.setOnStatusListener(this);
+
+        adapter1.setOnItemClickListener(this);
+        recyclerView1.setHasFixedSize(true);
+        recyclerView1.setAdapter(adapter1);
+
     }
 
     @Override
@@ -194,15 +229,15 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                 SoftKeyboardUtils.packUpKeyboard(this);
                 pvOptions.show(tv_selectCommodityClassification);
                 break;
-
-            case R.id.tv_addSpecification:
+            case R.id.ll_chooseBrand:
                 SoftKeyboardUtils.packUpKeyboard(this);
-                SpecsBean specsBean = new SpecsBean();
-                productSpecificationsViewAdapter.addLastItem(specsBean);
+                brandsOptions.show(tv_selectChooseBrand);
                 break;
-            case R.id.tv_releaseGoods:
-                showLoadingDialog(getString(R.string.submissionLoad));
-                ((ReleaseGoodsContract.Presenter) mPresenter).postGoodAddAndEdit(et_goodName.getText().toString().trim(), catId, et_introduction.getText().toString().trim(), "1", "100", "1", urllist, "", "");
+            case R.id.tv_nextStep:
+                ((ReleaseGoodsContract.Presenter) mPresenter).jumpActivity(this, brand_id, catId, type_id, et_goodName.getText().toString().trim(),
+                        et_productIntroduction.getText().toString().trim(), et_introduction.getText().toString().trim(), urllist, urllist1);
+//                showLoadingDialog(getString(R.string.submissionLoad));
+//                ((ReleaseGoodsContract.Presenter) mPresenter).postGoodAddAndEdit(et_goodName.getText().toString().trim(), catId, et_introduction.getText().toString().trim(), "1", "100", "1", urllist, "", "");
                 break;
         }
     }
@@ -217,15 +252,24 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                  * 详情请查看ImagePickerActivity
                  * */
                 // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
-                startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
+                if (((RecyclerView) view.getParent()).getId() == R.id.recyclerView) {
+                    startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
+                } else {
+                    startActivityForResult(intent1, NumericConstants.RESULT_CODE_GET);
+                }
                 break;
             default:
                 //打开预览
                 Intent intentPreview = new Intent(ReleaseGoodsActivity.this, ImagePreviewDelActivity.class);
-                intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
                 intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
-                startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
+                if (((RecyclerView) view.getParent()).getId() == R.id.recyclerView) {
+                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
+                    startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW);
+                } else {
+                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter1.getImages());
+                    startActivityForResult(intentPreview, NumericConstants.REQUEST_CODE_PREVIEW1);
+                }
                 break;
         }
     }
@@ -239,47 +283,102 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             GoodsTypeBean goodsTypeBean = (GoodsTypeBean) JsonUtil.json2Obj(success, GoodsTypeBean.class);
-            if (goodsTypeBean.getData() != null && goodsTypeBean.getData().size() > 0) {
-                typeList = goodsTypeBean.getData();
-                pvOptions.setPicker(typeList);
-            }
-            ll_productSpecifications.setVisibility(View.GONE);
-            dismissLoadingDialog();
+            setGoodsType(goodsTypeBean);
+            ((ReleaseGoodsContract.Presenter) mPresenter).getGoodsBrands();
         } else if (flag == 1) {
-            ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
-            if (productParametersBean.getData().getParams() != null && productParametersBean.getData().getParams().size() > 0) {
-                ll_productParameters.setVisibility(View.VISIBLE);
-                tv_productParameters.setText(productParametersBean.getData().getParams().get(0).getName());
-                productParametersViewAdapter.clear();
-                productParametersViewAdapter.addNewData(productParametersBean.getData().getParams().get(0).getParamList());
-            } else {
-                ll_productParameters.setVisibility(View.GONE);
+            GoodsBrandsBean goodsBrandsBean = (GoodsBrandsBean) JsonUtil.getInstance().json2Obj(success, GoodsBrandsBean.class);
+            goodsBrandsList = goodsBrandsBean.getData();
+            if (goodsBrandsList != null && goodsBrandsList.size() > 0) {
+                brandsOptions.setPicker(goodsBrandsList);
             }
-            list.clear();
-            ll_productSpecifications.setVisibility(View.VISIBLE);
-            if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().getSpec1() != null) {
-                tv_addSpecification.setVisibility(View.VISIBLE);
-                tv_divider.setVisibility(View.VISIBLE);
-                list.add(productParametersBean.getData().getSpecs());
-            } else {
-                tv_addSpecification.setVisibility(View.GONE);
-                tv_divider.setVisibility(View.GONE);
-                SpecsBean specsBean = new SpecsBean();
-                list.add(specsBean);
-            }
-            productSpecificationsViewAdapter.clear();
-            productSpecificationsViewAdapter.addNewData(list);
             dismissLoadingDialog();
         } else if (flag == 2) {
             urllist.add(success);
             selImageList.addAll(images);
             adapter.setImages(selImageList);
+            recyclerView.setAdapter(adapter);
             dismissLoadingDialog();
         } else if (flag == 3) {
+            urllist1.add(success);
+            selImageList1.addAll(images1);
+            adapter1.setImages(selImageList1);
+            recyclerView1.setAdapter(adapter1);
+            dismissLoadingDialog();
+        }
 
+    }
 
+    /**
+     * @param goodsTypeBean 设置分类
+     */
+    private void setGoodsType(GoodsTypeBean goodsTypeBean) {
+        if (goodsTypeBean.getData() != null && goodsTypeBean.getData().size() > 0) {
+            options1Items = goodsTypeBean.getData();
+            Log.d("tag1", options1Items.size() + "=province");
+            for (int i = 0; i < options1Items.size(); i++) {//遍历省份
+                ArrayList<GoodsTypeBean.DataBean.ChildrenBeanX> childrenBeanXList = new ArrayList<>();//该省的城市列表（第二级）
+                ArrayList<ArrayList<GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean>> childrenBeanList = new ArrayList<>();//该省的所有地区列表（第三极）
+                if (StringUtils.isEmpty(options1Items.get(i).getName())) {
+                    continue;
+                }
+                if (options1Items.get(i).getChildren() == null || options1Items.get(i).getChildren().size() <= 0) {
+                    GoodsTypeBean.DataBean.ChildrenBeanX childrenBeanX = new GoodsTypeBean.DataBean.ChildrenBeanX();
+                    childrenBeanX.setCat_id(options1Items.get(i).getCat_id());
+                    childrenBeanX.setType_id(options1Items.get(i).getType_id());
+                    childrenBeanX.setName("");
+                    childrenBeanXList.add(childrenBeanX);//添加城市
+                    ArrayList<GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean> childrenBeanList1 = new ArrayList<>();//该城市的所有地区列表
+                    GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = new GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean();
+                    childrenBean.setCat_id(options1Items.get(i).getCat_id());
+                    childrenBean.setType_id(options1Items.get(i).getType_id());
+                    childrenBean.setName("");
+                    childrenBeanList1.add(childrenBean);
+                    childrenBeanList.add(childrenBeanList1);
+                    options2Items.add(childrenBeanXList);
+                    options3Items.add(childrenBeanList);
+                    continue;
+                }
+                for (int c = 0; c < options1Items.get(i).getChildren().size(); c++) {//遍历该省份的所有城市
+                    GoodsTypeBean.DataBean.ChildrenBeanX childrenBeanX = options1Items.get(i).getChildren().get(c);
+                    if (StringUtils.isEmpty(childrenBeanX.getName())) {
+                        childrenBeanX = new GoodsTypeBean.DataBean.ChildrenBeanX();
+                        childrenBeanX.setCat_id(options1Items.get(i).getCat_id());
+                        childrenBeanX.setType_id(options1Items.get(i).getType_id());
+                        childrenBeanX.setName("");
+                    }
+                    childrenBeanXList.add(childrenBeanX);//添加城市
+                    ArrayList<GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean> childrenBeanList1 = new ArrayList<>();//该城市的所有地区列表
+                    //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
+                    if (options1Items.get(i).getChildren().get(c).getChildren() == null
+                            || options1Items.get(i).getChildren().get(c).getChildren().size() <= 0) {
+                        GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = new GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean();
+                        childrenBean.setCat_id(options1Items.get(i).getChildren().get(c).getCat_id());
+                        childrenBean.setType_id(options1Items.get(i).getChildren().get(c).getType_id());
+                        childrenBean.setName("");
+                        childrenBeanList1.add(childrenBean);
+                    } else {
+                        for (int d = 0; d < options1Items.get(i).getChildren().get(c).getChildren().size(); d++) {//该城市对应地区所有数据
+                            GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = options1Items.get(i).getChildren().get(c).getChildren().get(d);
+                            childrenBeanList1.add(childrenBean);//添加该城市所有地区数据
+                        }
+                    }
+                    childrenBeanList.add(childrenBeanList1);//添加该省所有地区数据
+                }
+                /**
+                 * 添加城市数据
+                 */
+                options2Items.add(childrenBeanXList);
+                Log.d("tag1", options2Items.size() + "=childrenBeanXList");
+                /**
+                 * 添加地区数据
+                 */
+                options3Items.add(childrenBeanList);
+                Log.d("tag1", options3Items.size() + "=childrenBeanList");
+            }
+            pvOptions.setPicker(options1Items, options2Items, options3Items);
         }
     }
+
 
     @Override
     public void errorMsg(String msg, int flag) {
@@ -293,20 +392,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
 
 
     @Override
-    public void onSetStatusListener(View view, ProductSpecificationsGvViewAdapter adapter, int position, int position1) {
-        for (int i = 0; i < adapter.getData().size(); i++) {
-            if (position1 == i && adapter.getItem(position1).getSelected() == 1) {
-                adapter.getItem(position1).setSelected(0);
-            } else if (position1 == i && adapter.getItem(position1).getSelected() == 0) {
-                adapter.getItem(position1).setSelected(1);
-            } else {
-                adapter.getItem(i).setSelected(0);
-            }
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null && resultCode == ImagePicker.RESULT_CODE_ITEMS && requestCode == NumericConstants.REQUEST_CODE_SELECT) {
@@ -317,7 +402,7 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                 return;
             }
             showLoadingDialog(getString(R.string.crossLoad));
-            ((ReleaseGoodsContract.Presenter) mPresenter).upPictures(images.get(0).path);
+            ((ReleaseGoodsContract.Presenter) mPresenter).upPictures(images.get(0).path, 2);
         } else if (data != null && resultCode == ImagePicker.RESULT_CODE_BACK && requestCode == NumericConstants.REQUEST_CODE_PREVIEW) {
             //预览图片返回
             images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
@@ -325,6 +410,23 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                 selImageList.clear();
                 selImageList.addAll(images);
                 adapter.setImages(selImageList);
+            }
+        } else if (data != null && resultCode == ImagePicker.RESULT_CODE_ITEMS && requestCode == NumericConstants.RESULT_CODE_GET) {
+            //添加图片返回
+            images1 = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+            if (images1 == null || images1.size() == 0) {
+                ViewInject.toast(getString(R.string.noData));
+                return;
+            }
+            showLoadingDialog(getString(R.string.crossLoad));
+            ((ReleaseGoodsContract.Presenter) mPresenter).upPictures(images1.get(0).path, 3);
+        } else if (data != null && resultCode == ImagePicker.RESULT_CODE_BACK && requestCode == NumericConstants.REQUEST_CODE_PREVIEW1) {
+            //预览图片返回
+            images1 = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+            if (images1 != null) {
+                selImageList1.clear();
+                selImageList1.addAll(images1);
+                adapter1.setImages(selImageList1);
             }
         } else {
             ViewInject.toast(getString(R.string.noData));
@@ -335,10 +437,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
     protected void onDestroy() {
         super.onDestroy();
         adapter = null;
-        if (productParametersViewAdapter != null) {
-            productParametersViewAdapter.clear();
-        }
-        productParametersViewAdapter = null;
         if (selImageList != null) {
             selImageList.clear();
         }
@@ -351,11 +449,21 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
             urllist.clear();
         }
         urllist = null;
-        if (list != null) {
-            list.clear();
-        }
-        list = null;
         recyclerView.removeAllViews();
+        adapter1 = null;
+        if (selImageList1 != null) {
+            selImageList1.clear();
+        }
+        selImageList1 = null;
+        if (images1 != null) {
+            images1.clear();
+        }
+        images1 = null;
+        if (urllist1 != null) {
+            urllist1.clear();
+        }
+        urllist1 = null;
+        recyclerView1.removeAllViews();
     }
 
 }

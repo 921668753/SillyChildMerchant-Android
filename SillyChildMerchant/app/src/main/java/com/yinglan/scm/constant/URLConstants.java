@@ -172,6 +172,11 @@ public class URLConstants {
     public static String GOODSTYPE = APIURL + "goods/types.do";
 
     /**
+     * 获取品牌列表
+     */
+    public static String GOODSBRANDS = APIURL + "goods/brands.do";
+
+    /**
      * 获取商品分类参数列表
      */
     public static String GOODSPARAMS = APIURL + "goods/params.do";

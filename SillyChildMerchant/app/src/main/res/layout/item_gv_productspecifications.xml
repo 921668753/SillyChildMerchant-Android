@@ -11,7 +11,7 @@
         android:paddingRight="@dimen/dimen7"
         android:paddingLeft="@dimen/dimen10"
         android:layout_height="@dimen/dimen12"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/unselect_box_round" />
 
     <TextView
         android:id="@+id/tv_productSpecifications"

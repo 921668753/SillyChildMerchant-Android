@@ -19,21 +19,21 @@ public interface ReleaseGoodsContract {
         void getClassificationList();
 
         /**
-         * 获取分类参数列表
+         * 获取获取品牌列表
          */
-        void getGoodsParams(int typeId);
+        void getGoodsBrands();
 
         /**
          * 上传图片
          *
          * @param imgPath
          */
-        void upPictures(String imgPath);
+        void upPictures(String imgPath, int flag);
 
         /**
-         * 新增修改商品
+         * 跳转规格界面
          */
-        void postGoodAddAndEdit(String name, int cat_id, String brief, String price, String store, String enable_store, List<String> urllist, String params, String specs);
+        void jumpActivity(ReleaseGoodsActivity releaseGoodsActivity,int brand_id, int catId, int type_id, String name, String brief, String intro, List<String> urllist, List<String> urllist1);
 
     }
 

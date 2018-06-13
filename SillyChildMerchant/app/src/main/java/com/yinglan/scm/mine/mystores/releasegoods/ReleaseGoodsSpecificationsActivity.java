@@ -1,0 +1,207 @@
+package com.yinglan.scm.mine.mystores.releasegoods;
+
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.common.cklibrary.common.BaseActivity;
+import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.ViewInject;
+import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.myview.ChildListView;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.view.CropImageView;
+import com.yinglan.scm.R;
+import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductParametersViewAdapter;
+import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsGvViewAdapter;
+import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
+import com.yinglan.scm.constant.NumericConstants;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
+import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.utils.GlideImageLoader;
+import com.yinglan.scm.utils.SoftKeyboardUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 发布商品---商品参数和规格
+ */
+public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements ReleaseGoodsSpecificationsContract.View, ProductSpecificationsViewAdapter.OnStatusListener {
+
+    /**
+     * 商品参数
+     */
+    @BindView(id = R.id.ll_productParameters)
+    private LinearLayout ll_productParameters;
+
+    @BindView(id = R.id.tv_productParameters)
+    private TextView tv_productParameters;
+
+    @BindView(id = R.id.clv_productParameters)
+    private ChildListView clv_productParameters;
+
+    /**
+     * 规格参数
+     */
+    @BindView(id = R.id.ll_productSpecifications)
+    private LinearLayout ll_productSpecifications;
+
+    @BindView(id = R.id.clv_productSpecifications)
+    private ChildListView clv_productSpecifications;
+
+    @BindView(id = R.id.tv_addSpecification, click = true)
+    private TextView tv_addSpecification;
+
+    /**
+     * 发布商品
+     */
+    @BindView(id = R.id.tv_releaseGoods, click = true)
+    private TextView tv_releaseGoods;
+
+    private ProductParametersViewAdapter productParametersViewAdapter = null;
+
+    private ProductSpecificationsViewAdapter productSpecificationsViewAdapter = null;
+
+    private List<SpecsBean> list;
+
+    private int catId = 0;
+    private int type_id = 0;
+    private String name = "";
+    private String brief = "";
+    private String images = "";
+    private String original = "";
+    private String intro = "";
+    private String images1 = "";
+    private int brand_id = 0;
+
+    @Override
+    public void setRootView() {
+        setContentView(R.layout.activity_releasegoodsspecifications);
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        mPresenter = new ReleaseGoodsSpecificationsPresenter(this);
+        list = new ArrayList<>();
+        productSpecificationsViewAdapter = new ProductSpecificationsViewAdapter(this);
+        productParametersViewAdapter = new ProductParametersViewAdapter(this);
+        brand_id = getIntent().getIntExtra("brand_id", 0);
+        catId = getIntent().getIntExtra("catId", 0);
+        type_id = getIntent().getIntExtra("type_id", 0);
+        name = getIntent().getStringExtra("name");
+        brief = getIntent().getStringExtra("brief");
+        images = getIntent().getStringExtra("images");
+        original = getIntent().getStringExtra("original");
+        intro = getIntent().getStringExtra("intro");
+        images1 = getIntent().getStringExtra("images1");
+    }
+
+
+    @Override
+    public void initWidget() {
+        super.initWidget();
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.releaseGoods), true, R.id.titlebar);
+        clv_productParameters.setAdapter(productParametersViewAdapter);
+        clv_productSpecifications.setAdapter(productSpecificationsViewAdapter);
+        productSpecificationsViewAdapter.setOnStatusListener(this);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).getGoodsParams(type_id);
+    }
+
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_addSpecification:
+                SoftKeyboardUtils.packUpKeyboard(this);
+                SpecsBean specsBean = new SpecsBean();
+                productSpecificationsViewAdapter.addLastItem(specsBean);
+                break;
+            case R.id.tv_releaseGoods:
+                showLoadingDialog(getString(R.string.submissionLoad));
+                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, "100", "1", "", 1, original, images, intro, "", "");
+                break;
+        }
+    }
+
+
+    @Override
+    public void setPresenter(ReleaseGoodsSpecificationsContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        if (flag == 0) {
+            ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
+            if (productParametersBean.getData().getParams() != null && productParametersBean.getData().getParams().size() > 0) {
+                ll_productParameters.setVisibility(View.VISIBLE);
+                tv_productParameters.setText(productParametersBean.getData().getParams().get(0).getName());
+                productParametersViewAdapter.clear();
+                productParametersViewAdapter.addNewData(productParametersBean.getData().getParams().get(0).getParamList());
+            } else {
+                ll_productParameters.setVisibility(View.GONE);
+            }
+            list.clear();
+            ll_productSpecifications.setVisibility(View.VISIBLE);
+            if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().getSpec1() != null) {
+                tv_addSpecification.setVisibility(View.VISIBLE);
+                list.add(productParametersBean.getData().getSpecs());
+            } else {
+                tv_addSpecification.setVisibility(View.GONE);
+                SpecsBean specsBean = new SpecsBean();
+                list.add(specsBean);
+            }
+            productSpecificationsViewAdapter.clear();
+            productSpecificationsViewAdapter.addNewData(list);
+        } else if (flag == 1) {
+
+
+        }
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        if (isLogin(msg)) {
+            showActivity(aty, LoginActivity.class);
+            return;
+        }
+        ViewInject.toast(msg);
+    }
+
+
+    @Override
+    public void onSetStatusListener(View view, ProductSpecificationsGvViewAdapter adapter, int position, int position1) {
+        for (int i = 0; i < adapter.getData().size(); i++) {
+            if (position1 == i && adapter.getItem(position1).getSelected() == 1) {
+                adapter.getItem(position1).setSelected(0);
+            } else if (position1 == i && adapter.getItem(position1).getSelected() == 0) {
+                adapter.getItem(position1).setSelected(1);
+            } else {
+                adapter.getItem(i).setSelected(0);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (productParametersViewAdapter != null) {
+            productParametersViewAdapter.clear();
+        }
+        productParametersViewAdapter = null;
+        if (list != null) {
+            list.clear();
+        }
+        list = null;
+    }
+
+}

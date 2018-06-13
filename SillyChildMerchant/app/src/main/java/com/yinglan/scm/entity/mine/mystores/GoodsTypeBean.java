@@ -14,7 +14,7 @@ public class GoodsTypeBean extends BaseResult<List<GoodsTypeBean.DataBean>> {
      */
 
 
-    public class DataBean implements IPickerViewData {
+    public static class DataBean implements IPickerViewData {
         /**
          * cat_id : 1
          * name : 食品饮料
@@ -164,7 +164,7 @@ public class GoodsTypeBean extends BaseResult<List<GoodsTypeBean.DataBean>> {
             return name;
         }
 
-        public class ChildrenBeanX {
+        public static class ChildrenBeanX implements IPickerViewData {
             /**
              * cat_id : 2
              * name : 休闲零食
@@ -309,7 +309,12 @@ public class GoodsTypeBean extends BaseResult<List<GoodsTypeBean.DataBean>> {
                 this.children = children;
             }
 
-            public class ChildrenBean {
+            @Override
+            public String getPickerViewText() {
+                return name;
+            }
+
+            public static class ChildrenBean implements IPickerViewData {
                 /**
                  * cat_id : 6
                  * name : 坚果
@@ -452,6 +457,11 @@ public class GoodsTypeBean extends BaseResult<List<GoodsTypeBean.DataBean>> {
 
                 public void setChildren(List<?> children) {
                     this.children = children;
+                }
+
+                @Override
+                public String getPickerViewText() {
+                    return name;
                 }
             }
         }

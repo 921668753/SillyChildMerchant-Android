@@ -239,6 +239,7 @@
     <string name="commodityImages">商品图片</string>
     <string name="productName">商品名称</string>
     <string name="commodityPrices">商品价格</string>
+    <string name="productIntroduction">商品简介</string>
     <string name="introduction">商品介绍</string>
     <string name="productParameters">商品参数</string>
     <string name="productName1">商品名称：</string>
@@ -258,13 +259,22 @@
     <!--  个人中心  我的店铺   发布商品-->
     <string name="releaseGoods">发布商品</string>
     <string name="jian1">件</string>
-    <string name="addSpecification">添加规格</string>
+    <string name="addPicture">请添加商品图片</string>
+    <string name="addSpecification">+ 添加规格</string>
     <string name="productSpecifications1">商品规格</string>
-    <string name="leaseEnterNameProduct">请输入商品名称</string>
+    <string name="productDescription">请输入商品简介</string>
     <string name="enterProductDescription">请输入商品介绍</string>
+    <string name="selectCommodityClassification1">请选择商品分类</string>
+    <string name="chooseBrand1">请选择商品名牌</string>
+    <string name="detailsPictures">详情图片</string>
+    <string name="chooseBrand">选择商品品牌</string>
+    <string name="nextStep">下一步</string>
+
+
+    <!--  个人中心  我的店铺   发布商品   商品参数和规格-->
     <string name="enterPriceGoods">请输入商品价格</string>
     <string name="enterGoodsWarehouseInventory">请输入商品仓库库存</string>
-
+    <string name="leaseEnterNameProduct">请输入商品名称</string>
 
     <!--提现成功-->
     <string name="withdrawalRequestSucceeded">提现申请成功</string>

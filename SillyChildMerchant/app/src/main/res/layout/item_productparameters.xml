@@ -12,18 +12,21 @@
         android:layout_width="@dimen/dimen60"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingBottom="@dimen/dimen5"
         android:text="@string/productParameters"
         android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize13" />
+        android:textSize="@dimen/textsize11" />
 
     <TextView
         style="@style/WrapWrap"
+        android:paddingBottom="@dimen/dimen5"
         android:text="："
         android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize13" />
+        android:textSize="@dimen/textsize11" />
 
     <LinearLayout
         style="@style/MatchMatch"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <EditText
@@ -31,10 +34,12 @@
             style="@style/MatchAuto"
             android:background="@color/whiteColors"
             android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dimen2"
+            android:singleLine="true"
             android:textColor="@color/textColor"
             android:textColorHint="@color/hintColors"
             android:textCursorDrawable="@drawable/shape_cursor"
-            android:textSize="@dimen/textsize12" />
+            android:textSize="@dimen/textsize10" />
 
         <TextView style="@style/DividerWidth" />
 

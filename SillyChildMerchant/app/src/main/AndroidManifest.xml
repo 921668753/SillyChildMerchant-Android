@@ -173,6 +173,11 @@
             android:name=".mine.mystores.releasegoods.ReleaseGoodsActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的  我的店铺  发布商品  商品参数和规格-->
+        <activity
+            android:name=".mine.mystores.releasegoods.ReleaseGoodsSpecificationsActivity"
+            android:screenOrientation="portrait" />
+
         <!--我的  我的店铺  产品详情-->
         <activity
             android:name=".mine.mystores.productdetails.ProductDetailsActivity"

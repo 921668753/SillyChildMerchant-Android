@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/whiteColors"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
+
+    <ScrollView
+        style="@style/MatchMatch"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/MatchMatch"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/ll_productParameters"
+                style="@style/MatchWrap"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen32"
+                android:background="@drawable/shape_homepage"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_productParameters"
+                    style="@style/WrapWrap"
+                    android:paddingTop="@dimen/dimen10"
+                    android:text="@string/productParameters"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <com.common.cklibrary.utils.myview.ChildListView
+                    android:id="@+id/clv_productParameters"
+                    style="@style/MatchWrap"
+                    android:divider="@color/whiteColors"
+                    android:dividerHeight="@dimen/dimen10"
+                    android:overScrollMode="never"
+                    android:paddingTop="@dimen/dimen4"
+                    android:scrollbars="none"
+                    android:visibility="visible"
+                    tools:listitem="@layout/item_productparameters" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/DividerWidth"
+                android:layout_marginBottom="@dimen/dimen38"
+                android:layout_marginTop="@dimen/dimen38" />
+
+            <LinearLayout
+                android:id="@+id/ll_productSpecifications"
+                style="@style/MatchWrap"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_homepage"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingBottom="@dimen/dimen20"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:paddingRight="@dimen/dimen10"
+                    android:text="@string/productSpecifications1"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <com.common.cklibrary.utils.myview.ChildListView
+                    android:id="@+id/clv_productSpecifications"
+                    style="@style/MatchWrap"
+                    android:divider="@color/dividercolors2"
+                    android:dividerHeight="@dimen/dimen1"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:visibility="visible"
+                    tools:listitem="@layout/item_productspecifications" />
+
+
+                <TextView
+                    android:id="@+id/tv_addSpecification"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen40"
+                    android:layout_marginBottom="@dimen/dimen15"
+                    android:layout_marginLeft="@dimen/dimen57"
+                    android:layout_marginRight="@dimen/dimen57"
+                    android:layout_marginTop="@dimen/dimen15"
+                    android:background="@drawable/shape_goodbtn"
+                    android:gravity="center"
+                    android:text="@string/addSpecification"
+                    android:textColor="@color/greenColors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/DividerWidth"
+                android:layout_marginBottom="@dimen/dimen50"
+                android:layout_marginTop="@dimen/dimen50" />
+
+            <TextView
+                android:id="@+id/tv_releaseGoods"
+                style="@style/Match40"
+                android:layout_marginBottom="@dimen/dimen15"
+                android:layout_marginLeft="@dimen/dimen68"
+                android:layout_marginRight="@dimen/dimen68"
+                android:layout_marginTop="@dimen/dimen20"
+                android:background="@drawable/shape_homepagebtn"
+                android:gravity="center"
+                android:text="@string/releaseGoods"
+                android:textColor="@color/whiteColors"
+                android:textSize="@dimen/textsize16" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>
