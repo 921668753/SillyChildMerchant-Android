@@ -37,7 +37,7 @@
                 android:dividerHeight="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen15"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:listitem="@layout/item_productimg" />
 
             <LinearLayout
@@ -205,7 +205,7 @@
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen10"
                 android:paddingRight="@dimen/dimen10"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     style="@style/WrapWrap"
@@ -238,224 +238,26 @@
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen10"
                 android:paddingRight="@dimen/dimen10"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
+                    android:id="@+id/tv_productParameters"
                     style="@style/WrapWrap"
                     android:paddingTop="@dimen/dimen10"
                     android:text="@string/productParameters"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
 
-
-                <LinearLayout
+                <com.common.cklibrary.utils.myview.ChildListView
+                    android:id="@+id/clv_productParameters"
                     style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/productName1"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="迪奥烈艳蓝金唇膏"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/productSpecifications"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="3.5g"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/shopPrice"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="300元/3.5g"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/commodityQualityMaterial"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="膏状"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/limitedDate"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="与专柜同步更新"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/goodsOrigin"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="法国"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/commodityPackaging"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="全新有外盒 无塑封 有中文标签"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/applicablePeople"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="所有女性人群"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/MatchWrap"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:layout_marginRight="@dimen/dimen10"
-                    android:layout_marginTop="@dimen/dimen4"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/WrapWrap"
-                        android:text="@string/methodUse"
-                        android:textColor="@color/titletextcolors"
-                        android:textSize="@dimen/textsize14" />
-
-                    <TextView
-                        style="@style/AutoWrap"
-                        android:paddingLeft="@dimen/dimen11"
-                        android:text="彩妆因人而异，如果亲对颜色实在拿不准，请先去专柜使用后再来购买哦~"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/textsize12" />
-
-                </LinearLayout>
+                    android:divider="@color/whiteColors"
+                    android:dividerHeight="@dimen/dimen10"
+                    android:overScrollMode="never"
+                    android:paddingTop="@dimen/dimen4"
+                    android:scrollbars="none"
+                    android:visibility="visible"
+                    tools:listitem="@layout/item_productparameters" />
 
             </LinearLayout>
 

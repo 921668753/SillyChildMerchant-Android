@@ -21,15 +21,15 @@ public class ProductSpecificationsGvViewAdapter extends BGAAdapterViewAdapter<Sp
     @Override
     protected void setItemChildListener(BGAViewHolderHelper helper) {
         super.setItemChildListener(helper);
-       // helper.setItemChildClickListener(R.id.img_checkBox);
+        // helper.setItemChildClickListener(R.id.img_checkBox);
     }
 
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, Spec1Bean model) {
         if (model.getSelected() == 0) {
-            helper.setImageResource(R.id.img_checkBox, R.mipmap.default_image);
+            helper.setImageResource(R.id.img_checkBox, R.mipmap.unselect_box_round);
         } else {
-            helper.setImageResource(R.id.img_checkBox, R.mipmap.ic_launcher);
+            helper.setImageResource(R.id.img_checkBox, R.mipmap.select_box_round);
         }
         helper.setText(R.id.tv_productSpecifications, model.getSpec_value());
     }

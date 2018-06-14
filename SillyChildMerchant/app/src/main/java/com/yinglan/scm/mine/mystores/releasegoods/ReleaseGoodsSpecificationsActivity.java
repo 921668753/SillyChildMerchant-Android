@@ -10,17 +10,16 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
-import com.lzy.imagepicker.ImagePicker;
-import com.lzy.imagepicker.view.CropImageView;
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductParametersViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsGvViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
-import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.utils.GlideImageLoader;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
 
 import java.util.ArrayList;
@@ -71,11 +70,12 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
     private int type_id = 0;
     private String name = "";
     private String brief = "";
-    private String images = "";
+    private ArrayList<String> images = null;
     private String original = "";
     private String intro = "";
-    private String images1 = "";
+    private ArrayList<String> images1 = null;
     private int brand_id = 0;
+    private ParamsBean paramsBean;
 
     @Override
     public void setRootView() {
@@ -94,10 +94,10 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
         type_id = getIntent().getIntExtra("type_id", 0);
         name = getIntent().getStringExtra("name");
         brief = getIntent().getStringExtra("brief");
-        images = getIntent().getStringExtra("images");
+        images = getIntent().getStringArrayListExtra("images");
         original = getIntent().getStringExtra("original");
         intro = getIntent().getStringExtra("intro");
-        images1 = getIntent().getStringExtra("images1");
+        images1 = getIntent().getStringArrayListExtra("images1");
     }
 
 
@@ -123,7 +123,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
                 break;
             case R.id.tv_releaseGoods:
                 showLoadingDialog(getString(R.string.submissionLoad));
-                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, "100", "1", "", 1, original, images, intro, "", "");
+                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, paramsBean, productSpecificationsViewAdapter.getData());
                 break;
         }
     }
@@ -140,9 +140,13 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
             ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
             if (productParametersBean.getData().getParams() != null && productParametersBean.getData().getParams().size() > 0) {
                 ll_productParameters.setVisibility(View.VISIBLE);
-                tv_productParameters.setText(productParametersBean.getData().getParams().get(0).getName());
+                paramsBean = new ParamsBean();
+                paramsBean.setName(productParametersBean.getData().getParams().get(0).getName());
+                paramsBean.setParamNum(productParametersBean.getData().getParams().get(0).getParamNum());
+                paramsBean.setParamList(productParametersBean.getData().getParams().get(0).getParamList());
+                tv_productParameters.setText(paramsBean.getName());
                 productParametersViewAdapter.clear();
-                productParametersViewAdapter.addNewData(productParametersBean.getData().getParams().get(0).getParamList());
+                productParametersViewAdapter.addNewData(paramsBean.getParamList());
             } else {
                 ll_productParameters.setVisibility(View.GONE);
             }
@@ -159,8 +163,12 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
             productSpecificationsViewAdapter.clear();
             productSpecificationsViewAdapter.addNewData(list);
         } else if (flag == 1) {
-
-
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusReleaseGoodsEvent"));
+            ViewInject.toast(getString(R.string.addProductSuccessfully));
+            finish();
         }
         dismissLoadingDialog();
     }
@@ -170,6 +178,9 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
         dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
+            if (flag == 0) {
+                finish();
+            }
             return;
         }
         ViewInject.toast(msg);

@@ -43,7 +43,7 @@ public abstract class SubmitBouncedDialog extends Dialog implements View.OnClick
 
     private void initView() {
         tv_content = (TextView) findViewById(R.id.tv_content);
-        tv_content.setText(context.getString(R.string.withdrawCash));
+        tv_content.setText("");
         TextView tv_cancel = (TextView) findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
         TextView tv_determine = (TextView) findViewById(R.id.tv_determine);
@@ -57,6 +57,7 @@ public abstract class SubmitBouncedDialog extends Dialog implements View.OnClick
                 cancel();
                 break;
             case R.id.tv_determine:
+                dismiss();
                 confirm(id, marketEnable);
                 break;
         }
@@ -64,6 +65,7 @@ public abstract class SubmitBouncedDialog extends Dialog implements View.OnClick
 
     public void setContent(String content, int id, int marketEnable) {
         this.content = content;
+        tv_content.setText(content);
         this.id = id;
         this.marketEnable = marketEnable;
     }

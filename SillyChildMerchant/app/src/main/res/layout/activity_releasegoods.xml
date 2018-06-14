@@ -12,6 +12,7 @@
     <TextView style="@style/DividerWidth" />
 
     <ScrollView
+        android:id="@+id/sv"
         style="@style/MatchMatch"
         android:scrollbars="none">
 

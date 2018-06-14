@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -17,6 +18,7 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -24,8 +26,6 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
-import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsGvViewAdapter;
-import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ReleaseGoodsImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.mine.mystores.GoodsTypeBean;
@@ -42,6 +42,9 @@ import java.util.List;
  */
 public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsContract.View, ReleaseGoodsImagePickerAdapter.OnRecyclerViewItemClickListener {
 
+
+    @BindView(id = R.id.sv)
+    private ScrollView sv;
 
     /**
      * 分类
@@ -385,6 +388,9 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
         dismissLoadingDialog();
         if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
+            if (flag == 0 || flag == 1) {
+                finish();
+            }
             return;
         }
         ViewInject.toast(msg);
@@ -432,6 +438,38 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
             ViewInject.toast(getString(R.string.noData));
         }
     }
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusReleaseGoodsEvent")) {
+            sv.scrollTo(0, 0);
+            ll_classification.setFocusable(true);
+            ll_classification.requestFocus();
+            ll_classification.setFocusableInTouchMode(true);
+            ll_classification.requestFocusFromTouch();
+            pvOptions.setSelectOptions(0, 0, 0);
+            tv_selectCommodityClassification.setText(getString(R.string.pleaseSelect));
+            tv_selectChooseBrand.setText(getString(R.string.pleaseSelect));
+            brandsOptions.setSelectOptions(0);
+            urllist.clear();
+            if (images != null) {
+                images.clear();
+            }
+            selImageList.clear();
+            adapter.setImages(selImageList);
+            et_goodName.setText("");
+            et_productIntroduction.setText("");
+            et_introduction.setText("");
+            urllist1.clear();
+            if (images1 != null) {
+                images1.clear();
+            }
+            selImageList1.clear();
+            adapter1.setImages(selImageList1);
+        }
+    }
+
 
     @Override
     protected void onDestroy() {

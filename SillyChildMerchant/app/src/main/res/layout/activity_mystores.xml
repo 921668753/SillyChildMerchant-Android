@@ -122,6 +122,7 @@
         <ListView
             android:id="@+id/lv_myStores"
             style="@style/MatchMatch"
+            android:divider="@color/background"
             android:dividerHeight="@dimen/dimen10"
             android:overScrollMode="never"
             android:scrollbars="none"

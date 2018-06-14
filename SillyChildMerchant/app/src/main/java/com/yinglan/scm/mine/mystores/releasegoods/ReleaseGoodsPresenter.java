@@ -16,6 +16,7 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,13 +128,9 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.chooseBrand1), 4);
             return;
         }
-        if (urllist.size() <= 0) {
+        if (urllist == null || urllist.size() <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.addPicture), 4);
             return;
-        }
-        String imgsStr = "";
-        for (int i = 0; i < urllist.size(); i++) {
-            imgsStr = imgsStr + "," + urllist.get(i);
         }
         if (StringUtils.isEmpty(name)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.leaseEnterNameProduct), 4);
@@ -153,18 +150,9 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
         intent.putExtra("type_id", type_id);
         intent.putExtra("name", name);
         intent.putExtra("brief", brief);
-        intent.putExtra("images", imgsStr.substring(1));
+        intent.putStringArrayListExtra("images", (ArrayList) urllist);
         intent.putExtra("original", urllist.get(0));
-        String imgsStr1 = "";
-        if (urllist1.size() > 0) {
-            for (int i = 0; i < urllist1.size(); i++) {
-                imgsStr1 = imgsStr1 + "," + urllist1.get(i);
-            }
-            imgsStr1 = imgsStr1.substring(1);
-        } else {
-            imgsStr1 = "";
-        }
-        intent.putExtra("images1", imgsStr1);
+        intent.putStringArrayListExtra("images1", (ArrayList) urllist1);
         intent.putExtra("intro", intro);
         releaseGoodsActivity.showActivity(releaseGoodsActivity, intent);
     }

@@ -272,9 +272,12 @@
 
 
     <!--  个人中心  我的店铺   发布商品   商品参数和规格-->
-    <string name="enterPriceGoods">请输入商品价格</string>
-    <string name="enterGoodsWarehouseInventory">请输入商品仓库库存</string>
+    <string name="enterPriceGoods">请输入正确的商品价格</string>
+    <string name="enterGoodsWarehouseInventory">请输入正确的商品仓库库存</string>
     <string name="leaseEnterNameProduct">请输入商品名称</string>
+    <string name="pleaseEnter">请输入</string>
+    <string name="addProductSuccessfully">添加商品成功</string>
+
 
     <!--提现成功-->
     <string name="withdrawalRequestSucceeded">提现申请成功</string>

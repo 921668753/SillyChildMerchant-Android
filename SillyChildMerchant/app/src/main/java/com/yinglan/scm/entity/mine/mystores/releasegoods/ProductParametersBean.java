@@ -44,6 +44,7 @@ public class ProductParametersBean extends BaseResult<ProductParametersBean.Data
 
         public static class SpecsBean {
 
+
             private String spec_name;
 
             private String inventory;

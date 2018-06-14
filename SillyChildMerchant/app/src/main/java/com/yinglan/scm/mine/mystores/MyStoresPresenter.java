@@ -42,7 +42,7 @@ public class MyStoresPresenter implements MyStoresContract.Presenter {
     @Override
     public void getGoodList(int page, int catId, int type, String store, String price) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("page", page);
+        httpParams.put("pageNo", page);
         httpParams.put("catId", catId);
         httpParams.put("type", type);
         httpParams.put("store", store);

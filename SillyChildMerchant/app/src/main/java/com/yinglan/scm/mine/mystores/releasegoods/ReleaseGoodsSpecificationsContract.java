@@ -2,6 +2,9 @@ package com.yinglan.scm.mine.mystores.releasegoods;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
+
 
 import java.util.List;
 
@@ -21,8 +24,8 @@ public interface ReleaseGoodsSpecificationsContract {
         /**
          * 新增修改商品
          */
-        void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String price, String store, String enable_store, int market_enable, String original,
-                                String images, String intro, String params, String specs);
+        void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String original,
+                                List<String> images, String intro, ParamsBean params, List<SpecsBean> specs);
 
     }
 

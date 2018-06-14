@@ -38,6 +38,7 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 //        }
 
         EditText et_warehouseInventory = (EditText) helper.getView(R.id.et_warehouseInventory);
+        et_warehouseInventory.setTag(position);
         et_warehouseInventory.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -51,11 +52,14 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
             @Override
             public void afterTextChanged(Editable editable) {
-                model.setInventory(editable + "");
+                if ((int) et_warehouseInventory.getTag() == position) {
+                    model.setInventory(editable + "");
+                }
             }
         });
 
         EditText et_commodityPrices = (EditText) helper.getView(R.id.et_commodityPrices);
+        et_commodityPrices.setTag(position);
         et_commodityPrices.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -69,7 +73,9 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
             @Override
             public void afterTextChanged(Editable editable) {
-                model.setPrice(editable + "");
+                if ((int) et_commodityPrices.getTag() == position) {
+                    model.setPrice(editable + "");
+                }
             }
         });
 

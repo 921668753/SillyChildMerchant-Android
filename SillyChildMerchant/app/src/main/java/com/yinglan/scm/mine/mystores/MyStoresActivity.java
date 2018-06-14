@@ -18,6 +18,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
+import com.common.cklibrary.utils.rx.MsgEvent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.MyStoresViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
@@ -92,8 +93,6 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     private boolean isShowLoadingMore = false;
 
     private SubmitBouncedDialog submitBouncedDialog = null;
-    private ImageView img_shelves;
-    private TextView tv_inSale;
 
     private int catId = 0;
     private int type = 1;
@@ -102,6 +101,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
 
     private OptionsPickerView pvOptions;
     private List<GoodsTypeBean.DataBean> typeList;
+    private int selectedPosition = 0;
 
     @Override
     public void setRootView() {
@@ -208,15 +208,14 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(aty, ProductDetailsActivity.class);
-        intent.putExtra("", "");
+        intent.putExtra("goodsId", myStoresViewAdapter.getItem(i).getGoods_id());
         showActivity(aty, intent);
     }
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.img_shelves) {
-            img_shelves = (ImageView) childView;
-            tv_inSale = (TextView) childView.getRootView().findViewById(R.id.tv_inSale);
+            selectedPosition = position;
             if (submitBouncedDialog == null) {
                 initDialog();
             }
@@ -272,11 +271,11 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             mRefreshLayout.setVisibility(View.VISIBLE);
             MyStoresBean myStoresBean = (MyStoresBean) JsonUtil.getInstance().json2Obj(success, MyStoresBean.class);
             if (myStoresBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                    myStoresBean.getData().getResult().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                    myStoresBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 errorMsg(getString(R.string.notGetMerchandise), 1);
                 return;
             } else if (myStoresBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                    myStoresBean.getData().getResult().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                    myStoresBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
                 ViewInject.toast(getString(R.string.noMoreData));
                 isShowLoadingMore = false;
                 dismissLoadingDialog();
@@ -286,63 +285,77 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 myStoresViewAdapter.clear();
-                myStoresViewAdapter.addNewData(myStoresBean.getData().getResult());
+                myStoresViewAdapter.addNewData(myStoresBean.getData().getResultX());
             } else {
                 mRefreshLayout.endLoadingMore();
-                myStoresViewAdapter.addMoreData(myStoresBean.getData().getResult());
+                myStoresViewAdapter.addMoreData(myStoresBean.getData().getResultX());
             }
             dismissLoadingDialog();
         } else if (flag == 2) {
-            img_shelves.setImageResource(R.mipmap.shop_shelves_icon);
-            tv_inSale.setText(getString(R.string.hasOffShelves));
-            tv_inSale.setTextColor(getResources().getColor(R.color.hintColors));
+            myStoresViewAdapter.getItem(selectedPosition).setMarket_enable(0);
+            myStoresViewAdapter.notifyDataSetChanged();
             dismissLoadingDialog();
         } else if (flag == 3) {
-            img_shelves.setImageResource(R.mipmap.shop_the_shelves_icon);
-            tv_inSale.setText(getString(R.string.inSale));
-            tv_inSale.setTextColor(getResources().getColor(R.color.greenColors));
+            myStoresViewAdapter.getItem(selectedPosition).setMarket_enable(1);
+            myStoresViewAdapter.notifyDataSetChanged();
             dismissLoadingDialog();
         }
-
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        //  if (flag == 0) {
-        isShowLoadingMore = false;
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-        } else {
-            mRefreshLayout.endLoadingMore();
-        }
-        mRefreshLayout.setPullDownRefreshEnable(false);
-        mRefreshLayout.setVisibility(View.GONE);
-        ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setVisibility(View.VISIBLE);
-        tv_button.setVisibility(View.VISIBLE);
-        if (isLogin(msg)) {
-            img_err.setImageResource(R.mipmap.no_login);
-            tv_hintText.setVisibility(View.GONE);
-            tv_button.setText(getString(R.string.login));
-            // ViewInject.toast(getString(R.string.reloginPrompting));
+        if (flag == 0 && isLogin(msg)) {
+            skipActivity(aty, LoginActivity.class);
+            return;
+        } else if (flag == 1) {
+            isShowLoadingMore = false;
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+            } else {
+                mRefreshLayout.endLoadingMore();
+            }
+            mRefreshLayout.setPullDownRefreshEnable(false);
+            mRefreshLayout.setVisibility(View.GONE);
+            ll_commonError.setVisibility(View.VISIBLE);
+            tv_hintText.setVisibility(View.VISIBLE);
+            tv_button.setVisibility(View.VISIBLE);
+            if (isLogin(msg)) {
+                img_err.setImageResource(R.mipmap.no_login);
+                tv_hintText.setVisibility(View.GONE);
+                tv_button.setText(getString(R.string.login));
+                // ViewInject.toast(getString(R.string.reloginPrompting));
+                showActivity(aty, LoginActivity.class);
+                return;
+            } else if (msg.contains(getString(R.string.checkNetwork))) {
+                img_err.setImageResource(R.mipmap.no_network);
+                tv_hintText.setText(msg);
+                tv_button.setText(getString(R.string.retry));
+            } else if (msg.contains(getString(R.string.notGetMerchandise))) {
+                img_err.setImageResource(R.mipmap.no_data);
+                tv_hintText.setText(msg);
+                tv_button.setVisibility(View.GONE);
+            } else {
+                img_err.setImageResource(R.mipmap.no_data);
+                tv_hintText.setText(msg);
+                tv_button.setText(getString(R.string.retry));
+            }
+        } else if (isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
             return;
-        } else if (msg.contains(getString(R.string.checkNetwork))) {
-            img_err.setImageResource(R.mipmap.no_network);
-            tv_hintText.setText(msg);
-            tv_button.setText(getString(R.string.retry));
-        } else if (msg.contains(getString(R.string.notGetMerchandise))) {
-            img_err.setImageResource(R.mipmap.no_data);
-            tv_hintText.setText(msg);
-            tv_button.setVisibility(View.GONE);
         } else {
-            img_err.setImageResource(R.mipmap.no_data);
-            tv_hintText.setText(msg);
-            tv_button.setText(getString(R.string.retry));
+            ViewInject.toast(msg);
         }
     }
 
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusReleaseGoodsEvent")) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, type, store, price);
+        }
+    }
 
     @Override
     protected void onDestroy() {

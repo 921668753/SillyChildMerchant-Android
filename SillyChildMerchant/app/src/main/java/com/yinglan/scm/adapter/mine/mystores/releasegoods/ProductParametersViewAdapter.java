@@ -25,8 +25,8 @@ public class ProductParametersViewAdapter extends BGAAdapterViewAdapter<ParamLis
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, ParamListBean model) {
         helper.setText(R.id.tv_productParameters, model.getName());
-
         EditText et_productParameters = (EditText) helper.getView(R.id.et_productParameters);
+        et_productParameters.setTag(position);
         et_productParameters.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -40,7 +40,9 @@ public class ProductParametersViewAdapter extends BGAAdapterViewAdapter<ParamLis
 
             @Override
             public void afterTextChanged(Editable editable) {
-                model.setValue(editable + "");
+                if ((int) et_productParameters.getTag() == position) {
+                   model.setValue(editable.toString());
+                }
             }
         });
     }

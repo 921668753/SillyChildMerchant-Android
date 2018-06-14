@@ -2,13 +2,19 @@ package com.yinglan.scm.mine.mystores.releasegoods;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.JsonUtil;
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean;
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +51,8 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
     }
 
     @Override
-    public void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String price, String store, String enable_store, int market_enable, String original,
-                                   String images, String intro, String params, String specs) {
+    public void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String original,
+                                   List<String> images, String intro, ParamsBean params, List<SpecsBean> specs) {
         if (cat_id <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 1);
             return;
@@ -55,7 +61,7 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.chooseBrand1), 1);
             return;
         }
-        if (StringUtils.isEmpty(images)) {
+        if (images == null || images.size() <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.addPicture), 1);
             return;
         }
@@ -71,13 +77,45 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 1);
             return;
         }
-        if (StringUtils.isEmpty(price)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 1);
-            return;
+        for (int i = 0; i < params.getParamList().size(); i++) {
+            if (StringUtils.isEmpty(params.getParamList().get(i).getValue())) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnter) + params.getParamList().get(i).getName(), 1);
+                return;
+            }
         }
-        if (StringUtils.isEmpty(store)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 1);
-            return;
+        List<ReleaseGoodsBean.SpecsBean> specsBeanList = new ArrayList<ReleaseGoodsBean.SpecsBean>();
+        int store = 0;
+        String price = "";
+        for (int i = 0; i < specs.size(); i++) {
+            if (StringUtils.toInt(specs.get(i).getInventory()) <= 0) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 1);
+                return;
+            }
+            if (StringUtils.toDouble(specs.get(i).getPrice()) <= 0) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 1);
+                return;
+            }
+            ReleaseGoodsBean.SpecsBean specsBean = new ReleaseGoodsBean.SpecsBean();
+            specsBean.setPrice(MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice())));
+            if (i == 0) {
+                price = MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice()));
+            }
+            specsBean.setEnable_store(StringUtils.toInt(specs.get(i).getInventory()));
+            store = store + StringUtils.toInt(specs.get(i).getInventory());
+            if (specs.get(i).getSpec1() != null && specs.get(i).getSpec1().size() > 0) {
+                List<Integer> list = new ArrayList<>();
+                for (int j = 0; j < specs.get(i).getSpec1().size(); j++) {
+                    if (specs.get(i).getSpec1().get(j).getSelected() == 1) {
+                        list.add(specs.get(i).getSpec1().get(j).getSpec_value_id());
+                    }
+                }
+                if (list.size() <= 0) {
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + specs.get(i).getSpec_name(), 1);
+                    return;
+                }
+                specsBean.setSpecs_value_id(list);
+            }
+            specsBeanList.add(specsBean);
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         //    httpParams.put("goodsId", goodsId);
@@ -88,19 +126,19 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
         map.put("cat_id", cat_id);
         map.put("type_id", type_id);
         map.put("brief", brief);
+        map.put("intro", intro);
+        map.put("original", original);
+        map.put("images", images);
+        map.put("market_enable", 1);
+        map.put("params", JsonUtil.obj2JsonString(params));
         map.put("price", price);
         map.put("store", store);
-        map.put("enable_store", enable_store);
-//        if (urllist.size() > 0) {
-//            String imgsStr = "";
-//            for (int i = 0; i < urllist.size(); i++) {
-//                imgsStr = imgsStr + "," + urllist.get(i);
-//            }
-//            httpParams.put("big", imgsStr.substring(1));
-//        }
-        map.put("intro", intro);
-        map.put("params", params);
-        map.put("specs", specs);
+        map.put("enable_store", store);
+        if (specs.get(0).getSpec1() == null || specs.get(0).getSpec1().size() <= 0) {
+            map.put("specs", null);
+        } else {
+            map.put("specs", specsBeanList);
+        }
         httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         RequestClient.postGoodAddAndEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
