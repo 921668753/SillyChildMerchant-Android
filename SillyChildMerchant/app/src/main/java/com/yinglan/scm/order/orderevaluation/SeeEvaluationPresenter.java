@@ -28,7 +28,7 @@ public class SeeEvaluationPresenter implements SeeEvaluationContract.Presenter {
     public void seeEvaluation(int orderid) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("orderId", orderid);
-        RequestClient.postOrderRate(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.getOrderRate(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

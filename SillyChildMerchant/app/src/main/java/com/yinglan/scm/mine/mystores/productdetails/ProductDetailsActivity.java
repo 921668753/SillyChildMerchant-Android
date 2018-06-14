@@ -1,5 +1,7 @@
 package com.yinglan.scm.mine.mystores.productdetails;
 
+import android.widget.EditText;
+
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
@@ -7,7 +9,8 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.ChildListView;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean;
+import com.yinglan.scm.adapter.mine.mystores.productdetails.ProductDetailsImageAdapter;
+import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 
 /**
@@ -15,11 +18,26 @@ import com.yinglan.scm.loginregister.LoginActivity;
  */
 public class ProductDetailsActivity extends BaseActivity implements ProductDetailsContract.View {
 
-
+    /**
+     * 商品图片
+     */
     @BindView(id = R.id.clv_productImg)
     private ChildListView clv_productImg;
 
+    /**
+     * 商品名称
+     */
+    @BindView(id = R.id.et_productName)
+    private EditText et_productName;
+
+
+
     private int goods_id = 0;
+
+    private ProductDetailsImageAdapter productDetailsImageAdapter = null;
+
+    private ProductDetailsBean productDetailsBean;
+
 
     @Override
     public void setRootView() {
@@ -31,6 +49,8 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         super.initData();
         mPresenter = new ProductDetailsPresenter(this);
         goods_id = getIntent().getIntExtra("goodsId", 0);
+        productDetailsImageAdapter = new ProductDetailsImageAdapter(this);
+        showLoadingDialog(getString(R.string.dataLoad));
         ((ProductDetailsContract.Presenter) mPresenter).getGoodDetail(goods_id);
     }
 
@@ -38,6 +58,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.productDetails), true, R.id.titlebar);
+        clv_productImg.setAdapter(productDetailsImageAdapter);
     }
 
     @Override
@@ -49,7 +70,24 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            ReleaseGoodsBean releaseGoodsBean = (ReleaseGoodsBean) JsonUtil.getInstance().json2Obj(success, ReleaseGoodsBean.class);
+            productDetailsBean = (ProductDetailsBean) JsonUtil.getInstance().json2Obj(success, ProductDetailsBean.class);
+            if (productDetailsBean.getData().getImages() != null && productDetailsBean.getData().getImages().size() > 0) {
+                productDetailsImageAdapter.clear();
+                productDetailsImageAdapter.addMoreData(productDetailsBean.getData().getImages());
+            }
+            et_productName.setText(productDetailsBean.getData().getName());
+
+
+
+
+
+
+
+
+
+
+
+           // et_warehouseInventory1
 
 
 

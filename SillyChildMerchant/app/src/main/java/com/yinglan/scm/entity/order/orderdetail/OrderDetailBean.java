@@ -1,50 +1,53 @@
 package com.yinglan.scm.entity.order.orderdetail;
 
 import com.common.cklibrary.entity.BaseResult;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 
 /**
- * Created by Admin on 2017/8/17.
+ * Created by Admin on 2018/6/17.
  */
 
-public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
+public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
 
 
-    public class DataBean {
+    public class DataBeanX {
         /**
-         * order_id : 64
-         * status : 1
-         * shipInfo : {"message":"暂无物流信息"}
-         * itemList : [{"item_id":15,"order_id":64,"goods_id":1,"product_id":1,"name":"可口可乐汽水330ml*24罐/箱碳酸饮料","specs":null,"num":1,"sn":"0001","price":25.9,"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/15/goods/2017/6/13/20//56319127_thumbnail.jpg"}]
-         * ship_name : 隔壁老王
-         * ship_mobile : 13656888888
-         * shipping_area : 北京-海淀区-三环以内
-         * order_amount : 25.9
-         * ship_money : null
-         * ship_no : null
-         * bouns_money : 0
-         * activity : 0
-         * sn : DD152768113539-1
-         * create_time : 2018-05-30 19:52:15
-         * payment_type : onlinePay
-         * paymoney : 0
+         * order_id : 638
+         * status : 3
+         * shipInfo : {"message":"ok","nu":"889966941641165886","ischeck":"1","condition":"F00","com":"yuantong","status":"200","state":"3","data":[{"time":"2018-06-05 13:05:27","ftime":"2018-06-05 13:05:27","context":"客户 签收人: 陈媛 已签收  感谢使用圆通速递，期待再次为您服务"},{"time":"2018-06-05 08:58:08","ftime":"2018-06-05 08:58:08","context":"河南省南阳市新野县公司(点击查询电话)王** 派件中 派件员电话13721843967"},{"time":"2018-06-05 08:43:03","ftime":"2018-06-05 08:43:03","context":"河南省南阳市新野县公司 已收入"},{"time":"2018-06-05 08:23:25","ftime":"2018-06-05 08:23:25","context":"河南省南阳市新野县公司 已收入"},{"time":"2018-06-05 04:19:56","ftime":"2018-06-05 04:19:56","context":"漯河转运中心 已发出,下一站"},{"time":"2018-06-04 04:45:56","ftime":"2018-06-04 04:45:56","context":"漯河转运中心 已发出,下一站 河南省南阳市新野县"},{"time":"2018-06-04 02:28:22","ftime":"2018-06-04 02:28:22","context":"漯河转运中心 已收入"},{"time":"2018-06-04 01:04:46","ftime":"2018-06-04 01:04:46","context":"漯河转运中心 已收入"},{"time":"2018-06-03 05:51:29","ftime":"2018-06-03 05:51:29","context":"广州转运中心 已发出,下一站"},{"time":"2018-06-03 00:24:02","ftime":"2018-06-03 00:24:02","context":"广州转运中心 已发出,下一站 漯河转运中心"},{"time":"2018-06-03 00:12:24","ftime":"2018-06-03 00:12:24","context":"广州转运中心 已收入"},{"time":"2018-06-02 23:22:08","ftime":"2018-06-02 23:22:08","context":"广州转运中心 已收入"},{"time":"2018-06-02 21:46:17","ftime":"2018-06-02 21:46:17","context":"广东省广州市新增城市公司 已发出,下一站"},{"time":"2018-06-02 21:43:13","ftime":"2018-06-02 21:43:13","context":"广东省广州市新增城市公司 已发出,下一站 广州转运中心"},{"time":"2018-06-02 21:33:14","ftime":"2018-06-02 21:33:14","context":"广东省广州市新增城市公司 已打包"},{"time":"2018-06-02 21:26:43","ftime":"2018-06-02 21:26:43","context":"广东省广州市新增城市公司(点击查询电话) 已揽收"},{"time":"2018-06-02 18:44:22","ftime":"2018-06-02 18:44:22","context":"广东省广州市新增城市公司 取件人: 曾树洋 已收件"}]}
+         * itemList : [{"item_id":246,"order_id":638,"goods_id":218,"product_id":590,"name":"名称","specs":null,"num":1,"sn":"G20180614183053500-1","price":20,"image":"http://ovwiqces1.bkt.clouddn.com/SHZS_S52_IMG_20180614_183006.jpg"}]
+         * ship_name : Liu
+         * ship_mobile : 15545678901
+         * shipping_area : 北京-密云区-城区
+         * ship_addr : haha
+         * order_amount : 20
+         * ship_money :
+         * ship_no : 889966941641165886
+         * bouns_money :
+         * activity :
+         * sn : DD152897244214-1
+         * create_time : 2018-06-14 18:34:06
+         * payment_type : qianbai
+         * paymoney :
          * pay_time :
          * allocation_time :
-         * reason : null
-         * backMoney : null
-         * total : null
-         * backTime : null
-         * lastTime : 0
+         * reason :
+         * backMoney :
+         * total :
+         * backTime :
+         * lastTime :
          */
 
         private int order_id;
         private int status;
-        private OrderDetailBean shipInfo;
+        private ShipInfoBean shipInfo;
         private String ship_name;
         private String ship_mobile;
         private String shipping_area;
+        private String ship_addr;
         private String order_amount;
         private String ship_money;
         private String ship_no;
@@ -79,11 +82,11 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
             this.status = status;
         }
 
-        public OrderDetailBean getShipInfo() {
+        public ShipInfoBean getShipInfo() {
             return shipInfo;
         }
 
-        public void setShipInfo(OrderDetailBean shipInfo) {
+        public void setShipInfo(ShipInfoBean shipInfo) {
             this.shipInfo = shipInfo;
         }
 
@@ -109,6 +112,14 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
 
         public void setShipping_area(String shipping_area) {
             this.shipping_area = shipping_area;
+        }
+
+        public String getShip_addr() {
+            return ship_addr;
+        }
+
+        public void setShip_addr(String ship_addr) {
+            this.ship_addr = ship_addr;
         }
 
         public String getOrder_amount() {
@@ -247,18 +258,142 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBean> {
             this.itemList = itemList;
         }
 
+        public class ShipInfoBean {
+            /**
+             * message : ok
+             * nu : 889966941641165886
+             * ischeck : 1
+             * condition : F00
+             * com : yuantong
+             * status : 200
+             * state : 3
+             * data : [{"time":"2018-06-05 13:05:27","ftime":"2018-06-05 13:05:27","context":"客户 签收人: 陈媛 已签收  感谢使用圆通速递，期待再次为您服务"},{"time":"2018-06-05 08:58:08","ftime":"2018-06-05 08:58:08","context":"河南省南阳市新野县公司(点击查询电话)王** 派件中 派件员电话13721843967"},{"time":"2018-06-05 08:43:03","ftime":"2018-06-05 08:43:03","context":"河南省南阳市新野县公司 已收入"},{"time":"2018-06-05 08:23:25","ftime":"2018-06-05 08:23:25","context":"河南省南阳市新野县公司 已收入"},{"time":"2018-06-05 04:19:56","ftime":"2018-06-05 04:19:56","context":"漯河转运中心 已发出,下一站"},{"time":"2018-06-04 04:45:56","ftime":"2018-06-04 04:45:56","context":"漯河转运中心 已发出,下一站 河南省南阳市新野县"},{"time":"2018-06-04 02:28:22","ftime":"2018-06-04 02:28:22","context":"漯河转运中心 已收入"},{"time":"2018-06-04 01:04:46","ftime":"2018-06-04 01:04:46","context":"漯河转运中心 已收入"},{"time":"2018-06-03 05:51:29","ftime":"2018-06-03 05:51:29","context":"广州转运中心 已发出,下一站"},{"time":"2018-06-03 00:24:02","ftime":"2018-06-03 00:24:02","context":"广州转运中心 已发出,下一站 漯河转运中心"},{"time":"2018-06-03 00:12:24","ftime":"2018-06-03 00:12:24","context":"广州转运中心 已收入"},{"time":"2018-06-02 23:22:08","ftime":"2018-06-02 23:22:08","context":"广州转运中心 已收入"},{"time":"2018-06-02 21:46:17","ftime":"2018-06-02 21:46:17","context":"广东省广州市新增城市公司 已发出,下一站"},{"time":"2018-06-02 21:43:13","ftime":"2018-06-02 21:43:13","context":"广东省广州市新增城市公司 已发出,下一站 广州转运中心"},{"time":"2018-06-02 21:33:14","ftime":"2018-06-02 21:33:14","context":"广东省广州市新增城市公司 已打包"},{"time":"2018-06-02 21:26:43","ftime":"2018-06-02 21:26:43","context":"广东省广州市新增城市公司(点击查询电话) 已揽收"},{"time":"2018-06-02 18:44:22","ftime":"2018-06-02 18:44:22","context":"广东省广州市新增城市公司 取件人: 曾树洋 已收件"}]
+             */
+
+            @SerializedName("message")
+            private String messageX;
+            private String nu;
+            private String ischeck;
+            private String condition;
+            private String com;
+            private String status;
+            private String state;
+            @SerializedName("data")
+            private List<DataBean> dataX;
+
+            public String getMessageX() {
+                return messageX;
+            }
+
+            public void setMessageX(String messageX) {
+                this.messageX = messageX;
+            }
+
+            public String getNu() {
+                return nu;
+            }
+
+            public void setNu(String nu) {
+                this.nu = nu;
+            }
+
+            public String getIscheck() {
+                return ischeck;
+            }
+
+            public void setIscheck(String ischeck) {
+                this.ischeck = ischeck;
+            }
+
+            public String getCondition() {
+                return condition;
+            }
+
+            public void setCondition(String condition) {
+                this.condition = condition;
+            }
+
+            public String getCom() {
+                return com;
+            }
+
+            public void setCom(String com) {
+                this.com = com;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+
+            public List<DataBean> getDataX() {
+                return dataX;
+            }
+
+            public void setDataX(List<DataBean> dataX) {
+                this.dataX = dataX;
+            }
+
+            public class DataBean {
+                /**
+                 * time : 2018-06-05 13:05:27
+                 * ftime : 2018-06-05 13:05:27
+                 * context : 客户 签收人: 陈媛 已签收  感谢使用圆通速递，期待再次为您服务
+                 */
+
+                private String time;
+                private String ftime;
+                private String context;
+
+                public String getTime() {
+                    return time;
+                }
+
+                public void setTime(String time) {
+                    this.time = time;
+                }
+
+                public String getFtime() {
+                    return ftime;
+                }
+
+                public void setFtime(String ftime) {
+                    this.ftime = ftime;
+                }
+
+                public String getContext() {
+                    return context;
+                }
+
+                public void setContext(String context) {
+                    this.context = context;
+                }
+            }
+        }
+
         public class ItemListBean {
             /**
-             * item_id : 15
-             * order_id : 64
-             * goods_id : 1
-             * product_id : 1
-             * name : 可口可乐汽水330ml*24罐/箱碳酸饮料
+             * item_id : 246
+             * order_id : 638
+             * goods_id : 218
+             * product_id : 590
+             * name : 名称
              * specs : null
              * num : 1
-             * sn : 0001
-             * price : 25.9
-             * image : http://static.b2b2cv2.javamall.com.cn/attachment//store/15/goods/2017/6/13/20//56319127_thumbnail.jpg
+             * sn : G20180614183053500-1
+             * price : 20
+             * image : http://ovwiqces1.bkt.clouddn.com/SHZS_S52_IMG_20180614_183006.jpg
              */
 
             private int item_id;

@@ -158,25 +158,16 @@ public class SeeEvaluationActivity extends BaseActivity implements SeeEvaluation
 
     @Override
     public void errorMsg(String msg, int flag) {
-        GlideCatchUtil.getInstance().cleanImageDisk();
-        Log.e("图片", msg);
+        dismissLoadingDialog();
         if (isLogin(msg)) {
-            ViewInject.toast(getString(R.string.reloginPrompting));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMineFragment", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isReLogin", true);
+            //  ViewInject.toast(getString(R.string.reloginPrompting));
             showActivity(this, LoginActivity.class);
-            finish();
+            if (flag == 0) {
+                finish();
+            }
             return;
         }
-        if (flag == 9) {
-            dismissLoadingDialog();
-            ViewInject.toast(this, msg);
-        }
-//        else{
-//            urlerrornum++;
-//            pictureerror=msg;
-////            upOperation();
-//        }
+        ViewInject.toast(msg);
     }
 
     @Override

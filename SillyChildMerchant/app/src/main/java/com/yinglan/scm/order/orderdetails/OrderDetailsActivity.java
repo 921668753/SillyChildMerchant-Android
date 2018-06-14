@@ -379,12 +379,16 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             OrderDetailBean orderDetailBean = (OrderDetailBean) JsonUtil.getInstance().json2Obj(success, OrderDetailBean.class);
+            if (orderDetailBean == null || orderDetailBean.getData() == null || orderDetailBean.getData().getShip_name() == null) {
+                errorMsg(getString(R.string.serverReturnsDataError), 0);
+                return;
+            }
             if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 1) {
                 obligationGood(orderDetailBean);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 2) {
                 sendGoodsGood();
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 3) {
-                waitGoodsGood();
+                waitGoodsGood(orderDetailBean);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 4) {
                 completedGood(orderDetailBean, 0);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
@@ -416,10 +420,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             }
             tv_orderCode.setText(orderDetailBean.getData().getSn());
             tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
-            if (orderDetailBean.getData().getPayment_type().contains("onlinePay")) {
+            if (orderDetailBean.getData().getPayment_type().contains("qianbao")) {
                 tv_modePayment.setText(getString(R.string.balancePay));
-            } else if (orderDetailBean.getData().getPayment_type().contains("wechatMobilePlugin")) {
+            } else if (orderDetailBean.getData().getPayment_type().contains("weixin")) {
                 tv_modePayment.setText(getString(R.string.weChatPay));
+            } else if (orderDetailBean.getData().getPayment_type().contains("zhifubao")) {
+                tv_modePayment.setText(getString(R.string.alipayToPay));
+            } else if (orderDetailBean.getData().getPayment_type().contains("yinlian")) {
+                tv_modePayment.setText(getString(R.string.unionpayPay));
             }
             amountRealPay = MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney()));
             tv_amountRealPay.setText(getString(R.string.renminbi) + amountRealPay);
@@ -498,8 +506,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     /**
      * 待收货
      */
-    private void waitGoodsGood() {
-
+    private void waitGoodsGood(OrderDetailBean orderDetailBean) {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_shipped_icon);
@@ -522,6 +529,15 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_confirmDelivery1.setVisibility(View.GONE);
         tv_afterWhy.setVisibility(View.GONE);
         tv_afterWhy1.setVisibility(View.GONE);
+        if (orderDetailBean.getData().getShipInfo() == null ||
+                orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
+            tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
+            tv_orderCourierTime.setText(orderDetailBean.getData().getAllocation_time());
+        } else {
+            List<OrderDetailBean.DataBeanX.ShipInfoBean.DataBean> list = orderDetailBean.getData().getShipInfo().getDataX();
+            tv_orderCourierInformation.setText(list.get(0).getContext());
+            tv_orderCourierTime.setText(list.get(0).getTime());
+        }
     }
 
     /**
@@ -545,6 +561,15 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_confirmDelivery1.setVisibility(View.GONE);
         tv_afterWhy.setVisibility(View.GONE);
         tv_afterWhy1.setVisibility(View.GONE);
+        if (orderDetailBean.getData().getShipInfo() == null ||
+                orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
+            tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
+            tv_orderCourierTime.setText(orderDetailBean.getData().getAllocation_time());
+        } else {
+            List<OrderDetailBean.DataBeanX.ShipInfoBean.DataBean> list = orderDetailBean.getData().getShipInfo().getDataX();
+            tv_orderCourierInformation.setText(list.get(0).getContext());
+            tv_orderCourierTime.setText(list.get(0).getTime());
+        }
         if (flag == 0) {
             ll_bottom.setVisibility(View.GONE);
         } else {

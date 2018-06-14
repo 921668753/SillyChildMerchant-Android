@@ -42,6 +42,9 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
     @BindView(id = R.id.clv_productParameters)
     private ChildListView clv_productParameters;
 
+    @BindView(id = R.id.tv_divider)
+    private TextView tv_divider;
+
     /**
      * 规格参数
      */
@@ -122,7 +125,6 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
                 productSpecificationsViewAdapter.addLastItem(specsBean);
                 break;
             case R.id.tv_releaseGoods:
-                showLoadingDialog(getString(R.string.submissionLoad));
                 ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, paramsBean, productSpecificationsViewAdapter.getData());
                 break;
         }
@@ -140,6 +142,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
             ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
             if (productParametersBean.getData().getParams() != null && productParametersBean.getData().getParams().size() > 0) {
                 ll_productParameters.setVisibility(View.VISIBLE);
+                tv_divider.setVisibility(View.VISIBLE);
                 paramsBean = new ParamsBean();
                 paramsBean.setName(productParametersBean.getData().getParams().get(0).getName());
                 paramsBean.setParamNum(productParametersBean.getData().getParams().get(0).getParamNum());
@@ -149,6 +152,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
                 productParametersViewAdapter.addNewData(paramsBean.getParamList());
             } else {
                 ll_productParameters.setVisibility(View.GONE);
+                tv_divider.setVisibility(View.GONE);
             }
             list.clear();
             ll_productSpecifications.setVisibility(View.VISIBLE);

@@ -171,6 +171,8 @@
     <string name="orderDetails">订单详情</string>
     <string name="waitSending">等待发货</string>
     <string name="sellerShippedGoods">卖家已发货</string>
+    <string name="orderEnteredWarehouse">您的订单已交付快递公司，请耐心等待</string>
+
     <string name="transactionCompleted">交易已完成</string>
     <string name="applyAfterSales">申请售后</string>
     <string name="sellerAppliesRefund">卖家申请退款</string>
@@ -277,7 +279,7 @@
     <string name="leaseEnterNameProduct">请输入商品名称</string>
     <string name="pleaseEnter">请输入</string>
     <string name="addProductSuccessfully">添加商品成功</string>
-
+    <string name="confirmReleaseProduct">确定发布该商品</string>
 
     <!--提现成功-->
     <string name="withdrawalRequestSucceeded">提现申请成功</string>

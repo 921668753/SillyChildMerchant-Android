@@ -18,7 +18,6 @@
             style="@style/MatchMatch"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:id="@+id/ll_productParameters"
                 style="@style/MatchWrap"
@@ -54,16 +53,17 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_divider"
                 style="@style/DividerWidth"
-                android:layout_marginBottom="@dimen/dimen38"
-                android:layout_marginTop="@dimen/dimen38" />
+                android:layout_marginTop="@dimen/dimen38"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/ll_productSpecifications"
                 style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
-                android:layout_marginTop="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen38"
                 android:background="@drawable/shape_homepage"
                 android:orientation="vertical"
                 android:visibility="visible">

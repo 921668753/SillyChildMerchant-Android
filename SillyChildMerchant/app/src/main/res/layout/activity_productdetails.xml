@@ -10,7 +10,6 @@
 
     <TextView style="@style/DividerWidth" />
 
-
     <ScrollView
         style="@style/MatchMatch"
         android:scrollbars="none">
@@ -37,7 +36,7 @@
                 android:dividerHeight="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen15"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:listitem="@layout/item_productimg" />
 
             <LinearLayout
@@ -59,6 +58,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <EditText
+                    android:id="@+id/et_productName"
                     style="@style/MatchWrap"
                     android:background="@color/whiteColors"
                     android:paddingLeft="@dimen/dimen11"
@@ -104,6 +104,7 @@
                         android:orientation="vertical">
 
                         <EditText
+                            android:id="@+id/et_warehouseInventory1"
                             style="@style/MatchWrap"
                             android:background="@color/whiteColors"
                             android:digits="@string/number0"

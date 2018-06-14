@@ -400,8 +400,8 @@ public class RequestClient {
     /**
      * 查看评价
      */
-    public static void postOrderRate(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        Log.d("tag", "postOrderRate");
+    public static void getOrderRate(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getOrderRate");
         doServer(context, new TokenCallback() {
             @Override
             public void execute() {
@@ -411,7 +411,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestPostFORMHttp(context, URLConstants.ORDERRATE, httpParams, listener);
+                HttpRequest.requestGetHttp(context, URLConstants.ORDERRATE, httpParams, listener);
             }
         }, listener);
     }

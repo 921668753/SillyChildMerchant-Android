@@ -1,12 +1,11 @@
 package com.yinglan.scm.adapter.order.orderdetails;
 
 import android.content.Context;
-import android.widget.ImageView;
 
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean.DataBean.ItemListBean;
+import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean.DataBeanX.ItemListBean;
 import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;

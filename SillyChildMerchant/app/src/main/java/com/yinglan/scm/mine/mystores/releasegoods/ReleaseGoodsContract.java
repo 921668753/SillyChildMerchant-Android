@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/2/11.
  */
-
 public interface ReleaseGoodsContract {
 
     interface Presenter extends BasePresenter {

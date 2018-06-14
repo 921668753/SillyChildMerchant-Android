@@ -8,25 +8,25 @@ import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
+import com.yinglan.scm.mine.mystores.dialog.SubmitBouncedDialog;
 import com.yinglan.scm.retrofit.RequestClient;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * Created by Administrator on 20187/6/11.
  */
-
 public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecificationsContract.Presenter {
 
     private ReleaseGoodsSpecificationsContract.View mView;
+
+    private SubmitBouncedDialog submitBouncedDialog = null;
 
     public ReleaseGoodsSpecificationsPresenter(ReleaseGoodsSpecificationsContract.View view) {
         mView = view;
@@ -130,7 +130,9 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
         map.put("original", original);
         map.put("images", images);
         map.put("market_enable", 1);
-        map.put("params", JsonUtil.obj2JsonString(params));
+        List<ParamsBean> ParamsBeanList = new ArrayList<ParamsBean>();
+        ParamsBeanList.add(params);
+        map.put("params", JsonUtil.obj2JsonString(ParamsBeanList));
         map.put("price", price);
         map.put("store", store);
         map.put("enable_store", store);
@@ -140,16 +142,32 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
             map.put("specs", specsBeanList);
         }
         httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
-        RequestClient.postGoodAddAndEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
+        if (submitBouncedDialog == null) {
+            initDialog(httpParams);
+        }
+        submitBouncedDialog.show();
+        submitBouncedDialog.setContent(KJActivityStack.create().topActivity().getString(R.string.confirmReleaseProduct), 0, 0);
+    }
 
+    private void initDialog(HttpParams httpParams) {
+        submitBouncedDialog = new SubmitBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
+            public void confirm(int id, int marketEnable) {
+                this.dismiss();
+                submitBouncedDialog = null;
+                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.submissionLoad));
+                RequestClient.postGoodAddAndEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 1);
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.errorMsg(msg, 1);
+                    }
+                });
             }
-        });
+        };
     }
 }

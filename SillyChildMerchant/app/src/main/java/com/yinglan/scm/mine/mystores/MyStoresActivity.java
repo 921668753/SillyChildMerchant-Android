@@ -131,7 +131,6 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
                 ((MyStoresContract.Presenter) mPresenter).postGoodUpAndDown(id, marketEnable, 3);
             }
         };
-
     }
 
 
