@@ -73,7 +73,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 
     public void initView() {
         ImageView image = new ImageView(aty);
-        image.setImageResource(R.mipmap.ic_launcher);
+        image.setImageResource(R.mipmap.startpage);
         Animation anim = AnimationUtils.loadAnimation(aty, R.anim.splash_start);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
