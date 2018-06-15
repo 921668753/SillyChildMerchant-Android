@@ -183,6 +183,11 @@
             android:name=".mine.mystores.productdetails.ProductDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的  我的店铺  产品详情   参数规格-->
+        <activity
+            android:name=".mine.mystores.productdetails.ProductSpecificationsActivity"
+            android:screenOrientation="portrait" />
+
         <!--我的  我的钱包-->
         <activity
             android:name=".mine.mywallet.MyWalletActivity"

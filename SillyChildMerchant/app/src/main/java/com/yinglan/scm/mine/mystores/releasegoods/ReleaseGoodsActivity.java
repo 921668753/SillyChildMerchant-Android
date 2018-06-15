@@ -134,7 +134,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
 
     private List<GoodsBrandsBean.DataBean> goodsBrandsList;
 
-
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_releasegoods);

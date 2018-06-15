@@ -143,7 +143,7 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
-        intent.putExtra("order_id", mAdapter.getItem(position).getOrderId());
+        intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
         aty.showActivity(aty, intent);
     }
 

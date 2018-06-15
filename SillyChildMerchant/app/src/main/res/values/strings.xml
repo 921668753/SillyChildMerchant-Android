@@ -256,6 +256,7 @@
     <string name="modify">修改</string>
     <string name="warehouseInventory1">仓库库存</string>
     <string name="jian">/件</string>
+    <string name="confirmChange">确认修改</string>
 
 
     <!--  个人中心  我的店铺   发布商品-->

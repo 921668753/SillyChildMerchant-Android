@@ -85,6 +85,7 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
              */
 
             private int orderId;
+            private int commented;
             private String paymoney;
             private String sn;
             private int itemsCount;
@@ -97,6 +98,14 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
 
             public void setOrderId(int orderId) {
                 this.orderId = orderId;
+            }
+
+            public int getCommented() {
+                return commented;
+            }
+
+            public void setCommented(int commented) {
+                this.commented = commented;
             }
 
             public String getPaymoney() {

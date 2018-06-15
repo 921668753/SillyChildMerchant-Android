@@ -268,8 +268,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     private int orderId = 0;
 
-    private int status = 0;
-
     /**
      * 退款金额
      */
@@ -390,9 +388,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 3) {
                 waitGoodsGood(orderDetailBean);
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 4) {
-                completedGood(orderDetailBean, 0);
+                completedGood(orderDetailBean, orderDetailBean.getData().getCommented());
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
-                completedGood(orderDetailBean, 1);
+                completedGood(orderDetailBean, orderDetailBean.getData().getCommented());
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
                 afterSaleGood(orderDetailBean);
             } else {
@@ -640,7 +638,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
         if (isLogin(msg)) {
-            //  ViewInject.toast(getString(R.string.reloginPrompting));
             showActivity(this, LoginActivity.class);
             if (flag == 0) {
                 finish();

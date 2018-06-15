@@ -20,7 +20,6 @@
             style="@style/MatchMatch"
             android:orientation="vertical">
 
-
             <TextView
                 style="@style/WrapWrap"
                 android:layout_marginLeft="@dimen/dimen15"

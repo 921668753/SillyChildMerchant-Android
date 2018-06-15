@@ -2,6 +2,9 @@ package com.yinglan.scm.mine.mystores.productdetails;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
+import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/2/11.
@@ -17,9 +20,26 @@ public interface ProductDetailsContract {
         void getGoodDetail(int goodsId);
 
         /**
-         * 新增修改商品
+         * 获取分类列表
          */
-        void postGoodAddAndEdit(int goodsId, String name, String sn, int brand_id, int cat_id, String brief, String price, String params, String store, String enable_store, String big, String small);
+        void getClassificationList();
+
+        /**
+         * 获取获取品牌列表
+         */
+        void getGoodsBrands();
+
+        /**
+         * 上传图片
+         *
+         * @param imgPath
+         */
+        void upPictures(String imgPath, int flag);
+
+        /**
+         * 跳转规格界面
+         */
+        void jumpActivity(ProductDetailsActivity releaseGoodsActivity, int brand_id, int catId, int type_id, String name, String brief, String intro, List<String> urllist, List<String> urllist1);
 
     }
 

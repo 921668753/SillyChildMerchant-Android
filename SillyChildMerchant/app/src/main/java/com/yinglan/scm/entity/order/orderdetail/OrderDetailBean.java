@@ -43,6 +43,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
 
         private int order_id;
         private int status;
+        private int commented;
         private ShipInfoBean shipInfo;
         private String ship_name;
         private String ship_mobile;
@@ -80,6 +81,14 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
 
         public void setStatus(int status) {
             this.status = status;
+        }
+
+        public int getCommented() {
+            return commented;
+        }
+
+        public void setCommented(int commented) {
+            this.commented = commented;
         }
 
         public ShipInfoBean getShipInfo() {
