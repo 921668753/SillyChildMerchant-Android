@@ -65,6 +65,25 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
         private String total;
         private String backTime;
         private String lastTime;
+        private String reasonDetail;
+        private String remark;
+
+        public String getReasonDetail() {
+            return reasonDetail;
+        }
+
+        public void setReasonDetail(String reasonDetail) {
+            this.reasonDetail = reasonDetail;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
         private List<ItemListBean> itemList;
 
         public int getOrder_id() {

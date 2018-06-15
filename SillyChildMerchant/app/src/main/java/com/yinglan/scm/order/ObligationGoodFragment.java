@@ -222,4 +222,12 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
             ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter.clear();
+        mAdapter = null;
+    }
+
 }

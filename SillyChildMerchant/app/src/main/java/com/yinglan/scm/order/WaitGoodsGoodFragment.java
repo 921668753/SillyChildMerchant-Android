@@ -223,4 +223,11 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter.clear();
+        mAdapter = null;
+    }
+
 }

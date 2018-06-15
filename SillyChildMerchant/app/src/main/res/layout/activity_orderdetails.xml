@@ -97,15 +97,14 @@
                 android:textSize="@dimen/textsize13"
                 android:visibility="gone" />
 
-
             <TextView
                 android:id="@+id/tv_orderCourierTime"
                 style="@style/MatchWrap"
                 android:layout_marginBottom="@dimen/dimen10"
                 android:background="@color/whiteColors"
+                android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingTop="@dimen/dimen10"
-                android:paddingBottom="@dimen/dimen10"
                 android:singleLine="true"
                 android:text="2018-04-30  13:32"
                 android:textColor="@color/titletextcolors"
@@ -330,7 +329,6 @@
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize13" />
             </LinearLayout>
-
 
             <LinearLayout
                 style="@style/MatchWrap"
@@ -582,22 +580,96 @@
 
             <View style="@style/DividerWidth" />
 
-
-            <TextView
-                android:id="@+id/tv_afterWhy1"
+            <LinearLayout
+                android:id="@+id/ll_afterType"
                 style="@style/MatchWrap"
                 android:background="@color/whiteColors"
-                android:paddingBottom="@dimen/dimen10"
-                android:paddingLeft="@dimen/dimen15"
-                android:paddingRight="@dimen/dimen15"
-                android:paddingTop="@dimen/dimen10"
-                android:text="这里是售后原因这里是售后原因这里是售后原因这里是售后这里是售后原因这里是售后原因这里是售后原因这里是售后"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10"
+                android:paddingTop="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/afterType1"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_afterType"
+                    style="@style/MatchWrap"
+                    android:text="不喜欢/不合适"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_refundReason"
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10"
+                android:paddingTop="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/refundReason"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_refundReason"
+                    style="@style/MatchWrap"
+                    android:text="不喜欢/不合适"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_problemDescription"
+                style="@style/MatchWrap"
+                android:background="@color/whiteColors"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen10"
+                android:paddingRight="@dimen/dimen10"
+                android:paddingTop="@dimen/dimen10">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/problemDescription"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_problemDescription"
+                    style="@style/MatchWrap"
+                    android:text="不喜欢/不合适"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_accountAfterSalesService"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen150"
+                android:layout_marginBottom="@dimen/dimen15"
+                android:background="@color/whiteColors"
+                android:gravity="start"
+                android:hint="@string/accountAfterSalesService"
+                android:padding="@dimen/dimen15"
                 android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize13" />
+                android:textColorHint="@color/hintColors"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:textSize="@dimen/textsize12" />
+
 
         </LinearLayout>
     </ScrollView>
-
 
     <View style="@style/DividerWidth" />
 

@@ -18,6 +18,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
@@ -27,7 +28,9 @@ import com.yinglan.scm.entity.order.GoodOrderBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.main.MineContract;
+import com.yinglan.scm.order.dialog.AfterSaleBouncedDialog;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
+import com.yinglan.scm.order.orderdetails.OrderDetailsContract;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -80,6 +83,10 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
      */
     private String status = "7";
 
+    private AfterSaleBouncedDialog afterSaleBouncedDialog = null;
+
+    private int selectedPosition = 0;
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
@@ -91,7 +98,27 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         super.initData();
         mPresenter = new GoodOrderPresenter(this);
         mAdapter = new GoodsOrderViewAdapter(aty);
+        initDialog();
     }
+
+    /**
+     * 弹框
+     */
+    private void initDialog() {
+        afterSaleBouncedDialog = new AfterSaleBouncedDialog(aty) {
+            @Override
+            public void confirm(int id, int marketEnable) {
+                if (marketEnable == 0) {
+                    showLoadingDialog(getString(R.string.dataLoad));
+                    ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(selectedPosition).getOrderId(), 2, "", mAdapter.getItem(selectedPosition).getPaymoney());
+                } else if (marketEnable == 1) {
+                    showLoadingDialog(getString(R.string.dataLoad));
+                    ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(selectedPosition).getOrderId(), 1, "", mAdapter.getItem(selectedPosition).getPaymoney());
+                }
+            }
+        };
+    }
+
 
     @Override
     protected void initWidget(View parentView) {
@@ -153,32 +180,41 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void getSuccess(String success, int flag) {
-        isShowLoadingMore = true;
-        mRefreshLayout.setPullDownRefreshEnable(true);
-        ll_commonError.setVisibility(View.GONE);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-        GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
-        if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            errorMsg(getString(R.string.noOrder), 1);
-            return;
-        } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-            ViewInject.toast(getString(R.string.noMoreData));
-            isShowLoadingMore = false;
-            dismissLoadingDialog();
-            mRefreshLayout.endLoadingMore();
-            return;
-        }
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-            mAdapter.clear();
-            mAdapter.addNewData(goodOrderBean.getData().getResultX());
-        } else {
-            mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(goodOrderBean.getData().getResultX());
+        if (flag == 0) {
+            isShowLoadingMore = true;
+            mRefreshLayout.setPullDownRefreshEnable(true);
+            ll_commonError.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            GoodOrderBean goodOrderBean = (GoodOrderBean) JsonUtil.getInstance().json2Obj(success, GoodOrderBean.class);
+            if (goodOrderBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                    goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                errorMsg(getString(R.string.noOrder), 1);
+                return;
+            } else if (goodOrderBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                    goodOrderBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                ViewInject.toast(getString(R.string.noMoreData));
+                isShowLoadingMore = false;
+                dismissLoadingDialog();
+                mRefreshLayout.endLoadingMore();
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(goodOrderBean.getData().getResultX());
+            } else {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(goodOrderBean.getData().getResultX());
+            }
+        } else if (flag == 2) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusApplyAfterEvent"));
+            ViewInject.toast(getString(R.string.submitSuccess));
         }
         dismissLoadingDialog();
+
     }
 
     @Override
@@ -220,10 +256,23 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        selectedPosition = position;
         if (childView.getId() == R.id.tv_refused) {
-            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 2, "", mAdapter.getItem(position).getPaymoney());
+            if (afterSaleBouncedDialog == null) {
+                initDialog();
+            }
+            if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
+                afterSaleBouncedDialog.show();
+                afterSaleBouncedDialog.setContent(getString(R.string.makeSureRejectApplication), mAdapter.getItem(position).getOrderId(), 0);
+            }
         } else if (childView.getId() == R.id.tv_agreed) {
-            ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(position).getOrderId(), 1, "", mAdapter.getItem(position).getPaymoney());
+            if (afterSaleBouncedDialog == null) {
+                initDialog();
+            }
+            if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
+                afterSaleBouncedDialog.show();
+                afterSaleBouncedDialog.setContent(getString(R.string.confirmApprovalAfterSalesApplication), mAdapter.getItem(position).getOrderId(), 1);
+            }
         }
     }
 
@@ -233,9 +282,21 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusApplyAfterEvent") && mPresenter != null
+                || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (afterSaleBouncedDialog != null) {
+            afterSaleBouncedDialog.cancel();
+        }
+        afterSaleBouncedDialog = null;
+        mAdapter.clear();
+        mAdapter = null;
     }
 }

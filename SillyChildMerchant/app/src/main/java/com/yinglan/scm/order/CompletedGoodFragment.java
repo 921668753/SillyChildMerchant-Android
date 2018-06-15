@@ -34,7 +34,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View ,BGAOnItemChildClickListener {
+public class CompletedGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View, BGAOnItemChildClickListener {
 
     private MainActivity aty;
 
@@ -229,7 +229,8 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusApplyAfterEvent") && mPresenter != null
+                || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
         }

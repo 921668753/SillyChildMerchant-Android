@@ -9,7 +9,7 @@
     <string name="sendingLoad">发送中&#8230;</string>
     <string name="dataLoad">数据加载中&#8230;</string>
     <string name="submissionLoad">提交中&#8230;</string>
-    <string name="submitSuccess">提交成功！</string>
+    <string name="submitSuccess">提交成功</string>
     <string name="crossLoad">上传中&#8230;</string>
     <string name="download">下载中&#8230;</string>
     <string name="deleteLoad">删除中&#8230;</string>
@@ -197,7 +197,18 @@
     <string name="courierCompany1">请选择快递公司名称</string>
     <string name="afterWhy">售后原因</string>
     <string name="successfulDelivery">发货成功</string>
-    <string name="notfillAfterSaleReason">未填写售后原因</string>
+    <string name="notfillAfterSaleReason">未填写售后描述</string>
+    <string name="accountAfterSalesService">请详细描述您的售后原因</string>
+    <string name="afterType1">售后类型：</string>
+    <string name="refundReason">退款原因：</string>
+    <string name="problemDescription">问题描述：</string>
+
+    <string name="makeSureRejectApplication">确定拒绝售后申请</string>
+    <string name="confirmApprovalAfterSalesApplication">确定同意售后申请</string>
+
+
+
+
 
 
     <string name="reloginPrompting">登录超时，或者在其它设备上登录了，请重新登录！</string>
