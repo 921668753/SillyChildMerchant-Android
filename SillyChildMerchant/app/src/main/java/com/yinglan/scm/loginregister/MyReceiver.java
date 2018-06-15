@@ -49,15 +49,10 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
             //打开自定义的Activity
-            boolean isRefreshingHomePageFragment = PreferenceHelper.readBoolean(context, StringConstants.FILENAME, "isRefreshingHomePageFragment", false);
-            if (isRefreshingHomePageFragment) {
-                PreferenceHelper.write(context, StringConstants.FILENAME, "isRefreshingHomePageFragment", false);
-                PreferenceHelper.write(context, StringConstants.FILENAME, "isRefreshingChangeHomePageFragment", true);
-            }
             Intent news = new Intent(context, MainActivity.class);
             news.putExtras(bundle);
             news.putExtra("newChageIcon", 1);
-            news.putExtra("chageIcon", 20);
+            news.putExtra("chageIcon", 21);
             news.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(news);
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {

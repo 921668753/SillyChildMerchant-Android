@@ -357,6 +357,11 @@
         <!--android:scheme="rong" />-->
         <!--</intent-filter>-->
         <!--</activity>-->
+
+
+
+
+
         <!--会话界面-->
         <activity
             android:name=".message.interactivemessage.ConversationActivity"
@@ -392,6 +397,27 @@
         <!--android:scheme="rong" />-->
         <!--</intent-filter>-->
         <!--</activity>-->
+
+        <!--融云即时通讯-->
+        <!--融云即时通讯-->
+        <meta-data
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="${RONGYUN_APPKEY}" />
+
+        <receiver
+            android:name=".message.interactivemessage.imuitl.RongIMPushMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+
+        <!--融云即时通讯-->
+        <!--融云即时通讯-->
         <!--融云end-->
         <!--融云end-->
         <!--融云end-->
@@ -441,13 +467,7 @@
         <!--百度地图-->
         <!--百度地图-->
 
-        <!--融云即时通讯-->
-        <!--融云即时通讯-->
-        <meta-data
-            android:name="RONG_CLOUD_APP_KEY"
-            android:value="${RONGYUN_APPKEY}" />
-        <!--融云即时通讯-->
-        <!--融云即时通讯-->
+
 
         <!--Anrroid 7.0SD卡路径-->
         <!--Anrroid 7.0SD卡路径-->
