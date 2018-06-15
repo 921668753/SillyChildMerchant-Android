@@ -641,7 +641,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_problemDescription.setVisibility(View.GONE);
         et_accountAfterSalesService.setVisibility(View.GONE);
 
-
         if (orderDetailBean.getData().getShipInfo() == null ||
                 orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
             tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
@@ -721,7 +720,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_problemDescription.setVisibility(View.GONE);
         et_accountAfterSalesService.setVisibility(View.GONE);
     }
-
 
     @Override
     public void errorMsg(String msg, int flag) {
