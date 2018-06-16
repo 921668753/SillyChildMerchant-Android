@@ -8,6 +8,7 @@ import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean;
 import com.yinglan.scm.mine.mystores.dialog.SubmitBouncedDialog;
@@ -42,46 +43,45 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
         RequestClient.getGoodsParams(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, 1);
             }
         });
     }
 
     @Override
-    public void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String original,
-                                   List<String> images, String intro, ReleaseGoodsBean.ParamsBean params, List<ProductParametersBean.DataBean.SpecsBean> specs) {
-        if (cat_id <= 0) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 1);
+    public void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<ProductParametersBean.DataBean.SpecsBean> specs) {
+        if (productDetailsBean.getData().getCat_id() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 2);
             return;
         }
-        if (brand_id <= 0) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.chooseBrand1), 1);
+        if (productDetailsBean.getData().getBrand_id() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.chooseBrand1), 2);
             return;
         }
-        if (images == null || images.size() <= 0) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.addPicture), 1);
+        if (productDetailsBean.getData().getImages() == null || productDetailsBean.getData().getImages().size() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.addPicture), 2);
             return;
         }
-        if (StringUtils.isEmpty(name)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.leaseEnterNameProduct), 1);
+        if (StringUtils.isEmpty(productDetailsBean.getData().getName())) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.leaseEnterNameProduct), 2);
             return;
         }
-        if (StringUtils.isEmpty(brief)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.productDescription), 1);
+        if (StringUtils.isEmpty(productDetailsBean.getData().getBrief())) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.productDescription), 2);
             return;
         }
-        if (StringUtils.isEmpty(intro)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 1);
+        if (StringUtils.isEmpty(productDetailsBean.getData().getIntro())) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 2);
             return;
         }
         for (int i = 0; i < params.getParamList().size(); i++) {
             if (StringUtils.isEmpty(params.getParamList().get(i).getValue())) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnter) + params.getParamList().get(i).getName(), 1);
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnter) + params.getParamList().get(i).getName(), 2);
                 return;
             }
         }
@@ -90,11 +90,11 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
         String price = "";
         for (int i = 0; i < specs.size(); i++) {
             if (StringUtils.toInt(specs.get(i).getInventory()) <= 0) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 1);
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 2);
                 return;
             }
             if (StringUtils.toDouble(specs.get(i).getPrice()) <= 0) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 1);
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 2);
                 return;
             }
             ReleaseGoodsBean.SpecsBean specsBean = new ReleaseGoodsBean.SpecsBean();
@@ -102,6 +102,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
             if (i == 0) {
                 price = MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice()));
             }
+            specsBean.setProduct_id(specs.get(i).getProduct_id());
             specsBean.setEnable_store(StringUtils.toInt(specs.get(i).getInventory()));
             store = store + StringUtils.toInt(specs.get(i).getInventory());
             if (specs.get(i).getSpec1() != null && specs.get(i).getSpec1().size() > 0) {
@@ -112,7 +113,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
                     }
                 }
                 if (list.size() <= 0) {
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + specs.get(i).getSpec_name(), 1);
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + specs.get(i).getSpec_name(), 2);
                     return;
                 }
                 specsBean.setSpecs_value_id(list);
@@ -122,15 +123,17 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         //    httpParams.put("goodsId", goodsId);
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", name);
-        //    httpParams.put("sn", sn);
-        map.put("brand_id", brand_id);
-        map.put("cat_id", cat_id);
-        map.put("type_id", type_id);
-        map.put("brief", brief);
-        map.put("intro", intro);
-        map.put("original", original);
-        map.put("images", images);
+        map.put("name", productDetailsBean.getData().getName());
+        map.put("sn", productDetailsBean.getData().getSn());
+        map.put("goods_id", productDetailsBean.getData().getGoods_id());
+        map.put("store_id", productDetailsBean.getData().getStore_id());
+        map.put("brand_id", productDetailsBean.getData().getBrand_id());
+        map.put("cat_id", productDetailsBean.getData().getCat_id());
+        map.put("type_id", productDetailsBean.getData().getType_id());
+        map.put("brief", productDetailsBean.getData().getBrief());
+        map.put("intro", productDetailsBean.getData().getIntro());
+        map.put("original", productDetailsBean.getData().getOriginal());
+        map.put("images", productDetailsBean.getData().getImages());
         map.put("market_enable", 1);
         List<ReleaseGoodsBean.ParamsBean> ParamsBeanList = new ArrayList<ReleaseGoodsBean.ParamsBean>();
         ParamsBeanList.add(params);
@@ -148,7 +151,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
             initDialog(httpParams);
         }
         submitBouncedDialog.show();
-        submitBouncedDialog.setContent(KJActivityStack.create().topActivity().getString(R.string.confirmReleaseProduct), 0, 0);
+        submitBouncedDialog.setContent(KJActivityStack.create().topActivity().getString(R.string.changeProductSuccessfully), 0, 0);
     }
 
     private void initDialog(HttpParams httpParams) {
@@ -161,12 +164,12 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
                 RequestClient.postGoodAddAndEdit(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        mView.getSuccess(response, 1);
+                        mView.getSuccess(response, 2);
                     }
 
                     @Override
                     public void onFailure(String msg) {
-                        mView.errorMsg(msg, 1);
+                        mView.errorMsg(msg, 2);
                     }
                 });
             }

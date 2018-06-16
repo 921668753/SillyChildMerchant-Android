@@ -29,6 +29,7 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ReleaseGoodsImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.mine.mystores.GoodsTypeBean;
+import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.GoodsBrandsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
@@ -134,6 +135,16 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
 
     private List<GoodsBrandsBean.DataBean> goodsBrandsList;
 
+    private int goodsId = 0;
+
+    private int options1Position = 0;
+
+    private int options2Position = 0;
+
+    private int options3Position = 0;
+
+    private ProductDetailsBean productDetailsBean;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_productdetails);
@@ -143,6 +154,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     public void initData() {
         super.initData();
         mPresenter = new ProductDetailsPresenter(this);
+        goodsId = getIntent().getIntExtra("goodsId", 0);
         selectCategoryName();
         selectBrandsName();
         initImagePicker();
@@ -157,7 +169,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 1);
         recyclerView1.setLayoutManager(gridLayoutManager1);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((ProductDetailsContract.Presenter) mPresenter).getClassificationList();
+        ((ProductDetailsContract.Presenter) mPresenter).getProductDetails(goodsId);
     }
 
     private void initImagePicker() {
@@ -212,7 +224,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.releaseGoods), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.productDetails), true, R.id.titlebar);
         adapter.setOnItemClickListener(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
@@ -237,7 +249,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                 break;
             case R.id.tv_nextStep:
                 ((ProductDetailsContract.Presenter) mPresenter).jumpActivity(this, brand_id, catId, type_id, et_goodName.getText().toString().trim(),
-                        et_productIntroduction.getText().toString().trim(), et_introduction.getText().toString().trim(), urllist, urllist1);
+                        et_productIntroduction.getText().toString().trim(), et_introduction.getText().toString().trim(), urllist, urllist1, productDetailsBean);
 //                showLoadingDialog(getString(R.string.submissionLoad));
 //                ((ProductDetailsContract.Presenter) mPresenter).postGoodAddAndEdit(et_goodName.getText().toString().trim(), catId, et_introduction.getText().toString().trim(), "1", "100", "1", urllist, "", "");
                 break;
@@ -292,7 +304,18 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
             goodsBrandsList = goodsBrandsBean.getData();
             if (goodsBrandsList != null && goodsBrandsList.size() > 0) {
                 brandsOptions.setPicker(goodsBrandsList);
+                for (int i = 0; i < goodsBrandsList.size(); i++) {
+                    if (brand_id == goodsBrandsList.get(i).getBrand_id()) {
+                        brandsOptions.setSelectOptions(i);
+                        tv_selectChooseBrand.setText(goodsBrandsList.get(i).getName());
+                        break;
+                    }
+                }
             }
+            ll_classification.setFocusable(true);
+            ll_classification.requestFocus();
+            ll_classification.setFocusableInTouchMode(true);
+            ll_classification.requestFocusFromTouch();
             dismissLoadingDialog();
         } else if (flag == 2) {
             urllist.add(success);
@@ -306,6 +329,25 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
             adapter1.setImages(selImageList1);
             recyclerView1.setAdapter(adapter1);
             dismissLoadingDialog();
+        } else if (flag == 5) {
+            productDetailsBean = (ProductDetailsBean) JsonUtil.getInstance().json2Obj(success, ProductDetailsBean.class);
+            catId = productDetailsBean.getData().getCat_id();
+            type_id = productDetailsBean.getData().getType_id();
+            brand_id = productDetailsBean.getData().getBrand_id();
+            et_goodName.setText(productDetailsBean.getData().getName());
+            urllist.addAll(productDetailsBean.getData().getImages());
+            images = new ArrayList<>();
+            for (int i = 0; i < productDetailsBean.getData().getImages().size(); i++) {
+                ImageItem imageItem = new ImageItem();
+                imageItem.path = productDetailsBean.getData().getImages().get(i);
+                images.add(imageItem);
+            }
+            selImageList.addAll(images);
+            adapter.setImages(selImageList);
+            recyclerView.setAdapter(adapter);
+            et_productIntroduction.setText(productDetailsBean.getData().getBrief());
+            et_introduction.setText(productDetailsBean.getData().getIntro());
+            ((ProductDetailsContract.Presenter) mPresenter).getClassificationList();
         }
 
     }
@@ -338,6 +380,11 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                     childrenBeanList.add(childrenBeanList1);
                     options2Items.add(childrenBeanXList);
                     options3Items.add(childrenBeanList);
+                    if (catId == childrenBean.getCat_id() && type_id == childrenBean.getType_id()) {
+                        options1Position = i;
+                        options2Position = 0;
+                        options3Position = 0;
+                    }
                     continue;
                 }
                 for (int c = 0; c < options1Items.get(i).getChildren().size(); c++) {//遍历该省份的所有城市
@@ -347,6 +394,11 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                         childrenBeanX.setCat_id(options1Items.get(i).getCat_id());
                         childrenBeanX.setType_id(options1Items.get(i).getType_id());
                         childrenBeanX.setName("");
+                        if (catId == childrenBeanX.getCat_id() && type_id == childrenBeanX.getType_id()) {
+                            options1Position = i;
+                            options2Position = 0;
+                            options3Position = 0;
+                        }
                     }
                     childrenBeanXList.add(childrenBeanX);//添加城市
                     ArrayList<GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean> childrenBeanList1 = new ArrayList<>();//该城市的所有地区列表
@@ -358,10 +410,20 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                         childrenBean.setType_id(options1Items.get(i).getChildren().get(c).getType_id());
                         childrenBean.setName("");
                         childrenBeanList1.add(childrenBean);
+                        if (catId == childrenBean.getCat_id() && type_id == childrenBean.getType_id()) {
+                            options1Position = i;
+                            options2Position = c;
+                            options3Position = 0;
+                        }
                     } else {
                         for (int d = 0; d < options1Items.get(i).getChildren().get(c).getChildren().size(); d++) {//该城市对应地区所有数据
                             GoodsTypeBean.DataBean.ChildrenBeanX.ChildrenBean childrenBean = options1Items.get(i).getChildren().get(c).getChildren().get(d);
                             childrenBeanList1.add(childrenBean);//添加该城市所有地区数据
+                            if (catId == childrenBean.getCat_id() && type_id == childrenBean.getType_id()) {
+                                options1Position = i;
+                                options2Position = c;
+                                options3Position = d;
+                            }
                         }
                     }
                     childrenBeanList.add(childrenBeanList1);//添加该省所有地区数据
@@ -378,6 +440,10 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                 Log.d("tag1", options3Items.size() + "=childrenBeanList");
             }
             pvOptions.setPicker(options1Items, options2Items, options3Items);
+            pvOptions.setSelectOptions(options1Position, options2Position, options3Position);
+            String selectCommodityClassification = options1Items.get(options1Position).getName() + options2Items.get(options1Position).get(options2Position).getName()
+                    + options3Items.get(options1Position).get(options2Position).get(options3Position).getName();
+            tv_selectCommodityClassification.setText(selectCommodityClassification);
         }
     }
 
@@ -435,37 +501,6 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
             }
         } else {
             ViewInject.toast(getString(R.string.noData));
-        }
-    }
-
-    @Override
-    public void callMsgEvent(MsgEvent msgEvent) {
-        super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusReleaseGoodsEvent")) {
-            sv.scrollTo(0, 0);
-            ll_classification.setFocusable(true);
-            ll_classification.requestFocus();
-            ll_classification.setFocusableInTouchMode(true);
-            ll_classification.requestFocusFromTouch();
-            pvOptions.setSelectOptions(0, 0, 0);
-            tv_selectCommodityClassification.setText(getString(R.string.pleaseSelect));
-            tv_selectChooseBrand.setText(getString(R.string.pleaseSelect));
-            brandsOptions.setSelectOptions(0);
-            urllist.clear();
-            if (images != null) {
-                images.clear();
-            }
-            selImageList.clear();
-            adapter.setImages(selImageList);
-            et_goodName.setText("");
-            et_productIntroduction.setText("");
-            et_introduction.setText("");
-            urllist1.clear();
-            if (images1 != null) {
-                images1.clear();
-            }
-            selImageList1.clear();
-            adapter1.setImages(selImageList1);
         }
     }
 

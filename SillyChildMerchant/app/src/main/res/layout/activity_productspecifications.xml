@@ -112,10 +112,10 @@
             <TextView
                 android:id="@+id/tv_confirmChange"
                 style="@style/Match40"
-                android:layout_marginBottom="@dimen/dimen15"
+                android:layout_marginBottom="@dimen/dimen60"
                 android:layout_marginLeft="@dimen/dimen68"
                 android:layout_marginRight="@dimen/dimen68"
-                android:layout_marginTop="@dimen/dimen20"
+                android:layout_marginTop="@dimen/dimen50"
                 android:background="@drawable/shape_homepagebtn"
                 android:gravity="center"
                 android:text="@string/confirmChange"

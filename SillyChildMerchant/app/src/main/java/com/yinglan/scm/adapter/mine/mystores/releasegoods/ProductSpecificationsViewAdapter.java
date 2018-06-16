@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
+import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.kymjs.common.Log;
+import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
 
@@ -39,6 +41,9 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
         EditText et_warehouseInventory = (EditText) helper.getView(R.id.et_warehouseInventory);
         et_warehouseInventory.setTag(position);
+        if (!StringUtils.isEmpty(model.getInventory())) {
+            et_warehouseInventory.setText(model.getInventory());
+        }
         et_warehouseInventory.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -60,6 +65,9 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
         EditText et_commodityPrices = (EditText) helper.getView(R.id.et_commodityPrices);
         et_commodityPrices.setTag(position);
+        if (!StringUtils.isEmpty(model.getPrice())) {
+            et_commodityPrices.setText(MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
+        }
         et_commodityPrices.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

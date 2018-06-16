@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.ParamsBean.ParamListBean;
 
@@ -27,6 +28,9 @@ public class ProductParametersViewAdapter extends BGAAdapterViewAdapter<ParamLis
         helper.setText(R.id.tv_productParameters, model.getName());
         EditText et_productParameters = (EditText) helper.getView(R.id.et_productParameters);
         et_productParameters.setTag(position);
+        if (!StringUtils.isEmpty(model.getValue())) {
+            et_productParameters.setText(model.getValue());
+        }
         et_productParameters.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -41,7 +45,7 @@ public class ProductParametersViewAdapter extends BGAAdapterViewAdapter<ParamLis
             @Override
             public void afterTextChanged(Editable editable) {
                 if ((int) et_productParameters.getTag() == position) {
-                   model.setValue(editable.toString());
+                    model.setValue(editable.toString());
                 }
             }
         });

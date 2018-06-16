@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
@@ -16,10 +17,11 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductParametersViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsGvViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
+import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
+import com.yinglan.scm.entity.mine.mystores.productdetails.ProductParamsBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsSpecificationsContract;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
 
 import java.util.ArrayList;
@@ -60,8 +62,8 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
     /**
      * 发布商品
      */
-    @BindView(id = R.id.tv_releaseGoods, click = true)
-    private TextView tv_releaseGoods;
+    @BindView(id = R.id.tv_confirmChange, click = true)
+    private TextView tv_confirmChange;
 
     private ProductParametersViewAdapter productParametersViewAdapter = null;
 
@@ -69,16 +71,12 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
 
     private List<ProductParametersBean.DataBean.SpecsBean> list;
 
-    private int catId = 0;
-    private int type_id = 0;
-    private String name = "";
-    private String brief = "";
-    private ArrayList<String> images = null;
-    private String original = "";
-    private String intro = "";
+
     private ArrayList<String> images1 = null;
-    private int brand_id = 0;
-    private ReleaseGoodsBean.ParamsBean paramsBean;
+
+    private ParamsBean paramsBean;
+
+    private ProductDetailsBean productDetailsBean;
 
     @Override
     public void setRootView() {
@@ -92,26 +90,19 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
         list = new ArrayList<>();
         productSpecificationsViewAdapter = new ProductSpecificationsViewAdapter(this);
         productParametersViewAdapter = new ProductParametersViewAdapter(this);
-        brand_id = getIntent().getIntExtra("brand_id", 0);
-        catId = getIntent().getIntExtra("catId", 0);
-        type_id = getIntent().getIntExtra("type_id", 0);
-        name = getIntent().getStringExtra("name");
-        brief = getIntent().getStringExtra("brief");
-        images = getIntent().getStringArrayListExtra("images");
-        original = getIntent().getStringExtra("original");
-        intro = getIntent().getStringExtra("intro");
+        productDetailsBean = (ProductDetailsBean) getIntent().getSerializableExtra("productDetailsBean");
         images1 = getIntent().getStringArrayListExtra("images1");
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.releaseGoods), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.productDetails), true, R.id.titlebar);
         clv_productParameters.setAdapter(productParametersViewAdapter);
         clv_productSpecifications.setAdapter(productSpecificationsViewAdapter);
         productSpecificationsViewAdapter.setOnStatusListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).getGoodsParams(type_id);
+        getSuccess("{params:" + productDetailsBean.getData().getParams() + "}", 0);
     }
 
     @Override
@@ -123,8 +114,8 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
                 ProductParametersBean.DataBean.SpecsBean specsBean = new ProductParametersBean.DataBean.SpecsBean();
                 productSpecificationsViewAdapter.addLastItem(specsBean);
                 break;
-            case R.id.tv_releaseGoods:
-                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, paramsBean, productSpecificationsViewAdapter.getData());
+            case R.id.tv_confirmChange:
+                ((ProductSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(productDetailsBean, paramsBean, productSpecificationsViewAdapter.getData());
                 break;
         }
     }
@@ -138,14 +129,14 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
-            if (productParametersBean.getData().getParams() != null && productParametersBean.getData().getParams().size() > 0) {
+            ProductParamsBean productParamsBean = (ProductParamsBean) JsonUtil.getInstance().json2Obj(success, ProductParamsBean.class);
+            if (productParamsBean != null && productParamsBean.getParams().size() > 0) {
                 ll_productParameters.setVisibility(View.VISIBLE);
                 tv_divider.setVisibility(View.VISIBLE);
-                paramsBean = new ReleaseGoodsBean.ParamsBean();
-                paramsBean.setName(productParametersBean.getData().getParams().get(0).getName());
-                paramsBean.setParamNum(productParametersBean.getData().getParams().get(0).getParamNum());
-                paramsBean.setParamList(productParametersBean.getData().getParams().get(0).getParamList());
+                paramsBean = new ParamsBean();
+                paramsBean.setName(productParamsBean.getParams().get(0).getName());
+                paramsBean.setParamNum(productParamsBean.getParams().get(0).getParamNum());
+                paramsBean.setParamList(productParamsBean.getParams().get(0).getParamList());
                 tv_productParameters.setText(paramsBean.getName());
                 productParametersViewAdapter.clear();
                 productParametersViewAdapter.addNewData(paramsBean.getParamList());
@@ -153,27 +144,55 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
                 ll_productParameters.setVisibility(View.GONE);
                 tv_divider.setVisibility(View.GONE);
             }
+            ll_productParameters.setFocusable(true);
+            ll_productParameters.requestFocus();
+            ll_productParameters.setFocusableInTouchMode(true);
+            ll_productParameters.requestFocusFromTouch();
+            ((ProductSpecificationsContract.Presenter) mPresenter).getGoodsParams(productDetailsBean.getData().getType_id());
+        } else if (flag == 1) {
+            ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
             list.clear();
             ll_productSpecifications.setVisibility(View.VISIBLE);
             if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().getSpec1() != null) {
                 tv_addSpecification.setVisibility(View.VISIBLE);
                 list.add(productParametersBean.getData().getSpecs());
+                for (int i = 0; i < productDetailsBean.getData().getSpecs().size(); i++) {
+                    if (productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().size() >= 0) {
+                        for (int j = 0; j < productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().size(); j++) {
+                            for (int k = 0; k < list.size(); k++) {
+                                list.get(k).setPrice(productDetailsBean.getData().getSpecs().get(i).getPrice());
+                                list.get(k).setInventory(productDetailsBean.getData().getSpecs().get(i).getEnable_store());
+                                list.get(k).setInventory(productDetailsBean.getData().getSpecs().get(i).getProduct_id());
+                                for (int l = 0; l < list.get(k).getSpec1().size(); l++) {
+                                    if (list.get(k).getSpec1().get(l).getSpec_value_id() == productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().get(j)) {
+                                        list.get(k).getSpec1().get(l).setSelected(1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             } else {
                 tv_addSpecification.setVisibility(View.GONE);
                 ProductParametersBean.DataBean.SpecsBean specsBean = new ProductParametersBean.DataBean.SpecsBean();
+                specsBean.setPrice(productDetailsBean.getData().getPrice());
+                specsBean.setInventory(productDetailsBean.getData().getStore());
                 list.add(specsBean);
             }
             productSpecificationsViewAdapter.clear();
             productSpecificationsViewAdapter.addNewData(list);
-        } else if (flag == 1) {
+            dismissLoadingDialog();
+        } else if (flag == 2) {
+            dismissLoadingDialog();
             /**
              * 发送消息
              */
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusReleaseGoodsEvent"));
-            ViewInject.toast(getString(R.string.addProductSuccessfully));
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusProductSpecificationsEvent"));
+            ViewInject.toast(getString(R.string.changeProductSuccessfully));
+            KJActivityStack.create().finishActivity(ProductDetailsActivity.class);
             finish();
         }
-        dismissLoadingDialog();
+
     }
 
     @Override

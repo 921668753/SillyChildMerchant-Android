@@ -12,8 +12,7 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.nanchen.compresshelper.FileUtil;
 import com.yinglan.scm.R;
-import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity;
-import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsSpecificationsActivity;
+import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import java.io.File;
@@ -35,9 +34,20 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
     }
 
     @Override
-    public void getGoodDetail(int goodsId) {
+    public void getProductDetails(int goodsId) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("goodsId", goodsId);
+        RequestClient.getProductDetails(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 5);
+            }
 
-
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 5);
+            }
+        });
     }
 
     @Override
@@ -107,7 +117,8 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
     }
 
     @Override
-    public void jumpActivity(ProductDetailsActivity releaseGoodsActivity, int brand_id, int catId, int type_id, String name, String brief, String intro, List<String> urllist, List<String> urllist1) {
+    public void jumpActivity(ProductDetailsActivity productDetailsActivity, int brand_id, int catId, int type_id, String name, String brief, String intro, List<String> urllist,
+                             List<String> urllist1, ProductDetailsBean productDetailsBean) {
         if (catId <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 4);
             return;
@@ -132,16 +143,18 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 4);
             return;
         }
-        Intent intent = new Intent(releaseGoodsActivity, ReleaseGoodsSpecificationsActivity.class);
-        intent.putExtra("brand_id", brand_id);
-        intent.putExtra("catId", catId);
-        intent.putExtra("type_id", type_id);
-        intent.putExtra("name", name);
-        intent.putExtra("brief", brief);
-        intent.putStringArrayListExtra("images", (ArrayList) urllist);
-        intent.putExtra("original", urllist.get(0));
+        productDetailsBean.getData().setBrand_id(brand_id);
+        productDetailsBean.getData().setCat_id(catId);
+        productDetailsBean.getData().setType_id(type_id);
+        productDetailsBean.getData().setName(name);
+        productDetailsBean.getData().setBrief(brief);
+        productDetailsBean.getData().setImages(urllist);
+        productDetailsBean.getData().setOriginal(urllist.get(0));
+        productDetailsBean.getData().setIntro(intro);
+
+        Intent intent = new Intent(productDetailsActivity, ProductSpecificationsActivity.class);
         intent.putStringArrayListExtra("images1", (ArrayList) urllist1);
-        intent.putExtra("intro", intro);
-        releaseGoodsActivity.showActivity(releaseGoodsActivity, intent);
+        intent.putExtra("productDetailsBean", productDetailsBean);
+        productDetailsActivity.showActivity(productDetailsActivity, intent);
     }
 }

@@ -650,8 +650,8 @@ public class RequestClient {
     /**
      * 获取商品详情
      */
-    public static void getGoodDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        Log.d("tag", "getGoodDetail");
+    public static void getProductDetails(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getProductDetails");
         doServer(context, new TokenCallback() {
             @Override
             public void execute() {

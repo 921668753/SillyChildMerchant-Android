@@ -2,7 +2,7 @@ package com.yinglan.scm.mine.mystores.productdetails;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
-import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity;
+import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface ProductDetailsContract {
         /**
          * 获取商品详情
          */
-        void getGoodDetail(int goodsId);
+        void getProductDetails(int goodsId);
 
         /**
          * 获取分类列表
@@ -39,7 +39,8 @@ public interface ProductDetailsContract {
         /**
          * 跳转规格界面
          */
-        void jumpActivity(ProductDetailsActivity releaseGoodsActivity, int brand_id, int catId, int type_id, String name, String brief, String intro, List<String> urllist, List<String> urllist1);
+        void jumpActivity(ProductDetailsActivity productDetailsActivity, int brand_id, int catId, int type_id, String name, String brief, String intro, List<String> urllist,
+                          List<String> urllist1, ProductDetailsBean productDetailsBean);
 
     }
 

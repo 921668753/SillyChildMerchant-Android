@@ -2,12 +2,13 @@ package com.yinglan.scm.entity.mine.mystores.productdetails;
 
 import com.common.cklibrary.entity.BaseResult;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> {
 
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * goods_id : 211
          * name : 名称
@@ -43,20 +44,20 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
         private int type_id;
         private String brief;
         private String intro;
-        private int price;
+        private String price;
         private String params;
-        private Object props;
+        private String props;
         private String original;
-        private int store;
+        private String store;
         private int enable_store;
-        private Object p1;
-        private Object p2;
-        private Object p3;
-        private Object p4;
-        private Object p5;
+        private String p1;
+        private String p2;
+        private String p3;
+        private String p4;
+        private String p5;
         private int market_enable;
         private int store_id;
-        private Object have_spec;
+        private String have_spec;
         private List<SpecsBean> specs;
         private List<String> images;
 
@@ -124,11 +125,11 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
             this.intro = intro;
         }
 
-        public int getPrice() {
+        public String getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(String price) {
             this.price = price;
         }
 
@@ -140,11 +141,11 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
             this.params = params;
         }
 
-        public Object getProps() {
+        public String getProps() {
             return props;
         }
 
-        public void setProps(Object props) {
+        public void setProps(String props) {
             this.props = props;
         }
 
@@ -156,11 +157,11 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
             this.original = original;
         }
 
-        public int getStore() {
+        public String getStore() {
             return store;
         }
 
-        public void setStore(int store) {
+        public void setStore(String store) {
             this.store = store;
         }
 
@@ -172,43 +173,43 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
             this.enable_store = enable_store;
         }
 
-        public Object getP1() {
+        public String getP1() {
             return p1;
         }
 
-        public void setP1(Object p1) {
+        public void setP1(String p1) {
             this.p1 = p1;
         }
 
-        public Object getP2() {
+        public String getP2() {
             return p2;
         }
 
-        public void setP2(Object p2) {
+        public void setP2(String p2) {
             this.p2 = p2;
         }
 
-        public Object getP3() {
+        public String getP3() {
             return p3;
         }
 
-        public void setP3(Object p3) {
+        public void setP3(String p3) {
             this.p3 = p3;
         }
 
-        public Object getP4() {
+        public String getP4() {
             return p4;
         }
 
-        public void setP4(Object p4) {
+        public void setP4(String p4) {
             this.p4 = p4;
         }
 
-        public Object getP5() {
+        public String getP5() {
             return p5;
         }
 
-        public void setP5(Object p5) {
+        public void setP5(String p5) {
             this.p5 = p5;
         }
 
@@ -228,11 +229,11 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
             this.store_id = store_id;
         }
 
-        public Object getHave_spec() {
+        public String getHave_spec() {
             return have_spec;
         }
 
-        public void setHave_spec(Object have_spec) {
+        public void setHave_spec(String have_spec) {
             this.have_spec = have_spec;
         }
 
@@ -252,59 +253,59 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
             this.images = images;
         }
 
-        public static class SpecsBean {
+        public static class SpecsBean implements Serializable {
             /**
-             * product_id : null
-             * specs_value_id : null
-             * enable_store : null
-             * price : null
-             * cost : null
+             * product_id : 397
+             * specs_value_id : [80,15]
+             * enable_store : 100
+             * price :
+             * cost :
              */
 
-            private Object product_id;
-            private Object specs_value_id;
-            private Object enable_store;
-            private Object price;
-            private Object cost;
+            private String product_id;
+            private String enable_store;
+            private String price;
+            private String cost;
+            private List<Integer> specs_value_id;
 
-            public Object getProduct_id() {
+            public String getProduct_id() {
                 return product_id;
             }
 
-            public void setProduct_id(Object product_id) {
+            public void setProduct_id(String product_id) {
                 this.product_id = product_id;
             }
 
-            public Object getSpecs_value_id() {
-                return specs_value_id;
-            }
-
-            public void setSpecs_value_id(Object specs_value_id) {
-                this.specs_value_id = specs_value_id;
-            }
-
-            public Object getEnable_store() {
+            public String getEnable_store() {
                 return enable_store;
             }
 
-            public void setEnable_store(Object enable_store) {
+            public void setEnable_store(String enable_store) {
                 this.enable_store = enable_store;
             }
 
-            public Object getPrice() {
+            public String getPrice() {
                 return price;
             }
 
-            public void setPrice(Object price) {
+            public void setPrice(String price) {
                 this.price = price;
             }
 
-            public Object getCost() {
+            public String getCost() {
                 return cost;
             }
 
-            public void setCost(Object cost) {
+            public void setCost(String cost) {
                 this.cost = cost;
+            }
+
+            public List<Integer> getSpecs_value_id() {
+                return specs_value_id;
+            }
+
+            public void setSpecs_value_id(List<Integer> specs_value_id) {
+                this.specs_value_id = specs_value_id;
             }
         }
     }

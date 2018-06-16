@@ -51,8 +51,17 @@ public class ProductParametersBean extends BaseResult<ProductParametersBean.Data
 
             private String price;
 
+            private String product_id;
 
             private List<Spec1Bean> spec1;
+
+            public String getProduct_id() {
+                return product_id;
+            }
+
+            public void setProduct_id(String product_id) {
+                this.product_id = product_id;
+            }
 
             public String getSpec_name() {
                 return spec_name;
