@@ -444,7 +444,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 5) {
                 completedGood(orderDetailBean, orderDetailBean.getData().getCommented());
             } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 7) {
-                afterSaleGood();
+                afterSaleGood(orderDetailBean, 0);
+            } else if (orderDetailBean != null && orderDetailBean.getData() != null && orderDetailBean.getData().getOrder_id() > 0 && orderDetailBean.getData().getStatus() == 8) {
+                afterSaleGood(orderDetailBean, 1);
             } else {
                 tradingClosedGood();
             }
@@ -470,15 +472,15 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             }
             tv_orderCode.setText(orderDetailBean.getData().getSn());
             tv_submitTime.setText(orderDetailBean.getData().getCreate_time());
-            if (orderDetailBean.getData().getPayment_type().contains("qianbao")) {
-                tv_modePayment.setText(getString(R.string.balancePay));
-            } else if (orderDetailBean.getData().getPayment_type().contains("weixin")) {
-                tv_modePayment.setText(getString(R.string.weChatPay));
-            } else if (orderDetailBean.getData().getPayment_type().contains("zhifubao")) {
-                tv_modePayment.setText(getString(R.string.alipayToPay));
-            } else if (orderDetailBean.getData().getPayment_type().contains("yinlian")) {
-                tv_modePayment.setText(getString(R.string.unionpayPay));
-            }
+//            if (orderDetailBean.getData().getPayment_type().contains("qianbao")) {
+//                tv_modePayment.setText(getString(R.string.balancePay));
+//            } else if (orderDetailBean.getData().getPayment_type().contains("weixin")) {
+//                tv_modePayment.setText(getString(R.string.weChatPay));
+//            } else if (orderDetailBean.getData().getPayment_type().contains("zhifubao")) {
+            tv_modePayment.setText(orderDetailBean.getData().getPayment_type());
+//            } else if (orderDetailBean.getData().getPayment_type().contains("yinlian")) {
+//                tv_modePayment.setText(getString(R.string.unionpayPay));
+//            }
             amountRealPay = MathUtil.keepTwo(StringUtils.toDouble(orderDetailBean.getData().getPaymoney()));
             tv_amountRealPay.setText(getString(R.string.renminbi) + amountRealPay);
             tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
@@ -499,6 +501,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 pvOptions.setPicker(logisList);
             }
         } else if (flag == 2) {
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusSendGoodsGoodEvent"));
             ViewInject.toast(getString(R.string.successfulDelivery));
             ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
         } else if (flag == 3) {
@@ -603,15 +609,15 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_problemDescription.setVisibility(View.GONE);
         et_accountAfterSalesService.setVisibility(View.GONE);
 
-
         if (orderDetailBean.getData().getShipInfo() == null ||
-                orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
+                StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getContext()) || StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getTime())) {
+            tv_courierName.setVisibility(View.GONE);
             tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
             tv_orderCourierTime.setText(orderDetailBean.getData().getAllocation_time());
         } else {
-            List<OrderDetailBean.DataBeanX.ShipInfoBean.DataBean> list = orderDetailBean.getData().getShipInfo().getDataX();
-            tv_orderCourierInformation.setText(list.get(0).getContext());
-            tv_orderCourierTime.setText(list.get(0).getTime());
+            tv_courierName.setText(orderDetailBean.getData().getShipInfo().getCom());
+            tv_orderCourierInformation.setText(orderDetailBean.getData().getShipInfo().getContext());
+            tv_orderCourierTime.setText(orderDetailBean.getData().getShipInfo().getTime());
         }
     }
 
@@ -642,13 +648,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         et_accountAfterSalesService.setVisibility(View.GONE);
 
         if (orderDetailBean.getData().getShipInfo() == null ||
-                orderDetailBean.getData().getShipInfo().getDataX() == null || orderDetailBean.getData().getShipInfo().getDataX().size() <= 0) {
+                StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getContext()) || StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getTime())) {
+            tv_courierName.setVisibility(View.GONE);
             tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
             tv_orderCourierTime.setText(orderDetailBean.getData().getAllocation_time());
         } else {
-            List<OrderDetailBean.DataBeanX.ShipInfoBean.DataBean> list = orderDetailBean.getData().getShipInfo().getDataX();
-            tv_orderCourierInformation.setText(list.get(0).getContext());
-            tv_orderCourierTime.setText(list.get(0).getTime());
+            tv_courierName.setText(orderDetailBean.getData().getShipInfo().getCom());
+            tv_orderCourierInformation.setText(orderDetailBean.getData().getShipInfo().getContext());
+            tv_orderCourierTime.setText(orderDetailBean.getData().getShipInfo().getTime());
         }
         if (flag == 0) {
             ll_bottom.setVisibility(View.GONE);
@@ -664,13 +671,17 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     /**
      * 售后
      */
-    private void afterSaleGood() {
+    private void afterSaleGood(OrderDetailBean orderDetailBean, int flag) {
         ll_waitingPayment.setVisibility(View.GONE);
         ll_waitSending.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
-        tv_waitSending.setText(getString(R.string.applyAfterSales));
-        tv_orderCourierInformation.setVisibility(View.GONE);
-        tv_orderCourierTime.setVisibility(View.GONE);
+        if (flag == 0) {
+            tv_waitSending.setText(getString(R.string.applyAfterSales));
+        } else {
+            tv_waitSending.setText(getString(R.string.afterComplete));
+        }
+        tv_orderCourierInformation.setVisibility(View.VISIBLE);
+        tv_orderCourierTime.setVisibility(View.VISIBLE);
         ll_name.setVisibility(View.GONE);
         ll_address.setVisibility(View.GONE);
         ll_modePayment.setVisibility(View.GONE);
@@ -691,6 +702,16 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_refundReason.setVisibility(View.VISIBLE);
         ll_problemDescription.setVisibility(View.VISIBLE);
         et_accountAfterSalesService.setVisibility(View.VISIBLE);
+        if (orderDetailBean.getData().getShipInfo() == null ||
+                StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getContext()) || StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getTime())) {
+            tv_courierName.setVisibility(View.GONE);
+            tv_orderCourierInformation.setText(getString(R.string.orderEnteredWarehouse));
+            tv_orderCourierTime.setText(orderDetailBean.getData().getAllocation_time());
+        } else {
+            tv_courierName.setText(orderDetailBean.getData().getShipInfo().getCom());
+            tv_orderCourierInformation.setText(orderDetailBean.getData().getShipInfo().getContext());
+            tv_orderCourierTime.setText(orderDetailBean.getData().getShipInfo().getTime());
+        }
     }
 
 

@@ -175,6 +175,10 @@
 
     <string name="transactionCompleted">交易已完成</string>
     <string name="applyAfterSales">申请售后</string>
+    <string name="applyAfterSales1">申请售后中</string>
+    <string name="afterComplete">售后完成</string>
+    <string name="afterRefusing">售后拒绝</string>
+
     <string name="sellerAppliesRefund">卖家申请退款</string>
     <string name="commodityInformation">商品信息</string>
     <string name="orderInformation">订单信息</string>

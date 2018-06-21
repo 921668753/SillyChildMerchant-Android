@@ -298,48 +298,10 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
              * data : [{"time":"2018-06-05 13:05:27","ftime":"2018-06-05 13:05:27","context":"客户 签收人: 陈媛 已签收  感谢使用圆通速递，期待再次为您服务"},{"time":"2018-06-05 08:58:08","ftime":"2018-06-05 08:58:08","context":"河南省南阳市新野县公司(点击查询电话)王** 派件中 派件员电话13721843967"},{"time":"2018-06-05 08:43:03","ftime":"2018-06-05 08:43:03","context":"河南省南阳市新野县公司 已收入"},{"time":"2018-06-05 08:23:25","ftime":"2018-06-05 08:23:25","context":"河南省南阳市新野县公司 已收入"},{"time":"2018-06-05 04:19:56","ftime":"2018-06-05 04:19:56","context":"漯河转运中心 已发出,下一站"},{"time":"2018-06-04 04:45:56","ftime":"2018-06-04 04:45:56","context":"漯河转运中心 已发出,下一站 河南省南阳市新野县"},{"time":"2018-06-04 02:28:22","ftime":"2018-06-04 02:28:22","context":"漯河转运中心 已收入"},{"time":"2018-06-04 01:04:46","ftime":"2018-06-04 01:04:46","context":"漯河转运中心 已收入"},{"time":"2018-06-03 05:51:29","ftime":"2018-06-03 05:51:29","context":"广州转运中心 已发出,下一站"},{"time":"2018-06-03 00:24:02","ftime":"2018-06-03 00:24:02","context":"广州转运中心 已发出,下一站 漯河转运中心"},{"time":"2018-06-03 00:12:24","ftime":"2018-06-03 00:12:24","context":"广州转运中心 已收入"},{"time":"2018-06-02 23:22:08","ftime":"2018-06-02 23:22:08","context":"广州转运中心 已收入"},{"time":"2018-06-02 21:46:17","ftime":"2018-06-02 21:46:17","context":"广东省广州市新增城市公司 已发出,下一站"},{"time":"2018-06-02 21:43:13","ftime":"2018-06-02 21:43:13","context":"广东省广州市新增城市公司 已发出,下一站 广州转运中心"},{"time":"2018-06-02 21:33:14","ftime":"2018-06-02 21:33:14","context":"广东省广州市新增城市公司 已打包"},{"time":"2018-06-02 21:26:43","ftime":"2018-06-02 21:26:43","context":"广东省广州市新增城市公司(点击查询电话) 已揽收"},{"time":"2018-06-02 18:44:22","ftime":"2018-06-02 18:44:22","context":"广东省广州市新增城市公司 取件人: 曾树洋 已收件"}]
              */
 
-            @SerializedName("message")
-            private String messageX;
-            private String nu;
-            private String ischeck;
-            private String condition;
             private String com;
-            private String status;
-            private String state;
-            @SerializedName("data")
-            private List<DataBean> dataX;
-
-            public String getMessageX() {
-                return messageX;
-            }
-
-            public void setMessageX(String messageX) {
-                this.messageX = messageX;
-            }
-
-            public String getNu() {
-                return nu;
-            }
-
-            public void setNu(String nu) {
-                this.nu = nu;
-            }
-
-            public String getIscheck() {
-                return ischeck;
-            }
-
-            public void setIscheck(String ischeck) {
-                this.ischeck = ischeck;
-            }
-
-            public String getCondition() {
-                return condition;
-            }
-
-            public void setCondition(String condition) {
-                this.condition = condition;
-            }
+            private String context;
+            private String ftime;
+            private String time;
 
             public String getCom() {
                 return com;
@@ -349,64 +311,28 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
                 this.com = com;
             }
 
-            public String getStatus() {
-                return status;
+            public String getContext() {
+                return context;
             }
 
-            public void setStatus(String status) {
-                this.status = status;
+            public void setContext(String contex) {
+                this.context = contex;
             }
 
-            public String getState() {
-                return state;
+            public String getFtime() {
+                return ftime;
             }
 
-            public void setState(String state) {
-                this.state = state;
+            public void setFtime(String ftime) {
+                this.ftime = ftime;
             }
 
-            public List<DataBean> getDataX() {
-                return dataX;
+            public String getTime() {
+                return time;
             }
 
-            public void setDataX(List<DataBean> dataX) {
-                this.dataX = dataX;
-            }
-
-            public class DataBean {
-                /**
-                 * time : 2018-06-05 13:05:27
-                 * ftime : 2018-06-05 13:05:27
-                 * context : 客户 签收人: 陈媛 已签收  感谢使用圆通速递，期待再次为您服务
-                 */
-
-                private String time;
-                private String ftime;
-                private String context;
-
-                public String getTime() {
-                    return time;
-                }
-
-                public void setTime(String time) {
-                    this.time = time;
-                }
-
-                public String getFtime() {
-                    return ftime;
-                }
-
-                public void setFtime(String ftime) {
-                    this.ftime = ftime;
-                }
-
-                public String getContext() {
-                    return context;
-                }
-
-                public void setContext(String context) {
-                    this.context = context;
-                }
+            public void setTime(String time) {
+                this.time = time;
             }
         }
 
