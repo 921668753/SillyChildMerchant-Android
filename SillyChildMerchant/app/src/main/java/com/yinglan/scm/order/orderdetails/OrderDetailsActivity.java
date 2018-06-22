@@ -2,6 +2,7 @@ package com.yinglan.scm.order.orderdetails;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import com.yinglan.scm.adapter.order.orderdetails.OrderDetailGoodAdapter;
 import com.yinglan.scm.entity.order.orderdetail.LogisBean;
 import com.yinglan.scm.entity.order.orderdetail.OrderDetailBean;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.order.aftersalesdetails.AfterSalesDetailsActivity;
 import com.yinglan.scm.order.dialog.AfterSaleBouncedDialog;
 import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
@@ -37,7 +39,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/2.
  */
 
-public class OrderDetailsActivity extends BaseActivity implements OrderDetailsContract.View, TimeCount.TimeCountCallBack {
+public class OrderDetailsActivity extends BaseActivity implements OrderDetailsContract.View, TimeCount.TimeCountCallBack, OrderDetailGoodAdapter.OnItemStatusListener, AdapterView.OnItemClickListener {
 
     /**
      * 等待买家付款
@@ -228,31 +230,11 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
 
     /**
-     * 售后原因
+     * 分界线10
      */
-    @BindView(id = R.id.tv_afterWhy)
-    private TextView tv_afterWhy;
+    @BindView(id = R.id.tv_divider)
+    private TextView tv_divider;
 
-    @BindView(id = R.id.ll_afterType)
-    private LinearLayout ll_afterType;
-
-    @BindView(id = R.id.tv_afterType)
-    private TextView tv_afterType;
-
-    @BindView(id = R.id.ll_refundReason)
-    private LinearLayout ll_refundReason;
-
-    @BindView(id = R.id.tv_refundReason)
-    private TextView tv_refundReason;
-
-    @BindView(id = R.id.ll_problemDescription)
-    private LinearLayout ll_problemDescription;
-
-    @BindView(id = R.id.tv_problemDescription)
-    private TextView tv_problemDescription;
-
-    @BindView(id = R.id.et_accountAfterSalesService)
-    private EditText et_accountAfterSalesService;
 
     /**
      * 底部按钮
@@ -271,18 +253,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
      */
     @BindView(id = R.id.tv_seeEvaluation, click = true)
     private TextView tv_seeEvaluation;
-
-    /**
-     * 拒绝
-     */
-    @BindView(id = R.id.tv_refused, click = true)
-    private TextView tv_refused;
-
-    /**
-     * 同意
-     */
-    @BindView(id = R.id.tv_agreed, click = true)
-    private TextView tv_agreed;
 
     private OrderDetailGoodAdapter mAdapter;
 
@@ -312,6 +282,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     private AfterSaleBouncedDialog afterSaleBouncedDialog = null;
 
+    private int status = 0;
+
 
     @Override
     public void setRootView() {
@@ -323,7 +295,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         super.initData();
         mPresenter = new OrderDetailsPresenter(this);
         mAdapter = new OrderDetailGoodAdapter(this);
-        time = new TimeCount();
         orderId = getIntent().getIntExtra("orderId", 0);
         selectLogis();
         initDialog();
@@ -352,13 +323,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         afterSaleBouncedDialog = new AfterSaleBouncedDialog(this) {
             @Override
             public void confirm(int id, int marketEnable) {
-                if (marketEnable == 1) {
-                    showLoadingDialog(getString(R.string.dataLoad));
-                    ((OrderDetailsContract.Presenter) mPresenter).postOrderBack(orderId, 2, et_accountAfterSalesService.getText().toString(), amountRealPay);
-                } else if (marketEnable == 2) {
-                    showLoadingDialog(getString(R.string.dataLoad));
-                    ((OrderDetailsContract.Presenter) mPresenter).postOrderBack(orderId, 1, et_accountAfterSalesService.getText().toString(), amountRealPay);
-                }
+                showLoadingDialog(getString(R.string.dataLoad));
+                ((OrderDetailsContract.Presenter) mPresenter).postOrderBack(id, marketEnable, "");
             }
         };
     }
@@ -368,8 +334,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     public void initWidget() {
         super.initWidget();
         initTitle();
-        time.setTimeCountCallBack(this);
         lv_shopGoods.setAdapter(mAdapter);
+        lv_shopGoods.setOnItemClickListener(this);
+        mAdapter.setOnItemStatusListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
         ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
     }
@@ -398,24 +365,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 Intent intent = new Intent(aty, SeeEvaluationActivity.class);
                 intent.putExtra("orderId", orderId);
                 showActivity(aty, intent);
-                break;
-            case R.id.tv_refused:
-                if (afterSaleBouncedDialog == null) {
-                    initDialog();
-                }
-                if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
-                    afterSaleBouncedDialog.show();
-                    afterSaleBouncedDialog.setContent(getString(R.string.makeSureRejectApplication), orderId, 1);
-                }
-                break;
-            case R.id.tv_agreed:
-                if (afterSaleBouncedDialog == null) {
-                    initDialog();
-                }
-                if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
-                    afterSaleBouncedDialog.show();
-                    afterSaleBouncedDialog.setContent(getString(R.string.confirmApprovalAfterSalesApplication), orderId, 2);
-                }
                 break;
         }
     }
@@ -450,10 +399,11 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else {
                 tradingClosedGood();
             }
+            status = orderDetailBean.getData().getStatus();
             tv_name.setText(orderDetailBean.getData().getShip_name());
             tv_phone.setText(orderDetailBean.getData().getShip_mobile());
             tv_address.setText(orderDetailBean.getData().getShipping_area());
-            tv_detailedAddress.setText(orderDetailBean.getData().getShip_mobile());
+            tv_detailedAddress.setText(orderDetailBean.getData().getShip_addr());
             if (orderDetailBean.getData().getItemList() != null && orderDetailBean.getData().getItemList().size() > 0) {
                 mAdapter.clear();
                 mAdapter.addMoreData(orderDetailBean.getData().getItemList());
@@ -485,14 +435,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_amountRealPay.setText(getString(R.string.renminbi) + amountRealPay);
             tv_paymentTime.setText(orderDetailBean.getData().getPay_time());
             tv_deliveryTime.setText(orderDetailBean.getData().getAllocation_time());
-            tv_afterType.setText(orderDetailBean.getData().getRemark());
-            tv_refundReason.setText(orderDetailBean.getData().getReason());
-
-            if (StringUtils.isEmpty(orderDetailBean.getData().getReason())) {
-                tv_problemDescription.setText(getString(R.string.notfillAfterSaleReason));
-            } else {
-                tv_problemDescription.setText(orderDetailBean.getData().getReasonDetail());
-            }
             dismissLoadingDialog();
         } else if (flag == 1) {
             LogisBean logisBean = (LogisBean) JsonUtil.getInstance().json2Obj(success, LogisBean.class);
@@ -537,13 +479,11 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_courierCompany.setVisibility(View.GONE);
         tv_confirmDelivery1.setVisibility(View.GONE);
 
-        tv_afterWhy.setVisibility(View.GONE);
-        ll_afterType.setVisibility(View.GONE);
-        ll_refundReason.setVisibility(View.GONE);
-        ll_problemDescription.setVisibility(View.GONE);
-        et_accountAfterSalesService.setVisibility(View.GONE);
+        tv_divider.setVisibility(View.GONE);
+
         if (StringUtils.toLong(orderDetailBean.getData().getLastTime()) > 0) {
-            time.setMillisCountDown(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000, 60000);
+            time = new TimeCount(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000, 60000);
+            time.setTimeCountCallBack(this);
             time.start();
         }
     }
@@ -568,12 +508,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_expressNumber.setVisibility(View.VISIBLE);
         ll_courierCompany.setVisibility(View.VISIBLE);
         tv_confirmDelivery1.setVisibility(View.VISIBLE);
-        tv_afterWhy.setVisibility(View.GONE);
 
-        ll_afterType.setVisibility(View.GONE);
-        ll_refundReason.setVisibility(View.GONE);
-        ll_problemDescription.setVisibility(View.GONE);
-        et_accountAfterSalesService.setVisibility(View.GONE);
+        tv_divider.setVisibility(View.GONE);
 
         ((OrderDetailsContract.Presenter) mPresenter).getLogis();
     }
@@ -602,12 +538,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_expressNumber.setVisibility(View.GONE);
         ll_courierCompany.setVisibility(View.GONE);
         tv_confirmDelivery1.setVisibility(View.GONE);
-        tv_afterWhy.setVisibility(View.GONE);
 
-        ll_afterType.setVisibility(View.GONE);
-        ll_refundReason.setVisibility(View.GONE);
-        ll_problemDescription.setVisibility(View.GONE);
-        et_accountAfterSalesService.setVisibility(View.GONE);
+        tv_divider.setVisibility(View.GONE);
 
         if (orderDetailBean.getData().getShipInfo() == null ||
                 StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getContext()) || StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getTime())) {
@@ -640,12 +572,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_expressNumber.setVisibility(View.GONE);
         ll_courierCompany.setVisibility(View.GONE);
         tv_confirmDelivery1.setVisibility(View.GONE);
-        tv_afterWhy.setVisibility(View.GONE);
 
-        ll_afterType.setVisibility(View.GONE);
-        ll_refundReason.setVisibility(View.GONE);
-        ll_problemDescription.setVisibility(View.GONE);
-        et_accountAfterSalesService.setVisibility(View.GONE);
+        tv_divider.setVisibility(View.GONE);
 
         if (orderDetailBean.getData().getShipInfo() == null ||
                 StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getContext()) || StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getTime())) {
@@ -663,8 +591,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             ll_bottom.setVisibility(View.VISIBLE);
             tv_confirmDelivery.setVisibility(View.GONE);
             tv_seeEvaluation.setVisibility(View.VISIBLE);
-            tv_refused.setVisibility(View.GONE);
-            tv_agreed.setVisibility(View.GONE);
         }
     }
 
@@ -682,26 +608,17 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         }
         tv_orderCourierInformation.setVisibility(View.VISIBLE);
         tv_orderCourierTime.setVisibility(View.VISIBLE);
-        ll_name.setVisibility(View.GONE);
-        ll_address.setVisibility(View.GONE);
+        ll_name.setVisibility(View.VISIBLE);
+        ll_address.setVisibility(View.VISIBLE);
         ll_modePayment.setVisibility(View.GONE);
         ll_amountRealPay.setVisibility(View.GONE);
         ll_paymentTime.setVisibility(View.GONE);
         ll_deliveryTime.setVisibility(View.GONE);
-        ll_bottom.setVisibility(View.VISIBLE);
-        tv_confirmDelivery.setVisibility(View.GONE);
-        tv_seeEvaluation.setVisibility(View.GONE);
-        tv_refused.setVisibility(View.VISIBLE);
-        tv_agreed.setVisibility(View.VISIBLE);
+        ll_bottom.setVisibility(View.GONE);
         ll_expressNumber.setVisibility(View.GONE);
         ll_courierCompany.setVisibility(View.GONE);
         tv_confirmDelivery1.setVisibility(View.GONE);
-
-        tv_afterWhy.setVisibility(View.VISIBLE);
-        ll_afterType.setVisibility(View.VISIBLE);
-        ll_refundReason.setVisibility(View.VISIBLE);
-        ll_problemDescription.setVisibility(View.VISIBLE);
-        et_accountAfterSalesService.setVisibility(View.VISIBLE);
+        tv_divider.setVisibility(View.VISIBLE);
         if (orderDetailBean.getData().getShipInfo() == null ||
                 StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getContext()) || StringUtils.isEmpty(orderDetailBean.getData().getShipInfo().getTime())) {
             tv_courierName.setVisibility(View.GONE);
@@ -735,11 +652,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_expressNumber.setVisibility(View.GONE);
         ll_courierCompany.setVisibility(View.GONE);
         tv_confirmDelivery1.setVisibility(View.GONE);
-        tv_afterWhy.setVisibility(View.GONE);
-        ll_afterType.setVisibility(View.GONE);
-        ll_refundReason.setVisibility(View.GONE);
-        ll_problemDescription.setVisibility(View.GONE);
-        et_accountAfterSalesService.setVisibility(View.GONE);
+
+        tv_divider.setVisibility(View.GONE);
     }
 
     @Override
@@ -755,17 +669,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ViewInject.toast(msg);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (afterSaleBouncedDialog != null) {
-            afterSaleBouncedDialog.cancel();
-        }
-        afterSaleBouncedDialog = null;
-        pvOptions = null;
-        time.cancel();
-        time = null;
-    }
 
     @Override
     public void onFinishTime() {
@@ -774,6 +677,59 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     @Override
     public void onTick(long millisUntilFinished) {
-        tv_lateCancelled.setText(String.valueOf(millisUntilFinished / 60000));
+        String millisUntilFinish = "";
+        long minute = millisUntilFinished / 60000;
+        long seconds = millisUntilFinished % 60000;
+        if (minute > 0) {
+            millisUntilFinish = minute + getString(R.string.minute) + seconds + getString(R.string.seconds);
+        } else {
+            millisUntilFinish = seconds + getString(R.string.seconds);
+        }
+        tv_lateCancelled.setText(getString(R.string.lateCancelled) + millisUntilFinish + getString(R.string.lateCancelled1));
+    }
+
+    @Override
+    public void onItemSetRefusedListener(View view, int id) {
+        if (afterSaleBouncedDialog == null) {
+            initDialog();
+        }
+        if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
+            afterSaleBouncedDialog.show();
+            afterSaleBouncedDialog.setContent(getString(R.string.makeSureRejectApplication), id, 2);
+        }
+    }
+
+    @Override
+    public void onItemSetAgreedListener(View view, int id) {
+        if (afterSaleBouncedDialog == null) {
+            initDialog();
+        }
+        if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
+            afterSaleBouncedDialog.show();
+            afterSaleBouncedDialog.setContent(getString(R.string.confirmApprovalAfterSalesApplication), id, 1);
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (status == 7 || status == 8) {
+            Intent intent = new Intent(this, AfterSalesDetailsActivity.class);
+            intent.putExtra("item_id", mAdapter.getItem(i).getItem_id());
+            showActivity(this, intent);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (afterSaleBouncedDialog != null) {
+            afterSaleBouncedDialog.cancel();
+        }
+        afterSaleBouncedDialog = null;
+        pvOptions = null;
+        if (time != null) {
+            time.cancel();
+        }
+        time = null;
     }
 }

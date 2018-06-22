@@ -87,6 +87,7 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
             private int orderId;
             private int commented;
             private String paymoney;
+            private String need_pay_memey;
             private String sn;
             private int itemsCount;
             private int status;
@@ -114,6 +115,14 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
 
             public void setPaymoney(String paymoney) {
                 this.paymoney = paymoney;
+            }
+
+            public String getNeed_pay_memey() {
+                return need_pay_memey;
+            }
+
+            public void setNeed_pay_memey(String need_pay_memey) {
+                this.need_pay_memey = need_pay_memey;
             }
 
             public String getSn() {
@@ -185,6 +194,7 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
                 private int goods_type;
                 private String sn;
                 private int state;
+                private int sellback_state;
                 private FieldsBean fields;
                 private int order_id;
 
@@ -322,6 +332,14 @@ public class GoodOrderBean extends BaseResult<GoodOrderBean.DataBean> {
 
                 public void setFields(FieldsBean fields) {
                     this.fields = fields;
+                }
+
+                public int getSellback_state() {
+                    return sellback_state;
+                }
+
+                public void setSellback_state(int sellback_state) {
+                    this.sellback_state = sellback_state;
                 }
 
                 public int getOrder_id() {

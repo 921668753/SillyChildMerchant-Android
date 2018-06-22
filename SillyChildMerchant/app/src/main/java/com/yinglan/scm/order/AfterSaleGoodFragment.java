@@ -13,24 +13,19 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
-import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.order.GoodsOrderViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.order.GoodOrderBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.main.MainActivity;
-import com.yinglan.scm.main.MineContract;
 import com.yinglan.scm.order.dialog.AfterSaleBouncedDialog;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
-import com.yinglan.scm.order.orderdetails.OrderDetailsContract;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -40,7 +35,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View, BGAOnItemChildClickListener {
+public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View, BGAOnItemChildClickListener, GoodsOrderViewAdapter.OnStatusListener {
 
     private MainActivity aty;
 
@@ -85,7 +80,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
 
     private AfterSaleBouncedDialog afterSaleBouncedDialog = null;
 
-    private int selectedPosition = 0;
+    // private int selectedPosition = 0;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -108,13 +103,8 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         afterSaleBouncedDialog = new AfterSaleBouncedDialog(aty) {
             @Override
             public void confirm(int id, int marketEnable) {
-                if (marketEnable == 0) {
-                    showLoadingDialog(getString(R.string.dataLoad));
-                    ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(selectedPosition).getOrderId(), 2, "", mAdapter.getItem(selectedPosition).getPaymoney());
-                } else if (marketEnable == 1) {
-                    showLoadingDialog(getString(R.string.dataLoad));
-                    ((GoodOrderContract.Presenter) mPresenter).postOrderBack(mAdapter.getItem(selectedPosition).getOrderId(), 1, "", mAdapter.getItem(selectedPosition).getPaymoney());
-                }
+                showLoadingDialog(getString(R.string.dataLoad));
+                ((GoodOrderContract.Presenter) mPresenter).postOrderBack(id, marketEnable, "");
             }
         };
     }
@@ -125,6 +115,7 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         super.initWidget(parentView);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_order.setAdapter(mAdapter);
+        mAdapter.setOnStatusListener(this);
         lv_order.setOnItemClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
         mRefreshLayout.beginRefreshing();
@@ -256,23 +247,32 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-        selectedPosition = position;
-        if (childView.getId() == R.id.tv_refused) {
-            if (afterSaleBouncedDialog == null) {
-                initDialog();
-            }
-            if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
-                afterSaleBouncedDialog.show();
-                afterSaleBouncedDialog.setContent(getString(R.string.makeSureRejectApplication), mAdapter.getItem(position).getOrderId(), 0);
-            }
-        } else if (childView.getId() == R.id.tv_agreed) {
-            if (afterSaleBouncedDialog == null) {
-                initDialog();
-            }
-            if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
-                afterSaleBouncedDialog.show();
-                afterSaleBouncedDialog.setContent(getString(R.string.confirmApprovalAfterSalesApplication), mAdapter.getItem(position).getOrderId(), 1);
-            }
+        if (childView.getId() == R.id.tv_seeOrder) {
+            Intent intent = new Intent(aty, OrderDetailsActivity.class);
+            intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
+            aty.showActivity(aty, intent);
+        }
+    }
+
+    @Override
+    public void onSetRefusedListener(View view, int id) {
+        if (afterSaleBouncedDialog == null) {
+            initDialog();
+        }
+        if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
+            afterSaleBouncedDialog.show();
+            afterSaleBouncedDialog.setContent(getString(R.string.makeSureRejectApplication), id, 2);
+        }
+    }
+
+    @Override
+    public void onSetAgreedListener(View view, int id) {
+        if (afterSaleBouncedDialog == null) {
+            initDialog();
+        }
+        if (afterSaleBouncedDialog != null && !afterSaleBouncedDialog.isShowing()) {
+            afterSaleBouncedDialog.show();
+            afterSaleBouncedDialog.setContent(getString(R.string.confirmApprovalAfterSalesApplication), id, 1);
         }
     }
 
@@ -299,4 +299,6 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
         mAdapter.clear();
         mAdapter = null;
     }
+
+
 }

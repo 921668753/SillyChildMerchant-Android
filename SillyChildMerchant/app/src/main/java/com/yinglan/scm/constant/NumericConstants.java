@@ -62,7 +62,7 @@ public class NumericConstants {
     public static final int REQUEST_CODE_PREVIEW2 = 103;
 
     //定位权限权限所需参数
-    public final static int  LOCATION_CODE = 104;
+    public final static int LOCATION_CODE = 104;
 
     /**
      * 订单状态：0未支付
@@ -161,7 +161,7 @@ public class NumericConstants {
     /**
      * 图片选择的最大数量
      */
-    public static final int MAXPICTURE=8;
+    public static final int MAXPICTURE = 8;
 
     /**
      * 输入框小数的位数

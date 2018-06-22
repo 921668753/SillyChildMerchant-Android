@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView style="@style/DividerWidth" />
+
+    <ScrollView
+        style="@style/MatchMatch"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/MatchMatch"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <ImageView
+                    style="@style/Image20"
+                    android:src="@mipmap/order_after_sale_icon" />
+
+                <TextView
+                    android:id="@+id/tv_applyAfterSales"
+                    style="@style/WrapWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="@string/applyAfterSales"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize14" />
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:paddingBottom="@dimen/dimen14"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen14"
+                android:text="@string/commodityInformation"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize14" />
+
+            <View style="@style/DividerWidth" />
+
+            <include layout="@layout/item_shopgoodsup" />
+
+            <LinearLayout
+                style="@style/Match48"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/orderNumber1"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_orderCode"
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:singleLine="true"
+                    android:text="201804291350"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                style="@style/Match48"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/submitTime"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_submitTime"
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:singleLine="true"
+                    android:text="2018-04-29 13:50"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                android:id="@+id/ll_modePayment"
+                style="@style/Match48"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/modePayment"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_modePayment"
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:singleLine="true"
+                    android:text="@string/weChatPay"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                android:id="@+id/ll_amountRealPay"
+                style="@style/Match48"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/amountRealPay"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:singleLine="true"
+                    android:text="@string/renminbi"
+                    android:textColor="@color/fF0000Colors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_amountRealPay"
+                    style="@style/AutoWrap"
+                    android:singleLine="true"
+                    android:text="50.00"
+                    android:textColor="@color/fF0000Colors"
+                    android:textSize="@dimen/textsize13" />
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                android:id="@+id/ll_paymentTime"
+                style="@style/Match48"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/paymentTime"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_paymentTime"
+                    style="@style/AutoWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:singleLine="true"
+                    android:text="2018-04-29  13:50"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/Match48"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/afterType1"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_afterType"
+                    style="@style/MatchWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="退货退款"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                style="@style/Match48"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/afterNumber"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_afterNumber"
+                    style="@style/MatchWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="123"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Match48"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/refundAmount"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="@string/renminbi"
+                    android:textColor="@color/fF0000Colors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_refundAmount"
+                    style="@style/MatchWrap"
+                    android:text="285.00"
+                    android:textColor="@color/fF0000Colors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Match48"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/afterWhy1"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_afterWhy"
+                    style="@style/MatchWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="不喜欢/不合适"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen17"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen17">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/problemDescription"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+                <TextView
+                    android:id="@+id/tv_problemDescription"
+                    style="@style/MatchWrap"
+                    android:paddingLeft="@dimen/dimen10"
+                    android:text="不喜欢/不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适不合适"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize13" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/et_accountAfterSalesService"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen150"
+                android:layout_marginBottom="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/whiteColors"
+                android:gravity="start"
+                android:hint="@string/accountAfterSalesService"
+                android:padding="@dimen/dimen15"
+                android:textColor="@color/titletextcolors"
+                android:textColorHint="@color/hintColors"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:textSize="@dimen/textsize12" />
+
+            <LinearLayout
+                style="@style/Match49"
+                android:layout_marginBottom="@dimen/dimen15"
+                android:background="@color/whiteColors"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView style="@style/AutoWrap" />
+
+                <TextView
+                    android:id="@+id/tv_refused1"
+                    style="@style/Match9035"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:background="@drawable/shape_goodbtn"
+                    android:gravity="center"
+                    android:text="@string/refused"
+                    android:textColor="@color/greenColors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    android:id="@+id/tv_agreed1"
+                    style="@style/Match9035"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:background="@drawable/shape_goodbtn"
+                    android:gravity="center"
+                    android:text="@string/agreed"
+                    android:textColor="@color/greenColors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

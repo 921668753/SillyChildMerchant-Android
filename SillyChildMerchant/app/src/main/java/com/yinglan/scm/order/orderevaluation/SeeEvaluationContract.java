@@ -3,8 +3,6 @@ package com.yinglan.scm.order.orderevaluation;
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
-import java.io.File;
-
 /**
  * Created by ruitu on 2016/9/24.
  */

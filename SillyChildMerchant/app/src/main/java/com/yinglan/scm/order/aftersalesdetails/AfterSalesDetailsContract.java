@@ -1,29 +1,26 @@
-package com.yinglan.scm.order;
+package com.yinglan.scm.order.aftersalesdetails;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 
 /**
- * Created by ruitu on 2016/9/24.
+ * Created by ruitu on  2018/6/24.
  */
 
-public interface GoodOrderContract {
+public interface AfterSalesDetailsContract {
+
     interface Presenter extends BasePresenter {
 
         /**
-         * 获取订单信息列表
+         * 获取售后详情
          */
-        void getOrderList(String status, int page);
-
-        /**
-         * 确认发货
-         */
-        void postOrderShip(int orderId);
+        void getAfterSalesDetails(int orderItemId);
 
         /**
          * 订单售后
          */
         void postOrderBack(int orderItemId, int status, String sellerRemark);
+
     }
 
     interface View extends BaseView<Presenter, String> {

@@ -40,26 +40,13 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tv_refused"
+        android:id="@+id/tv_seeOrder"
         style="@style/Match9035"
         android:layout_marginLeft="@dimen/dimen10"
         android:background="@drawable/shape_goodbtn"
         android:gravity="center"
-        android:text="@string/refused"
+        android:text="@string/seeOrder"
         android:textColor="@color/greenColors"
         android:textSize="@dimen/textsize15"
         android:visibility="gone" />
-
-
-    <TextView
-        android:id="@+id/tv_agreed"
-        style="@style/Match9035"
-        android:layout_marginLeft="@dimen/dimen10"
-        android:background="@drawable/shape_goodbtn"
-        android:gravity="center"
-        android:text="@string/agreed"
-        android:textColor="@color/greenColors"
-        android:textSize="@dimen/textsize15"
-        android:visibility="gone" />
-
 </LinearLayout>

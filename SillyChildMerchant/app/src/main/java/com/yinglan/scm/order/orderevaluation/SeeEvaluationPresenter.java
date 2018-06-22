@@ -1,15 +1,11 @@
 package com.yinglan.scm.order.orderevaluation;
 
-import android.text.TextUtils;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.rxvolley.client.HttpParams;
-import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
-
-import java.io.File;
 
 /**
  * Created by ruitu on 2016/9/24.

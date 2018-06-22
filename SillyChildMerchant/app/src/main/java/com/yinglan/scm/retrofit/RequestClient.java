@@ -417,6 +417,26 @@ public class RequestClient {
     }
 
     /**
+     * 售后详情
+     */
+    public static void getSellBackDetail(Context context, HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getSellBackDetail");
+        doServer(context, new TokenCallback() {
+            @Override
+            public void execute() {
+                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                if (StringUtils.isEmpty(cookies)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("Cookie", cookies);
+                HttpRequest.requestGetHttp(context, URLConstants.SELLBACKDETAIL, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
      * 订单售后
      */
     public static void postOrderBack(Context context, HttpParams httpParams, ResponseListener<String> listener) {

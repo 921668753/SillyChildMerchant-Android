@@ -138,6 +138,11 @@
             android:name=".order.orderdetails.OrderDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!--订单  售后详情-->
+        <activity
+            android:name=".order.aftersalesdetails.AfterSalesDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <!--订单  订单评价-->
         <activity
             android:name=".order.orderevaluation.SeeEvaluationActivity"
@@ -359,9 +364,6 @@
         <!--</activity>-->
 
 
-
-
-
         <!--会话界面-->
         <activity
             android:name=".message.interactivemessage.ConversationActivity"
@@ -466,7 +468,6 @@
         <!--android:process=":remote" />-->
         <!--百度地图-->
         <!--百度地图-->
-
 
 
         <!--Anrroid 7.0SD卡路径-->

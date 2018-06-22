@@ -1,7 +1,7 @@
 package com.yinglan.scm.adapter.order;
 
 import android.content.Context;
-import android.widget.ImageView;
+import android.view.View;
 
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
@@ -19,6 +19,8 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 public class GoodOrderItemsViewAdapter extends BGAAdapterViewAdapter<OrderItemsBean> {
 
+    private OnItemStatusListener onStatusListener;
+
     public GoodOrderItemsViewAdapter(Context context) {
         super(context, R.layout.item_shopgoodsup);
     }
@@ -34,5 +36,41 @@ public class GoodOrderItemsViewAdapter extends BGAAdapterViewAdapter<OrderItemsB
             viewHolderHelper.setText(R.id.tv_goodDescribe, model.getSpecs());
         }
         viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
+        if (model.getSellback_state() == 0) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+        } else if (model.getSellback_state() == 1) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.VISIBLE);
+        } else if (model.getSellback_state() == 2) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+        } else if (model.getSellback_state() == 3) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+        }
+        viewHolderHelper.getTextView(R.id.tv_refused).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onStatusListener.onItemSetRefusedListener(view, model.getItem_id());
+            }
+        });
+        viewHolderHelper.getTextView(R.id.tv_agreed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onStatusListener.onItemSetAgreedListener(view, model.getItem_id());
+            }
+        });
     }
+
+    public void setOnItemStatusListener(OnItemStatusListener onStatusListener) {
+        this.onStatusListener = onStatusListener;
+    }
+
+    public interface OnItemStatusListener {
+        void onItemSetRefusedListener(View view, int id);
+
+        void onItemSetAgreedListener(View view, int id);
+    }
+
 }

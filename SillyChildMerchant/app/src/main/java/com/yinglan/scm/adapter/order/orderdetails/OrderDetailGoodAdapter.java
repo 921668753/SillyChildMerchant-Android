@@ -1,6 +1,7 @@
 package com.yinglan.scm.adapter.order.orderdetails;
 
 import android.content.Context;
+import android.view.View;
 
 import com.common.cklibrary.utils.MathUtil;
 import com.kymjs.common.StringUtils;
@@ -18,13 +19,14 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 public class OrderDetailGoodAdapter extends BGAAdapterViewAdapter<ItemListBean> {
 
+    private OnItemStatusListener onStatusListener;
+
     public OrderDetailGoodAdapter(Context context) {
         super(context, R.layout.item_shopgoodsup);
     }
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ItemListBean listBean) {
-
 
         /**
          * 图片
@@ -51,6 +53,40 @@ public class OrderDetailGoodAdapter extends BGAAdapterViewAdapter<ItemListBean> 
          */
         viewHolderHelper.setText(R.id.tv_money, MathUtil.keepTwo(StringUtils.toDouble(listBean.getPrice())));
 
+        if (listBean.getSellback_state() == 0) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+        } else if (listBean.getSellback_state() == 1) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.VISIBLE);
+        } else if (listBean.getSellback_state() == 2) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+        } else if (listBean.getSellback_state() == 3) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+        }
+        viewHolderHelper.getTextView(R.id.tv_refused).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onStatusListener.onItemSetRefusedListener(view, listBean.getItem_id());
+            }
+        });
+        viewHolderHelper.getTextView(R.id.tv_agreed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onStatusListener.onItemSetAgreedListener(view, listBean.getItem_id());
+            }
+        });
     }
 
+    public void setOnItemStatusListener(OnItemStatusListener onStatusListener) {
+        this.onStatusListener = onStatusListener;
+    }
+
+    public interface OnItemStatusListener {
+        void onItemSetRefusedListener(View view, int id);
+
+        void onItemSetAgreedListener(View view, int id);
+    }
 }

@@ -12,6 +12,7 @@ import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.order.GoodOrderBean.DataBean.ResultBean;
+import com.yinglan.scm.order.aftersalesdetails.AfterSalesDetailsActivity;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
@@ -23,6 +24,8 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
  */
 
 public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
+
+    private OnStatusListener onStatusListener = null;
 
     //用于退出 Activity,避免 Countdown，造成资源浪费。
     private SparseArray<GoodOrderItemsViewAdapter> countDownCounters;
@@ -37,8 +40,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
         super.setItemChildListener(helper);
         helper.setItemChildClickListener(R.id.tv_confirmDelivery);
         helper.setItemChildClickListener(R.id.tv_seeEvaluation);
-        helper.setItemChildClickListener(R.id.tv_refused);
-        helper.setItemChildClickListener(R.id.tv_agreed);
+        helper.setItemChildClickListener(R.id.tv_seeOrder);
     }
 
     @Override
@@ -53,8 +55,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
         } else if (listBean.getStatus() == 3) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.waitGoods));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
@@ -64,24 +65,21 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
         } else if (listBean.getStatus() == 5 && listBean.getCommented() == 1) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.VISIBLE);
-            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
-        } else if (listBean.getStatus() == 7) {
+            viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
+        } else if (listBean.getStatus() == 7 || listBean.getStatus() == 8) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_refused, View.VISIBLE);
-            viewHolderHelper.setVisibility(R.id.tv_agreed, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.VISIBLE);
         } else {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.closed));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
@@ -94,9 +92,26 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
             GoodOrderItemsViewAdapter adapter = new GoodOrderItemsViewAdapter(mContext);
             clv_shopgoods.setAdapter(adapter);
+            adapter.setOnItemStatusListener(new GoodOrderItemsViewAdapter.OnItemStatusListener() {
+                @Override
+                public void onItemSetRefusedListener(View view, int id) {
+                    onStatusListener.onSetRefusedListener(view, id);
+                }
+
+                @Override
+                public void onItemSetAgreedListener(View view, int id) {
+                    onStatusListener.onSetAgreedListener(view, id);
+                }
+            });
             clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (listBean.getStatus() == 7 || listBean.getStatus() == 8) {
+                        Intent intent = new Intent(mContext, AfterSalesDetailsActivity.class);
+                        intent.putExtra("item_id", adapter.getItem(i).getItem_id());
+                        mContext.startActivity(intent);
+                        return;
+                    }
                     Intent intent = new Intent(mContext, OrderDetailsActivity.class);
                     intent.putExtra("orderId", listBean.getOrderId());
                     mContext.startActivity(intent);
@@ -109,6 +124,15 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
         }
     }
 
+    public void setOnStatusListener(OnStatusListener onStatusListener) {
+        this.onStatusListener = onStatusListener;
+    }
+
+    public interface OnStatusListener {
+        void onSetRefusedListener(View view, int id);
+
+        void onSetAgreedListener(View view, int id);
+    }
 
     @Override
     public void clear() {

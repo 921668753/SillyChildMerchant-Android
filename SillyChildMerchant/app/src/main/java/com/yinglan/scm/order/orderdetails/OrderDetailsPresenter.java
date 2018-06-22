@@ -82,11 +82,10 @@ public class OrderDetailsPresenter implements OrderDetailsContract.Presenter {
     }
 
     @Override
-    public void postOrderBack(int orderId, int status, String sellerRemark, String money) {
+    public void postOrderBack(int orderItemId, int status, String sellerRemark) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("orderId", orderId);
+        httpParams.put("orderItemId", orderItemId);
         httpParams.put("status", status);
-        httpParams.put("money", money);
         if (!StringUtils.isEmpty(sellerRemark)) {
             httpParams.put("sellerRemark", sellerRemark);
         }

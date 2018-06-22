@@ -82,7 +82,32 @@
                 android:textColor="@color/fF0000Colors"
                 android:textSize="@dimen/textsize14" />
 
+            <TextView
+                android:id="@+id/tv_refused"
+                android:layout_width="@dimen/dimen55"
+                android:layout_height="@dimen/dimen25"
+                android:background="@drawable/shape_goodbtn"
+                android:gravity="center"
+                android:text="@string/refused"
+                android:textColor="@color/greenColors"
+                android:textSize="@dimen/textsize12"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_agreed"
+                android:layout_width="@dimen/dimen55"
+                android:layout_height="@dimen/dimen25"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:background="@drawable/shape_goodbtn"
+                android:gravity="center"
+                android:text="@string/agreed"
+                android:textColor="@color/greenColors"
+                android:textSize="@dimen/textsize12"
+                android:visibility="gone" />
+
         </LinearLayout>
+
+
     </LinearLayout>
 
 

@@ -137,6 +137,11 @@ public class URLConstants {
     public static String ORDERRATE = APIURL + "order/rate.do";
 
     /**
+     * 售后详情
+     */
+    public static String SELLBACKDETAIL = APIURL + "order/sellBack/detail.do";
+
+    /**
      * 订单售后
      */
     public static String ORDERBACK = APIURL + "order/back.do";

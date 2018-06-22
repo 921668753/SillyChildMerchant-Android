@@ -67,6 +67,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
         private String lastTime;
         private String reasonDetail;
         private String remark;
+        private List<ItemListBean> itemList;
 
         public String getReasonDetail() {
             return reasonDetail;
@@ -83,8 +84,6 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
         public void setRemark(String remark) {
             this.remark = remark;
         }
-
-        private List<ItemListBean> itemList;
 
         public int getOrder_id() {
             return order_id;
@@ -360,6 +359,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
             private String sn;
             private String price;
             private String image;
+            private int sellback_state;
 
             public int getItem_id() {
                 return item_id;
@@ -439,6 +439,14 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public int getSellback_state() {
+                return sellback_state;
+            }
+
+            public void setSellback_state(int sellback_state) {
+                this.sellback_state = sellback_state;
             }
         }
     }

@@ -28,7 +28,7 @@ public interface OrderDetailsContract {
         /**
          * 订单售后
          */
-        void postOrderBack(int orderId, int status, String sellerRemark, String money);
+        void postOrderBack(int orderItemId, int status, String sellerRemark);
 
     }
 
