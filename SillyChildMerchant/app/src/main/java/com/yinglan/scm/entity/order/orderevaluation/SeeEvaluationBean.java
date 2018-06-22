@@ -1,5 +1,130 @@
 package com.yinglan.scm.entity.order.orderevaluation;
 
-public class SeeEvaluationBean {
+import com.common.cklibrary.entity.BaseResult;
 
+import java.util.List;
+
+public class SeeEvaluationBean extends BaseResult<SeeEvaluationBean.DataBean> {
+
+    public class DataBean {
+        /**
+         * memberCommentExts : [{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//07451628_thumbnail.jpg","specs":null,"imageList":["",""],"price":198,"num":6,"name":"苹果","comment":"测试啊测试啊"},{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//05100692_thumbnail.jpg","specs":null,"imageList":["",""],"price":1490,"num":1,"name":"苹果","comment":"测试啊测试啊"}]
+         * store_servicecredit : 5
+         * store_desccredit : 4
+         * store_deliverycredit : 3
+         */
+
+        private int store_servicecredit;
+        private int store_desccredit;
+        private int store_deliverycredit;
+        private List<MemberCommentExtsBean> memberCommentExts;
+
+        public int getStore_servicecredit() {
+            return store_servicecredit;
+        }
+
+        public void setStore_servicecredit(int store_servicecredit) {
+            this.store_servicecredit = store_servicecredit;
+        }
+
+        public int getStore_desccredit() {
+            return store_desccredit;
+        }
+
+        public void setStore_desccredit(int store_desccredit) {
+            this.store_desccredit = store_desccredit;
+        }
+
+        public int getStore_deliverycredit() {
+            return store_deliverycredit;
+        }
+
+        public void setStore_deliverycredit(int store_deliverycredit) {
+            this.store_deliverycredit = store_deliverycredit;
+        }
+
+        public List<MemberCommentExtsBean> getMemberCommentExts() {
+            return memberCommentExts;
+        }
+
+        public void setMemberCommentExts(List<MemberCommentExtsBean> memberCommentExts) {
+            this.memberCommentExts = memberCommentExts;
+        }
+
+        public class MemberCommentExtsBean {
+            /**
+             * image : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//07451628_thumbnail.jpg
+             * specs : null
+             * imageList : ["",""]
+             * price : 198
+             * num : 6
+             * name : 苹果
+             * comment : 测试啊测试啊
+             */
+
+            private String image;
+            private String specs;
+            private String price;
+            private String num;
+            private String name;
+            private String comment;
+            private List<String> imageList;
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
+
+            public String getSpecs() {
+                return specs;
+            }
+
+            public void setSpecs(String specs) {
+                this.specs = specs;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getNum() {
+                return num;
+            }
+
+            public void setNum(String num) {
+                this.num = num;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getComment() {
+                return comment;
+            }
+
+            public void setComment(String comment) {
+                this.comment = comment;
+            }
+
+            public List<String> getImageList() {
+                return imageList;
+            }
+
+            public void setImageList(List<String> imageList) {
+                this.imageList = imageList;
+            }
+        }
+    }
 }

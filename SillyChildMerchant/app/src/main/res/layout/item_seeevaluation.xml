@@ -10,6 +10,7 @@
 
     <LinearLayout
         style="@style/MatchWrap"
+        android:layout_marginBottom="@dimen/dimen10"
         android:background="@color/whiteColors"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -79,7 +80,6 @@
     <TextView
         android:id="@+id/tv_goodsSatisfactory"
         style="@style/MatchWrap"
-        android:layout_marginTop="@dimen/dimen10"
         android:background="@color/whiteColors"
         android:gravity="left"
         android:lineSpacingExtra="5dp"
