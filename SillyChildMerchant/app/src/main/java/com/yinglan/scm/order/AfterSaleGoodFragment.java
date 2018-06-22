@@ -158,6 +158,12 @@ public class AfterSaleGoodFragment extends BaseFragment implements AdapterView.O
     }
 
     @Override
+    public void onChange() {
+        super.onChange();
+        mRefreshLayout.beginRefreshing();
+    }
+
+    @Override
     public void setPresenter(GoodOrderContract.Presenter presenter) {
         mPresenter = presenter;
     }

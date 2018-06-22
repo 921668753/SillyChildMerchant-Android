@@ -112,6 +112,11 @@ public class SendGoodsGoodFragment extends BaseFragment implements AdapterView.O
         }
     }
 
+    @Override
+    public void onChange() {
+        super.onChange();
+        mRefreshLayout.beginRefreshing();
+    }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {

@@ -8,8 +8,7 @@
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
         style="@style/MatchAuto"
-        android:background="@color/background"
-        android:paddingTop="@dimen/dimen10">
+        android:background="@color/background">
 
         <ListView
             android:id="@+id/lv_order"
@@ -17,6 +16,7 @@
             android:divider="@color/background"
             android:dividerHeight="@dimen/dimen1"
             android:overScrollMode="never"
+            android:paddingTop="@dimen/dimen10"
             android:scrollbars="none"
             tools:listitem="@layout/item_goodsorder" />
 

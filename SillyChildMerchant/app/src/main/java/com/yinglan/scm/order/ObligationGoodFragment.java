@@ -110,6 +110,11 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
         }
     }
 
+    @Override
+    public void onChange() {
+        super.onChange();
+        mRefreshLayout.beginRefreshing();
+    }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
