@@ -60,11 +60,11 @@ public class SeeEvaluationViewAdapter extends BGARecyclerViewAdapter<MemberComme
             selImageList = new ArrayList<>();
             selImageListCounters.put(recyclerView.hashCode(), selImageList);
         }
-        if (model.getImageList() != null && model.getImageList().size() > 0) {
+        if (model.getGallerys() != null && model.getGallerys().size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
-            for (int i = 0; i < model.getImageList().size(); i++) {
+            for (int i = 0; i < model.getGallerys().size(); i++) {
                 ImageItem imageItem = new ImageItem();
-                imageItem.path = model.getImageList().get(i);
+                imageItem.path = model.getGallerys().get(i).getOriginal();
                 selImageList.add(imageItem);
             }
             SeeEvaluationImageViewAdapter adapter;

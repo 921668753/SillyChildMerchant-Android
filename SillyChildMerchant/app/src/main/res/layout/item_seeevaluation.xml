@@ -93,7 +93,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         style="@style/MatchWrap"
-        android:layout_marginBottom="@dimen/dimen5"
+        android:layout_marginBottom="@dimen/dimen10"
         android:background="@color/whiteColors"
         android:choiceMode="singleChoice"
         android:divider="@null"

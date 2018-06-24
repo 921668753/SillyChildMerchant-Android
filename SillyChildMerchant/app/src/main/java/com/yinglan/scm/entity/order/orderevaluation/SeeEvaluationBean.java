@@ -6,9 +6,10 @@ import java.util.List;
 
 public class SeeEvaluationBean extends BaseResult<SeeEvaluationBean.DataBean> {
 
+
     public class DataBean {
         /**
-         * memberCommentExts : [{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//07451628_thumbnail.jpg","specs":null,"imageList":["",""],"price":198,"num":6,"name":"苹果","comment":"测试啊测试啊"},{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//05100692_thumbnail.jpg","specs":null,"imageList":["",""],"price":1490,"num":1,"name":"苹果","comment":"测试啊测试啊"}]
+         * memberCommentExts : [{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//07451628_thumbnail.jpg","specs":null,"gallerys":[{"img_id":5,"comment_id":7,"original":"http:hqd92hd10","sort":0},{"img_id":6,"comment_id":7,"original":"http:8d9hw12hd9","sort":1}],"store_servicecredit":"5","price":198,"num":6,"store_desccredit":"4","store_deliverycredit":"3","comment":"测试啊测试啊"},{"image":"http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//05100692_thumbnail.jpg","specs":null,"gallerys":[{"img_id":7,"comment_id":8,"original":"http:hqd92hd10","sort":0},{"img_id":8,"comment_id":8,"original":"http:8d9hw12hd9","sort":1}],"store_servicecredit":"5","price":1490,"num":1,"store_desccredit":"4","store_deliverycredit":"3","comment":"测试啊测试啊"}]
          * store_servicecredit : 5
          * store_desccredit : 4
          * store_deliverycredit : 3
@@ -55,20 +56,25 @@ public class SeeEvaluationBean extends BaseResult<SeeEvaluationBean.DataBean> {
             /**
              * image : http://static.b2b2cv2.javamall.com.cn/attachment//store/5/goods/2017/6/14/14//07451628_thumbnail.jpg
              * specs : null
-             * imageList : ["",""]
+             * gallerys : [{"img_id":5,"comment_id":7,"original":"http:hqd92hd10","sort":0},{"img_id":6,"comment_id":7,"original":"http:8d9hw12hd9","sort":1}]
+             * store_servicecredit : 5
              * price : 198
              * num : 6
-             * name : 苹果
+             * store_desccredit : 4
+             * store_deliverycredit : 3
              * comment : 测试啊测试啊
              */
 
             private String image;
             private String specs;
+            private String store_servicecredit;
             private String price;
-            private String num;
             private String name;
+            private int num;
+            private String store_desccredit;
+            private String store_deliverycredit;
             private String comment;
-            private List<String> imageList;
+            private List<GallerysBean> gallerys;
 
             public String getImage() {
                 return image;
@@ -86,20 +92,20 @@ public class SeeEvaluationBean extends BaseResult<SeeEvaluationBean.DataBean> {
                 this.specs = specs;
             }
 
+            public String getStore_servicecredit() {
+                return store_servicecredit;
+            }
+
+            public void setStore_servicecredit(String store_servicecredit) {
+                this.store_servicecredit = store_servicecredit;
+            }
+
             public String getPrice() {
                 return price;
             }
 
             public void setPrice(String price) {
                 this.price = price;
-            }
-
-            public String getNum() {
-                return num;
-            }
-
-            public void setNum(String num) {
-                this.num = num;
             }
 
             public String getName() {
@@ -110,6 +116,30 @@ public class SeeEvaluationBean extends BaseResult<SeeEvaluationBean.DataBean> {
                 this.name = name;
             }
 
+            public int getNum() {
+                return num;
+            }
+
+            public void setNum(int num) {
+                this.num = num;
+            }
+
+            public String getStore_desccredit() {
+                return store_desccredit;
+            }
+
+            public void setStore_desccredit(String store_desccredit) {
+                this.store_desccredit = store_desccredit;
+            }
+
+            public String getStore_deliverycredit() {
+                return store_deliverycredit;
+            }
+
+            public void setStore_deliverycredit(String store_deliverycredit) {
+                this.store_deliverycredit = store_deliverycredit;
+            }
+
             public String getComment() {
                 return comment;
             }
@@ -118,12 +148,58 @@ public class SeeEvaluationBean extends BaseResult<SeeEvaluationBean.DataBean> {
                 this.comment = comment;
             }
 
-            public List<String> getImageList() {
-                return imageList;
+            public List<GallerysBean> getGallerys() {
+                return gallerys;
             }
 
-            public void setImageList(List<String> imageList) {
-                this.imageList = imageList;
+            public void setGallerys(List<GallerysBean> gallerys) {
+                this.gallerys = gallerys;
+            }
+
+            public class GallerysBean {
+                /**
+                 * img_id : 5
+                 * comment_id : 7
+                 * original : http:hqd92hd10
+                 * sort : 0
+                 */
+
+                private int img_id;
+                private int comment_id;
+                private String original;
+                private int sort;
+
+                public int getImg_id() {
+                    return img_id;
+                }
+
+                public void setImg_id(int img_id) {
+                    this.img_id = img_id;
+                }
+
+                public int getComment_id() {
+                    return comment_id;
+                }
+
+                public void setComment_id(int comment_id) {
+                    this.comment_id = comment_id;
+                }
+
+                public String getOriginal() {
+                    return original;
+                }
+
+                public void setOriginal(String original) {
+                    this.original = original;
+                }
+
+                public int getSort() {
+                    return sort;
+                }
+
+                public void setSort(int sort) {
+                    this.sort = sort;
+                }
             }
         }
     }

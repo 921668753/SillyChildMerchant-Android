@@ -67,10 +67,24 @@ public class GlideImageLoader implements ImageLoader {
 
     @Override
     public void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height) {
-        Glide.with(activity)                             //配置上下文
-                .load(Uri.fromFile(new File(path)))      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
-                .into(imageView);
+        if (path.startsWith("http")) {
+            Glide.with(activity)
+                    //      .asBitmap()//配置上下文
+                    .load(path)//设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+                    .error(R.mipmap.placeholderfigure)           //设置错误图片
+                    //  .placeholder(R.mipmap.load)     //设置占位图片
+                    .fallback(R.mipmap.placeholderfigure)//当url为空时，显示图片
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
+                    //     .centerInside()
+                    //  .transition(withCrossFade().crossFade())//应用在淡入淡出
+                    //  .skipMemoryCache(true)//设置跳过内存缓存
+                    .into(imageView);
+        } else {
+            Glide.with(activity)                             //配置上下文
+                    .load(Uri.fromFile(new File(path)))      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
+                    .into(imageView);
+        }
     }
 
 

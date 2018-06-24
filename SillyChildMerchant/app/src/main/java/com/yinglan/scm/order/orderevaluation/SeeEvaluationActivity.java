@@ -56,7 +56,7 @@ public class SeeEvaluationActivity extends BaseActivity implements SeeEvaluation
         int orderId = getIntent().getIntExtra("orderId", 0);
         mAdapter = new SeeEvaluationViewAdapter(recyclerview);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((SeeEvaluationContract.Presenter) mPresenter).seeEvaluation(orderId);
+        ((SeeEvaluationContract.Presenter) mPresenter).seeEvaluation(749);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SeeEvaluationActivity extends BaseActivity implements SeeEvaluation
         recyclerview.setLayoutManager(layoutmanager);
         recyclerview.setHasFixedSize(true);
         recyclerview.setNestedScrollingEnabled(false);
-        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(5, 10);
+        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(0, 0);
         //设置item之间的间隔
         recyclerview.addItemDecoration(spacesItemDecoration);
         recyclerview.setAdapter(mAdapter);
