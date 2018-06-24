@@ -313,6 +313,7 @@
                 android:background="@color/whiteColors"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen17"
+                android:layout_marginBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen15"
                 android:paddingTop="@dimen/dimen17">
@@ -339,7 +340,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen150"
                 android:layout_marginBottom="@dimen/dimen15"
-                android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/whiteColors"
                 android:gravity="start"
                 android:hint="@string/accountAfterSalesService"
@@ -350,6 +350,7 @@
                 android:textSize="@dimen/textsize12" />
 
             <LinearLayout
+                android:id="@+id/ll_bottom"
                 style="@style/Match49"
                 android:layout_marginBottom="@dimen/dimen15"
                 android:background="@color/whiteColors"

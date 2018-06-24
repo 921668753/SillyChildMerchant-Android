@@ -65,6 +65,9 @@ public class OrderDetailGoodAdapter extends BGAAdapterViewAdapter<ItemListBean> 
         } else if (listBean.getSellback_state() == 3) {
             viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+        } else if (listBean.getSellback_state() == 4) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
         }
         viewHolderHelper.getTextView(R.id.tv_refused).setOnClickListener(new View.OnClickListener() {
             @Override

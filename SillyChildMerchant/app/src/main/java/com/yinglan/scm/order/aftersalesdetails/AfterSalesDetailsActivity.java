@@ -3,6 +3,7 @@ package com.yinglan.scm.order.aftersalesdetails;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -130,6 +131,10 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
     /**
      * 拒绝
      */
+    @BindView(id = R.id.ll_bottom)
+    private LinearLayout ll_bottom;
+
+
     @BindView(id = R.id.tv_refused1, click = true)
     private TextView tv_refused1;
 
@@ -222,14 +227,24 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
 
             if (afterSalesDetailsBean.getData().getTradestatus() == 0) {
                 tv_applyAfterSales.setText(getString(R.string.toAudit));
+                ll_bottom.setVisibility(View.VISIBLE);
+                et_accountAfterSalesService.setVisibility(View.VISIBLE);
             } else if (afterSalesDetailsBean.getData().getTradestatus() == 1) {
                 tv_applyAfterSales.setText(getString(R.string.pendingDelivery));
+                ll_bottom.setVisibility(View.GONE);
+                et_accountAfterSalesService.setVisibility(View.GONE);
             } else if (afterSalesDetailsBean.getData().getTradestatus() == 3) {
                 tv_applyAfterSales.setText(getString(R.string.merchantRefund));
+                ll_bottom.setVisibility(View.GONE);
+                et_accountAfterSalesService.setVisibility(View.GONE);
             } else if (afterSalesDetailsBean.getData().getTradestatus() == 6) {
                 tv_applyAfterSales.setText(getString(R.string.platformRefundCompleted));
+                ll_bottom.setVisibility(View.GONE);
+                et_accountAfterSalesService.setVisibility(View.GONE);
             } else {
                 tv_applyAfterSales.setText(getString(R.string.applyAfterSales));
+                ll_bottom.setVisibility(View.VISIBLE);
+                et_accountAfterSalesService.setVisibility(View.VISIBLE);
             }
 
             GlideImageLoader.glideOrdinaryLoader(this, afterSalesDetailsBean.getData().getImage(), img_good, R.mipmap.placeholderfigure1);
