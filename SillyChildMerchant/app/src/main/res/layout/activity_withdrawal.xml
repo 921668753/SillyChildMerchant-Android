@@ -14,7 +14,6 @@
         android:background="@color/whiteColors"
         android:orientation="horizontal">
 
-
         <TextView
             style="@style/WrapWrap"
             android:paddingLeft="@dimen/dimen15"
@@ -112,9 +111,7 @@
 
         <TextView style="@style/DividerWidth" />
 
-
     </LinearLayout>
-
 
     <LinearLayout
         style="@style/MatchWrap"

@@ -479,8 +479,12 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
             images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
             if (images != null) {
                 selImageList.clear();
+                urllist.clear();
                 selImageList.addAll(images);
                 adapter.setImages(selImageList);
+                for (int i = 0; i < images.size(); i++) {
+                    urllist.add(images.get(i).path);
+                }
             }
         } else if (data != null && resultCode == ImagePicker.RESULT_CODE_ITEMS && requestCode == NumericConstants.RESULT_CODE_GET) {
             //添加图片返回
@@ -496,8 +500,12 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
             images1 = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
             if (images1 != null) {
                 selImageList1.clear();
+                urllist1.clear();
                 selImageList1.addAll(images1);
                 adapter1.setImages(selImageList1);
+                for (int i = 0; i < images1.size(); i++) {
+                    urllist1.add(images1.get(i).path);
+                }
             }
         } else {
             ViewInject.toast(getString(R.string.noData));

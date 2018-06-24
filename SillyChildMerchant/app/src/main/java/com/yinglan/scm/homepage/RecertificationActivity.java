@@ -12,6 +12,7 @@ import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
+import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -36,7 +37,6 @@ import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
  * 重新认证
  */
 public class RecertificationActivity extends BaseActivity implements RecertificationContract.View, EasyPermissions.PermissionCallbacks {
-
 
     @BindView(id = R.id.img_storeLogo, click = true)
     private ImageView img_storeLogo;
@@ -100,6 +100,15 @@ public class RecertificationActivity extends BaseActivity implements Recertifica
                 ((RecertificationContract.Presenter) mPresenter).getIsLogin(aty, 1);
                 break;
             case R.id.tv_asManager:
+                if (StringUtils.isEmpty(store_logo)) {
+                    errorMsg(getString(R.string.uploadStoreIcon), 2);
+                    return;
+                }
+                if (StringUtils.isEmpty(et_enterNameStore.getText().toString().trim())) {
+                    errorMsg(getString(R.string.enterNameStore1), 2);
+                    errorMsg("", 2);
+                    return;
+                }
                 ((RecertificationContract.Presenter) mPresenter).getIsLogin(aty, 2);
                 break;
             default:
@@ -169,6 +178,7 @@ public class RecertificationActivity extends BaseActivity implements Recertifica
 
     @Override
     public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
         if (flag == 0) {
             store_logo = success;
             GlideImageLoader.glideLoader(aty, success, img_storeLogo, 0, R.mipmap.home_add_shop_logo);
@@ -180,7 +190,7 @@ public class RecertificationActivity extends BaseActivity implements Recertifica
             intent.putExtra("store_name", et_enterNameStore.getText().toString().trim());
             startActivityForResult(intent, RESULT_CODE_GET);
         }
-        dismissLoadingDialog();
+
     }
 
     @Override

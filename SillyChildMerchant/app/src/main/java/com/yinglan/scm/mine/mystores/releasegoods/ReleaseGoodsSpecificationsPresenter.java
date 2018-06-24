@@ -77,10 +77,12 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 1);
             return;
         }
-        for (int i = 0; i < params.getParamList().size(); i++) {
-            if (StringUtils.isEmpty(params.getParamList().get(i).getValue())) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnter) + params.getParamList().get(i).getName(), 1);
-                return;
+        if (params != null && params.getParamList().size() > 0) {
+            for (int i = 0; i < params.getParamList().size(); i++) {
+                if (StringUtils.isEmpty(params.getParamList().get(i).getValue())) {
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnter) + params.getParamList().get(i).getName(), 1);
+                    return;
+                }
             }
         }
         List<ReleaseGoodsBean.SpecsBean> specsBeanList = new ArrayList<ReleaseGoodsBean.SpecsBean>();

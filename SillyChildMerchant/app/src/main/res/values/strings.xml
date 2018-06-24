@@ -125,6 +125,8 @@
     <string name="enterName">请输入您的姓名</string>
     <string name="submitAudit">提交审核</string>
     <string name="submitAudit1">提交成功,请等待审核</string>
+    <string name="uploadStoreIcon">请上传店铺图标</string>
+    <string name="enterNameStore1">请输入店铺名称</string>
 
 
     <!--消息-->
@@ -228,16 +230,11 @@
     <string name="afterSalesDetails">售后详情</string>
 
 
-
     <!--  订单   订单详情  查看评价 -->
     <string name="storeRatings">店铺评分</string>
     <string name="descriptionConsistent">描述相符</string>
     <string name="logisticsService">物流服务</string>
     <string name="serviceAttitude">服务态度</string>
-
-
-
-
 
 
     <!--  个人中心  -->
@@ -252,6 +249,13 @@
     <string name="notLogged">您还没有登录</string>
     <string name="loginImmediately">立即登录</string>
     <string name="merchants">商家</string>
+
+    <string name="recertification1">认证失败，请重新认证</string>
+    <string name="certificationProcess">认证审核中，请耐心等待</string>
+    <string name="accountNumberDisabled">账号被禁用，请联系客服</string>
+    <string name="youNotCertified">您还未认证，请先提交认证</string>
+
+
 
 
     <!--  个人中心  我的店铺-->

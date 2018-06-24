@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.common.cklibrary.common.BaseFragment;
 import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
-import com.common.cklibrary.utils.GlideCatchUtil;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.PreferenceHelper;
@@ -28,7 +26,6 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
-import com.yinglan.scm.entity.UploadImageBean;
 import com.yinglan.scm.entity.main.UserInfoBean;
 import com.yinglan.scm.homepage.RecertificationActivity;
 import com.yinglan.scm.homepage.ShopkeeperCertificationActivity;
@@ -141,6 +138,15 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                 ((HomePageContract.Presenter) mPresenter).getIsLogin(aty, 2);
                 break;
             case R.id.tv_asManager:
+                if (StringUtils.isEmpty(store_logo)) {
+                    errorMsg(getString(R.string.uploadStoreIcon), 2);
+                    return;
+                }
+                if (StringUtils.isEmpty(et_enterNameStore.getText().toString().trim())) {
+                    errorMsg(getString(R.string.enterNameStore1), 2);
+                    errorMsg("", 2);
+                    return;
+                }
                 int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
                 if (disabled == -1) {
                     Intent intent = new Intent(aty, RecertificationActivity.class);
