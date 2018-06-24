@@ -129,20 +129,20 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 errorMsg("", 1);
                 break;
             case R.id.ll_myStores:
-//                int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
-//                if (disabled == -1) {
-//                    errorMsg(getString(R.string.recertification1), 2);
-//                    return;
-//                } else if (disabled == 0) {
-//                    errorMsg(getString(R.string.certificationProcess), 2);
-//                    return;
-//                } else if (disabled == 2) {
-//                    errorMsg(getString(R.string.accountNumberDisabled), 2);
-//                    return;
-//                } else if (disabled == 3) {
-//                    errorMsg(getString(R.string.youNotCertified), 2);
-//                    return;
-//                }
+                int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
+                if (disabled == -1) {
+                    errorMsg(getString(R.string.recertification1), 2);
+                    return;
+                } else if (disabled == 0) {
+                    errorMsg(getString(R.string.certificationProcess), 2);
+                    return;
+                } else if (disabled == 2) {
+                    errorMsg(getString(R.string.accountNumberDisabled), 2);
+                    return;
+                } else if (disabled == 3) {
+                    errorMsg(getString(R.string.youNotCertified), 2);
+                    return;
+                }
                 ((MineContract.Presenter) mPresenter).getIsLogin(aty, 2);
                 break;
             case R.id.ll_myWallet:
