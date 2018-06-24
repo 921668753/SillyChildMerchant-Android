@@ -56,7 +56,7 @@ public class SeeEvaluationActivity extends BaseActivity implements SeeEvaluation
         int orderId = getIntent().getIntExtra("orderId", 0);
         mAdapter = new SeeEvaluationViewAdapter(recyclerview);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((SeeEvaluationContract.Presenter) mPresenter).seeEvaluation(749);
+        ((SeeEvaluationContract.Presenter) mPresenter).seeEvaluation(orderId);
     }
 
     @Override
