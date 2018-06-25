@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -138,12 +137,12 @@ public class WebViewLayout1 extends LinearLayout {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url.contains("intent:/linedetails/")) {
-                view.canGoBack();
+              //  view.canGoBack();
                 String line_id = url.substring(url.indexOf("intent:/linedetails/") + 20);
                 Log.d("tag+line_id", line_id);
                 callBack.backOnclick(line_id);
                 return true;
-            } else if (url.contains("indtent://share")) {
+            } else if (url.contains("intent://share")) {
                 callBack.backOnclick("");
                 return true;
             }

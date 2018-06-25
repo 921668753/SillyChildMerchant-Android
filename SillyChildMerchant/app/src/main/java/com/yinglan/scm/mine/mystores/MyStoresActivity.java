@@ -19,6 +19,7 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.RefreshLayoutUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
+import com.kymjs.common.Log;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.MyStoresViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
@@ -269,12 +270,13 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
             MyStoresBean myStoresBean = (MyStoresBean) JsonUtil.getInstance().json2Obj(success, MyStoresBean.class);
-            if (myStoresBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
-                    myStoresBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            Log.d(JsonUtil.obj2JsonString(myStoresBean));
+            if (myStoresBean == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER || myStoresBean != null && myStoresBean.getData() == null && mMorePageNumber == NumericConstants.START_PAGE_NUMBER ||
+                    myStoresBean != null && myStoresBean.getData().getResultX().size() <= 0 && mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 errorMsg(getString(R.string.notGetMerchandise), 1);
                 return;
-            } else if (myStoresBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
-                    myStoresBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+            } else if (myStoresBean == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER || myStoresBean != null && myStoresBean.getData() == null && mMorePageNumber > NumericConstants.START_PAGE_NUMBER ||
+                    myStoresBean != null && myStoresBean.getData().getResultX().size() <= 0 && mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
                 ViewInject.toast(getString(R.string.noMoreData));
                 isShowLoadingMore = false;
                 dismissLoadingDialog();
