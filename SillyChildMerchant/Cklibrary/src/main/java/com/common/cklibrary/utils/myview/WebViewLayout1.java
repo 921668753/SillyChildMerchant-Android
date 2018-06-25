@@ -143,7 +143,9 @@ public class WebViewLayout1 extends LinearLayout {
                 Log.d("tag+line_id", line_id);
                 callBack.backOnclick(line_id);
                 return true;
-            } else if (url.contains("intent:/linedetails/")) {
+            } else if (url.contains("indtent://share")) {
+                callBack.backOnclick("");
+                return true;
             }
             Log.d("tag", url);
             return super.shouldOverrideUrlLoading(view, url);

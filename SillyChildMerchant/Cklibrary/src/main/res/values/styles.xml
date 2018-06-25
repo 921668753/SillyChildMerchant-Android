@@ -39,5 +39,11 @@
         <item name="android:layout_gravity">bottom</item>
     </style>
 
+    <!--分割线-->
+    <style name="DividerWidth">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen1</item>
+        <item name="android:background">#DDDDDD</item>
+    </style>
 
 </resources>

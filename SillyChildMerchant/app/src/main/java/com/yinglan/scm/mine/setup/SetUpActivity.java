@@ -1,6 +1,7 @@
 package com.yinglan.scm.mine.setup;
 
 import android.Manifest;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -32,6 +33,9 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.yinglan.scm.constant.URLConstants.ABOUTUS;
+import static com.yinglan.scm.constant.URLConstants.HELP;
 
 /**
  * 设置
@@ -129,10 +133,16 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
                 showClearCacheDialog();
                 break;
             case R.id.ll_help:
-                showActivity(this, HelpCenterActivity.class);
+                Intent intent = new Intent(aty, HelpCenterActivity.class);
+                intent.putExtra("title", getString(R.string.helpCenter));
+                intent.putExtra("url", HELP);
+                showActivity(aty, intent);
                 break;
             case R.id.ll_aboutus:
-                showActivity(this, AboutUsActivity.class);
+                Intent aboutUsIntent = new Intent(aty, HelpCenterActivity.class);
+                aboutUsIntent.putExtra("title", getString(R.string.aboutUs));
+                aboutUsIntent.putExtra("url", ABOUTUS);
+                showActivity(aty, aboutUsIntent);
                 break;
             case R.id.tv_logOut:
                 ((SetUpContract.Presenter) mPresenter).logOutAPP(aty);

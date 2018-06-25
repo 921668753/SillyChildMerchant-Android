@@ -21,10 +21,12 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
+import com.yinglan.scm.mine.setup.HelpCenterActivity;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+import static com.yinglan.scm.constant.URLConstants.REGISTPROTOOL;
 
 /**
  * 手机号注册
@@ -139,7 +141,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                 break;
             case R.id.tv_agreement:
                 // 注册协议
-                showActivity(aty, RegistrationAgreementActivity.class);
+                Intent intent = new Intent(aty, HelpCenterActivity.class);
+                intent.putExtra("title", getString(R.string.agreement1));
+                intent.putExtra("url", REGISTPROTOOL);
+                showActivity(aty, intent);
                 break;
             default:
                 break;

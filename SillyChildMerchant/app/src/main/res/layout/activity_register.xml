@@ -205,7 +205,6 @@
                 android:textSize="@dimen/textsize12" />
         </LinearLayout>
 
-
     </LinearLayout>
 
 
@@ -220,7 +219,6 @@
             android:paddingRight="@dimen/dimen15"
             android:src="@mipmap/loginback" />
 
-
         <TextView
             style="@style/WrapWrap"
             android:layout_centerHorizontal="true"
@@ -228,7 +226,6 @@
             android:text="@string/register"
             android:textColor="@color/whiteColors"
             android:textSize="@dimen/textsize17" />
-
 
     </RelativeLayout>
 

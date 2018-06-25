@@ -59,6 +59,7 @@
     <string name="woman">女</string>
     <string name="secret">保密</string>
 
+
     <!--选择国家或地区-->
     <string name="selectCountry">选择国家或地区</string>
 
@@ -82,7 +83,8 @@
     <string name="revalidation">重新验证</string>
     <string name="clickFinish">点击完成代表您同意</string>
     <string name="myagreement">点击注册即表示您同意</string>
-    <string name="agreement">《傻孩子注册协议》</string>
+    <string name="agreement">《傻孩志注册协议》</string>
+    <string name="agreement1">傻孩志注册协议</string>
     <string name="determine">确定</string>
 
     <!--app权限-->
@@ -249,14 +251,10 @@
     <string name="notLogged">您还没有登录</string>
     <string name="loginImmediately">立即登录</string>
     <string name="merchants">商家</string>
-
     <string name="recertification1">认证失败，请重新认证</string>
     <string name="certificationProcess">认证审核中，请耐心等待</string>
     <string name="accountNumberDisabled">账号被禁用，请联系客服</string>
     <string name="youNotCertified">您还未认证，请先提交认证</string>
-
-
-
 
     <!--  个人中心  我的店铺-->
     <string name="classification">分类</string>
@@ -426,6 +424,23 @@
     <string name="confirmAdd">确认添加</string>
     <string name="toResend">s后重发</string>
     <string name="openingBank1">请选择开户行</string>
+
+    <!--  个人中心  分享有礼-->
+    <string name="welcomSilly">你的朋友邀请你使用傻孩志并给你发了一个大红包  </string>
+    <string name="sillyChildMyHands">傻孩志在手天下我有</string>
+    <string name="notInstalled">没有安装应用</string>
+    <string name="notInstalled1">您还没有安装应用，请安装应用</string>
+
+    <!--弹框    分享-->
+    <string name="shareTo">分享给好友</string>
+    <string name="weChatFriends">微信好友</string>
+    <string name="circleFriends">朋友圈</string>
+    <string name="QQFriends">QQ好友</string>
+    <string name="qzone">QQ空间</string>
+    <string name="shareSuccess">分享成功啦</string>
+    <string name="shareError">分享失败啦</string>
+    <string name="shareCancel">分享取消了</string>
+    <string name="share">分享</string>
 
 
     <!-- 个人中心 设置-->

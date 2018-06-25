@@ -21,6 +21,8 @@ public class URLConstants {
     // public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
     public static String SERVERURL = "http://store.api.shahaizhi.com/";
 
+    public static String SERVERURL1 = "http://www.shahaizhi.com/";
+
     /**
      * 请求地址URL
      */
@@ -87,6 +89,11 @@ public class URLConstants {
      * 用户注册
      */
     public static String REGISTER = APIURL + "sys/regist.do";
+
+    /**
+     * 用户注册协议
+     */
+    public static String REGISTPROTOOL =  SERVERURL1 + "dist/pages/registProtocol.html";
 
     /**
      * 更改密码【手机】
@@ -252,4 +259,29 @@ public class URLConstants {
      * 提交意见反馈
      */
     public static String ADVICEPOST = APIURL + "advice/post.do";
+
+    /**
+     * 关于我们
+     */
+    public static String ABOUTUS = SERVERURL1 + "dist/pages/about_us.html";
+
+    /**
+     * 帮助中心
+     */
+    public static String HELP = SERVERURL1 + "dist/pages/help.html";
+
+    /**
+     * 帮助中心详情
+     */
+    public static String HELPDETAIL = SERVERURL1 + "dist/pages/helpDetal.html";
+
+    /**
+     * 分享有礼
+     */
+    public static String SHARE = SERVERURL1 + "html/share.html?icode=";
+
+    /**
+     * 分享有礼分享网址
+     */
+    public static String REGISTERHTML = SERVERURL1 + "html/login.html?icode=";
 }

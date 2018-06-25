@@ -240,9 +240,6 @@
             android:screenOrientation="portrait" />
 
         <!--我的  设置  关于我们-->
-        <activity
-            android:name=".mine.setup.AboutUsActivity"
-            android:screenOrientation="portrait" />
 
         <!--我的  设置  帮助中心-->
         <activity
