@@ -426,7 +426,7 @@
         <!--      极光推送      -->
         <!-- User defined. 用户自定义的广播接收器-->
         <receiver
-            android:name=".loginregister.MyReceiver"
+            android:name=".message.systemmessage.jpushmessagereceiver.JPushMessageReceiver"
             android:enabled="true">
             <intent-filter>
                 <!--Required 用户注册SDK的intent-->

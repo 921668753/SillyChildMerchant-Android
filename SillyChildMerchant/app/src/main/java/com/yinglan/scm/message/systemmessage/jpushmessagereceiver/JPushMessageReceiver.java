@@ -1,4 +1,4 @@
-package com.yinglan.scm.loginregister;
+package com.yinglan.scm.message.systemmessage.jpushmessagereceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,7 +25,7 @@ import cn.jpush.android.api.JPushInterface;
  * 1) 默认用户会打开主界面
  * 2) 接收不到自定义消息
  */
-public class MyReceiver extends BroadcastReceiver {
+public class JPushMessageReceiver extends BroadcastReceiver {
     private static final String TAG = "JPush";
 
     @Override
@@ -51,8 +51,9 @@ public class MyReceiver extends BroadcastReceiver {
             //打开自定义的Activity
             Intent news = new Intent(context, MainActivity.class);
             news.putExtras(bundle);
+            news.putExtra("chageIcon", 1);
             news.putExtra("newChageIcon", 1);
-            news.putExtra("chageIcon", 21);
+            news.putExtra("chageMessageIcon", 21);
             news.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(news);
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
