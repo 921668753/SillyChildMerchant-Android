@@ -305,7 +305,8 @@
                         android:id="@+id/ll_sharePolite"
                         style="@style/Match49"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             style="@style/Image20"
@@ -329,7 +330,8 @@
 
                     <TextView
                         style="@style/DividerWidth"
-                        android:layout_marginLeft="@dimen/dimen15" />
+                        android:layout_marginLeft="@dimen/dimen15"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/ll_setUp"

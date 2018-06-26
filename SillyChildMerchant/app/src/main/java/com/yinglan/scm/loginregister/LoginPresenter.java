@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
-import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
@@ -14,7 +13,6 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.qiniu.android.utils.UrlSafeBase64;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.loginregister.LoginBean;
-import com.yinglan.scm.entity.startpage.QiNiuKeyBean;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import org.json.JSONObject;

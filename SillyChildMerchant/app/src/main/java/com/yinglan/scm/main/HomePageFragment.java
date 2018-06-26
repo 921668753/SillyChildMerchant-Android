@@ -101,7 +101,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
-        initImagePicker();
         img_storeLogo.setVisibility(View.VISIBLE);
         et_enterNameStore.setVisibility(View.VISIBLE);
         tv_asManager.setVisibility(View.VISIBLE);
@@ -144,7 +143,6 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                 }
                 if (StringUtils.isEmpty(et_enterNameStore.getText().toString().trim())) {
                     errorMsg(getString(R.string.enterNameStore1), 2);
-                    errorMsg("", 2);
                     return;
                 }
                 int disabled = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "disabled", 3);
@@ -166,6 +164,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     private void choicePhotoWrapper() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(aty, perms)) {
+            initImagePicker();
             PictureDialog();
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.needPermission), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
@@ -239,6 +238,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     ll_seller.setVisibility(View.VISIBLE);
                     tv_storeName.setText(userInfoBean.getData().getStore_name());
                     store_logo = userInfoBean.getData().getStore_logo();
+                    et_enterNameStore.setText(userInfoBean.getData().getStore_name());
                     tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
                     img_certified.setImageResource(R.mipmap.home_not_through);
                     tv_asManager.setText(getString(R.string.recertification));
@@ -249,6 +249,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     ll_seller.setVisibility(View.VISIBLE);
                     tv_storeName.setText(userInfoBean.getData().getStore_name());
                     store_logo = userInfoBean.getData().getStore_logo();
+                    et_enterNameStore.setText(userInfoBean.getData().getStore_name());
                     tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
                     img_certified.setImageResource(R.mipmap.home_under_review);
                 } else if (disabled == 1) {
@@ -258,6 +259,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     ll_seller.setVisibility(View.VISIBLE);
                     tv_storeName.setText(userInfoBean.getData().getStore_name());
                     store_logo = userInfoBean.getData().getStore_logo();
+                    et_enterNameStore.setText(userInfoBean.getData().getStore_name());
                     tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
                     img_certified.setImageResource(R.mipmap.home_certified);
                 } else if (disabled == 2) {
@@ -267,6 +269,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
                     ll_seller.setVisibility(View.VISIBLE);
                     tv_storeName.setText(userInfoBean.getData().getStore_name());
                     store_logo = userInfoBean.getData().getStore_logo();
+                    et_enterNameStore.setText(userInfoBean.getData().getStore_name());
                     tv_shopNum.setText(getString(R.string.shopNum) + userInfoBean.getData().getStore_id());
                     img_certified.setImageResource(R.mipmap.home_disabled);
                 } else {

@@ -160,12 +160,12 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         initImagePicker();
         selImageList = new ArrayList<>();
         urllist = new ArrayList<String>();
-        adapter = new ReleaseGoodsImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
+        adapter = new ReleaseGoodsImagePickerAdapter(this, selImageList, NumericConstants.MAXPICTURE, R.mipmap.shop_add_goods);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         selImageList1 = new ArrayList<>();
         urllist1 = new ArrayList<String>();
-        adapter1 = new ReleaseGoodsImagePickerAdapter(this, selImageList1, NumericConstants.MAXPICTURE, R.mipmap.feedback_add_pictures);
+        adapter1 = new ReleaseGoodsImagePickerAdapter(this, selImageList1, NumericConstants.MAXPICTURE, R.mipmap.shop_add_goods);
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 1);
         recyclerView1.setLayoutManager(gridLayoutManager1);
         showLoadingDialog(getString(R.string.dataLoad));

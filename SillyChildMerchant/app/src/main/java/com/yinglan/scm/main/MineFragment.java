@@ -193,6 +193,10 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 int disabled = StringUtils.toInt(userInfoBean.getData().getDisabled(), 3);
                 if (disabled == 3) {
                     tv_nature.setVisibility(View.GONE);
+                } else if (disabled == -1) {
+                    tv_nature.setVisibility(View.VISIBLE);
+                    tv_nature.setText(getString(R.string.unapprove));
+                    tv_nature.setTextColor(getResources().getColor(R.color.fF0000Colors));
                 } else if (disabled == 0) {
                     tv_nature.setVisibility(View.VISIBLE);
                     tv_nature.setText(getString(R.string.audit1));

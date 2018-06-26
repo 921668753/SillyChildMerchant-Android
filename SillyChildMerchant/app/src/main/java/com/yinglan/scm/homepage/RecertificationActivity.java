@@ -20,7 +20,6 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.loginregister.LoginActivity;
-import com.yinglan.scm.main.HomePageContract;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scm.utils.GlideImageLoader;
 
@@ -217,7 +216,7 @@ public class RecertificationActivity extends BaseActivity implements Recertifica
                     }
                     String imgPath = images.get(0).path;
                     showLoadingDialog(getString(R.string.saveLoad));
-                    ((HomePageContract.Presenter) mPresenter).upPictures(imgPath);
+                    ((RecertificationContract.Presenter) mPresenter).upPictures(imgPath);
                 } else {
                     ViewInject.toast(getString(R.string.noData));
                 }
