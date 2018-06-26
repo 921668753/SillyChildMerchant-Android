@@ -246,7 +246,7 @@
     <string name="businessLevel">商家等级</string>
     <string name="myStores">我的店铺</string>
     <string name="myWallet">我的钱包</string>
-    <string name="sillyChildCollege">傻孩子学院</string>
+    <string name="sillyChildCollege">傻孩志学院</string>
     <string name="sharePolite">分享有礼</string>
     <string name="setUp">设置</string>
     <string name="notLogged">您还没有登录</string>
@@ -443,7 +443,6 @@
     <string name="shareCancel">分享取消了</string>
     <string name="share">分享</string>
 
-
     <!-- 个人中心 设置-->
     <string name="versionNumber">版本号</string>
     <string name="versionNumberNo">没有发现版本号</string>
@@ -472,7 +471,7 @@
     <string name="experienceProblem">体验问题</string>
     <string name="newFeatureRecommendations">新功能建议</string>
     <string name="other">其他</string>
-    <string name="hintCommentsSuggestions">傻孩子APP的每一次进步，都离不开您的意见和建议.</string>
+    <string name="hintCommentsSuggestions">傻孩志APP的每一次进步，都离不开您的意见和建议.</string>
     <string name="wordLimit">500</string>
     <string name="submit">提交</string>
     <string name="noHaveFeedBackType">没有反馈问题类型可选，无法进行反馈操作！将关闭此页面，请移步至客服。</string>

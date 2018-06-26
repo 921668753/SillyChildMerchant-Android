@@ -27,6 +27,7 @@ import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.mine.mystores.MyStoresActivity;
 import com.yinglan.scm.mine.mywallet.MyWalletActivity;
 import com.yinglan.scm.mine.personaldata.PersonalDataActivity;
+import com.yinglan.scm.mine.setup.HelpCenterActivity;
 import com.yinglan.scm.mine.setup.SetUpActivity;
 import com.yinglan.scm.mine.sharepolite.SharePoliteActivity;
 import com.yinglan.scm.mine.sillychildcollege.SillyChildCollegeActivity;
@@ -36,6 +37,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 import static android.app.Activity.RESULT_OK;
 import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE;
+import static com.yinglan.scm.constant.URLConstants.COLLEGE;
 
 /**
  * 个人中心
@@ -149,7 +151,11 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
                 ((MineContract.Presenter) mPresenter).getIsLogin(aty, 3);
                 break;
             case R.id.ll_sillyChildCollege:
-                aty.showActivity(aty, SillyChildCollegeActivity.class);
+                Intent intent = new Intent(aty, HelpCenterActivity.class);
+                intent.putExtra("title", getString(R.string.sillyChildCollege));
+                intent.putExtra("url", COLLEGE);
+                aty.showActivity(aty, intent);
+                //  aty.showActivity(aty, SillyChildCollegeActivity.class);
                 break;
             case R.id.ll_sharePolite:
                 ((MineContract.Presenter) mPresenter).getIsLogin(aty, 4);

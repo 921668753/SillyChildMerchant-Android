@@ -284,4 +284,11 @@ public class URLConstants {
      * 分享有礼分享网址
      */
     public static String REGISTERHTML = SERVERURL1 + "html/login.html?icode=";
+
+    /**
+     * 傻孩志学院
+     */
+    public static String COLLEGE = SERVERURL1 + "dist/pages/college.html";
+
+
 }
