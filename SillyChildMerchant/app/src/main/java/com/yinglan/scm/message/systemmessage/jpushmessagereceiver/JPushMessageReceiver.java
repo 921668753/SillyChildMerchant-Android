@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.common.cklibrary.common.StringConstants;
-import com.kymjs.common.PreferenceHelper;
 import com.yinglan.scm.main.MainActivity;
 
 import org.json.JSONException;
