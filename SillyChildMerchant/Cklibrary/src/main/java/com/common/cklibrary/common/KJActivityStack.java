@@ -110,7 +110,9 @@ public class KJActivityStack {
         for (int i = 0; i < activityStack.size(); i++) {
             if (activityStack.get(i) != null && activityStack.get(i).getClass().equals(cls)) {
                 finishActivity((Activity) activityStack.get(i));
+                i--;
             }
+
         }
 
 
@@ -130,13 +132,9 @@ public class KJActivityStack {
         for (int i = 0; i < activityStack.size(); i++) {
             if (activityStack.get(i) != null && !(activityStack.get(i).getClass().equals(cls))) {
                 finishActivity((Activity) activityStack.get(i));
+                i--;
             }
         }
-//        for (I_KJActivity activity : activityStack) {
-//            if (activity != null && !(activity.getClass().equals(cls))) {
-//                finishActivity((Activity) activity);
-//            }
-//        }
     }
 
     /**
@@ -144,16 +142,16 @@ public class KJActivityStack {
      *
      * @param cls
      */
-    public void finishToThis(Class<?> cls,Class<?> cls1) {
+    public void finishToThis(Class<?> cls, Class<?> cls1) {
         for (int i = 0; i < activityStack.size(); i++) {
-            if (i==(activityStack.size()-1)){
-                Activity activity=(Activity) activityStack.get(i);
+            if (i == (activityStack.size() - 1)) {
+                Activity activity = (Activity) activityStack.get(i);
                 activityStack.clear();
-                Intent intent=new Intent(activity,cls);
+                Intent intent = new Intent(activity, cls);
                 activity.startActivity(intent);
                 activity.finish();
-            }else{
-                if (activityStack.get(i) != null&&!activityStack.get(i).getClass().equals(cls1)) {
+            } else {
+                if (activityStack.get(i) != null && !activityStack.get(i).getClass().equals(cls1)) {
                     ((Activity) activityStack.get(i)).finish();
                 }
             }

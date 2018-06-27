@@ -49,8 +49,7 @@ public class GlideCatchUtil {
     // 获取Glide磁盘缓存大小
     public long getCacheSize() {
         try {
-//            return getFolderSize(FileUtils.getSaveFolder(StringConstants.PHOTOCACHE));
-            return 0;
+            return getFolderSize(FileUtils.getSaveFolder(StringConstants.PHOTOCACHE));
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -149,7 +148,7 @@ public class GlideCatchUtil {
     private boolean deleteFolderFile(String filePath, boolean deleteThisPath) {
         try {
             File file = new File(filePath);
-            if (file.exists()&&file.isDirectory()) {
+            if (file.exists() && file.isDirectory()) {
                 File files[] = file.listFiles();
                 for (File file1 : files) {
                     deleteFolderFile(file1.getAbsolutePath(), true);

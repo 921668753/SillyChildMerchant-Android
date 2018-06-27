@@ -10,6 +10,12 @@ public class StringConstants {
      * 存放的文件名
      */
     public static String FILENAME = "shzsShare";
+
+    /**
+     * 文件缓存路径存放的文件名-----图片以及URL请求缓存路径
+     */
+    public static String SHZS = "SHZS";
+
     /**
      * 文件缓存路径存放的文件名-----图片以及URL请求缓存路径
      */

@@ -11,12 +11,13 @@ import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
 
+import com.lzy.imagepicker.ImagePicker;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.yinglan.scm.BuildConfig;
 import com.yinglan.scm.message.interactivemessage.imuitl.RongCloudEvent;
-import com.yinglan.scm.message.interactivemessage.imuitl.RongIMUtil;
+import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -57,6 +58,7 @@ public class MyApplication extends Application {
         mContext = getApplicationContext();
         UMShareAPI.get(this);//友盟分享
         initRongCloud();
+        initImagePicker();
         testMemoryInfo();
     }
 
@@ -119,30 +121,14 @@ public class MyApplication extends Application {
         RongCloudEvent.init(this);
     }
 
-
-
-//    private void openSealDBIfHasCachedToken() {
-//        String rcToken = UserUtil.getResTokenInfo(this);
-//        if (!StringUtils.isEmpty(rcToken)) {
-//            String current = getCurProcessName(this);
-//            String mainProcessName = getPackageName();
-//            if (mainProcessName.equals(current)) {
-//                SealUserInfoManager.getInstance().openDB();
-//            }
-//        }
-//    }
-
-//    public static String getCurProcessName(Context context) {
-//        int pid = android.os.Process.myPid();
-//        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-//        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
-//            if (appProcess.pid == pid) {
-//                return appProcess.processName;
-//            }
-//        }
-//        return null;
-//    }
-
+    /**
+     * 初始化图片加载器
+     */
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        GlideImageLoader glideImageLoader = new GlideImageLoader();
+        imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
+    }
 
     //查询缓存
     public void testMemoryInfo() {
@@ -161,7 +147,7 @@ public class MyApplication extends Application {
             GlideCatchUtil.getInstance().clearCacheMemory();
             // 必须在后台线程中调用，建议同时clearMemory()
             GlideCatchUtil.getInstance().clearCacheDiskSelf();
-//            GlideCatchUtil.getInstance().cleanCatchDisk();
+            GlideCatchUtil.getInstance().cleanCatchDisk();
         }
     }
 }
