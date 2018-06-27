@@ -405,7 +405,7 @@
     <string name="ccdBank">建设银行</string>
     <string name="cmbBank">招商银行</string>
     <string name="deleteCard">确定删除银行卡吗</string>
-
+    <string name="notAddedBankCard">亲，您还没有添加银行卡哟~</string>
 
     <!-- 个人中心 我的钱包  我的银行卡列表 添加银行卡-->
     <string name="addBankCard">添加银行卡</string>
