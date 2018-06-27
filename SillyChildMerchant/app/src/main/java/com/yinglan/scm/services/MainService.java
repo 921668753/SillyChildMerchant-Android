@@ -20,6 +20,8 @@ import io.rong.imkit.RongIM;
  */
 public class MainService extends Service {
 
+    private Thread mThread = null;
+
     private Intent intentcast;
 
     @Override
@@ -35,7 +37,17 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        getSystemMessage();
+        if (mThread != null && !mThread.isAlive()) {
+            mThread.run();
+        } else {
+            mThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    getSystemMessage();
+                }
+            });
+            mThread.start();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -92,5 +104,14 @@ public class MainService extends Service {
         intentcast.putExtra("havemsg", havemsg);
         sendBroadcast(intentcast);
         stopSelf();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mThread != null) {
+            mThread.interrupted();
+        }
+        mThread = null;
     }
 }
