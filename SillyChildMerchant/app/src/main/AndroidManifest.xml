@@ -113,6 +113,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <!--主界面的后台-->
+        <service android:name=".services.MainService" />
+
+
         <!--首页  重新认证-->
         <activity
             android:name=".homepage.RecertificationActivity"

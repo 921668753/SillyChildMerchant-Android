@@ -28,16 +28,16 @@ import com.yinglan.scm.entity.message.SystemMessageBean;
 import com.yinglan.scm.entity.message.SystemMessageBean.DataBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.main.MainActivity;
-import com.yinglan.scm.main.MineContract;
 import com.yinglan.scm.message.systemmessage.SystemMessageListActivity;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 import static android.app.Activity.RESULT_OK;
 import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE;
-import static com.yinglan.scm.main.MainActivity.KEY_EXTRAS;
-import static com.yinglan.scm.main.MainActivity.KEY_MESSAGE;
-import static com.yinglan.scm.main.MainActivity.MESSAGE_RECEIVED_ACTION;
+import static com.yinglan.scm.constant.StringNewConstants.KEY_EXTRAS;
+import static com.yinglan.scm.constant.StringNewConstants.KEY_MESSAGE;
+import static com.yinglan.scm.constant.StringNewConstants.MESSAGE_RECEIVED_ACTION;
+
 
 /**
  * 系统消息

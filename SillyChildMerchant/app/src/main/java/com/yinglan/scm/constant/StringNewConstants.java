@@ -96,6 +96,15 @@ public class StringNewConstants {
     /**
      * 主页的后台
      */
-    public static String MainServiceAction = "com.yinglan.scc.services.MainReceiver";
+    public static String MainServiceAction = "com.yinglan.scm.services.MainReceiver";
+
+    /**
+     * 极光推送消息
+     */
+    public static String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+
+    public static String KEY_TITLE = "title";
+    public static String KEY_MESSAGE = "message";
+    public static String KEY_EXTRAS = "extras";
 
 }

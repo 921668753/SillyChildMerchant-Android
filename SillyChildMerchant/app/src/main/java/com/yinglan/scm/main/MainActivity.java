@@ -21,7 +21,7 @@ import com.kymjs.common.Log;
 import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.StringNewConstants;
-import com.yinglan.scm.custominterfaces.MainCallBack;
+import com.yinglan.scm.receivers.MainCallBack;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.message.SystemMessageFragment.MessageReceiver;
 import com.yinglan.scm.receivers.MainReceiver;
@@ -29,6 +29,8 @@ import com.yinglan.scm.services.MainService;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
+
+import static com.yinglan.scm.constant.StringNewConstants.MESSAGE_RECEIVED_ACTION;
 
 
 @SuppressWarnings("deprecation")
@@ -83,19 +85,14 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
 
     private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
-    public static final String KEY_EXTRAS = "extras";
 
     /**
      * 用来表示移动的Fragment
      */
     private int chageIcon;
-    public static boolean isForeground = true;
-    private Thread thread = null;
     private Intent intentservice;
-    private MainReceiver mainReceiver;
+
+    public MainReceiver mainReceiver;
 
 
     @Override
@@ -113,8 +110,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
         contentFragment3 = new MineFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
         registerMessageReceiver();  //   极光推送 used for receive msg
-        // ((MainContract.Presenter) mPresenter).getChatManagerListener();
-
         mainReceiver = new MainReceiver(this);
         IntentFilter intentFilter = new IntentFilter(StringNewConstants.MainServiceAction);
         registerReceiver(mainReceiver, intentFilter);
@@ -123,10 +118,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     @Override
     public void initWidget() {
         super.initWidget();
-//        boolean isShow = getIntent().getBooleanExtra("isShow", false);
-//        if (isShow) {
-//            tv_messageTag.setVisibility(View.VISIBLE);
-//        }
         initColors();
     }
 
@@ -199,27 +190,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     }
 
 
-    @Override
-    protected void onDestroy() {
-        isForeground = false;
-        unregisterReceiver(mMessageReceiver);
-        if (mainReceiver != null) {
-            unregisterReceiver(mainReceiver);
-            mainReceiver = null;
-        }
-        if (intentservice != null) {
-            stopService(intentservice);
-            intentservice = null;
-        }
-        super.onDestroy();
-    }
-
     public void registerMessageReceiver() {
         mMessageReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         filter.addAction(MESSAGE_RECEIVED_ACTION);
-        Intent intent = registerReceiver(mMessageReceiver, filter);
+        registerReceiver(mMessageReceiver, filter);
         //极光推送 定制声音、震动、闪灯等 Notification 样式。
         BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(MainActivity.this);
 //        builder.statusBarDrawable = R.mipmap.ic_launcher;
@@ -279,7 +255,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                     break;
             }
         }
-
     }
 
     /**
@@ -321,6 +296,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
+            msgStyle(false);
             cleanColors(1);
         } else if (flag == 1) {
             cleanColors(2);
@@ -343,14 +319,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
         super.onResume();
         intentservice = new Intent(MainActivity.this, MainService.class);
         MainActivity.this.startService(intentservice);
-//        thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                intentservice=new Intent(MainActivity.this, MainService.class);
-//                MainActivity.this.startService(intentservice);
-//            }
-//        });
-//        thread.start();
     }
 
     /**
@@ -375,7 +343,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                     //   KjBitmapUtil.getInstance().getKjBitmap().cleanCache();
                     MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
                     JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
-                    //    MobclickAgent.onKillProcess(aty);
+                    MobclickAgent.onKillProcess(aty);
                     //第一个参数为是否解绑推送的devicetoken
                     KJActivityStack.create().appExit(aty);
                 }
@@ -387,14 +355,32 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
 
     @Override
     public void msgStyle(boolean havemsg) {
-//        if (havemsg) {
-//            tv_messageTag.setVisibility(View.VISIBLE);
-//        } else {
-//            tv_messageTag.setVisibility(View.GONE);
-//        }
+        if (havemsg) {
+            tv_messageTag.setVisibility(View.VISIBLE);
+        } else {
+            tv_messageTag.setVisibility(View.GONE);
+        }
     }
 
     public int getChageIcon() {
         return chageIcon;
     }
+
+    @Override
+    protected void onDestroy() {
+        if (mMessageReceiver != null) {
+            unregisterReceiver(mMessageReceiver);
+            mMessageReceiver = null;
+        }
+        if (mainReceiver != null) {
+            unregisterReceiver(mainReceiver);
+            mainReceiver = null;
+        }
+        if (intentservice != null) {
+            stopService(intentservice);
+            intentservice = null;
+        }
+        super.onDestroy();
+    }
+
 }

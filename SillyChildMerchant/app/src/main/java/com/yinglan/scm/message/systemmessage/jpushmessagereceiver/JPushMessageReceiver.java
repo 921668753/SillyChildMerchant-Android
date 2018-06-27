@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.kymjs.common.StringUtils;
 import com.yinglan.scm.main.MainActivity;
 
 import org.json.JSONException;
@@ -14,6 +15,11 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
+
+import static com.yinglan.scm.constant.StringNewConstants.KEY_EXTRAS;
+import static com.yinglan.scm.constant.StringNewConstants.KEY_MESSAGE;
+import static com.yinglan.scm.constant.StringNewConstants.MESSAGE_RECEIVED_ACTION;
+import static com.yinglan.scm.constant.StringNewConstants.MainServiceAction;
 
 
 /**
@@ -43,7 +49,14 @@ public class JPushMessageReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
-
+            Intent intent1 = new Intent();
+          //  intent1.setAction(MESSAGE_RECEIVED_ACTION);
+            intent1.setAction(MainServiceAction);
+            intent1.putExtra("havemsg", true);
+            context.sendBroadcast(intent1);
+            //对应BroadcastReceiver中intentFilter的action
+            //  intent.setAction(BROADCAST_ACTION);
+            //发送广播
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
             //打开自定义的Activity
@@ -54,6 +67,8 @@ public class JPushMessageReceiver extends BroadcastReceiver {
             news.putExtra("chageMessageIcon", 21);
             news.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(news);
+            news.putExtra("havemsg", false);
+            context.sendBroadcast(news);
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
@@ -94,7 +109,7 @@ public class JPushMessageReceiver extends BroadcastReceiver {
                 }
 
             } else {
-                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
+                //  sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
             }
         }
         return sb.toString();
@@ -102,23 +117,20 @@ public class JPushMessageReceiver extends BroadcastReceiver {
 
     //send msg to MainActivity
     private void processCustomMessage(Context context, Bundle bundle) {
-//        if (MainActivity.isForeground) {
-//            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-//            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-//            Intent msgIntent = new Intent(MessageReceiver.MESSAGE_RECEIVED_ACTION);
-//            msgIntent.putExtra(MessageReceiver.KEY_MESSAGE, message);
-//            if (!StringUtils.isEmpty(extras)) {
-//                try {
-//                    JSONObject extraJson = new JSONObject(extras);
-//                    if (null != extraJson && extraJson.length() > 0) {
-//                        msgIntent.putExtra(MessageReceiver.KEY_EXTRAS, extras);
-//                    }
-//                } catch (JSONException e) {
-//
-//                }
-//
-//            }
-//            context.sendBroadcast(msgIntent);
-//        }
+            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+            Intent msgIntent = new Intent(MESSAGE_RECEIVED_ACTION);
+            msgIntent.putExtra(KEY_MESSAGE, message);
+            if (!StringUtils.isEmpty(extras)) {
+                try {
+                    JSONObject extraJson = new JSONObject(extras);
+                    if (null != extraJson && extraJson.length() > 0) {
+                        msgIntent.putExtra(KEY_EXTRAS, extras);
+                    }
+                } catch (JSONException e) {
+
+                }
+            }
+            context.sendBroadcast(msgIntent);
     }
 }

@@ -10,6 +10,8 @@ import com.yinglan.scm.main.MainActivity;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
+import static com.yinglan.scm.constant.StringNewConstants.MainServiceAction;
+
 /**
  * 为了接收推送消息，您需要自定义一个继承自 PushMessageReceiver 类的 BroadcastReceiver (必须实现,否则会收不到推送消息)，
  * 实现其中的 onNotificationMessageArrived，onNotificationMessageClicked 然后把该 receiver 注册到 AndroidManifest.xml 文件中。
@@ -19,6 +21,10 @@ public class RongIMPushMessageReceiver extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
+        Intent intent = new Intent();
+        intent.setAction(MainServiceAction);
+        intent.putExtra("havemsg", true);
+        context.sendBroadcast(intent);
         return false;
     }
 
@@ -32,6 +38,8 @@ public class RongIMPushMessageReceiver extends PushMessageReceiver {
         news.putExtra("chageMessageIcon", 20);
         news.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(news);
+        news.putExtra("havemsg", false);
+        context.sendBroadcast(news);
 //        Intent intent = new Intent();
 //        intent.putExtra("newChageIcon", 1);
 //        intent.putExtra("chageIcon", 20);
