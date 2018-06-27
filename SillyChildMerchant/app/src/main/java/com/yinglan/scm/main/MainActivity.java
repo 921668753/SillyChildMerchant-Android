@@ -317,8 +317,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     @Override
     protected void onResume() {
         super.onResume();
-        intentservice = new Intent(MainActivity.this, MainService.class);
-        MainActivity.this.startService(intentservice);
+        intentservice = new Intent(this, MainService.class);
+        startService(intentservice);
     }
 
     /**

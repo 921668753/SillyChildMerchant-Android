@@ -106,6 +106,7 @@ public class MainService extends Service {
         stopSelf();
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
