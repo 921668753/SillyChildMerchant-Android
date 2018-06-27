@@ -75,7 +75,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     private String bankCardNun = "";
     private int bankCardId = 0;
     private String fee = "";
-    private String get_time = "";
+    private String get_time = "5";
 
 
     @Override

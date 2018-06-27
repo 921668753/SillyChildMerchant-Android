@@ -18,7 +18,7 @@ public class URLConstants {
      * 测试服务器地址URL
      */
 //    public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
-    // public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
+    //public static String SERVERURL = "http://api.shahaizi.keiousoft.com/";
     public static String SERVERURL = "http://store.api.shahaizhi.com/";
 
     public static String SERVERURL1 = "http://www.shahaizhi.com/";
@@ -93,7 +93,7 @@ public class URLConstants {
     /**
      * 用户注册协议
      */
-    public static String REGISTPROTOOL =  SERVERURL1 + "dist/pages/registProtocol.html";
+    public static String REGISTPROTOOL = SERVERURL1 + "dist/pages/registProtocol.html";
 
     /**
      * 更改密码【手机】

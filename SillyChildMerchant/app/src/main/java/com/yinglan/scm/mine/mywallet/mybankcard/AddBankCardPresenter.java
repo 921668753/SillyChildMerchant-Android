@@ -97,18 +97,18 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             return;
         }
 
-        if (StringUtils.isEmpty(phone)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.accountText), 0);
-            return;
-        }
-        if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(verificationCode)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);
-            return;
-        }
+//        if (StringUtils.isEmpty(phone)) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.accountText), 0);
+//            return;
+//        }
+//        if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(verificationCode)) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);
+//            return;
+//        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("account_name", account_name);
         httpParams.put("id_number", id_number);

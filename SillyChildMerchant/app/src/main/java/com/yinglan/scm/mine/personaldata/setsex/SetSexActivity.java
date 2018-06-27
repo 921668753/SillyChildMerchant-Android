@@ -46,6 +46,7 @@ public class SetSexActivity extends BaseActivity implements SetSexContract.View 
         initTitle();
         sex = getIntent().getIntExtra("sex", 0);
         if (sex == 0 || sex == 1) {
+            sex = 1;
             img_nan.setImageResource(R.mipmap.set_gender_check_the_number);
             img_nv.setImageDrawable(null);
         } else {
