@@ -18,7 +18,6 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
-import com.common.cklibrary.utils.rx.MsgEvent;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -177,15 +176,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         GlideImageLoader glideImageLoader = new GlideImageLoader();
         imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
         imagePicker.setShowCamera(true);                      //显示拍照按钮
-        imagePicker.setCrop(true);                           //允许裁剪（单选才有效）
-        imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
         imagePicker.setSelectLimit(NumericConstants.MAXPICTURE);              //选中数量限制
-        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setFocusHeight(400);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
-        imagePicker.setOutPutY(500);                         //保存文件的高度。单位像素
-        imagePicker.setMultiMode(false);//设置为单选模式，默认多选
     }
 
 
@@ -267,8 +258,18 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                  * */
                 // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
                 if (((RecyclerView) view.getParent()).getId() == R.id.recyclerView) {
+                    ImagePicker.getInstance().setCrop(true);                           //允许裁剪（单选才有效）
+                    ImagePicker.getInstance().setSaveRectangle(true);                   //是否按矩形区域保存
+                    ImagePicker.getInstance().setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+                    ImagePicker.getInstance().setFocusWidth(1000);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+                    ImagePicker.getInstance().setFocusHeight(500);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+                    ImagePicker.getInstance().setOutPutX(1200);                         //保存文件的宽度。单位像素
+                    ImagePicker.getInstance().setOutPutY(600);                         //保存文件的高度。单位像素
+                    ImagePicker.getInstance().setMultiMode(false);//设置为单选模式，默认多选
                     startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
                 } else {
+                    ImagePicker.getInstance().setCrop(false);                           //允许裁剪（单选才有效）
+                    ImagePicker.getInstance().setSaveRectangle(true);                   //是否按矩形区域保存
                     startActivityForResult(intent1, NumericConstants.RESULT_CODE_GET);
                 }
                 break;
@@ -545,5 +546,4 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         urllist1 = null;
         recyclerView1.removeAllViews();
     }
-
 }

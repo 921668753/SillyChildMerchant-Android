@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen175"
         android:padding="@dimen/dimen1"
-        android:scaleType="fitXY"
+        android:scaleType="centerInside"
         android:src="@mipmap/home_add_pictures" />
 
 </RelativeLayout>
