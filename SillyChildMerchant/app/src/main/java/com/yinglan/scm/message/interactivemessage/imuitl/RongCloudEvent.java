@@ -90,6 +90,7 @@ public final class RongCloudEvent implements
         //  RongIM.setGroupInfoProvider(this, true);// 设置群组信息提供者。
         RongIM.setLocationProvider(this);//设置地理位置提供者,不用位置的同学可以注掉此行代码
         setReadReceiptConversationType();
+        RongIMUtil.connectRongIM(mContext);
     }
 
 
