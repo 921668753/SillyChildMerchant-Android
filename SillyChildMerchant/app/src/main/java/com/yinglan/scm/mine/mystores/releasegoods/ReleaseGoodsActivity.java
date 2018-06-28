@@ -214,6 +214,10 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(adapter1);
 
+        ll_classification.setFocusable(true);
+        ll_classification.requestFocus();
+        ll_classification.setFocusableInTouchMode(true);
+        ll_classification.requestFocusFromTouch();
     }
 
     @Override

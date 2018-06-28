@@ -225,6 +225,10 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(adapter1);
 
+        ll_classification.setFocusable(true);
+        ll_classification.requestFocus();
+        ll_classification.setFocusableInTouchMode(true);
+        ll_classification.requestFocusFromTouch();
     }
 
     @Override
