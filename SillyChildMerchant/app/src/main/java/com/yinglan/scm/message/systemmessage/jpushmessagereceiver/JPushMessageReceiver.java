@@ -67,6 +67,7 @@ public class JPushMessageReceiver extends BroadcastReceiver {
             news.putExtra("chageMessageIcon", 21);
             news.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(news);
+            news.setAction(MainServiceAction);
             news.putExtra("havemsg", false);
             context.sendBroadcast(news);
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {

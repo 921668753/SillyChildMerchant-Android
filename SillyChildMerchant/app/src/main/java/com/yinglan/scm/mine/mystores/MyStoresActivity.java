@@ -352,7 +352,8 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusReleaseGoodsEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusProductSpecificationsEvent") && mPresenter != null) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") ||
+                ((String) msgEvent.getData()).equals("RxBusReleaseGoodsEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusProductSpecificationsEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, type, store, price);
         }
