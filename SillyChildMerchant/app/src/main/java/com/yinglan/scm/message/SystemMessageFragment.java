@@ -24,6 +24,7 @@ import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.message.SystemMessageViewAdapter;
 import com.yinglan.scm.constant.NumericConstants;
+import com.yinglan.scm.constant.StringNewConstants;
 import com.yinglan.scm.entity.message.SystemMessageBean;
 import com.yinglan.scm.entity.message.SystemMessageBean.DataBean;
 import com.yinglan.scm.loginregister.LoginActivity;
@@ -77,10 +78,6 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
 
-    /**
-     * 消息总数
-     */
-    // private int sum = 0;
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MainActivity) getActivity();
@@ -163,20 +160,37 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-//            for (int i = 0; i < systemMessageBean.getData().size(); i++) {
-//                sum = sum + systemMessageBean.getData().get(i).getNum();
-//            }
-//            if (sum == 0) {
-//                errorMsg(getString(R.string.noSystemMessage), 1);
-//                return;
-//            }
             mAdapter.addNewData(systemMessageBean.getData());
         } else {
             mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(systemMessageBean.getData());
         }
+        sendCast(systemMessageBean);
         dismissLoadingDialog();
     }
+
+
+    /**
+     * 发送广播
+     *
+     * @param systemMessageBean num 未读消息总数
+     */
+    private void sendCast(SystemMessageBean systemMessageBean) {
+        int num = 0;
+        if (systemMessageBean.getData() != null && systemMessageBean.getData().size() > 0) {
+            for (int i = 0; i < systemMessageBean.getData().size(); i++) {
+                num += systemMessageBean.getData().get(i).getNum();
+            }
+        }
+        Intent intentcast = new Intent(StringNewConstants.MainServiceAction);
+        if (num > 0) {
+            intentcast.putExtra("havemsg", true);
+        } else {
+            intentcast.putExtra("havemsg", false);
+        }
+        aty.sendBroadcast(intentcast);
+    }
+
 
     @Override
     public void errorMsg(String msg, int flag) {
@@ -196,7 +210,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
             tv_hintText.setVisibility(View.GONE);
             tv_button.setText(getString(R.string.login));
             // ViewInject.toast(getString(R.string.reloginPrompting));
-         //   aty.showActivity(aty, LoginActivity.class);
+            //   aty.showActivity(aty, LoginActivity.class);
             return;
         } else if (msg.contains(getString(R.string.checkNetwork))) {
             img_err.setImageResource(R.mipmap.no_network);

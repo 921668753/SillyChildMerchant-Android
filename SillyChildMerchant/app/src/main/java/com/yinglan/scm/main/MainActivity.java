@@ -18,9 +18,12 @@ import com.common.cklibrary.common.BindView;
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
 import com.kymjs.common.Log;
+import com.kymjs.common.StringUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.StringNewConstants;
+import com.yinglan.scm.message.interactivemessage.imuitl.RongCloudEvent;
+import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.receivers.MainCallBack;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.message.SystemMessageFragment.MessageReceiver;
@@ -29,6 +32,7 @@ import com.yinglan.scm.services.MainService;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 
 import static com.yinglan.scm.constant.StringNewConstants.MESSAGE_RECEIVED_ACTION;
 
@@ -296,7 +300,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            msgStyle(false);
             cleanColors(1);
         } else if (flag == 1) {
             cleanColors(2);
@@ -344,6 +347,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                     MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
                     JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
                     MobclickAgent.onKillProcess(aty);
+                    if (!StringUtils.isEmpty(UserUtil.getResTokenInfo(this))) {
+                        //在mainActivity中是否需要重新注册消息数量监听， 只有被挤出融云后才需要
+                        //清除融云信息，退出登陆
+                        RongIM.getInstance().logout();
+                    }
+                    RongCloudEvent.getInstance().removeUnReadMessageCountChangedObserver();
                     //第一个参数为是否解绑推送的devicetoken
                     KJActivityStack.create().appExit(aty);
                 }

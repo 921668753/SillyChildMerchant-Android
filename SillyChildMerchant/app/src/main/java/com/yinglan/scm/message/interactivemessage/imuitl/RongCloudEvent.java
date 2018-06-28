@@ -1,6 +1,7 @@
 package com.yinglan.scm.message.interactivemessage.imuitl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.yinglan.scm.message.interactivemessage.imuitl.moudle.SealExtensionModule;
@@ -12,12 +13,15 @@ import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+
+import static com.yinglan.scm.constant.StringNewConstants.MainServiceAction;
 
 /**
  * 融云SDK事件监听处理。 把事件统一处理，开发者可直接复制到自己的项目中去使用。
@@ -31,6 +35,7 @@ import io.rong.imlib.model.UserInfo;
  * 6、连接状态监听器，以获取连接相关状态：    ConnectionStatusListener。
  * 7、地理位置提供者：                 LocationProvider。
  * 8、会话界面操作的监听器：            ConversationBehaviorListener。
+ * 9、未读消息数监听器的监听器：           addUnReadMessageCountChangedObserver。
  */
 public final class RongCloudEvent implements
         RongIM.ConversationListBehaviorListener,
@@ -41,7 +46,7 @@ public final class RongCloudEvent implements
         RongIMClient.ConnectionStatusListener,
         RongIM.LocationProvider,
         RongIM.ConversationBehaviorListener,
-        RongIM.OnSendMessageListener {
+        RongIM.OnSendMessageListener, IUnReadMessageObserver {
 
     private static final String TAG = RongCloudEvent.class.getSimpleName();
 
@@ -55,9 +60,7 @@ public final class RongCloudEvent implements
      * @param context 上下文。
      */
     public static void init(final Context context) {
-
         if (mRongCloudInstance == null) {
-
             synchronized (RongCloudEvent.class) {
                 if (mRongCloudInstance == null) {
                     mRongCloudInstance = new RongCloudEvent(context);
@@ -86,7 +89,9 @@ public final class RongCloudEvent implements
         RongIM.setUserInfoProvider(this, true);// 设置用户信息提供者。
         //  RongIM.setGroupInfoProvider(this, true);// 设置群组信息提供者。
         RongIM.setLocationProvider(this);//设置地理位置提供者,不用位置的同学可以注掉此行代码
+        setReadReceiptConversationType();
     }
+
 
     /*
      * 连接成功注册。 <p/> 在RongIM-connect-onSuccess后调用。
@@ -94,7 +99,6 @@ public final class RongCloudEvent implements
     public void setOtherListener() {
         RongIM.setOnReceiveMessageListener(this);// 设置发出消息接收监听器.
         RongIM.setConnectionStatusListener(this);// 设置连接状态监听器。
-        //  RongIM.setOnReceiveMessageListener(this);// 设置消息接收监听器。
         setUserInfoEngineListener();   //用户信息提供者回调监听
 //    setGroupInfoEngineListener();  //群组信息提供者回调监听
         setInputProvider();
@@ -107,11 +111,12 @@ public final class RongCloudEvent implements
                 Conversation.ConversationType.DISCUSSION
         };
         RongIM.getInstance().setReadReceiptConversationTypeList(types);
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, types);
     }
 
     private void setInputProvider() {
-     //   RongIM.setOnReceiveMessageListener(this);
-        List<IExtensionModule> moduleList =  RongExtensionManager.getInstance().getExtensionModules();;
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+        ;
         IExtensionModule defaultModule = null;
         if (moduleList != null) {
             for (IExtensionModule module : moduleList) {
@@ -153,8 +158,7 @@ public final class RongCloudEvent implements
 
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
-                //   ActivityUtil.reLogout(IHealthActivity.INSTANCE);
-
+                UserUtil.clearUserInfo(mContext);
                 break;
         }
     }
@@ -247,5 +251,26 @@ public final class RongCloudEvent implements
                 }
             }
         });
+    }
+
+    /**
+     * 未读消息数监听器
+     *
+     * @param i
+     */
+    @Override
+    public void onCountChanged(int i) {
+        Intent news = new Intent();
+        news.setAction(MainServiceAction);
+        if (i > 0) {
+            news.putExtra("havemsg", true);
+        } else {
+            news.putExtra("havemsg", false);
+        }
+        mContext.sendBroadcast(news);
+    }
+
+    public void removeUnReadMessageCountChangedObserver() {
+        RongIM.getInstance().removeUnReadMessageCountChangedObserver(this);
     }
 }

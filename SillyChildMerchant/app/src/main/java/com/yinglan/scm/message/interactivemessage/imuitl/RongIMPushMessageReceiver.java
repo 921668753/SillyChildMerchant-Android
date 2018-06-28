@@ -19,12 +19,9 @@ import static com.yinglan.scm.constant.StringNewConstants.MainServiceAction;
  */
 public class RongIMPushMessageReceiver extends PushMessageReceiver {
 
+
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
-        Intent intent = new Intent();
-        intent.setAction(MainServiceAction);
-        intent.putExtra("havemsg", true);
-        context.sendBroadcast(intent);
         return false;
     }
 
@@ -38,6 +35,7 @@ public class RongIMPushMessageReceiver extends PushMessageReceiver {
         news.putExtra("chageMessageIcon", 20);
         news.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(news);
+        news.setAction(MainServiceAction);
         news.putExtra("havemsg", false);
         context.sendBroadcast(news);
 //        Intent intent = new Intent();
