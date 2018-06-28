@@ -211,7 +211,7 @@
                 android:paddingBottom="@dimen/dimen10"
                 android:paddingLeft="@dimen/dimen10"
                 android:paddingRight="@dimen/dimen10"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     style="@style/WrapWrap"

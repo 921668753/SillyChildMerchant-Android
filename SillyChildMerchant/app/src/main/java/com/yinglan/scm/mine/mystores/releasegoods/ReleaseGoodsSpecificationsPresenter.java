@@ -73,10 +73,10 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.productDescription), 1);
             return;
         }
-        if (StringUtils.isEmpty(intro)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 1);
-            return;
-        }
+//        if (StringUtils.isEmpty(intro)) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 1);
+//            return;
+//        }
         if (params != null && params.getParamList().size() > 0) {
             for (int i = 0; i < params.getParamList().size(); i++) {
                 if (StringUtils.isEmpty(params.getParamList().get(i).getValue())) {

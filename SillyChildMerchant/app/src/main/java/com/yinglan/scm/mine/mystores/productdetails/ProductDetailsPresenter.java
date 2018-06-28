@@ -139,10 +139,10 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.productDescription), 4);
             return;
         }
-        if (StringUtils.isEmpty(intro)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 4);
-            return;
-        }
+//        if (StringUtils.isEmpty(intro)) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 4);
+//            return;
+//        }
         productDetailsBean.getData().setBrand_id(brand_id);
         productDetailsBean.getData().setCat_id(catId);
         productDetailsBean.getData().setType_id(type_id);

@@ -75,10 +75,10 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.productDescription), 2);
             return;
         }
-        if (StringUtils.isEmpty(productDetailsBean.getData().getIntro())) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 2);
-            return;
-        }
+//        if (StringUtils.isEmpty(productDetailsBean.getData().getIntro())) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 2);
+//            return;
+//        }
         for (int i = 0; i < params.getParamList().size(); i++) {
             if (StringUtils.isEmpty(params.getParamList().get(i).getValue())) {
                 mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnter) + params.getParamList().get(i).getName(), 2);
