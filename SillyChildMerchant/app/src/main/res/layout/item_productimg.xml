@@ -4,13 +4,11 @@
     android:orientation="vertical"
     android:paddingTop="@dimen/dimen10">
 
-
     <ImageView
         android:id="@+id/iv_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen175"
         android:padding="@dimen/dimen1"
-        android:scaleType="centerInside"
-        android:src="@mipmap/home_add_pictures" />
+        android:src="@mipmap/shop_add_goods" />
 
 </RelativeLayout>

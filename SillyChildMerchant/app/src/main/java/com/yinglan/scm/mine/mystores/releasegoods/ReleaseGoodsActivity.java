@@ -166,6 +166,7 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
         imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
         imagePicker.setShowCamera(true);                      //显示拍照按钮
         imagePicker.setSelectLimit(NumericConstants.MAXPICTURE);              //选中数量限制
+        imagePicker.setMultiMode(false);//设置为单选模式，默认多选
     }
 
 
@@ -435,8 +436,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                 selImageList1.addAll(images1);
                 adapter1.setImages(selImageList1);
             }
-        } else {
-            ViewInject.toast(getString(R.string.noData));
         }
     }
 

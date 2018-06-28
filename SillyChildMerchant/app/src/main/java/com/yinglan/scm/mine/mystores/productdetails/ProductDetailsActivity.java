@@ -177,6 +177,7 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         imagePicker.setImageLoader(glideImageLoader);   //设置图片加载器
         imagePicker.setShowCamera(true);                      //显示拍照按钮
         imagePicker.setSelectLimit(NumericConstants.MAXPICTURE);              //选中数量限制
+        imagePicker.setMultiMode(false);//设置为单选模式，默认多选
     }
 
 
@@ -265,7 +266,6 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                     ImagePicker.getInstance().setFocusHeight(500);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
                     ImagePicker.getInstance().setOutPutX(1200);                         //保存文件的宽度。单位像素
                     ImagePicker.getInstance().setOutPutY(600);                         //保存文件的高度。单位像素
-                    ImagePicker.getInstance().setMultiMode(false);//设置为单选模式，默认多选
                     startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
                 } else {
                     ImagePicker.getInstance().setCrop(false);                           //允许裁剪（单选才有效）

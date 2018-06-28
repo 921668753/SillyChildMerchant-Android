@@ -83,7 +83,75 @@ public class RequestClient {
                 listener.onFailure(msg);
             }
         });
+    }
 
+    /**
+     * 多图片上传
+     */
+    public static void upLoadImg(Context context, List<File> files, ResponseListener<String> listener) {
+        long nowTime = System.currentTimeMillis();
+        String qiNiuImgTime = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgTime", "");
+        long qiNiuImgTime1 = 0;
+        if (StringUtils.isEmpty(qiNiuImgTime)) {
+            qiNiuImgTime1 = 0;
+        } else {
+            qiNiuImgTime1 = Long.decode(qiNiuImgTime);
+        }
+        long refreshTime = nowTime - qiNiuImgTime1 - (8 * 60 * 60 * 1000);
+
+        if (refreshTime <= 0) {
+            String token = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuToken");
+            for (int i = 0; i < files.size(); i++) {
+                String key = "SHZS_" + UserUtil.getRcId(context) + "_" + files.get(i).getName();
+                UploadManagerUtil.getInstance().getUploadManager().put(files.get(i).getPath(), key, token, new UpCompletionHandler() {
+                    @Override
+                    public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
+                        Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
+                        if (responseInfo.isOK()) {
+                            String host = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgHost");
+                            String headpicPath = host + key;
+                            Log.i("ReadFragment", "complete: " + headpicPath);
+                            listener.onSuccess(headpicPath);
+                        }
+                    }
+                }, null);
+            }
+            return;
+        }
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        getQiNiuKey(context, httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                QiNiuKeyBean qiNiuKeyBean = (QiNiuKeyBean) JsonUtil.getInstance().json2Obj(response, QiNiuKeyBean.class);
+                if (qiNiuKeyBean == null && StringUtils.isEmpty(qiNiuKeyBean.getData().getAuthToken())) {
+                    listener.onFailure(context.getString(R.string.serverReturnsDataNullJsonError));
+                    return;
+                }
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuToken", qiNiuKeyBean.getData().getAuthToken());
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuImgHost", qiNiuKeyBean.getData().getHost());
+                PreferenceHelper.write(context, StringConstants.FILENAME, "qiNiuImgTime", String.valueOf(System.currentTimeMillis()));
+                for (int i = 0; i < files.size(); i++) {
+                    String key = "SHZS_" + UserUtil.getRcId(context) + "_" + files.get(i).getName();
+                    UploadManagerUtil.getInstance().getUploadManager().put(files.get(i).getPath(), key, qiNiuKeyBean.getData().getAuthToken(), new UpCompletionHandler() {
+                        @Override
+                        public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
+                            Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
+                            if (responseInfo.isOK()) {
+                                String host = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgHost");
+                                String headpicPath = host + key;
+                                Log.i("ReadFragment", "complete: " + headpicPath);
+                                listener.onSuccess(headpicPath);
+                            }
+                        }
+                    }, null);
+                }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                listener.onFailure(msg);
+            }
+        });
     }
 
 
