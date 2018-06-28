@@ -352,6 +352,16 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
             recyclerView.setAdapter(adapter);
             et_productIntroduction.setText(productDetailsBean.getData().getBrief());
             et_introduction.setText(productDetailsBean.getData().getIntro());
+            urllist1.addAll(productDetailsBean.getData().getDetail_images());
+            images1 = new ArrayList<>();
+            for (int i = 0; i < productDetailsBean.getData().getDetail_images().size(); i++) {
+                ImageItem imageItem = new ImageItem();
+                imageItem.path = productDetailsBean.getData().getDetail_images().get(i);
+                images1.add(imageItem);
+            }
+            selImageList1.addAll(images1);
+            adapter1.setImages(selImageList1);
+            recyclerView1.setAdapter(adapter1);
             ((ProductDetailsContract.Presenter) mPresenter).getClassificationList();
         }
 

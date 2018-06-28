@@ -189,6 +189,10 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
 //            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 4);
 //            return;
 //        }
+        if (urllist1 == null || urllist1.size() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.addDetailsPictures), 4);
+            return;
+        }
         Intent intent = new Intent(releaseGoodsActivity, ReleaseGoodsSpecificationsActivity.class);
         intent.putExtra("brand_id", brand_id);
         intent.putExtra("catId", catId);

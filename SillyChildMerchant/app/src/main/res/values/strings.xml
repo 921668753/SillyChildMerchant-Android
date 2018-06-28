@@ -303,6 +303,7 @@
     <string name="releaseGoods">发布商品</string>
     <string name="jian1">件</string>
     <string name="addPicture">请添加商品图片</string>
+    <string name="addDetailsPictures">请添加商品详情图片</string>
     <string name="addSpecification">+ 添加规格</string>
     <string name="productSpecifications1">商品规格</string>
     <string name="productDescription">请输入商品简介</string>

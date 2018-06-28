@@ -143,6 +143,10 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
 //            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 4);
 //            return;
 //        }
+        if (urllist1 == null || urllist1.size() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.addDetailsPictures), 4);
+            return;
+        }
         productDetailsBean.getData().setBrand_id(brand_id);
         productDetailsBean.getData().setCat_id(catId);
         productDetailsBean.getData().setType_id(type_id);
@@ -151,9 +155,8 @@ public class ProductDetailsPresenter implements ProductDetailsContract.Presenter
         productDetailsBean.getData().setImages(urllist);
         productDetailsBean.getData().setOriginal(urllist.get(0));
         productDetailsBean.getData().setIntro(intro);
-
+        productDetailsBean.getData().setDetail_images(urllist1);
         Intent intent = new Intent(productDetailsActivity, ProductSpecificationsActivity.class);
-        intent.putStringArrayListExtra("images1", (ArrayList) urllist1);
         intent.putExtra("productDetailsBean", productDetailsBean);
         productDetailsActivity.showActivity(productDetailsActivity, intent);
     }

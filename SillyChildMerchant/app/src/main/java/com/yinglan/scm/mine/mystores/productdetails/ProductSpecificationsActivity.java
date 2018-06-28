@@ -71,9 +71,6 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
 
     private List<ProductParametersBean.DataBean.SpecsBean> list;
 
-
-    private ArrayList<String> images1 = null;
-
     private ParamsBean paramsBean;
 
     private ProductDetailsBean productDetailsBean;
@@ -91,7 +88,6 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
         productSpecificationsViewAdapter = new ProductSpecificationsViewAdapter(this);
         productParametersViewAdapter = new ProductParametersViewAdapter(this);
         productDetailsBean = (ProductDetailsBean) getIntent().getSerializableExtra("productDetailsBean");
-        images1 = getIntent().getStringArrayListExtra("images1");
     }
 
     @Override

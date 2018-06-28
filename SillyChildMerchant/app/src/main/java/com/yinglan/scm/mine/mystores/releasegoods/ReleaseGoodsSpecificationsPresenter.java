@@ -52,7 +52,7 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
 
     @Override
     public void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String original,
-                                   List<String> images, String intro, ParamsBean params, List<SpecsBean> specs) {
+                                   List<String> images, String intro, List<String> detail_images, ParamsBean params, List<SpecsBean> specs) {
         if (cat_id <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 1);
             return;
@@ -77,6 +77,10 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
 //            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterProductDescription), 1);
 //            return;
 //        }
+        if (detail_images == null || detail_images.size() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.addDetailsPictures), 4);
+            return;
+        }
         if (params != null && params.getParamList().size() > 0) {
             for (int i = 0; i < params.getParamList().size(); i++) {
                 if (StringUtils.isEmpty(params.getParamList().get(i).getValue())) {
@@ -131,6 +135,7 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
         map.put("intro", intro);
         map.put("original", original);
         map.put("images", images);
+        map.put("detail_images", detail_images);
         map.put("market_enable", 1);
         List<ParamsBean> ParamsBeanList = new ArrayList<ParamsBean>();
         ParamsBeanList.add(params);

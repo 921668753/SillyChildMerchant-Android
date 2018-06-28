@@ -60,6 +60,7 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
         private String have_spec;
         private List<SpecsBean> specs;
         private List<String> images;
+        private List<String> detail_images;
 
         public int getGoods_id() {
             return goods_id;
@@ -251,6 +252,14 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
 
         public void setImages(List<String> images) {
             this.images = images;
+        }
+
+        public List<String> getDetail_images() {
+            return detail_images;
+        }
+
+        public void setDetail_images(List<String> detail_images) {
+            this.detail_images = detail_images;
         }
 
         public static class SpecsBean implements Serializable {

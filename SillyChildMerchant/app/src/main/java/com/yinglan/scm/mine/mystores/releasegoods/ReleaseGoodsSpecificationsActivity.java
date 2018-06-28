@@ -125,7 +125,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
                 productSpecificationsViewAdapter.addLastItem(specsBean);
                 break;
             case R.id.tv_releaseGoods:
-                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, paramsBean, productSpecificationsViewAdapter.getData());
+                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, images1, paramsBean, productSpecificationsViewAdapter.getData());
                 break;
         }
     }

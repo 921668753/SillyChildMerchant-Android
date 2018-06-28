@@ -134,6 +134,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
         map.put("intro", productDetailsBean.getData().getIntro());
         map.put("original", productDetailsBean.getData().getOriginal());
         map.put("images", productDetailsBean.getData().getImages());
+        map.put("detail_images", productDetailsBean.getData().getDetail_images());
         map.put("market_enable", 1);
         List<ReleaseGoodsBean.ParamsBean> ParamsBeanList = new ArrayList<ReleaseGoodsBean.ParamsBean>();
         ParamsBeanList.add(params);
