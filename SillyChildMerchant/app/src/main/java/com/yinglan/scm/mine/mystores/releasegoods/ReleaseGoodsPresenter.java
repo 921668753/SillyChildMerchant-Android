@@ -11,6 +11,7 @@ import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.lzy.imagepicker.bean.ImageItem;
 import com.nanchen.compresshelper.FileUtil;
 import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
@@ -117,6 +118,50 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void upPictures(List<ImageItem> imgPath, int flag) {
+        if (imgPath == null || imgPath.size() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), flag);
+            return;
+        }
+        List<File> files = new ArrayList<File>();
+        for (int i = 0; i < imgPath.size(); i++) {
+            String path = imgPath.get(i).path;
+            if (StringUtils.isEmpty(path)) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), flag);
+                return;
+            }
+            File oldFile = new File(path);
+            if (!(FileUtil.isFileExists(oldFile))) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.imagePathError), flag);
+                return;
+            }
+            long fileSize = 0;
+            try {
+                fileSize = DataCleanManager.getFileSize(oldFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+                fileSize = 0;
+            }
+            if (fileSize >= StringConstants.COMPRESSION_SIZE) {
+                oldFile = BitmapCoreUtil.customCompression(oldFile);
+            }
+            files.add(oldFile);
+        }
+        RequestClient.upLoadImg(KJActivityStack.create().topActivity(), files, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, flag);
+            }
+        });
+    }
+
 
     @Override
     public void jumpActivity(ReleaseGoodsActivity releaseGoodsActivity, int brand_id, int catId, int type_id, String name, String brief, String intro, List<String> urllist, List<String> urllist1) {

@@ -98,7 +98,6 @@ public class RequestClient {
             qiNiuImgTime1 = Long.decode(qiNiuImgTime);
         }
         long refreshTime = nowTime - qiNiuImgTime1 - (8 * 60 * 60 * 1000);
-
         if (refreshTime <= 0) {
             String token = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuToken");
             for (int i = 0; i < files.size(); i++) {

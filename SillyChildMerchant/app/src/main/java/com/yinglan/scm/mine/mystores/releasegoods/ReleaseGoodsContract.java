@@ -2,6 +2,7 @@ package com.yinglan.scm.mine.mystores.releasegoods;
 
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
+import com.lzy.imagepicker.bean.ImageItem;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public interface ReleaseGoodsContract {
          */
         void upPictures(String imgPath, int flag);
 
+        void upPictures(List<ImageItem> imgPath, int flag);
         /**
          * 跳转规格界面
          */
