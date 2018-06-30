@@ -16,6 +16,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.loginregister.LoginBean;
@@ -197,6 +198,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
              */
             RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
+            CrashReport.putUserData(this, "mobile", et_accountNumber.getText().toString());
             dismissLoadingDialog();
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();

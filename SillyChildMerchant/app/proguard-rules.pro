@@ -198,6 +198,11 @@ public static final ** CREATOR;
 -ignorewarnings
 
 
+#==================腾讯bugly=====================
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
+
 #==================Cklibrary=====================
 #==================Cklibrary=====================
 #==================Cklibrary=====================

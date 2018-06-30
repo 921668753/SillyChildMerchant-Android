@@ -16,6 +16,7 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.loginregister.LoginBean;
@@ -166,6 +167,7 @@ public class BindingPhoneActivity extends BaseActivity implements BindingPhoneCo
              */
             RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             MobclickAgent.onProfileSignIn(getIntent().getStringExtra("openid"));
+            CrashReport.putUserData(this, "openid", getIntent().getStringExtra("openid"));
             dismissLoadingDialog();
             KJActivityStack.create().finishActivity(LoginActivity.class);
             aty.finish();

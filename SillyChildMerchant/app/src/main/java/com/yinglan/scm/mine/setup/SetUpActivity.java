@@ -20,6 +20,7 @@ import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.common.SystemTool;
+import com.tencent.bugly.beta.Beta;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.loginregister.LoginActivity;
@@ -30,7 +31,6 @@ import com.yinglan.scm.utils.FileNewUtil;
 import java.io.File;
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -69,9 +69,6 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     @BindView(id = R.id.ll_feedback, click = true)
     private LinearLayout ll_feedback;
 
-    private String updateAppUrl = null;
-    private boolean isUpdateApp = false;
-    private SweetAlertDialog sweetAlertDialog = null;
     private ClearCacheDialog clearCacheDialog = null;
 
     @Override
@@ -82,13 +79,12 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     @Override
     public void initData() {
         super.initData();
-        initDialog();
         mPresenter = new SetUpPresenter(this);
-        isUpdateApp = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isUpdate", false);
-        if (isUpdateApp) {
+        int versionCode = Beta.getUpgradeInfo().versionCode;
+        if (versionCode > SystemTool.getAppVersionCode(this)) {
             tv_versionname.setText(getString(R.string.newVersion));
         } else {
-            tv_versionname.setText(SystemTool.getAppVersionName(this));
+            tv_versionname.setText("V" + SystemTool.getAppVersionName(this));
         }
         ((SetUpContract.Presenter) mPresenter).getIsLogin(aty, 2);
     }
@@ -113,21 +109,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_versionNumber:
-                if (isUpdateApp) {
-                    updateAppUrl = PreferenceHelper.readString(aty, StringConstants.FILENAME, "updateAppUrl", null);
-                    if (StringUtils.isEmpty(updateAppUrl)) {
-                        return;
-                    }
-                    sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            sweetAlertDialog.dismiss();
-                            readAndWriteTask(updateAppUrl);
-                        }
-                    }).show();
-                    break;
-                }
-                ViewInject.toast(getString(R.string.latestVersion));
+                readAndWriteTask();
                 break;
             case R.id.ll_clearCache:
                 showClearCacheDialog();
@@ -185,31 +167,12 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     }
 
 
-    /**
-     * 弹框设置
-     */
-    private void initDialog() {
-        sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setTitleText(getString(R.string.updateVersion))
-                .setCancelText(getString(R.string.cancel1))
-                .setConfirmText(getString(R.string.update))
-                .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismiss();
-                    }
-                });
-    }
-
-
     @AfterPermissionGranted(NumericConstants.READ_AND_WRITE_CODE)
-    public void readAndWriteTask(String updateAppUrl) {
+    public void readAndWriteTask() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Have permission, do the thing!
-            ((SetUpContract.Presenter) mPresenter).downloadApp(updateAppUrl);
+            Beta.checkUpgrade();
         } else {
             // Ask for one permission
             EasyPermissions.requestPermissions(this, getString(R.string.readAndWrite),
@@ -234,20 +197,6 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
         if (requestCode == NumericConstants.READ_AND_WRITE_CODE) {
             ViewInject.toast(getString(R.string.sdPermission));
         }
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (clearCacheDialog != null) {
-            clearCacheDialog.cancel();
-        }
-        clearCacheDialog = null;
-        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) {
-            sweetAlertDialog.cancel();
-        }
-        sweetAlertDialog = null;
     }
 
     @Override
@@ -288,7 +237,17 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
             showActivity(aty, LoginActivity.class);
             return;
         }
-        isUpdateApp = false;
         ViewInject.toast(msg);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (clearCacheDialog != null) {
+            clearCacheDialog.cancel();
+        }
+        clearCacheDialog = null;
+    }
+
+
 }

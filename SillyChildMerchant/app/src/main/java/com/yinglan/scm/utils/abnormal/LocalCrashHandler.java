@@ -6,6 +6,7 @@ package com.yinglan.scm.utils.abnormal;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +20,10 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.yinglan.scm.R;
-import com.yinglan.scm.application.MyApplication;
 import com.yinglan.scm.main.MainActivity;
 
 import java.io.File;
@@ -48,7 +49,7 @@ import java.util.Map;
 public class LocalCrashHandler implements UncaughtExceptionHandler {
 
     public static final String TAG = LocalCrashHandler.class.getCanonicalName();
-    private static MyApplication application;
+    private static Application application;
 
     // 系统默认的UncaughtException处理类
     private UncaughtExceptionHandler mDefaultHandler;
@@ -82,7 +83,7 @@ public class LocalCrashHandler implements UncaughtExceptionHandler {
      *
      * @param application1
      */
-    public void init(MyApplication application1) {
+    public void init(Application application1) {
         mContext = application1.getApplicationContext();
         application = application1;
         // 获取系统默认的UncaughtException处理器
@@ -114,7 +115,9 @@ public class LocalCrashHandler implements UncaughtExceptionHandler {
             AlarmManager mgr = (AlarmManager) application.getSystemService(Context.ALARM_SERVICE);
             mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
                     restartIntent); // 1秒钟后重启应用
-            application.finishActivity();
+            KJActivityStack.create().finishAllActivity();
+            //杀死该应用进程
+            android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
 
@@ -140,7 +143,7 @@ public class LocalCrashHandler implements UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                ViewInject.toast(MyApplication.getContext().getString(R.string.errException));
+                ViewInject.toast(KJActivityStack.create().topActivity().getString(R.string.errException));
                 Looper.loop();
             }
         }.start();
@@ -211,7 +214,7 @@ public class LocalCrashHandler implements UncaughtExceptionHandler {
 
             TelephonyManager mTelephonyMgr = (TelephonyManager) mContext
                     .getSystemService(Context.TELEPHONY_SERVICE);
-            @SuppressLint({"HardwareIds", "MissingPermission"}) String imei = mTelephonyMgr.getDeviceId();
+            @SuppressLint("MissingPermission") String imei = mTelephonyMgr.getDeviceId();
             if (TextUtils.isEmpty(imei)) {
                 imei = "unknownimei";
             }

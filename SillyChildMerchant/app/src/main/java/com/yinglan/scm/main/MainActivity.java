@@ -19,6 +19,7 @@ import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.ViewInject;
 import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
+import com.tencent.bugly.beta.Beta;
 import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.StringNewConstants;
@@ -352,6 +353,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                         //清除融云信息，退出登陆
                         RongIM.getInstance().logout();
                     }
+                    Beta.unInit();
                     RongCloudEvent.getInstance().removeUnReadMessageCountChangedObserver();
                     //第一个参数为是否解绑推送的devicetoken
                     KJActivityStack.create().appExit(aty);

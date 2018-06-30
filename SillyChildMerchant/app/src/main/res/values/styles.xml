@@ -66,7 +66,7 @@
         <item name="bgatitlebar_titleTextColor">@color/titletextcolors</item>
         <item name="bgatitlebar_titleTextSize">@dimen/textsize17</item>
         <item name="bgatitlebar_rightMaxWidth">@dimen/dimen150</item>
-        <item name="bgatitlebar_isTitleTextBold ">false</item>
+        <item name="bgatitlebar_isTitleTextBold">false</item>
         <item name="bgatitlebar_leftAndRightPadding">@dimen/dimen14</item>
     </style>
 
