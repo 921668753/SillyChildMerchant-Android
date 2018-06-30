@@ -86,7 +86,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
         }
 
         viewHolderHelper.setText(R.id.tv_goodNumber, mContext.getString(R.string.totalOnlyWord) + listBean.getItemsCount() + mContext.getString(R.string.goods));
-        viewHolderHelper.setText(R.id.tv_goodsMoney, MathUtil.keepTwo(StringUtils.toDouble(listBean.getPaymoney())));
+        viewHolderHelper.setText(R.id.tv_goodsMoney, MathUtil.keepTwo(StringUtils.toDouble(listBean.getNeed_pay_memey())));
 
         if (listBean.getOrderItems() != null && listBean.getOrderItems().size() > 0) {
             ChildListView clv_shopgoods = (ChildListView) viewHolderHelper.getView(R.id.clv_shopgoods);
