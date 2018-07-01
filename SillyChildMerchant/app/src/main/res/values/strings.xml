@@ -216,6 +216,8 @@
 
     <string name="reloginPrompting">登录超时，或者在其它设备上登录了，请重新登录！</string>
 
+    <!-- 个人中心 我的订单  订单跟踪-->
+    <string name="orderTracking">订单跟踪</string>
 
     <!-- 订单   订单详情-->
     <string name="afterWhy">售后原因</string>

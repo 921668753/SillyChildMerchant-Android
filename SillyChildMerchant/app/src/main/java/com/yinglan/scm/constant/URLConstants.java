@@ -141,6 +141,11 @@ public class URLConstants {
     public static String ORDERSHIP = APIURL + "order/ship.do";
 
     /**
+     * 获取物流详情
+     */
+    public static String ORDERLOGISTICS = SERVERURL1 + "html/order_logistics.html?orderid=";
+
+    /**
      * 查看评价
      */
     public static String ORDERRATE = APIURL + "order/rate.do";

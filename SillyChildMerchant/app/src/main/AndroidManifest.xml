@@ -142,6 +142,11 @@
             android:name=".order.orderdetails.OrderDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!--订单  订单详情  订单跟踪-->
+        <activity
+            android:name=".order.ordertracking.OrderTrackingActivity"
+            android:screenOrientation="portrait" />
+
         <!--订单  售后详情-->
         <activity
             android:name=".order.aftersalesdetails.AfterSalesDetailsActivity"

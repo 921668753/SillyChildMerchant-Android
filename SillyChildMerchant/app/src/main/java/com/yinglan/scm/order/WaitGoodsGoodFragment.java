@@ -24,7 +24,9 @@ import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.adapter.order.GoodsOrderViewAdapter;
 import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
+import com.yinglan.scm.order.ordertracking.OrderTrackingActivity;
 
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
@@ -32,7 +34,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/9/2.
  */
 
-public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, GoodOrderContract.View {
+public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener, GoodOrderContract.View {
 
     private MainActivity aty;
 
@@ -93,6 +95,7 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
         mRefreshLayout.beginRefreshing();
     }
 
@@ -147,6 +150,17 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
         aty.showActivity(aty, intent);
+    }
+
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        // selectedPosition = position;
+        if (childView.getId() == R.id.tv_checkLogistics) {
+            Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
+            checkLogisticsIntent.putExtra("sn", mAdapter.getItem(position).getSn());
+            aty.showActivity(aty, checkLogisticsIntent);
+        }
     }
 
     @Override
@@ -222,7 +236,7 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent")&& mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")&& mPresenter != null||
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null ||
                 ((String) msgEvent.getData()).equals("RxBusSendGoodsGoodEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);

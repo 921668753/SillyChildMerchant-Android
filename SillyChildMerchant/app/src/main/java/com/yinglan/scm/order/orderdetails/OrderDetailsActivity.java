@@ -30,9 +30,12 @@ import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.order.aftersalesdetails.AfterSalesDetailsActivity;
 import com.yinglan.scm.order.dialog.AfterSaleBouncedDialog;
 import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
+import com.yinglan.scm.order.ordertracking.OrderTrackingActivity;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
 
 import java.util.List;
+
+import static com.yinglan.scm.constant.URLConstants.COLLEGE;
 
 /**
  * 我的订单---订单详情
@@ -249,6 +252,18 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private TextView tv_confirmDelivery;
 
     /**
+     * 查看物流
+     */
+    @BindView(id = R.id.tv_checkLogistics, click = true)
+    private TextView tv_checkLogistics;
+
+    /**
+     * 未评价
+     */
+    @BindView(id = R.id.tv_noEvaluation)
+    private TextView tv_noEvaluation;
+
+    /**
      * 查看评价
      */
     @BindView(id = R.id.tv_seeEvaluation, click = true)
@@ -283,6 +298,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private AfterSaleBouncedDialog afterSaleBouncedDialog = null;
 
     private int status = 0;
+    private String sn = "";
 
 
     @Override
@@ -361,10 +377,15 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 showLoadingDialog(getString(R.string.dataLoad));
                 ((OrderDetailsContract.Presenter) mPresenter).postOrderShip(orderId, et_expressNumber.getText().toString().trim(), logiId, tv_courierCompany.getText().toString().trim());
                 break;
+            case R.id.tv_checkLogistics:
+                Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
+                checkLogisticsIntent.putExtra("sn", sn);
+                showActivity(aty, checkLogisticsIntent);
+                break;
             case R.id.tv_seeEvaluation:
-                Intent intent = new Intent(aty, SeeEvaluationActivity.class);
-                intent.putExtra("orderId", orderId);
-                showActivity(aty, intent);
+                Intent intent1 = new Intent(aty, SeeEvaluationActivity.class);
+                intent1.putExtra("orderId", orderId);
+                showActivity(aty, intent1);
                 break;
         }
     }
@@ -400,6 +421,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 tradingClosedGood();
             }
             status = orderDetailBean.getData().getStatus();
+            sn = orderDetailBean.getData().getSn();
             tv_name.setText(orderDetailBean.getData().getShip_name());
             tv_phone.setText(orderDetailBean.getData().getShip_mobile());
             tv_address.setText(orderDetailBean.getData().getShipping_area());
@@ -530,11 +552,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_amountRealPay.setVisibility(View.VISIBLE);
         ll_paymentTime.setVisibility(View.VISIBLE);
         ll_deliveryTime.setVisibility(View.VISIBLE);
-        ll_bottom.setVisibility(View.GONE);
-//            tv_confirmDelivery.setVisibility(View.VISIBLE);
-//            tv_seeEvaluation.setVisibility(View.GONE);
-//            tv_refused.setVisibility(View.GONE);
-//            tv_agreed.setVisibility(View.GONE);
+
+        ll_bottom.setVisibility(View.VISIBLE);
+        tv_confirmDelivery.setVisibility(View.GONE);
+        tv_checkLogistics.setVisibility(View.VISIBLE);
+        tv_noEvaluation.setVisibility(View.GONE);
+        tv_seeEvaluation.setVisibility(View.GONE);
+
+
         ll_expressNumber.setVisibility(View.GONE);
         ll_courierCompany.setVisibility(View.GONE);
         tv_confirmDelivery1.setVisibility(View.GONE);
@@ -589,8 +614,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             ll_bottom.setVisibility(View.GONE);
         } else {
             ll_bottom.setVisibility(View.VISIBLE);
-            tv_confirmDelivery.setVisibility(View.GONE);
             tv_seeEvaluation.setVisibility(View.VISIBLE);
+            tv_confirmDelivery.setVisibility(View.GONE);
+            tv_checkLogistics.setVisibility(View.GONE);
+            tv_noEvaluation.setVisibility(View.GONE);
         }
     }
 

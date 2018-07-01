@@ -39,6 +39,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
     protected void setItemChildListener(BGAViewHolderHelper helper) {
         super.setItemChildListener(helper);
         helper.setItemChildClickListener(R.id.tv_confirmDelivery);
+        helper.setItemChildClickListener(R.id.tv_checkLogistics);
         helper.setItemChildClickListener(R.id.tv_seeEvaluation);
         helper.setItemChildClickListener(R.id.tv_seeOrder);
     }
@@ -53,16 +54,23 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.sendGoods));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
         } else if (listBean.getStatus() == 3) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.waitGoods));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
         } else if (listBean.getStatus() == 5 && listBean.getCommented() == 0) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.completed));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
@@ -71,11 +79,13 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
         } else if (listBean.getStatus() == 7 || listBean.getStatus() == 8) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);

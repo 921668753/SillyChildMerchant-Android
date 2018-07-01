@@ -17,6 +17,18 @@
         android:textSize="@dimen/textsize15"
         android:visibility="visible" />
 
+
+    <TextView
+        android:id="@+id/tv_checkLogistics"
+        style="@style/Match9035"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@drawable/shape_goodbtn"
+        android:gravity="center"
+        android:text="@string/checkLogistics"
+        android:textColor="@color/greenColors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/tv_noEvaluation"
         style="@style/Match9035"

@@ -27,6 +27,7 @@ import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.order.dialog.AfterSaleBouncedDialog;
 import com.yinglan.scm.order.orderdetails.OrderDetailsActivity;
 import com.yinglan.scm.order.orderevaluation.SeeEvaluationActivity;
+import com.yinglan.scm.order.ordertracking.OrderTrackingActivity;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -256,6 +257,10 @@ public class AllGoodFragment extends BaseFragment implements AdapterView.OnItemC
             Intent intent = new Intent(aty, OrderDetailsActivity.class);
             intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
             aty.showActivity(aty, intent);
+        } else if (childView.getId() == R.id.tv_checkLogistics) {
+            Intent checkLogisticsIntent = new Intent(aty, OrderTrackingActivity.class);
+            checkLogisticsIntent.putExtra("sn", mAdapter.getItem(position).getSn());
+            aty.showActivity(aty, checkLogisticsIntent);
         } else if (childView.getId() == R.id.tv_seeEvaluation) {
             Intent intent = new Intent(aty, SeeEvaluationActivity.class);
             intent.putExtra("orderId", mAdapter.getItem(position).getOrderId());
