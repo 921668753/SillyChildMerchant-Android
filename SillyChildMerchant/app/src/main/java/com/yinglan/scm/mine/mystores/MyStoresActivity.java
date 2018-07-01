@@ -30,6 +30,7 @@ import com.yinglan.scm.mine.mystores.dialog.SubmitBouncedDialog;
 import com.yinglan.scm.mine.mystores.productdetails.ProductDetailsActivity;
 import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
@@ -53,6 +54,9 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
 
     @BindView(id = R.id.ll_allState, click = true)
     private LinearLayout ll_allState;
+
+    @BindView(id = R.id.tv_allState)
+    private TextView tv_allState;
 
     @BindView(id = R.id.ll_inventory, click = true)
     private LinearLayout ll_inventory;
@@ -96,12 +100,17 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     private SubmitBouncedDialog submitBouncedDialog = null;
 
     private int catId = 0;
-    private int type = 1;
+    private String state = "";
     private String store = "DESC";
     private String price = "DESC";
 
     private OptionsPickerView pvOptions;
+    private OptionsPickerView pvOptions1;
+
     private List<GoodsTypeBean.DataBean> typeList;
+    private List<GoodsTypeBean.DataBean> stateList;
+
+
     private int selectedPosition = 0;
 
     @Override
@@ -115,7 +124,8 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         mPresenter = new MyStoresPresenter(this);
         myStoresViewAdapter = new MyStoresViewAdapter(this);
         initDialog();
-        selectBankName();
+        selectClassification();
+        selectState();
         showLoadingDialog(getString(R.string.dataLoad));
         ((MyStoresContract.Presenter) mPresenter).getClassificationList();
     }
@@ -139,7 +149,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
      * 选择分类名称
      */
     @SuppressWarnings("unchecked")
-    private void selectBankName() {
+    private void selectClassification() {
         pvOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
@@ -149,6 +159,36 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
                 mRefreshLayout.beginRefreshing();
             }
         }).build();
+    }
+
+    /**
+     * 选择分类名称
+     */
+    @SuppressWarnings("unchecked")
+    private void selectState() {
+        stateList = new ArrayList<GoodsTypeBean.DataBean>();
+        GoodsTypeBean.DataBean dataBean = new GoodsTypeBean.DataBean();
+        dataBean.setState("");
+        dataBean.setName(getString(R.string.allState));
+        stateList.add(dataBean);
+        GoodsTypeBean.DataBean dataBean1 = new GoodsTypeBean.DataBean();
+        dataBean1.setState("1");
+        dataBean1.setName(getString(R.string.shelves));
+        stateList.add(dataBean1);
+        GoodsTypeBean.DataBean dataBean2 = new GoodsTypeBean.DataBean();
+        dataBean2.setState("0");
+        dataBean2.setName(getString(R.string.soldOut));
+        stateList.add(dataBean2);
+        pvOptions1 = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                state = stateList.get(options1).getState();
+                ((TextView) v).setText(stateList.get(options1).getName());
+                mRefreshLayout.beginRefreshing();
+            }
+        }).build();
+        pvOptions1.setPicker(stateList);
     }
 
     @Override
@@ -169,12 +209,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
                 pvOptions.show(tv_classification);
                 break;
             case R.id.ll_allState:
-                if (type == 1) {
-                    type = 0;
-                } else {
-                    type = 1;
-                }
-                mRefreshLayout.beginRefreshing();
+                pvOptions1.show(tv_allState);
                 break;
             case R.id.ll_inventory:
                 if (store.contains("DESC")) {
@@ -234,7 +269,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, type, store, price);
+        ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, state, store, price);
     }
 
     @Override
@@ -246,7 +281,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         }
         mMorePageNumber++;
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, type, store, price);
+        ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, state, store, price);
         return true;
     }
 
@@ -260,7 +295,11 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         if (flag == 0) {
             GoodsTypeBean goodsTypeBean = (GoodsTypeBean) JsonUtil.json2Obj(success, GoodsTypeBean.class);
             if (goodsTypeBean.getData() != null && goodsTypeBean.getData().size() > 0) {
-                typeList = goodsTypeBean.getData();
+                GoodsTypeBean.DataBean dataBean = new GoodsTypeBean.DataBean();
+                dataBean.setCat_id(-1);
+                dataBean.setName(getString(R.string.all));
+                typeList.add(dataBean);
+                typeList.addAll(goodsTypeBean.getData());
                 pvOptions.setPicker(typeList);
             }
             mRefreshLayout.beginRefreshing();
@@ -355,7 +394,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") ||
                 ((String) msgEvent.getData()).equals("RxBusReleaseGoodsEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusProductSpecificationsEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-            ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, type, store, price);
+            ((MyStoresContract.Presenter) mPresenter).getGoodList(mMorePageNumber, catId, state, store, price);
         }
     }
 
@@ -366,6 +405,16 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
             submitBouncedDialog.cancel();
         }
         submitBouncedDialog = null;
+        if (pvOptions != null && pvOptions.isShowing()) {
+            pvOptions.dismiss();
+        }
+        pvOptions = null;
+        if (pvOptions1 != null && pvOptions1.isShowing()) {
+            pvOptions1.dismiss();
+        }
+        pvOptions1 = null;
+
+
         myStoresViewAdapter.clear();
         myStoresViewAdapter = null;
     }

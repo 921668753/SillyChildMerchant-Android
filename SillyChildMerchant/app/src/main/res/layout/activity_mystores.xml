@@ -51,6 +51,7 @@
             android:paddingRight="@dimen/dimen13">
 
             <TextView
+                android:id="@+id/tv_allState"
                 style="@style/WrapWrap"
                 android:text="@string/allState"
                 android:textColor="@color/hintColors"

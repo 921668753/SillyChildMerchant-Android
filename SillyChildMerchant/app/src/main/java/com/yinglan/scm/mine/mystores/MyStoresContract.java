@@ -21,7 +21,7 @@ public interface MyStoresContract {
         /**
          * 获取商品列表
          */
-        void getGoodList(int page, int catId, int type, String store, String price);
+        void getGoodList(int page, int catId, String type, String store, String price);
 
         /**
          * 商品上下架

@@ -4,6 +4,7 @@ import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
 import com.yinglan.scm.R;
@@ -40,11 +41,15 @@ public class MyStoresPresenter implements MyStoresContract.Presenter {
     }
 
     @Override
-    public void getGoodList(int page, int catId, int type, String store, String price) {
+    public void getGoodList(int page, int catId, String type, String store, String price) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("pageNo", page);
-        httpParams.put("catId", catId);
-        httpParams.put("type", type);
+        if (catId > -1) {
+            httpParams.put("catId", catId);
+        }
+        if (!StringUtils.isEmpty(type)) {
+            httpParams.put("type", type);
+        }
         httpParams.put("store", store);
         httpParams.put("price", price);
         RequestClient.getGoodList(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {

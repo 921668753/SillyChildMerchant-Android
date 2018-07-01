@@ -271,7 +271,8 @@
     <string name="sureAboutProduct">确定下架该产品吗</string>
     <string name="sureOnShelf">确定上架该产品吗</string>
     <string name="notGetMerchandise">亲，您还没有任何商品哟~</string>
-
+    <string name="shelves">上架</string>
+    <string name="soldOut">下架</string>
 
     <!--  个人中心  我的店铺  产品详情-->
     <string name="productDetails">产品详情</string>
