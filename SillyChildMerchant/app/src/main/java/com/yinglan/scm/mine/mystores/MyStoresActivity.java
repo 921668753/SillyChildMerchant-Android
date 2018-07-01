@@ -150,6 +150,7 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
      */
     @SuppressWarnings("unchecked")
     private void selectClassification() {
+        typeList = new ArrayList<GoodsTypeBean.DataBean>();
         pvOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
@@ -401,6 +402,16 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (typeList != null || typeList.size() > 0) {
+            typeList.clear();
+        }
+        typeList = null;
+
+        if (stateList != null || stateList.size() > 0) {
+            stateList.clear();
+        }
+        stateList = null;
+
         if (submitBouncedDialog != null) {
             submitBouncedDialog.cancel();
         }
