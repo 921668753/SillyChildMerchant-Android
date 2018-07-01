@@ -21,6 +21,7 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.common.SystemTool;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.loginregister.LoginActivity;
@@ -80,8 +81,8 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
     public void initData() {
         super.initData();
         mPresenter = new SetUpPresenter(this);
-        int versionCode = Beta.getUpgradeInfo().versionCode;
-        if (versionCode > SystemTool.getAppVersionCode(this)) {
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+        if (upgradeInfo != null && upgradeInfo.versionCode > SystemTool.getAppVersionCode(this)) {
             tv_versionname.setText(getString(R.string.newVersion));
         } else {
             tv_versionname.setText("V" + SystemTool.getAppVersionName(this));

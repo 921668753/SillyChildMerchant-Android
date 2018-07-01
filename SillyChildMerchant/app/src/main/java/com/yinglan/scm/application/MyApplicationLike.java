@@ -215,7 +215,7 @@ public class MyApplicationLike extends DefaultApplicationLike {
         //升级检查周期设置  设置升级检查周期为60s(默认检查周期为0s)，60s内SDK不重复向后台请求策略);
         Beta.upgradeCheckPeriod = 5000;
         //延迟初始化  设置启动延时为1s（默认延时3s），APP启动1s后初始化SDK，避免影响APP启动速度;
-        Beta.initDelay = 4 * 1000;
+        Beta.initDelay = 3 * 1000;
         //设置sd卡的Download为更新资源存储目录
         Beta.storageDir = FileUtils.getSaveFolder(StringConstants.DOWNLOADPATH);
         //设置点击过确认的弹窗在App下次启动自动检查更新时会再次显示。
