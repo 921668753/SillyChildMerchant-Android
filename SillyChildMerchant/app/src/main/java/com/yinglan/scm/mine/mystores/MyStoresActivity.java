@@ -213,19 +213,21 @@ public class MyStoresActivity extends BaseActivity implements MyStoresContract.V
                 pvOptions1.show(tv_allState);
                 break;
             case R.id.ll_inventory:
-                if (store.contains("DESC")) {
+                if (store != null && store.contains("DESC")) {
                     store = "ASC";
                 } else {
                     store = "DESC";
                 }
+                price = null;
                 mRefreshLayout.beginRefreshing();
                 break;
             case R.id.ll_price:
-                if (price.contains("DESC")) {
+                if (price != null && price.contains("DESC")) {
                     price = "ASC";
                 } else {
                     price = "DESC";
                 }
+                store = null;
                 mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_itemAdd:

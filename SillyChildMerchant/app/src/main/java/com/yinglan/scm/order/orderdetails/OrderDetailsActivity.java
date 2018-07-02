@@ -502,11 +502,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_confirmDelivery1.setVisibility(View.GONE);
 
         tv_divider.setVisibility(View.GONE);
-
         if (StringUtils.toLong(orderDetailBean.getData().getLastTime()) > 0) {
-            time = new TimeCount(StringUtils.toLong(orderDetailBean.getData().getLastTime()) * 1000, 60000);
+            long last_time = StringUtils.toLong(orderDetailBean.getData().getLastTime()) - StringUtils.toLong(orderDetailBean.getData().getNowTime());
+            time = new TimeCount(last_time * 1000, 1000);
             time.setTimeCountCallBack(this);
             time.start();
+        } else {
+            tv_waitingPayment.setText(getString(R.string.closed));
+            tv_lateCancelled.setVisibility(View.GONE);
         }
     }
 
@@ -705,8 +708,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @Override
     public void onTick(long millisUntilFinished) {
         String millisUntilFinish = "";
-        long minute = millisUntilFinished / 60000;
-        long seconds = millisUntilFinished % 60000;
+        long minute = millisUntilFinished / 1000 / 60;
+        long seconds = millisUntilFinished / 1000 % 60;
         if (minute > 0) {
             millisUntilFinish = minute + getString(R.string.minute) + seconds + getString(R.string.seconds);
         } else {
@@ -739,7 +742,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (status == 7 || status == 8) {
+        if (status == 7 && mAdapter.getItem(i).getSellback_state() > 0 || status == 8 && mAdapter.getItem(i).getSellback_state() > 0) {
             Intent intent = new Intent(this, AfterSalesDetailsActivity.class);
             intent.putExtra("item_id", mAdapter.getItem(i).getItem_id());
             showActivity(this, intent);
@@ -753,6 +756,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             afterSaleBouncedDialog.cancel();
         }
         afterSaleBouncedDialog = null;
+        mAdapter.clear();
+        mAdapter = null;
         pvOptions = null;
         if (time != null) {
             time.cancel();

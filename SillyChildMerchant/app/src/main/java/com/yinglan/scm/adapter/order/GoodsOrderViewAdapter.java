@@ -60,8 +60,8 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
         } else if (listBean.getStatus() == 3) {
             viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.waitGoods));
-            viewHolderHelper.setVisibility(R.id.ll_bottom, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
@@ -116,7 +116,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (listBean.getStatus() == 7 || listBean.getStatus() == 8) {
+                    if (listBean.getStatus() == 7 && adapter.getItem(i).getSellback_state() == 1 || listBean.getStatus() == 8 && adapter.getItem(i).getSellback_state() == 1) {
                         Intent intent = new Intent(mContext, AfterSalesDetailsActivity.class);
                         intent.putExtra("item_id", adapter.getItem(i).getItem_id());
                         mContext.startActivity(intent);

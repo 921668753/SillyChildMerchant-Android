@@ -185,7 +185,6 @@ public class CompletedGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        //  if (flag == 0) {
         isShowLoadingMore = false;
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();

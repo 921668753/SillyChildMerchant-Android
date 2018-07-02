@@ -182,7 +182,6 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        //  if (flag == 0) {
         isShowLoadingMore = false;
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
@@ -214,6 +213,7 @@ public class ObligationGoodFragment extends BaseFragment implements AdapterView.
             tv_hintText.setText(msg);
             tv_button.setText(getString(R.string.retry));
         }
+
     }
 
     /**

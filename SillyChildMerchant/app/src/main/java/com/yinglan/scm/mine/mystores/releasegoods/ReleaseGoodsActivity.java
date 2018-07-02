@@ -19,6 +19,7 @@ import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
+import com.kymjs.common.DensityUtils;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -41,7 +42,6 @@ import java.util.List;
  * 发布商品
  */
 public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsContract.View, ReleaseGoodsImagePickerAdapter.OnRecyclerViewItemClickListener {
-
 
     @BindView(id = R.id.sv)
     private ScrollView sv;
@@ -249,16 +249,18 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                 Intent intent1 = new Intent(this, ImageGridActivity.class);
                 /* 如果需要进入选择的时候显示已经选中的图片，
                  * 详情请查看ImagePickerActivity
-                 * */
+                 */
                 // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
                 if (((RecyclerView) view.getParent()).getId() == R.id.recyclerView) {
                     ImagePicker.getInstance().setCrop(true);                           //允许裁剪（单选才有效）
                     ImagePicker.getInstance().setSaveRectangle(true);                   //是否按矩形区域保存
                     ImagePicker.getInstance().setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-                    ImagePicker.getInstance().setFocusWidth(1000);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-                    ImagePicker.getInstance().setFocusHeight(500);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-                    ImagePicker.getInstance().setOutPutX(1200);                         //保存文件的宽度。单位像素
-                    ImagePicker.getInstance().setOutPutY(600);                         //保存文件的高度。单位像素
+                    int w = DensityUtils.getScreenW();
+                    ImagePicker.getInstance().setFocusWidth(w - 100);//裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+                    int h = w - 100;
+                    ImagePicker.getInstance().setFocusHeight((int) (h / 1.875));                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+                    ImagePicker.getInstance().setOutPutX(w);                         //保存文件的宽度。单位像素
+                    ImagePicker.getInstance().setOutPutY((int) (w / 1.875));                         //保存文件的高度。单位像素
                     ImagePicker.getInstance().setMultiMode(false);//设置为单选模式，默认多选
                     startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
                 } else {

@@ -32,6 +32,7 @@ import com.yinglan.scm.main.MainActivity;
 import com.yinglan.scm.message.systemmessage.SystemMessageListActivity;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import io.rong.imkit.RongIM;
 
 import static android.app.Activity.RESULT_OK;
 import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE;
@@ -182,6 +183,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
                 num += systemMessageBean.getData().get(i).getNum();
             }
         }
+        num += RongIM.getInstance().getTotalUnreadCount();
         Intent intentcast = new Intent(StringNewConstants.MainServiceAction);
         if (num > 0) {
             intentcast.putExtra("havemsg", true);

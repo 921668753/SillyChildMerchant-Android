@@ -65,6 +65,7 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
         private String total;
         private String backTime;
         private String lastTime;
+        private String nowTime;
         private String reasonDetail;
         private String remark;
         private List<ItemListBean> itemList;
@@ -275,6 +276,14 @@ public class OrderDetailBean extends BaseResult<OrderDetailBean.DataBeanX> {
 
         public void setLastTime(String lastTime) {
             this.lastTime = lastTime;
+        }
+
+        public String getNowTime() {
+            return nowTime;
+        }
+
+        public void setNowTime(String nowTime) {
+            this.nowTime = nowTime;
         }
 
         public List<ItemListBean> getItemList() {

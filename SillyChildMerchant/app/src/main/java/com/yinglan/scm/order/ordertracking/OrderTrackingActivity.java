@@ -20,7 +20,7 @@ public class OrderTrackingActivity extends BaseActivity implements WebViewLayout
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_sharepolite);
+        setContentView(R.layout.activity_ordertracking);
     }
 
     @Override
@@ -28,8 +28,6 @@ public class OrderTrackingActivity extends BaseActivity implements WebViewLayout
         super.initWidget();
         initTitle();
         webViewLayout.setTitleVisibility(false);
-//        webViewLayout.setTitleText(getString(R.string.orderTracking));
-//        webViewLayout.setBackImgResource(R.mipmap.back);
         webViewLayout.setWebViewCallBack(this);
         String sn = getIntent().getStringExtra("sn");
         String url = URLConstants.ORDERLOGISTICS + sn;
@@ -37,11 +35,6 @@ public class OrderTrackingActivity extends BaseActivity implements WebViewLayout
             webViewLayout.loadUrl(url);
         }
     }
-
-//    @Override
-//    public void widgetClick(View v) {
-//        super.widgetClick(v);
-//    }
 
     /**
      * 设置标题
