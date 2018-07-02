@@ -270,9 +270,9 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
                     int w = DensityUtils.getScreenW();
                     ImagePicker.getInstance().setFocusWidth(w - 100);//裁剪框的宽度。单位像素（圆形自动取宽高最小值）
                     int h = w - 100;
-                    ImagePicker.getInstance().setFocusHeight((int) (h / 1.875));                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+                    ImagePicker.getInstance().setFocusHeight((int) (h * 8 / 15));                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
                     ImagePicker.getInstance().setOutPutX(w);                         //保存文件的宽度。单位像素
-                    ImagePicker.getInstance().setOutPutY((int) (w / 1.875));                         //保存文件的高度。单位像素
+                    ImagePicker.getInstance().setOutPutY((int) (w * 8 / 15));                         //保存文件的高度。单位像素
                     startActivityForResult(intent1, NumericConstants.REQUEST_CODE_SELECT);
                 } else {
                     ImagePicker.getInstance().setCrop(false);                           //允许裁剪（单选才有效）
