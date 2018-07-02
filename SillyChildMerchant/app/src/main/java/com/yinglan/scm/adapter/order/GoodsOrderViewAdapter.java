@@ -105,12 +105,16 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             adapter.setOnItemStatusListener(new GoodOrderItemsViewAdapter.OnItemStatusListener() {
                 @Override
                 public void onItemSetRefusedListener(View view, int id) {
-                    onStatusListener.onSetRefusedListener(view, id);
+                    if (listBean.getStatus() == 7 || listBean.getStatus() == 8) {
+                        onStatusListener.onSetRefusedListener(view, id);
+                    }
                 }
 
                 @Override
                 public void onItemSetAgreedListener(View view, int id) {
-                    onStatusListener.onSetAgreedListener(view, id);
+                    if (listBean.getStatus() == 7 || listBean.getStatus() == 8) {
+                        onStatusListener.onSetAgreedListener(view, id);
+                    }
                 }
             });
             clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
