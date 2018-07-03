@@ -44,7 +44,6 @@
         android:paddingLeft="@dimen/dimen15"
         android:paddingRight="@dimen/dimen15"
         android:paddingTop="@dimen/dimen15"
-        android:singleLine="true"
         android:text="白体白体白体"
         android:textColor="@color/hintColors"
         android:textSize="@dimen/textsize13" />

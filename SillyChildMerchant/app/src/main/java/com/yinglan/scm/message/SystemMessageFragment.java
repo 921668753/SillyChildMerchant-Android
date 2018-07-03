@@ -272,7 +272,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null||((String) msgEvent.getData()).equals("RxBusSystemMessageEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((SystemMessageContract.Presenter) mPresenter).getSystem(aty, mMorePageNumber);
         }

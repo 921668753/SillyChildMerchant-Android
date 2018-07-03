@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.common.cklibrary.utils.rx.MsgEvent;
+import com.common.cklibrary.utils.rx.RxBus;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.main.MainActivity;
 
@@ -50,10 +52,14 @@ public class JPushMessageReceiver extends BroadcastReceiver {
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[JPushMessageReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             Intent intent1 = new Intent();
-          //  intent1.setAction(MESSAGE_RECEIVED_ACTION);
+            //  intent1.setAction(MESSAGE_RECEIVED_ACTION);
             intent1.setAction(MainServiceAction);
             intent1.putExtra("havemsg", true);
             context.sendBroadcast(intent1);
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusSystemMessageEvent"));
             //对应BroadcastReceiver中intentFilter的action
             //  intent.setAction(BROADCAST_ACTION);
             //发送广播
@@ -118,20 +124,20 @@ public class JPushMessageReceiver extends BroadcastReceiver {
 
     //send msg to MainActivity
     private void processCustomMessage(Context context, Bundle bundle) {
-            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-            Intent msgIntent = new Intent(MESSAGE_RECEIVED_ACTION);
-            msgIntent.putExtra(KEY_MESSAGE, message);
-            if (!StringUtils.isEmpty(extras)) {
-                try {
-                    JSONObject extraJson = new JSONObject(extras);
-                    if (null != extraJson && extraJson.length() > 0) {
-                        msgIntent.putExtra(KEY_EXTRAS, extras);
-                    }
-                } catch (JSONException e) {
-
+        String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+        Intent msgIntent = new Intent(MESSAGE_RECEIVED_ACTION);
+        msgIntent.putExtra(KEY_MESSAGE, message);
+        if (!StringUtils.isEmpty(extras)) {
+            try {
+                JSONObject extraJson = new JSONObject(extras);
+                if (null != extraJson && extraJson.length() > 0) {
+                    msgIntent.putExtra(KEY_EXTRAS, extras);
                 }
+            } catch (JSONException e) {
+
             }
-            context.sendBroadcast(msgIntent);
+        }
+        context.sendBroadcast(msgIntent);
     }
 }
