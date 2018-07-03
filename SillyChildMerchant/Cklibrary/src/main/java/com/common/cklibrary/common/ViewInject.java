@@ -1,5 +1,6 @@
 package com.common.cklibrary.common;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.widget.ImageView;
@@ -104,6 +105,7 @@ public class ViewInject {
      * @param message
      * @param duration
      */
+    @SuppressLint("ShowToast")
     public static void toast(Context context, String message, int duration) {
         if (mToast == null) {
             mToast = Toast.makeText(context, null, duration);
@@ -115,6 +117,7 @@ public class ViewInject {
     /**
      * 自定义图片Toat
      */
+    @SuppressLint("ShowToast")
     public static void showImg(Context context, String message, int duration, int img) {
         if (mToast == null) {
             mToast = Toast.makeText(context, null, duration);
