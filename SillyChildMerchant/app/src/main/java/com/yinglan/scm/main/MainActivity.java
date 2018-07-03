@@ -339,7 +339,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {
                     //如果两次按键时间间隔大于2秒，则不退出
-                    ViewInject.toast(this, getString(R.string.clickAgainExitProgram));
+                    ViewInject.toast(getString(R.string.clickAgainExitProgram));
                     firstTime = secondTime;//更新firstTime
                     return true;
                 } else {

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 
 /**
- * Created by Administrator on 2017/2/13.
+ * Created by Administrator on 2018/2/19.
  */
 
 public class ViewInject {
@@ -83,7 +83,7 @@ public class ViewInject {
      * @param msg
      */
     public static void longToast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        toast(context, msg, Toast.LENGTH_LONG);
     }
 
     /**
@@ -92,7 +92,7 @@ public class ViewInject {
      * @param msg
      */
     public static void toast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        toast(context, msg, Toast.LENGTH_SHORT);
     }
 
     /**
@@ -103,10 +103,10 @@ public class ViewInject {
      * @param duration
      */
     public static void toast(Context context, String message, int duration) {
-
-        Toast.makeText(context, message, duration).show();
+        Toast mToast = Toast.makeText(context, null, duration);
+        mToast.setText(message);
+        mToast.show();
     }
-
 
     /**
      * 自定义图片Toat
@@ -120,6 +120,5 @@ public class ViewInject {
         toastView.addView(imageCodeProject, 0);
         toast.show();
     }
-
 
 }

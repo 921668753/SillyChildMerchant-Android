@@ -32,7 +32,7 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ResultBean> {
          */
 
         if (model.getType() == 1 && model.getStatus() == 0) {
-            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.recharge) + " " + mContext.getString(R.string.ongoing));
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.recharge) + " (" + mContext.getString(R.string.ongoing) + ")");
             /**
              * 交易金额
              */
@@ -44,7 +44,7 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ResultBean> {
              */
             helper.setText(R.id.tv_balance, "+" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
         } else if (model.getType() == 2 && model.getStatus() == 0) {
-            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.withdrawal) + " " + mContext.getString(R.string.ongoing));
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.withdrawal) + " (" + mContext.getString(R.string.ongoing) + ")");
             /**
              * 交易金额
              */
@@ -56,7 +56,7 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ResultBean> {
              */
             helper.setText(R.id.tv_balance, "-" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
         } else if (model.getType() == 3 && model.getStatus() == 0) {
-            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.consumption) + " " + mContext.getString(R.string.ongoing));
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.consumption));
             /**
              * 交易金额
              */
@@ -68,7 +68,7 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ResultBean> {
              */
             helper.setText(R.id.tv_balance, "-" + MathUtil.keepTwo(StringUtils.toDouble(model.getAmount())));
         } else if (model.getType() == 4 && model.getStatus() == 0) {
-            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.refund) + " " + mContext.getString(R.string.ongoing));
+            helper.setText(R.id.tv_detailsType, mContext.getString(R.string.refund) + " (" + mContext.getString(R.string.ongoing) + ")");
             /**
              * 交易金额
              */
@@ -91,6 +91,6 @@ public class AccountDetailsAdapter extends BGAAdapterViewAdapter<ResultBean> {
         /**
          * 时间
          */
-        helper.setText(R.id.tv_time, DataUtil.formatData(StringUtils.toLong(model.getCreate_time()), "yyyy-MM-dd HH:mm:ss"));
+        helper.setText(R.id.tv_time, DataUtil.formatData(StringUtils.toLong(model.getCreate_time()) / 1000, "yyyy-MM-dd HH:mm:ss"));
     }
 }
