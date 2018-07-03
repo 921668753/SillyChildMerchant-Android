@@ -142,8 +142,7 @@ public class InteractiveMessageFragment extends BaseFragment implements Interact
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null
-                ) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null) {
             ((InteractiveMessageContract.Presenter) mPresenter).getIsLogin(aty, 0);
         }
     }
