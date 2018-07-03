@@ -233,6 +233,10 @@ public class AfterSalesDetailsActivity extends BaseActivity implements AfterSale
                 tv_applyAfterSales.setText(getString(R.string.pendingDelivery));
                 ll_bottom.setVisibility(View.GONE);
                 et_accountAfterSalesService.setVisibility(View.GONE);
+            } else if (afterSalesDetailsBean.getData().getTradestatus() == 2) {
+                tv_applyAfterSales.setText(getString(R.string.refuseApplyAfterSales));
+                ll_bottom.setVisibility(View.GONE);
+                et_accountAfterSalesService.setVisibility(View.GONE);
             } else if (afterSalesDetailsBean.getData().getTradestatus() == 3) {
                 tv_applyAfterSales.setText(getString(R.string.merchantRefund));
                 ll_bottom.setVisibility(View.GONE);

@@ -233,6 +233,7 @@
     <string name="toAudit">待审核</string>
     <string name="pendingDelivery">审核成功待用户发货</string>
     <string name="merchantRefund">商家已退款，待平台退款</string>
+    <string name="refuseApplyAfterSales">商家拒绝售后申请</string>
     <string name="platformRefundCompleted">平台退款完成,拒绝再次申请</string>
     <string name="afterSalesDetails">售后详情</string>
 
