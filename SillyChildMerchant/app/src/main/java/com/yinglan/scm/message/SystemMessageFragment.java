@@ -241,11 +241,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     @Override
     public void onChange() {
         super.onChange();
-        //    mRefreshLayout.beginRefreshing();
-//        boolean isRefreshAllOrderFragment1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrderFragment1", false);
-//        if (isRefreshAllOrderFragment1) {
-//            mRefreshLayout.beginRefreshing();
-//        }
+        mRefreshLayout.beginRefreshing();
     }
 
 
@@ -276,7 +272,7 @@ public class SystemMessageFragment extends BaseFragment implements SystemMessage
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((SystemMessageContract.Presenter) mPresenter).getSystem(aty, mMorePageNumber);
         }

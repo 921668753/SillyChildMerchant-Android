@@ -236,8 +236,7 @@ public class WaitGoodsGoodFragment extends BaseFragment implements AdapterView.O
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null ||
-                ((String) msgEvent.getData()).equals("RxBusSendGoodsGoodEvent") && mPresenter != null) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusSendGoodsGoodEvent") && mPresenter != null) {
             mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((GoodOrderContract.Presenter) mPresenter).getOrderList(status, mMorePageNumber);
         }

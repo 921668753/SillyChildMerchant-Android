@@ -24,17 +24,17 @@ public class InteractiveMessagePresenter implements InteractiveMessageContract.P
 
 
     @Override
-    public void getIsLogin(Context context) {
+    public void getIsLogin(Context context, int flage) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         RequestClient.getIsLogin(context, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, flage);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, flage);
             }
         });
     }

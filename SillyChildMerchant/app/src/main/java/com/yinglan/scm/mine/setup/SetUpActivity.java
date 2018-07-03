@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
 import com.common.cklibrary.common.BindView;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.common.ViewInject;
 import com.common.cklibrary.entity.BaseResult;
 import com.common.cklibrary.utils.ActivityTitleUtils;
@@ -17,8 +16,6 @@ import com.common.cklibrary.utils.DataCleanManager;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
-import com.kymjs.common.PreferenceHelper;
-import com.kymjs.common.StringUtils;
 import com.kymjs.common.SystemTool;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
@@ -210,6 +207,7 @@ public class SetUpActivity extends BaseActivity implements SetUpContract.View, E
         if (flag == 0) {
             BaseResult baseResult = (BaseResult) JsonUtil.getInstance().json2Obj(success, BaseResult.class);
             if ((String) baseResult.getData() == null) {
+                dismissLoadingDialog();
                 return;
             }
             File path = new File((String) baseResult.getData());

@@ -314,9 +314,9 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") || ((String) msgEvent.getData()).equals("RxBusLogOutEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent") && mPresenter != null || ((String) msgEvent.getData()).equals("RxBusLogOutEvent") && mPresenter != null) {
             ((MineContract.Presenter) mPresenter).getInfo(aty);
-        } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+        } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent") && mPresenter != null) {
             String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
             if (!StringUtils.isEmpty(avatar)) {
 //                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);

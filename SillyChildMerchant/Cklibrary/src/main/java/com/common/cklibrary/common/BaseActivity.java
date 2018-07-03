@@ -134,7 +134,7 @@ public abstract class BaseActivity extends KJActivity implements LoadingDialogVi
      */
     @Override
     protected void onDestroy() {
-        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
+        RxVolley.getRequestQueue().cancelAll(this.getClass().getName());
         RxManager.get().cancel(this.getClass().getName());
         super.onDestroy();
         subscription = null;

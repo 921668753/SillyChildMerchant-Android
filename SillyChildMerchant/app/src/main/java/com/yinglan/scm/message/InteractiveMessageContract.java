@@ -16,7 +16,7 @@ public class InteractiveMessageContract {
         /**
          * 获取会员登录状态
          */
-        void getIsLogin(Context context);
+        void getIsLogin(Context context, int flage);
 
     }
 
