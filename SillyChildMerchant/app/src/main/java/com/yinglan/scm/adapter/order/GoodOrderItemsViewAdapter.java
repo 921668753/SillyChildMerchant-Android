@@ -39,18 +39,30 @@ public class GoodOrderItemsViewAdapter extends BGAAdapterViewAdapter<OrderItemsB
         if (model.getSellback_state() == 0) {
             viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_sellbackState, View.GONE);
         } else if (model.getSellback_state() == 1) {
             viewHolderHelper.setVisibility(R.id.tv_refused, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_sellbackState, View.GONE);
         } else if (model.getSellback_state() == 2) {
             viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_sellbackState, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_sellbackState, mContext.getString(R.string.afterComplete));
         } else if (model.getSellback_state() == 3) {
             viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_sellbackState, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_sellbackState, mContext.getString(R.string.afterRefusing));
+        } else if (model.getSellback_state() == 4) {
+            viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_sellbackState, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_sellbackState, mContext.getString(R.string.merchantPassed));
         } else {
             viewHolderHelper.setVisibility(R.id.tv_refused, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_agreed, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_sellbackState, View.GONE);
         }
         viewHolderHelper.getTextView(R.id.tv_refused).setOnClickListener(new View.OnClickListener() {
             @Override

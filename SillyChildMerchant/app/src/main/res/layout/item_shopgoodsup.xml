@@ -105,6 +105,20 @@
                 android:textSize="@dimen/textsize12"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/tv_sellbackState"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen25"
+                android:layout_marginRight="@dimen/dimen10"
+                android:background="@drawable/shape_express"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen17"
+                android:paddingRight="@dimen/dimen17"
+                android:text="@string/afterComplete"
+                android:textColor="@color/hintColors"
+                android:textSize="@dimen/textsize12"
+                android:visibility="gone" />
+
         </LinearLayout>
 
 

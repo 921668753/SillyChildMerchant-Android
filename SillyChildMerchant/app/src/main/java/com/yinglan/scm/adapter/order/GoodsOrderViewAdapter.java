@@ -120,7 +120,7 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             clv_shopgoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (listBean.getStatus() == 7 && adapter.getItem(i).getSellback_state() == 1 || listBean.getStatus() == 8 && adapter.getItem(i).getSellback_state() == 1) {
+                    if (listBean.getStatus() == 7 && adapter.getItem(i).getSellback_state() > 0 || listBean.getStatus() == 8 && adapter.getItem(i).getSellback_state() > 0) {
                         Intent intent = new Intent(mContext, AfterSalesDetailsActivity.class);
                         intent.putExtra("item_id", adapter.getItem(i).getItem_id());
                         mContext.startActivity(intent);
