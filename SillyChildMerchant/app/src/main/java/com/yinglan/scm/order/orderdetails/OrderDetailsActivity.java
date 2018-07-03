@@ -562,7 +562,6 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         tv_noEvaluation.setVisibility(View.GONE);
         tv_seeEvaluation.setVisibility(View.GONE);
 
-
         ll_expressNumber.setVisibility(View.GONE);
         ll_courierCompany.setVisibility(View.GONE);
         tv_confirmDelivery1.setVisibility(View.GONE);
@@ -632,7 +631,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         ll_waitSending.setVisibility(View.VISIBLE);
         img_waitSending.setImageResource(R.mipmap.order_after_sale_icon);
         if (flag == 0) {
-            tv_waitSending.setText(getString(R.string.applyAfterSales));
+            tv_waitSending.setText(getString(R.string.applyAfterSales1));
         } else {
             tv_waitSending.setText(getString(R.string.afterComplete));
         }

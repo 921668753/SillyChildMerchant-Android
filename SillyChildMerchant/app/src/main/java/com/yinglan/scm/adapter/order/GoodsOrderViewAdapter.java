@@ -82,8 +82,16 @@ public class GoodsOrderViewAdapter extends BGAAdapterViewAdapter<ResultBean> {
             viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.GONE);
-        } else if (listBean.getStatus() == 7 || listBean.getStatus() == 8) {
-            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale));
+        } else if (listBean.getStatus() == 7) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.afterSale1));
+            viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
+            viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_noEvaluation, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_seeEvaluation, View.GONE);
+            viewHolderHelper.setVisibility(R.id.tv_seeOrder, View.VISIBLE);
+        } else if (listBean.getStatus() == 8) {
+            viewHolderHelper.setText(R.id.tv_goodStatus, mContext.getString(R.string.haveAfter));
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_checkLogistics, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_confirmDelivery, View.GONE);
