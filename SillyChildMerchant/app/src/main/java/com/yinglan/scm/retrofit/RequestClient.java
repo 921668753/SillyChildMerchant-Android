@@ -166,13 +166,15 @@ public class RequestClient {
         UploadManagerUtil.getInstance().getUploadManager().put(file.getPath(), key, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo responseInfo, JSONObject jsonObject) {
-                Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + jsonObject.toString());
+                Log.d("ReadFragment", "key" + key + "responseInfo" + JsonUtil.obj2JsonString(responseInfo) + "jsObj:" + String.valueOf(jsonObject));
                 if (responseInfo.isOK()) {
                     String host = PreferenceHelper.readString(context, StringConstants.FILENAME, "qiNiuImgHost");
                     String headpicPath = host + key;
                     Log.i("ReadFragment", "complete: " + headpicPath);
                     listener.onSuccess(headpicPath);
+                    return;
                 }
+                listener.onFailure(context.getString(R.string.failedUploadPicture));
             }
         }, null);
     }

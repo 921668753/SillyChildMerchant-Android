@@ -19,6 +19,7 @@
 
     <!--公共的-->
     <string name="imagePathError">图片路径错误</string>
+    <string name="failedUploadPicture">上传图片失败，请重试</string>
     <string name="noData">没有数据</string>
     <string name="denyPermission">您拒绝了「图片选择」所需要的相关权限!</string>
     <string name="needPermission">图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照\n\n3.读写权限</string>

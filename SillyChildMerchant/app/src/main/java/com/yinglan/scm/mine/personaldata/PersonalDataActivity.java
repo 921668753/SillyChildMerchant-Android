@@ -46,6 +46,7 @@ import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE_SELECT;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_ADD;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_MINUS;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_MINUSALL;
+import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_BASKET_MOVE;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
 import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_PRODUCT;
 
@@ -177,7 +178,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_headPortrait:
-                choicePhotoWrapper(RESULT_CODE_GET);
+                PictureDialog();
                 break;
             case R.id.ll_nickname:
                 Intent setNickNameIntent = new Intent(this, SetNickNameActivity.class);
@@ -202,13 +203,16 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     private void choicePhotoWrapper(int code) {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms) && code == RESULT_CODE_GET) {
-            ImagePicker.getInstance().setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
-            ImagePicker.getInstance().setShowCamera(false);//显示拍照按钮
-            ImagePicker.getInstance().setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-            ImagePicker.getInstance().setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-            ImagePicker.getInstance().setOutPutX(800);                         //保存文件的宽度。单位像素
-            ImagePicker.getInstance().setOutPutY(800);                         //保存文件的高度。单位像素
-            PictureDialog();
+            Intent intent = new Intent(PersonalDataActivity.this, ImageGridActivity.class);
+            intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+            startActivityForResult(intent, REQUEST_CODE_SELECT);
+        } else if (EasyPermissions.hasPermissions(this, perms) && code == RESULT_CODE_BASKET_MOVE) {
+            Intent intent = new Intent(PersonalDataActivity.this, ImageGridActivity.class);
+            /* 如果需要进入选择的时候显示已经选中的图片，
+             * 详情请查看ImagePickerActivity
+             * */
+            // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+            startActivityForResult(intent, REQUEST_CODE_SELECT);
         } else if (EasyPermissions.hasPermissions(this, perms) && code == RESULT_CODE_PRODUCT) {
             ImagePicker.getInstance().setSelectLimit(8);
             ImagePicker.getInstance().setShowCamera(true);//显示拍照按钮
@@ -244,25 +248,23 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
      * 选择更换头像的弹窗
      */
     public void PictureDialog() {
+        ImagePicker.getInstance().setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
+        ImagePicker.getInstance().setShowCamera(false);//显示拍照按钮
+        ImagePicker.getInstance().setFocusWidth(600);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        ImagePicker.getInstance().setFocusHeight(600);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        ImagePicker.getInstance().setOutPutX(800);                         //保存文件的宽度。单位像素
+        ImagePicker.getInstance().setOutPutY(800);                         //保存文件的高度。单位像素
+        ImagePicker.getInstance().setSelectLimit(1);
         if (pictureSourceDialog == null) {
             pictureSourceDialog = new PictureSourceDialog(aty) {
                 @Override
                 public void takePhoto() {
-                    ImagePicker.getInstance().setSelectLimit(1);
-                    Intent intent = new Intent(PersonalDataActivity.this, ImageGridActivity.class);
-                    intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
-                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                    choicePhotoWrapper(RESULT_CODE_GET);
                 }
 
                 @Override
                 public void chooseFromAlbum() {
-                    ImagePicker.getInstance().setSelectLimit(1);
-                    Intent intent = new Intent(PersonalDataActivity.this, ImageGridActivity.class);
-                    /* 如果需要进入选择的时候显示已经选中的图片，
-                     * 详情请查看ImagePickerActivity
-                     * */
-                    // intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
-                    startActivityForResult(intent, REQUEST_CODE_SELECT);
+                    choicePhotoWrapper(RESULT_CODE_BASKET_MOVE);
                 }
             };
         }
