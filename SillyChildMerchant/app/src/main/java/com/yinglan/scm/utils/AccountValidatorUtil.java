@@ -20,7 +20,7 @@ public class AccountValidatorUtil {
     /**
      * 正则表达式：验证手机号
      */
-    public static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(16[0-9])|(18[0,5-9]))\\d{8}$";
 
     /**
      * 正则表达式：验证邮箱
@@ -40,7 +40,7 @@ public class AccountValidatorUtil {
     /**
      * 正则表达式：验证URL
      */
-   // public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+    // public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
 
     /**
      * 正则表达式：验证IP地址
