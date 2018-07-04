@@ -44,8 +44,8 @@ import java.util.List;
  * 2017-03-17
  *
  * @author nanchen
- *         新增可直接传递是否裁剪参数，以及直接拍照
- *         ================================================
+ * 新增可直接传递是否裁剪参数，以及直接拍照
+ * ================================================
  */
 public class ImageGridActivity extends ImageBaseActivity implements ImageDataSource.OnImagesLoadedListener, OnImageItemClickListener, ImagePicker.OnImageSelectedListener, View.OnClickListener {
 
@@ -368,6 +368,9 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 }
             } else if (directPhoto) {
                 finish();
+            } else if (resultCode == RESULT_CANCELED && requestCode == ImagePicker.REQUEST_CODE_CROP) {
+                finish();
+                //   mImageFolderAdapter.refreshData(mImageFolders);  //刷新数据
             }
         }
     }
