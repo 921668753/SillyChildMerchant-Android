@@ -419,22 +419,22 @@ public static final ** CREATOR;
 
  #代码混淆
 -optimizationpasses 5          # 指定代码的压缩级别
--dontusemixedcaseclassnames   # 是否使用大小写混合
--dontpreverify           # 混淆时是否做预校验 # 不做预检验,preverify是proguard的四个步骤之一,Android不需要preverify,去掉这一步可以加快混淆速度
+#-dontusemixedcaseclassnames   # 是否使用大小写混合
+#-dontpreverify           # 混淆时是否做预校验 # 不做预检验,preverify是proguard的四个步骤之一,Android不需要preverify,去掉这一步可以加快混淆速度
 -verbose                # 混淆时是否记录日志
-# 不跳过非公共的库的类成员
--dontskipnonpubliclibraryclassmembers
-# 混淆时采用的算法(google推荐，一般不改变)
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
-# 把混淆类中的方法名也混淆了
--useuniqueclassmembernames
-# 优化时允许访问并修改有修饰符的类和类的成员
--allowaccessmodification
-# 将文件来源重命名为“SourceFile”字符串
--renamesourcefileattribute SourceFile
-# 保留行号
+## 不跳过非公共的库的类成员
+#-dontskipnonpubliclibraryclassmembers
+## 混淆时采用的算法(google推荐，一般不改变)
+#-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+## 把混淆类中的方法名也混淆了
+#-useuniqueclassmembernames
+## 优化时允许访问并修改有修饰符的类和类的成员
+#-allowaccessmodification
+## 将文件来源重命名为“SourceFile”字符串
+#-renamesourcefileattribute SourceFile
+## 保留行号
 -keepattributes SourceFile,LineNumberTable
-
+#
 -keep public class * extends android.app.Activity      # 保持哪些类不被混淆
 -keep public class * extends android.app.Application   # 保持哪些类不被混淆
 -keep public class * extends android.app.Service       # 保持哪些类不被混淆
@@ -482,7 +482,3 @@ public static final ** CREATOR;
 -keepattributes InnerClasses
 #-dontoptimize
 -keepattributes EnclosingMethod
-
-#-keep class com.newrelic.** { *; }
-#
-#-dontwarn com.newrelic.**

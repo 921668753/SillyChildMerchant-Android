@@ -94,7 +94,6 @@ android {
             proguardFiles 'proguard-rules.pro'
         }
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
             debuggable false
             jniDebuggable false
             zipAlignEnabled true
@@ -103,6 +102,7 @@ android {
             minifyEnabled true
             // 混淆文件的位置
             signingConfig signingConfigs.release
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "BAIDU_APPKEY", "\"lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM\""
             buildConfigField "String", "WEIXIN_APPKEY", "\"wx287c0db55098301b\""
             buildConfigField "String", "WEIXIN_APPSECRET", "\"ffd075c202c8aee81e629efbb9c9156b\""
