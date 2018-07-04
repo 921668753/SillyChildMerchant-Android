@@ -15,11 +15,9 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
-import com.kymjs.rxvolley.client.RequestConfig;
 
 import java.util.Map;
 
-//import com.kymjs.rxvolley.client.ProgressListener;
 
 /**
  * Created by Administrator on 2017/3/8.
