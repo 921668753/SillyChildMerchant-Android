@@ -92,37 +92,37 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
         List<ReleaseGoodsBean.SpecsBean> specsBeanList = new ArrayList<ReleaseGoodsBean.SpecsBean>();
         int store = 0;
         String price = "";
-        for (int i = 0; i < specs.size(); i++) {
-            if (StringUtils.toInt(specs.get(i).getInventory()) <= 0) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 1);
-                return;
-            }
-            if (StringUtils.toDouble(specs.get(i).getPrice()) <= 0) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 1);
-                return;
-            }
-            ReleaseGoodsBean.SpecsBean specsBean = new ReleaseGoodsBean.SpecsBean();
-            specsBean.setPrice(MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice())));
-            if (i == 0) {
-                price = MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice()));
-            }
-            specsBean.setEnable_store(StringUtils.toInt(specs.get(i).getInventory()));
-            store = store + StringUtils.toInt(specs.get(i).getInventory());
-            if (specs.get(i).getSpec1() != null && specs.get(i).getSpec1().size() > 0) {
-                List<Integer> list = new ArrayList<>();
-                for (int j = 0; j < specs.get(i).getSpec1().size(); j++) {
-                    if (specs.get(i).getSpec1().get(j).getSelected() == 1) {
-                        list.add(specs.get(i).getSpec1().get(j).getSpec_value_id());
-                    }
-                }
-                if (list.size() <= 0) {
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + specs.get(i).getSpec_name(), 1);
-                    return;
-                }
-                specsBean.setSpecs_value_id(list);
-            }
-            specsBeanList.add(specsBean);
-        }
+  //      for (int i = 0; i < specs.size(); i++) {
+//            if (StringUtils.toInt(specs.get(i).getInventory()) <= 0) {
+//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 1);
+//                return;
+//            }
+//            if (StringUtils.toDouble(specs.get(i).getPrice()) <= 0) {
+//                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 1);
+//                return;
+//            }
+//            ReleaseGoodsBean.SpecsBean specsBean = new ReleaseGoodsBean.SpecsBean();
+//            specsBean.setPrice(MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice())));
+//            if (i == 0) {
+//                price = MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice()));
+//            }
+//            specsBean.setEnable_store(StringUtils.toInt(specs.get(i).getInventory()));
+//            store = store + StringUtils.toInt(specs.get(i).getInventory());
+//            if (specs.get(i).getSpec1() != null && specs.get(i).getSpec1().size() > 0) {
+//                List<Integer> list = new ArrayList<>();
+//                for (int j = 0; j < specs.get(i).getSpec1().size(); j++) {
+//                    if (specs.get(i).getSpec1().get(j).getSelected() == 1) {
+//                        list.add(specs.get(i).getSpec1().get(j).getSpec_value_id());
+//                    }
+//                }
+//                if (list.size() <= 0) {
+//                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + specs.get(i).getSpec_name(), 1);
+//                    return;
+//                }
+//                specsBean.setSpecs_value_id(list);
+//            }
+//            specsBeanList.add(specsBean);
+//        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         //    httpParams.put("goodsId", goodsId);
         Map<String, Object> map = new HashMap<String, Object>();
@@ -143,11 +143,11 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
         map.put("price", price);
         map.put("store", store);
         map.put("enable_store", store);
-        if (specs.get(0).getSpec1() == null || specs.get(0).getSpec1().size() <= 0) {
-            map.put("specs", null);
-        } else {
-            map.put("specs", specsBeanList);
-        }
+//        if (specs.get(0).getSpec1() == null || specs.get(0).getSpec1().size() <= 0) {
+//            map.put("specs", null);
+//        } else {
+//            map.put("specs", specsBeanList);
+//        }
         httpParams.putJsonParams(JsonUtil.obj2JsonString(map));
         if (submitBouncedDialog == null) {
             initDialog(httpParams);

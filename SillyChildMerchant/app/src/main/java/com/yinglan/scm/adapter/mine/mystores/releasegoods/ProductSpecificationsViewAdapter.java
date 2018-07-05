@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
-import com.common.cklibrary.utils.MathUtil;
 import com.common.cklibrary.utils.myview.NoScrollGridView;
 import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.DataBean.SpecsListBean;
+
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
@@ -22,11 +23,10 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 /**
  * 发布商品----选择规格
  */
-public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<SpecsBean> {
+public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<SpecsListBean> {
 
     private SparseArray<ProductSpecificationsGvViewAdapter> mAdapterCounters;
     private OnStatusListener onStatusListener;
-
 
     public ProductSpecificationsViewAdapter(Context context) {
         super(context, R.layout.item_productspecifications);
@@ -34,15 +34,17 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, SpecsBean model) {
+    protected void fillData(BGAViewHolderHelper helper, int position, SpecsListBean model) {
 //        if (!StringUtils.isEmpty(model.getSpec_name())) {
 //            helper.setText(R.id.tv_productSpecifications, model.getSpec_name());
 //        }
-
         EditText et_warehouseInventory = (EditText) helper.getView(R.id.et_warehouseInventory);
         et_warehouseInventory.setTag(position);
-        if (!StringUtils.isEmpty(model.getInventory())) {
+        if (!StringUtils.isEmpty(model.getInventory()) && (int) et_warehouseInventory.getTag() == position) {
             et_warehouseInventory.setText(model.getInventory());
+            et_warehouseInventory.setSelection(model.getInventory().length());
+        } else {
+            et_warehouseInventory.setText("");
         }
         et_warehouseInventory.addTextChangedListener(new TextWatcher() {
             @Override
@@ -57,7 +59,7 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if ((int) et_warehouseInventory.getTag() == position) {
+                if (!StringUtils.isEmpty(editable) && (int) et_warehouseInventory.getTag() == position) {
                     model.setInventory(editable + "");
                 }
             }
@@ -65,8 +67,11 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
         EditText et_commodityPrices = (EditText) helper.getView(R.id.et_commodityPrices);
         et_commodityPrices.setTag(position);
-        if (!StringUtils.isEmpty(model.getPrice())) {
-            et_commodityPrices.setText(MathUtil.keepTwo(StringUtils.toDouble(model.getPrice())));
+        if (!StringUtils.isEmpty(model.getPrice()) && (int) et_commodityPrices.getTag() == position) {
+            et_commodityPrices.setText(model.getPrice());
+            et_commodityPrices.setSelection(model.getPrice().length());
+        } else {
+            et_commodityPrices.setText("");
         }
         et_commodityPrices.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +86,7 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if ((int) et_commodityPrices.getTag() == position) {
+                if (!StringUtils.isEmpty(editable) && (int) et_commodityPrices.getTag() == position) {
                     model.setPrice(editable + "");
                 }
             }
@@ -89,38 +94,39 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
         NoScrollGridView noScrollGridView = (NoScrollGridView) helper.getView(R.id.gv_productspecifications);
         ProductSpecificationsGvViewAdapter productSpecificationsGvViewAdapter;
-        if (mAdapterCounters.get(noScrollGridView.hashCode()) != null) {
-            productSpecificationsGvViewAdapter = mAdapterCounters.get(noScrollGridView.hashCode());
-            if (model.getSpec1() != null && model.getSpec1().size() > 0) {
-                helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
-                noScrollGridView.setVisibility(View.VISIBLE);
-                productSpecificationsGvViewAdapter.clear();
-                productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
-            } else {
-                helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
-                noScrollGridView.setVisibility(View.GONE);
-            }
-        } else {
-            if (model.getSpec1() != null && model.getSpec1().size() > 0) {
-                helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
-                noScrollGridView.setVisibility(View.VISIBLE);
-                productSpecificationsGvViewAdapter = new ProductSpecificationsGvViewAdapter(mContext);
-                noScrollGridView.setAdapter(productSpecificationsGvViewAdapter);
-                noScrollGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position1, long l) {
-                        onStatusListener.onSetStatusListener(view, productSpecificationsGvViewAdapter, position, position1);
-                    }
-                });
-                productSpecificationsGvViewAdapter.clear();
-                productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
-                mAdapterCounters.put(noScrollGridView.hashCode(), productSpecificationsGvViewAdapter);
-            } else {
-                helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
-                noScrollGridView.setVisibility(View.GONE);
-            }
-        }
+//        if (mAdapterCounters.get(noScrollGridView.hashCode()) != null) {
+//            productSpecificationsGvViewAdapter = mAdapterCounters.get(noScrollGridView.hashCode());
+//            if (model.getSpec1() != null && model.getSpec1().size() > 0) {
+//                helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
+//                noScrollGridView.setVisibility(View.VISIBLE);
+//                productSpecificationsGvViewAdapter.clear();
+//                productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
+//            } else {
+//                helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
+//                noScrollGridView.setVisibility(View.GONE);
+//            }
+//        } else {
+//            if (model.getSpec1() != null && model.getSpec1().size() > 0) {
+//                helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
+//                noScrollGridView.setVisibility(View.VISIBLE);
+//                productSpecificationsGvViewAdapter = new ProductSpecificationsGvViewAdapter(mContext);
+//                noScrollGridView.setAdapter(productSpecificationsGvViewAdapter);
+//                noScrollGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapterView, View view, int position1, long l) {
+//                        onStatusListener.onSetStatusListener(view, productSpecificationsGvViewAdapter, position, position1);
+//                    }
+//                });
+//                productSpecificationsGvViewAdapter.clear();
+//                productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
+//                mAdapterCounters.put(noScrollGridView.hashCode(), productSpecificationsGvViewAdapter);
+//            } else {
+//                helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
+//                noScrollGridView.setVisibility(View.GONE);
+//            }
+//        }
     }
+
 
 
     public void setOnStatusListener(OnStatusListener onStatusListener) {

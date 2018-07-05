@@ -11,6 +11,7 @@
     <TextView style="@style/DividerWidth" />
 
     <ScrollView
+        android:id="@+id/sv_productSpecifications"
         style="@style/MatchMatch"
         android:scrollbars="none">
 
@@ -48,7 +49,8 @@
                     android:paddingTop="@dimen/dimen4"
                     android:scrollbars="none"
                     android:visibility="visible"
-                    tools:listitem="@layout/item_productparameters" />
+                    android:descendantFocusability="afterDescendants"
+                tools:listitem="@layout/item_productparameters" />
 
             </LinearLayout>
 

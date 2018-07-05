@@ -1,7 +1,10 @@
 package com.yinglan.scm.mine.mystores.releasegoods;
 
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -18,6 +21,7 @@ import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsG
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.DataBean.SpecsListBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
@@ -29,6 +33,9 @@ import java.util.List;
  * 发布商品---商品参数和规格
  */
 public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements ReleaseGoodsSpecificationsContract.View, ProductSpecificationsViewAdapter.OnStatusListener {
+
+    @BindView(id = R.id.sv_productSpecifications)
+    private ScrollView sv_productSpecifications;
 
     /**
      * 商品参数
@@ -67,7 +74,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
 
     private ProductSpecificationsViewAdapter productSpecificationsViewAdapter = null;
 
-    private List<SpecsBean> list;
+    private List<SpecsListBean> list;
 
     private int catId = 0;
     private int type_id = 0;
@@ -79,6 +86,8 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
     private ArrayList<String> images1 = null;
     private int brand_id = 0;
     private ParamsBean paramsBean;
+    private List<SpecsBean> specsList;
+    private SpecsBean specBean;
 
     @Override
     public void setRootView() {
@@ -89,7 +98,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
     public void initData() {
         super.initData();
         mPresenter = new ReleaseGoodsSpecificationsPresenter(this);
-        list = new ArrayList<>();
+        list = new ArrayList<SpecsListBean>();
         productSpecificationsViewAdapter = new ProductSpecificationsViewAdapter(this);
         productParametersViewAdapter = new ProductParametersViewAdapter(this);
         brand_id = getIntent().getIntExtra("brand_id", 0);
@@ -110,6 +119,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
         ActivityTitleUtils.initToolbar(aty, getString(R.string.releaseGoods), true, R.id.titlebar);
         clv_productParameters.setAdapter(productParametersViewAdapter);
         clv_productSpecifications.setAdapter(productSpecificationsViewAdapter);
+        clv_productSpecifications.setItemsCanFocus(true);
         productSpecificationsViewAdapter.setOnStatusListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
         ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).getGoodsParams(type_id);
@@ -120,16 +130,44 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_addSpecification:
+                clv_productSpecifications.setFocusable(true);
+                clv_productSpecifications.setFocusableInTouchMode(true);
+                clv_productSpecifications.requestFocus();
                 SoftKeyboardUtils.packUpKeyboard(this);
-                SpecsBean specsBean = new SpecsBean();
-                productSpecificationsViewAdapter.addLastItem(specsBean);
+                List<SpecsBean> specs1List = new ArrayList<SpecsBean>();
+                if (specsList != null && specsList.size() > 0) {
+                    for (int i = 0; i < specsList.size(); i++) {
+                        SpecsBean specsBean = new SpecsBean();
+                        List<SpecsBean.SpecBean> spec1List = new ArrayList<SpecsBean.SpecBean>();
+                        for (int j = 0; j < specsList.get(i).getSpec().size(); j++) {
+                            SpecsBean.SpecBean spec1Bean = new SpecsBean.SpecBean();
+                            spec1Bean.setSelected(0);
+                            spec1Bean.setSpec_value_id(specsList.get(i).getSpec().get(j).getSpec_value_id());
+                            spec1Bean.setSpec_id(specsList.get(i).getSpec().get(i).getSpec_id());
+                            spec1Bean.setSpec_value(specsList.get(i).getSpec().get(i).getSpec_value());
+                            spec1Bean.setSpec_image(specsList.get(i).getSpec().get(i).getSpec_image());
+                            spec1Bean.setSpec_order(specsList.get(i).getSpec().get(i).getSpec_order());
+                            spec1Bean.setSpec_type(specsList.get(i).getSpec().get(i).getSpec_type());
+                            spec1Bean.setImage(specsList.get(i).getSpec().get(i).getImage());
+                            spec1Bean.setInherent_or_add(specsList.get(i).getSpec().get(i).getInherent_or_add());
+                            spec1List.add(spec1Bean);
+                        }
+                        specsBean.setSpec(spec1List);
+                        specsBean.setSpec_name(specsList.get(i).getSpec_name());
+                        specs1List.add(specsBean);
+                    }
+                } else {
+                    SpecsBean specsBean = new SpecsBean();
+                    specs1List.add(specsBean);
+                }
+               // productSpecificationsViewAdapter.addLastItem(specs1List);
+                sv_productSpecifications.scrollTo(0, ll_productParameters.getHeight() + ll_productSpecifications.getHeight());// 改变滚动条的位置
                 break;
             case R.id.tv_releaseGoods:
-                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, images1, paramsBean, productSpecificationsViewAdapter.getData());
+           //     ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, images1, paramsBean, productSpecificationsViewAdapter.getData());
                 break;
         }
     }
-
 
     @Override
     public void setPresenter(ReleaseGoodsSpecificationsContract.Presenter presenter) {
@@ -156,14 +194,17 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
             }
             list.clear();
             ll_productSpecifications.setVisibility(View.VISIBLE);
-            if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().getSpec1() != null) {
+
+            if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().size() > 0) {
                 tv_addSpecification.setVisibility(View.VISIBLE);
-                list.add(productParametersBean.getData().getSpecs());
+                specsList = productParametersBean.getData().getSpecs();
+
+
             } else {
                 tv_addSpecification.setVisibility(View.GONE);
-                SpecsBean specsBean = new SpecsBean();
-                list.add(specsBean);
+                specsList = new ArrayList<SpecsBean>();
             }
+          //  list.add(specsList);
             productSpecificationsViewAdapter.clear();
             productSpecificationsViewAdapter.addNewData(list);
         } else if (flag == 1) {

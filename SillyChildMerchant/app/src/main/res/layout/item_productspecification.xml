@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchWrap"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_productSpecifications"
+        style="@style/WrapWrap"
+        android:paddingLeft="@dimen/dimen10"
+        android:paddingRight="@dimen/dimen10"
+        android:paddingTop="@dimen/dimen10"
+        android:text="商品规格1"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/textsize13" />
+
+    <com.common.cklibrary.utils.myview.NoScrollGridView
+        android:id="@+id/gv_productspecifications"
+        style="@style/MatchWrap"
+        android:horizontalSpacing="0dp"
+        android:numColumns="4"
+        android:overScrollMode="never"
+        android:paddingTop="@dimen/dimen10"
+        android:scrollbars="none"
+        android:verticalSpacing="0dp"
+        tools:listitem="@layout/item_gv_productspecifications" />
+</LinearLayout>

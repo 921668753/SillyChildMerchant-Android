@@ -14,15 +14,18 @@ public class ProductParametersBean extends BaseResult<ProductParametersBean.Data
          * props : [{"hidden":0,"optionAr":["XXXX"],"type":1,"required":1,"unit":"","datatype":" ","valStr":"","valueList":[],"name":"商品名简写","options":"XXXX","optionMap":[],"value":"","nums":[0]},{"hidden":0,"optionAr":["XXXX"],"type":1,"required":1,"unit":"","datatype":" ","valStr":"","valueList":[],"name":"是否跨境商品","options":"XXXX","optionMap":[],"value":"","nums":[0]},{"hidden":0,"optionAr":["XXXX"],"type":1,"required":1,"unit":"","datatype":" ","valStr":"","valueList":[],"name":"哪国品牌","options":"XXXX","optionMap":[],"value":"","nums":[0]},{"hidden":0,"optionAr":["XXXX"],"type":1,"required":1,"unit":"","datatype":" ","valStr":"","valueList":[],"name":"运费方式","options":"XXXX","optionMap":[],"value":"","nums":[0]},{"hidden":0,"optionAr":["XXXX"],"type":1,"required":1,"unit":"","datatype":" ","valStr":"","valueList":[],"name":"保障说明","options":"XXXX","optionMap":[],"value":"","nums":[0]}]
          */
 
-        private SpecsBean specs;
+        private List<SpecsBean> specs;
+        private String inventory;
+
+        private String price;
         private List<ParamsBean> params;
         private List<PropsBean> props;
 
-        public SpecsBean getSpecs() {
+        public List<SpecsBean> getSpecs() {
             return specs;
         }
 
-        public void setSpecs(SpecsBean specs) {
+        public void setSpecs(List<SpecsBean> specs) {
             this.specs = specs;
         }
 
@@ -42,18 +45,29 @@ public class ProductParametersBean extends BaseResult<ProductParametersBean.Data
             this.props = props;
         }
 
-        public static class SpecsBean {
+        public String getInventory() {
+            return inventory;
+        }
 
+        public void setInventory(String inventory) {
+            this.inventory = inventory;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public static class SpecsBean {
 
             private String spec_name;
 
-            private String inventory;
-
-            private String price;
-
             private String product_id;
 
-            private List<Spec1Bean> spec1;
+            private List<SpecBean> spec;
 
             public String getProduct_id() {
                 return product_id;
@@ -71,31 +85,16 @@ public class ProductParametersBean extends BaseResult<ProductParametersBean.Data
                 this.spec_name = spec_name;
             }
 
-            public String getInventory() {
-                return inventory;
+
+            public List<SpecBean> getSpec() {
+                return spec;
             }
 
-            public void setInventory(String inventory) {
-                this.inventory = inventory;
+            public void setSpec(List<SpecBean> spec) {
+                this.spec = spec;
             }
 
-            public String getPrice() {
-                return price;
-            }
-
-            public void setPrice(String price) {
-                this.price = price;
-            }
-
-            public List<Spec1Bean> getSpec1() {
-                return spec1;
-            }
-
-            public void setSpec1(List<Spec1Bean> spec1) {
-                this.spec1 = spec1;
-            }
-
-            public static class Spec1Bean {
+            public static class SpecBean {
                 /**
                  * spec_value_id : 58
                  * spec_id : 3

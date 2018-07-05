@@ -329,6 +329,10 @@
     <string name="pleaseEnter">请输入</string>
     <string name="addProductSuccessfully">添加商品成功</string>
     <string name="confirmReleaseProduct">确定发布该商品</string>
+    <string name="color">颜色</string>
+    <string name="size">尺寸</string>
+    <string name="capacity">容量</string>
+
 
     <!--提现成功-->
     <string name="withdrawalRequestSucceeded">提现申请成功</string>
