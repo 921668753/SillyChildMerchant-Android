@@ -4,7 +4,7 @@ package com.yinglan.scm.adapter.mine.mystores.releasegoods;
 import android.content.Context;
 
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean.SpecBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.SpecsListBean.SpecsBean.SpecListBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
@@ -12,7 +12,7 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 /**
  * 发布商品----选择规格
  */
-public class ProductSpecificationsGvViewAdapter extends BGAAdapterViewAdapter<SpecBean> {
+public class ProductSpecificationsGvViewAdapter extends BGAAdapterViewAdapter<SpecListBean> {
 
     public ProductSpecificationsGvViewAdapter(Context context) {
         super(context, R.layout.item_gv_productspecifications);
@@ -25,7 +25,7 @@ public class ProductSpecificationsGvViewAdapter extends BGAAdapterViewAdapter<Sp
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, SpecBean model) {
+    protected void fillData(BGAViewHolderHelper helper, int position, SpecListBean model) {
         if (model.getSelected() == 0) {
             helper.setImageResource(R.id.img_checkBox, R.mipmap.unselect_box_round);
         } else {

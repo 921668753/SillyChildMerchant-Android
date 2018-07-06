@@ -13,7 +13,7 @@
         android:dividerHeight="@dimen/dimen1"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:listitem="@layout/item_productspecification" />
 
     <TextView
@@ -70,5 +70,20 @@
         android:textColor="@color/titletextcolors"
         android:textCursorDrawable="@drawable/shape_cursor"
         android:textSize="@dimen/textsize13" />
+
+
+    <TextView
+        android:id="@+id/tv_deleteSpecifications"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen40"
+        android:layout_marginLeft="@dimen/dimen57"
+        android:layout_marginRight="@dimen/dimen57"
+        android:layout_marginTop="@dimen/dimen15"
+        android:background="@drawable/shape_specification"
+        android:gravity="center"
+        android:text="@string/deleteSpecifications"
+        android:textColor="@color/fF0000Colors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
 
 </LinearLayout>

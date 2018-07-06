@@ -6,43 +6,80 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 
-import com.common.cklibrary.utils.myview.NoScrollGridView;
+import com.common.cklibrary.utils.myview.ChildListView;
 import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.DataBean.SpecsListBean;
-
-import java.util.List;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.SpecsListBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 /**
- * 发布商品----选择规格
+ * 发布商品----规格
  */
 public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<SpecsListBean> {
 
-    private SparseArray<ProductSpecificationsGvViewAdapter> mAdapterCounters;
+    private SparseArray<ProductSpecificationViewAdapter> mAdapter1Counters;
+
     private OnStatusListener onStatusListener;
 
     public ProductSpecificationsViewAdapter(Context context) {
         super(context, R.layout.item_productspecifications);
-        this.mAdapterCounters = new SparseArray<>();
+        this.mAdapter1Counters = new SparseArray<>();
     }
 
     @Override
+    protected void setItemChildListener(BGAViewHolderHelper helper) {
+        super.setItemChildListener(helper);
+        helper.setItemChildClickListener(R.id.tv_deleteSpecifications);
+    }
+
+
+    @Override
     protected void fillData(BGAViewHolderHelper helper, int position, SpecsListBean model) {
-//        if (!StringUtils.isEmpty(model.getSpec_name())) {
-//            helper.setText(R.id.tv_productSpecifications, model.getSpec_name());
-//        }
+        if (getCount() - 1 == position) {
+            helper.setVisibility(R.id.tv_deleteSpecifications, View.GONE);
+        } else {
+            helper.setVisibility(R.id.tv_deleteSpecifications, View.VISIBLE);
+        }
+        ChildListView clv_productSpecification = (ChildListView) helper.getView(R.id.clv_productSpecification);
+        ProductSpecificationViewAdapter productSpecificationViewAdapter;
+        if (mAdapter1Counters.get(clv_productSpecification.hashCode()) != null) {
+            productSpecificationViewAdapter = mAdapter1Counters.get(clv_productSpecification.hashCode());
+            if (model.getSpecs() != null && model.getSpecs().size() > 0) {
+                clv_productSpecification.setVisibility(View.VISIBLE);
+                productSpecificationViewAdapter.clear();
+                productSpecificationViewAdapter.addNewData(model.getSpecs());
+            } else {
+                clv_productSpecification.setVisibility(View.GONE);
+            }
+        } else {
+            if (model.getSpecs() != null && model.getSpecs().size() > 0) {
+                clv_productSpecification.setVisibility(View.VISIBLE);
+                productSpecificationViewAdapter = new ProductSpecificationViewAdapter(mContext);
+                clv_productSpecification.setAdapter(productSpecificationViewAdapter);
+                productSpecificationViewAdapter.clear();
+                productSpecificationViewAdapter.addNewData(model.getSpecs());
+                productSpecificationViewAdapter.setOnStatusListener(new ProductSpecificationViewAdapter.OnStatusListener() {
+                    @Override
+                    public void onSetStatusListener(View view, ProductSpecificationsGvViewAdapter madapter, int position1, int position2) {
+                        onStatusListener.onSetStatusListener(view, productSpecificationViewAdapter, madapter, position, position1, position2);
+                    }
+                });
+                mAdapter1Counters.put(clv_productSpecification.hashCode(), productSpecificationViewAdapter);
+            } else {
+                clv_productSpecification.setVisibility(View.GONE);
+            }
+        }
+
         EditText et_warehouseInventory = (EditText) helper.getView(R.id.et_warehouseInventory);
         et_warehouseInventory.setTag(position);
-        if (!StringUtils.isEmpty(model.getInventory()) && (int) et_warehouseInventory.getTag() == position) {
-            et_warehouseInventory.setText(model.getInventory());
-            et_warehouseInventory.setSelection(model.getInventory().length());
+        if (!StringUtils.isEmpty(model.getStore()) && (int) et_warehouseInventory.getTag() == position) {
+            et_warehouseInventory.setText(model.getStore());
+            et_warehouseInventory.setSelection(model.getStore().length());
         } else {
             et_warehouseInventory.setText("");
         }
@@ -60,7 +97,7 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!StringUtils.isEmpty(editable) && (int) et_warehouseInventory.getTag() == position) {
-                    model.setInventory(editable + "");
+                    model.setStore(editable + "");
                 }
             }
         });
@@ -91,42 +128,7 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
                 }
             }
         });
-
-        NoScrollGridView noScrollGridView = (NoScrollGridView) helper.getView(R.id.gv_productspecifications);
-        ProductSpecificationsGvViewAdapter productSpecificationsGvViewAdapter;
-//        if (mAdapterCounters.get(noScrollGridView.hashCode()) != null) {
-//            productSpecificationsGvViewAdapter = mAdapterCounters.get(noScrollGridView.hashCode());
-//            if (model.getSpec1() != null && model.getSpec1().size() > 0) {
-//                helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
-//                noScrollGridView.setVisibility(View.VISIBLE);
-//                productSpecificationsGvViewAdapter.clear();
-//                productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
-//            } else {
-//                helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
-//                noScrollGridView.setVisibility(View.GONE);
-//            }
-//        } else {
-//            if (model.getSpec1() != null && model.getSpec1().size() > 0) {
-//                helper.setVisibility(R.id.tv_productSpecifications, View.VISIBLE);
-//                noScrollGridView.setVisibility(View.VISIBLE);
-//                productSpecificationsGvViewAdapter = new ProductSpecificationsGvViewAdapter(mContext);
-//                noScrollGridView.setAdapter(productSpecificationsGvViewAdapter);
-//                noScrollGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> adapterView, View view, int position1, long l) {
-//                        onStatusListener.onSetStatusListener(view, productSpecificationsGvViewAdapter, position, position1);
-//                    }
-//                });
-//                productSpecificationsGvViewAdapter.clear();
-//                productSpecificationsGvViewAdapter.addNewData(model.getSpec1());
-//                mAdapterCounters.put(noScrollGridView.hashCode(), productSpecificationsGvViewAdapter);
-//            } else {
-//                helper.setVisibility(R.id.tv_productSpecifications, View.GONE);
-//                noScrollGridView.setVisibility(View.GONE);
-//            }
-//        }
     }
-
 
 
     public void setOnStatusListener(OnStatusListener onStatusListener) {
@@ -135,17 +137,17 @@ public class ProductSpecificationsViewAdapter extends BGAAdapterViewAdapter<Spec
 
     public interface OnStatusListener {
 
-        void onSetStatusListener(View view, ProductSpecificationsGvViewAdapter adapter, int position, int position1);
+        void onSetStatusListener(View view, ProductSpecificationViewAdapter adapter, ProductSpecificationsGvViewAdapter madapter, int position, int position1, int position2);
 
     }
 
 
     @Override
     public void clear() {
-        if (mAdapterCounters != null) {
-            Log.e("TAG", "size :  " + mAdapterCounters.size());
-            for (int i = 0, length = mAdapterCounters.size(); i < length; i++) {
-                ProductSpecificationsGvViewAdapter cdt = mAdapterCounters.get(mAdapterCounters.keyAt(i));
+        if (mAdapter1Counters != null) {
+            Log.e("TAG", "size :  " + mAdapter1Counters.size());
+            for (int i = 0, length = mAdapter1Counters.size(); i < length; i++) {
+                ProductSpecificationViewAdapter cdt = mAdapter1Counters.get(mAdapter1Counters.keyAt(i));
                 if (cdt != null) {
                     cdt.clear();
                     cdt = null;

@@ -1,7 +1,9 @@
 package com.yinglan.scm.mine.mystores.productdetails;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.common.cklibrary.common.BaseActivity;
@@ -15,11 +17,14 @@ import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductParametersViewAdapter;
+import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsGvViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
 import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
 import com.yinglan.scm.entity.mine.mystores.productdetails.ProductParamsBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.SpecsListBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
@@ -27,10 +32,15 @@ import com.yinglan.scm.utils.SoftKeyboardUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
+
 /**
  * 产品详情----参数规格
  */
-public class ProductSpecificationsActivity extends BaseActivity implements ProductSpecificationsContract.View, ProductSpecificationsViewAdapter.OnStatusListener {
+public class ProductSpecificationsActivity extends BaseActivity implements ProductSpecificationsContract.View, BGAOnItemChildClickListener, ProductSpecificationsViewAdapter.OnStatusListener {
+
+    @BindView(id = R.id.sv_productSpecifications)
+    private ScrollView sv_productSpecifications;
 
     /**
      * 商品参数
@@ -69,9 +79,11 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
 
     private ProductSpecificationsViewAdapter productSpecificationsViewAdapter = null;
 
-    private List<ProductParametersBean.DataBean.SpecsBean> list;
+    private List<SpecsListBean> list;
 
     private ParamsBean paramsBean;
+
+    private SpecsListBean specsListBean;
 
     private ProductDetailsBean productDetailsBean;
 
@@ -96,6 +108,7 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
         ActivityTitleUtils.initToolbar(aty, getString(R.string.productDetails), true, R.id.titlebar);
         clv_productParameters.setAdapter(productParametersViewAdapter);
         clv_productSpecifications.setAdapter(productSpecificationsViewAdapter);
+        productSpecificationsViewAdapter.setOnItemChildClickListener(this);
         productSpecificationsViewAdapter.setOnStatusListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
         getSuccess("{params:" + productDetailsBean.getData().getParams() + "}", 0);
@@ -107,8 +120,40 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
         switch (v.getId()) {
             case R.id.tv_addSpecification:
                 SoftKeyboardUtils.packUpKeyboard(this);
-                ProductParametersBean.DataBean.SpecsBean specsBean = new ProductParametersBean.DataBean.SpecsBean();
-                productSpecificationsViewAdapter.addLastItem(specsBean);
+                clv_productSpecifications.setFocusable(true);
+                clv_productSpecifications.setFocusableInTouchMode(true);
+                clv_productSpecifications.requestFocus();
+                SoftKeyboardUtils.packUpKeyboard(this);
+                ProductSpecsBean.SpecsListBean specsListBean1 = new ProductSpecsBean.SpecsListBean();
+                if (specsListBean != null && specsListBean.getSpecs().size() > 0) {
+                    List<ProductSpecsBean.SpecsListBean.SpecsBean> specsList = new ArrayList<ProductSpecsBean.SpecsListBean.SpecsBean>();
+                    for (int i = 0; i < specsListBean.getSpecs().size(); i++) {
+                        ProductSpecsBean.SpecsListBean.SpecsBean specsBean = new ProductParametersBean.DataBean.SpecsBean();
+                        specsBean.setSpec_type(specsListBean.getSpecs().get(i).getSpec_type());
+                        specsBean.setSpecName(specsListBean.getSpecs().get(i).getSpecName());
+                        List<ProductParametersBean.DataBean.SpecsBean.SpecListBean> spec1List = new ArrayList<>();
+                        for (int j = 0; j < specsListBean.getSpecs().get(i).getSpecList().size(); j++) {
+                            ProductParametersBean.DataBean.SpecsBean.SpecListBean spec1Bean = new ProductParametersBean.DataBean.SpecsBean.SpecListBean();
+                            spec1Bean.setSelected(0);
+                            spec1Bean.setSpec_value_id(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_value_id());
+                            spec1Bean.setSpec_id(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_id());
+                            spec1Bean.setSpec_value(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_value());
+                            spec1Bean.setSpec_image(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_image());
+                            spec1Bean.setSpec_order(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_order());
+                            spec1Bean.setSpec_type(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_type());
+                            spec1Bean.setImage(specsListBean.getSpecs().get(i).getSpecList().get(j).getImage());
+                            spec1Bean.setInherent_or_add(specsListBean.getSpecs().get(i).getSpecList().get(j).getInherent_or_add());
+                            spec1List.add(spec1Bean);
+                        }
+                        specsBean.setSpecList(spec1List);
+                        specsList.add(specsBean);
+                    }
+                    specsListBean1.setPrice(null);
+                    specsListBean1.setStore(null);
+                    specsListBean1.setSpecs(specsList);
+                }
+                productSpecificationsViewAdapter.addLastItem(specsListBean1);
+                sv_productSpecifications.scrollTo(0, ll_productParameters.getHeight() + ll_productSpecifications.getHeight());// 改变滚动条的位置
                 break;
             case R.id.tv_confirmChange:
                 ((ProductSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(productDetailsBean, paramsBean, productSpecificationsViewAdapter.getData());
@@ -116,6 +161,12 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
         }
     }
 
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.tv_deleteSpecifications) {
+            productSpecificationsViewAdapter.removeItem(position);
+        }
+    }
 
     @Override
     public void setPresenter(ProductSpecificationsContract.Presenter presenter) {
@@ -149,31 +200,57 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
             ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
             list.clear();
             ll_productSpecifications.setVisibility(View.VISIBLE);
-            if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().getSpec1() != null) {
+            if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().size() > 0) {
                 tv_addSpecification.setVisibility(View.VISIBLE);
-                list.add(productParametersBean.getData().getSpecs());
                 for (int i = 0; i < productDetailsBean.getData().getSpecs().size(); i++) {
-                    if (productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().size() >= 0) {
-                        for (int j = 0; j < productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().size(); j++) {
-                            for (int k = 0; k < list.size(); k++) {
-                                list.get(k).setPrice(productDetailsBean.getData().getSpecs().get(i).getPrice());
-                                list.get(k).setInventory(productDetailsBean.getData().getSpecs().get(i).getEnable_store());
-                                list.get(k).setInventory(productDetailsBean.getData().getSpecs().get(i).getProduct_id());
-                                for (int l = 0; l < list.get(k).getSpec1().size(); l++) {
-                                    if (list.get(k).getSpec1().get(l).getSpec_value_id() == productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().get(j)) {
-                                        list.get(k).getSpec1().get(l).setSelected(1);
-                                    }
-                                }
+                    if (productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().size() <= 0) {
+                        continue;
+                    }
+                    List<ProductParametersBean.DataBean.SpecsBean> specsList = productParametersBean.getData().getSpecs();
+                    specsListBean = new ProductSpecsBean.SpecsListBean();
+                    List<ProductSpecsBean.SpecsListBean.SpecsBean> specsList1 = new ArrayList<ProductSpecsBean.SpecsListBean.SpecsBean>();
+                    for (int j = 0; j < specsList.size(); j++) {
+                        ProductSpecsBean.SpecsListBean.SpecsBean specsBean = new ProductParametersBean.DataBean.SpecsBean();
+                        specsBean.setSpec_type(specsList.get(j).getSpec_type());
+                        specsBean.setSpecName(specsList.get(j).getSpecName());
+                        List<ProductParametersBean.DataBean.SpecsBean.SpecListBean> spec1List = new ArrayList<>();
+                        for (int k = 0; k < specsList.get(j).getSpecList().size(); k++) {
+                            ProductParametersBean.DataBean.SpecsBean.SpecListBean spec1Bean = new ProductParametersBean.DataBean.SpecsBean.SpecListBean();
+                            spec1Bean.setSelected(0);
+                            spec1Bean.setSpec_value_id(specsList.get(j).getSpecList().get(k).getSpec_value_id());
+                            spec1Bean.setSpec_id(specsList.get(j).getSpecList().get(k).getSpec_id());
+                            spec1Bean.setSpec_value(specsList.get(j).getSpecList().get(k).getSpec_value());
+                            spec1Bean.setSpec_image(specsList.get(j).getSpecList().get(k).getSpec_image());
+                            spec1Bean.setSpec_order(specsList.get(j).getSpecList().get(k).getSpec_order());
+                            spec1Bean.setSpec_type(specsList.get(j).getSpecList().get(k).getSpec_type());
+                            spec1Bean.setImage(specsList.get(j).getSpecList().get(k).getImage());
+                            spec1Bean.setInherent_or_add(specsList.get(j).getSpecList().get(k).getInherent_or_add());
+                            spec1List.add(spec1Bean);
+                        }
+                        specsBean.setSpecList(spec1List);
+                        specsList1.add(specsBean);
+                    }
+                    specsListBean.setPrice(productDetailsBean.getData().getSpecs().get(i).getPrice());
+                    specsListBean.setStore(productDetailsBean.getData().getSpecs().get(i).getEnable_store());
+                    List<Integer> integerList = productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id();
+                    for (int j = 0; j < integerList.size(); j++) {
+                        for (int k = 0; k < specsList1.get(j).getSpecList().size(); k++) {
+                            if (integerList.get(j) == specsList1.get(j).getSpecList().get(k).getSpec_value_id()) {
+                                specsList1.get(j).getSpecList().get(k).setSelected(1);
+                            } else {
+                                specsList1.get(j).getSpecList().get(k).setSelected(0);
                             }
                         }
                     }
+                    specsListBean.setSpecs(specsList1);
+                    list.add(specsListBean);
                 }
             } else {
                 tv_addSpecification.setVisibility(View.GONE);
-                ProductParametersBean.DataBean.SpecsBean specsBean = new ProductParametersBean.DataBean.SpecsBean();
-                specsBean.setPrice(productDetailsBean.getData().getPrice());
-                specsBean.setInventory(productDetailsBean.getData().getStore());
-                list.add(specsBean);
+                specsListBean = new ProductSpecsBean.SpecsListBean();
+                specsListBean.setStore(productDetailsBean.getData().getStore());
+                specsListBean.setPrice(productDetailsBean.getData().getPrice());
+                list.add(specsListBean);
             }
             productSpecificationsViewAdapter.clear();
             productSpecificationsViewAdapter.addNewData(list);
@@ -206,19 +283,20 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
 
 
     @Override
-    public void onSetStatusListener(View view, ProductSpecificationsGvViewAdapter adapter, int position, int position1) {
+    public void onSetStatusListener(View view, ProductSpecificationViewAdapter
+            adapter, ProductSpecificationsGvViewAdapter madapter, int position, int position1,
+                                    int position2) {
         for (int i = 0; i < adapter.getData().size(); i++) {
-            if (position1 == i && adapter.getItem(position1).getSelected() == 1) {
-                adapter.getItem(position1).setSelected(0);
-            } else if (position1 == i && adapter.getItem(position1).getSelected() == 0) {
-                adapter.getItem(position1).setSelected(1);
+            if (position2 == i && madapter.getItem(position2).getSelected() == 1) {
+                madapter.getItem(position2).setSelected(0);
+            } else if (position2 == i && madapter.getItem(position2).getSelected() == 0) {
+                madapter.getItem(position2).setSelected(1);
             } else {
-                adapter.getItem(i).setSelected(0);
+                madapter.getItem(i).setSelected(0);
             }
         }
-        adapter.notifyDataSetChanged();
+        madapter.notifyDataSetChanged();
     }
-
 
     @Override
     protected void onDestroy() {
@@ -232,6 +310,7 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
         }
         list = null;
     }
+
 
 }
 

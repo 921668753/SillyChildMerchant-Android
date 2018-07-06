@@ -1,8 +1,7 @@
 package com.yinglan.scm.mine.mystores.releasegoods;
 
-import android.os.SystemClock;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,11 +16,13 @@ import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductParametersViewAdapter;
+import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsGvViewAdapter;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ProductSpecificationsViewAdapter;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean.DataBean.SpecsBean;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.DataBean.SpecsListBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.SpecsListBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean.ParamsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
@@ -29,10 +30,12 @@ import com.yinglan.scm.utils.SoftKeyboardUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
+
 /**
  * 发布商品---商品参数和规格
  */
-public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements ReleaseGoodsSpecificationsContract.View, ProductSpecificationsViewAdapter.OnStatusListener {
+public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements ReleaseGoodsSpecificationsContract.View, BGAOnItemChildClickListener, ProductSpecificationsViewAdapter.OnStatusListener {
 
     @BindView(id = R.id.sv_productSpecifications)
     private ScrollView sv_productSpecifications;
@@ -85,9 +88,11 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
     private String intro = "";
     private ArrayList<String> images1 = null;
     private int brand_id = 0;
+
     private ParamsBean paramsBean;
-    private List<SpecsBean> specsList;
-    private SpecsBean specBean;
+
+    private SpecsListBean specsListBean;
+
 
     @Override
     public void setRootView() {
@@ -120,6 +125,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
         clv_productParameters.setAdapter(productParametersViewAdapter);
         clv_productSpecifications.setAdapter(productSpecificationsViewAdapter);
         clv_productSpecifications.setItemsCanFocus(true);
+        productSpecificationsViewAdapter.setOnItemChildClickListener(this);
         productSpecificationsViewAdapter.setOnStatusListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
         ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).getGoodsParams(type_id);
@@ -134,38 +140,47 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
                 clv_productSpecifications.setFocusableInTouchMode(true);
                 clv_productSpecifications.requestFocus();
                 SoftKeyboardUtils.packUpKeyboard(this);
-                List<SpecsBean> specs1List = new ArrayList<SpecsBean>();
-                if (specsList != null && specsList.size() > 0) {
-                    for (int i = 0; i < specsList.size(); i++) {
-                        SpecsBean specsBean = new SpecsBean();
-                        List<SpecsBean.SpecBean> spec1List = new ArrayList<SpecsBean.SpecBean>();
-                        for (int j = 0; j < specsList.get(i).getSpec().size(); j++) {
-                            SpecsBean.SpecBean spec1Bean = new SpecsBean.SpecBean();
+                SpecsListBean specsListBean1 = new SpecsListBean();
+                if (specsListBean != null && specsListBean.getSpecs().size() > 0) {
+                    List<ProductSpecsBean.SpecsListBean.SpecsBean> specsList = new ArrayList<ProductSpecsBean.SpecsListBean.SpecsBean>();
+                    for (int i = 0; i < specsListBean.getSpecs().size(); i++) {
+                        SpecsListBean.SpecsBean specsBean = new SpecsBean();
+                        specsBean.setSpec_type(specsListBean.getSpecs().get(i).getSpec_type());
+                        specsBean.setSpecName(specsListBean.getSpecs().get(i).getSpecName());
+                        List<SpecsBean.SpecListBean> spec1List = new ArrayList<>();
+                        for (int j = 0; j < specsListBean.getSpecs().get(i).getSpecList().size(); j++) {
+                            SpecsBean.SpecListBean spec1Bean = new SpecsBean.SpecListBean();
                             spec1Bean.setSelected(0);
-                            spec1Bean.setSpec_value_id(specsList.get(i).getSpec().get(j).getSpec_value_id());
-                            spec1Bean.setSpec_id(specsList.get(i).getSpec().get(i).getSpec_id());
-                            spec1Bean.setSpec_value(specsList.get(i).getSpec().get(i).getSpec_value());
-                            spec1Bean.setSpec_image(specsList.get(i).getSpec().get(i).getSpec_image());
-                            spec1Bean.setSpec_order(specsList.get(i).getSpec().get(i).getSpec_order());
-                            spec1Bean.setSpec_type(specsList.get(i).getSpec().get(i).getSpec_type());
-                            spec1Bean.setImage(specsList.get(i).getSpec().get(i).getImage());
-                            spec1Bean.setInherent_or_add(specsList.get(i).getSpec().get(i).getInherent_or_add());
+                            spec1Bean.setSpec_value_id(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_value_id());
+                            spec1Bean.setSpec_id(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_id());
+                            spec1Bean.setSpec_value(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_value());
+                            spec1Bean.setSpec_image(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_image());
+                            spec1Bean.setSpec_order(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_order());
+                            spec1Bean.setSpec_type(specsListBean.getSpecs().get(i).getSpecList().get(j).getSpec_type());
+                            spec1Bean.setImage(specsListBean.getSpecs().get(i).getSpecList().get(j).getImage());
+                            spec1Bean.setInherent_or_add(specsListBean.getSpecs().get(i).getSpecList().get(j).getInherent_or_add());
                             spec1List.add(spec1Bean);
                         }
-                        specsBean.setSpec(spec1List);
-                        specsBean.setSpec_name(specsList.get(i).getSpec_name());
-                        specs1List.add(specsBean);
+                        specsBean.setSpecList(spec1List);
+                        specsList.add(specsBean);
                     }
-                } else {
-                    SpecsBean specsBean = new SpecsBean();
-                    specs1List.add(specsBean);
+                    specsListBean1.setPrice(null);
+                    specsListBean1.setStore(null);
+                    specsListBean1.setSpecs(specsList);
                 }
-               // productSpecificationsViewAdapter.addLastItem(specs1List);
+                productSpecificationsViewAdapter.addLastItem(specsListBean1);
                 sv_productSpecifications.scrollTo(0, ll_productParameters.getHeight() + ll_productSpecifications.getHeight());// 改变滚动条的位置
                 break;
             case R.id.tv_releaseGoods:
-           //     ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, images1, paramsBean, productSpecificationsViewAdapter.getData());
+                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, images1, paramsBean, productSpecificationsViewAdapter.getData());
                 break;
+        }
+    }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.tv_deleteSpecifications) {
+            productSpecificationsViewAdapter.removeItem(position);
         }
     }
 
@@ -194,17 +209,20 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
             }
             list.clear();
             ll_productSpecifications.setVisibility(View.VISIBLE);
-
             if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().size() > 0) {
                 tv_addSpecification.setVisibility(View.VISIBLE);
-                specsList = productParametersBean.getData().getSpecs();
-
-
+                List<SpecsBean> specsList = productParametersBean.getData().getSpecs();
+                specsListBean = new SpecsListBean();
+                List<SpecsListBean.SpecsBean> specsList1 = new ArrayList<SpecsListBean.SpecsBean>();
+                for (int i = 0; i < specsList.size(); i++) {
+                    specsList1.add(specsList.get(i));
+                }
+                specsListBean.setSpecs(specsList1);
             } else {
                 tv_addSpecification.setVisibility(View.GONE);
-                specsList = new ArrayList<SpecsBean>();
+                specsListBean = new SpecsListBean();
             }
-          //  list.add(specsList);
+            list.add(specsListBean);
             productSpecificationsViewAdapter.clear();
             productSpecificationsViewAdapter.addNewData(list);
         } else if (flag == 1) {
@@ -231,19 +249,18 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
         ViewInject.toast(msg);
     }
 
-
     @Override
-    public void onSetStatusListener(View view, ProductSpecificationsGvViewAdapter adapter, int position, int position1) {
-        for (int i = 0; i < adapter.getData().size(); i++) {
-            if (position1 == i && adapter.getItem(position1).getSelected() == 1) {
-                adapter.getItem(position1).setSelected(0);
-            } else if (position1 == i && adapter.getItem(position1).getSelected() == 0) {
-                adapter.getItem(position1).setSelected(1);
+    public void onSetStatusListener(View view, ProductSpecificationViewAdapter adapter, ProductSpecificationsGvViewAdapter madapter, int position, int position1, int position2) {
+        for (int i = 0; i < madapter.getData().size(); i++) {
+            if (position2 == i && madapter.getItem(position2).getSelected() == 1) {
+                madapter.getItem(position2).setSelected(0);
+            } else if (position2 == i && madapter.getItem(position2).getSelected() == 0) {
+                madapter.getItem(position2).setSelected(1);
             } else {
-                adapter.getItem(i).setSelected(0);
+                madapter.getItem(i).setSelected(0);
             }
         }
-        adapter.notifyDataSetChanged();
+        madapter.notifyDataSetChanged();
     }
 
 

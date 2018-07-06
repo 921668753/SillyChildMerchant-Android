@@ -24,4 +24,5 @@
         android:scrollbars="none"
         android:verticalSpacing="0dp"
         tools:listitem="@layout/item_gv_productspecifications" />
+
 </LinearLayout>

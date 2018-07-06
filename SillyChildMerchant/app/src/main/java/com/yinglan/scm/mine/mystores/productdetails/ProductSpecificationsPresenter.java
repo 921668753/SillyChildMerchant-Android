@@ -9,10 +9,9 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean;
 import com.yinglan.scm.mine.mystores.dialog.SubmitBouncedDialog;
-import com.yinglan.scm.mine.mystores.releasegoods.ReleaseGoodsSpecificationsContract;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.SpecsListBean;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
     }
 
     @Override
-    public void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<ProductParametersBean.DataBean.SpecsBean> specs) {
+    public void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<SpecsListBean> specsListBean) {
         if (productDetailsBean.getData().getCat_id() <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 2);
             return;
@@ -88,33 +87,34 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
         List<ReleaseGoodsBean.SpecsBean> specsBeanList = new ArrayList<ReleaseGoodsBean.SpecsBean>();
         int store = 0;
         String price = "";
-        for (int i = 0; i < specs.size(); i++) {
-            if (StringUtils.toInt(specs.get(i).getInventory()) <= 0) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 2);
+        for (int i = 0; i < specsListBean.size(); i++) {
+            if (StringUtils.toInt(specsListBean.get(i).getStore()) <= 0) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterGoodsWarehouseInventory), 1);
                 return;
             }
-            if (StringUtils.toDouble(specs.get(i).getPrice()) <= 0) {
-                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 2);
+            if (StringUtils.toDouble(specsListBean.get(i).getPrice()) <= 0) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterPriceGoods), 1);
                 return;
             }
             ReleaseGoodsBean.SpecsBean specsBean = new ReleaseGoodsBean.SpecsBean();
-            specsBean.setPrice(MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice())));
+            specsBean.setPrice(MathUtil.keepTwo(StringUtils.toDouble(specsListBean.get(i).getPrice())));
             if (i == 0) {
-                price = MathUtil.keepTwo(StringUtils.toDouble(specs.get(i).getPrice()));
+                price = MathUtil.keepTwo(StringUtils.toDouble(specsListBean.get(i).getPrice()));
             }
-            specsBean.setProduct_id(specs.get(i).getProduct_id());
-            specsBean.setEnable_store(StringUtils.toInt(specs.get(i).getInventory()));
-            store = store + StringUtils.toInt(specs.get(i).getInventory());
-            if (specs.get(i).getSpec1() != null && specs.get(i).getSpec1().size() > 0) {
+            specsBean.setEnable_store(StringUtils.toInt(specsListBean.get(i).getStore()));
+            store = store + StringUtils.toInt(specsListBean.get(i).getStore());
+            if (specsListBean.get(i).getSpecs() != null && specsListBean.get(i).getSpecs().size() > 0) {
                 List<Integer> list = new ArrayList<>();
-                for (int j = 0; j < specs.get(i).getSpec1().size(); j++) {
-                    if (specs.get(i).getSpec1().get(j).getSelected() == 1) {
-                        list.add(specs.get(i).getSpec1().get(j).getSpec_value_id());
+                for (int j = 0; j < specsListBean.get(i).getSpecs().size(); j++) {
+                    for (int k = 0; k < specsListBean.get(i).getSpecs().get(j).getSpecList().size(); k++) {
+                        if (specsListBean.get(i).getSpecs().get(j).getSpecList().get(k).getSelected() == 1) {
+                            list.add(specsListBean.get(i).getSpecs().get(j).getSpecList().get(k).getSpec_value_id());
+                        }
                     }
-                }
-                if (list.size() <= 0) {
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + specs.get(i).getSpec_name(), 2);
-                    return;
+                    if (list.size() <= j) {
+                        mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + specsListBean.get(i).getSpecs().get(j).getSpecName(), 1);
+                        return;
+                    }
                 }
                 specsBean.setSpecs_value_id(list);
             }
@@ -142,7 +142,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
         map.put("price", price);
         map.put("store", store);
         map.put("enable_store", store);
-        if (specs.get(0).getSpec1() == null || specs.get(0).getSpec1().size() <= 0) {
+        if (specsListBean.get(0).getSpecs() == null || specsListBean.get(0).getSpecs().size() <= 0) {
             map.put("specs", null);
         } else {
             map.put("specs", specsBeanList);
@@ -152,7 +152,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
             initDialog(httpParams);
         }
         submitBouncedDialog.show();
-        submitBouncedDialog.setContent(KJActivityStack.create().topActivity().getString(R.string.changeProductSuccessfully), 0, 0);
+        submitBouncedDialog.setContent(KJActivityStack.create().topActivity().getString(R.string.confirmChangeProduct), 0, 0);
     }
 
     private void initDialog(HttpParams httpParams) {

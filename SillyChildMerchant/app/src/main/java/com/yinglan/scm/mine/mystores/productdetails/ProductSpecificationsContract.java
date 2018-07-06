@@ -3,7 +3,7 @@ package com.yinglan.scm.mine.mystores.productdetails;
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductParametersBean;
+import com.yinglan.scm.entity.mine.mystores.releasegoods.ProductSpecsBean.SpecsListBean;
 import com.yinglan.scm.entity.mine.mystores.releasegoods.ReleaseGoodsBean;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface ProductSpecificationsContract {
         /**
          * 新增修改商品
          */
-        void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<ProductParametersBean.DataBean.SpecsBean> specs);
+        void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<SpecsListBean> specsListBean);
 
     }
 
