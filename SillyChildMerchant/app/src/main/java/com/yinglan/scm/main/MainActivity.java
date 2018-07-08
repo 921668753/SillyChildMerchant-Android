@@ -311,11 +311,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Mai
     public void errorMsg(String msg, int flag) {
         if (flag == 0 && isLogin(msg) || flag == 1 && isLogin(msg)) {
             showActivity(aty, LoginActivity.class);
-        } else if (flag == 0) {
-            cleanColors(1);
-        } else if (flag == 1) {
-            cleanColors(2);
+            return;
         }
+        ViewInject.toast(msg);
     }
 
     @Override
