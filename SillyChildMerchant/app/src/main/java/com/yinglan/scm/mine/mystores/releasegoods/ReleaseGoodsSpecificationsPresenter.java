@@ -52,7 +52,7 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
 
     @Override
     public void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String original,
-                                   List<String> images, String intro, List<String> detail_images, ParamsBean params, List<SpecsListBean> specs) {
+                                   List<String> images, String intro, List<String> detail_images, ParamsBean params, List<SpecsListBean> specs, int have_spec) {
         if (cat_id <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 1);
             return;
@@ -139,6 +139,7 @@ public class ReleaseGoodsSpecificationsPresenter implements ReleaseGoodsSpecific
         map.put("images", images);
         map.put("detail_images", detail_images);
         map.put("market_enable", 1);
+        map.put("have_spec", have_spec);
         List<ParamsBean> ParamsBeanList = new ArrayList<ParamsBean>();
         ParamsBeanList.add(params);
         map.put("params", JsonUtil.obj2JsonString(ParamsBeanList));

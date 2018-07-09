@@ -24,7 +24,7 @@ public interface ProductSpecificationsContract {
         /**
          * 新增修改商品
          */
-        void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<SpecsListBean> specsListBean);
+        void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<SpecsListBean> specsListBean, int have_spec);
 
     }
 

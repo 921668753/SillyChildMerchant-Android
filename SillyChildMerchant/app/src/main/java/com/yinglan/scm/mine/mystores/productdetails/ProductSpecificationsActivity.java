@@ -87,6 +87,8 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
 
     private ProductDetailsBean productDetailsBean;
 
+    private int have_spec = 0;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_productspecifications);
@@ -156,7 +158,7 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
                 sv_productSpecifications.scrollTo(0, ll_productParameters.getHeight() + ll_productSpecifications.getHeight());// 改变滚动条的位置
                 break;
             case R.id.tv_confirmChange:
-                ((ProductSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(productDetailsBean, paramsBean, productSpecificationsViewAdapter.getData());
+                ((ProductSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(productDetailsBean, paramsBean, productSpecificationsViewAdapter.getData(),have_spec);
                 break;
         }
     }
@@ -202,6 +204,7 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
             ll_productSpecifications.setVisibility(View.VISIBLE);
             if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().size() > 0) {
                 tv_addSpecification.setVisibility(View.VISIBLE);
+                have_spec = 1;
                 for (int i = 0; i < productDetailsBean.getData().getSpecs().size(); i++) {
                     if (productDetailsBean.getData().getSpecs().get(i).getSpecs_value_id().size() <= 0) {
                         continue;
@@ -246,6 +249,7 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
                     list.add(specsListBean);
                 }
             } else {
+                have_spec = 0;
                 tv_addSpecification.setVisibility(View.GONE);
                 specsListBean = new ProductSpecsBean.SpecsListBean();
                 specsListBean.setStore(productDetailsBean.getData().getStore());

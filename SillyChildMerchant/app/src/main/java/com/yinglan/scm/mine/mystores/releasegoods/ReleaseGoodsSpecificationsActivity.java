@@ -89,6 +89,8 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
     private ArrayList<String> images1 = null;
     private int brand_id = 0;
 
+    private int have_spec = 0;
+
     private ParamsBean paramsBean;
 
     private SpecsListBean specsListBean;
@@ -172,7 +174,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
                 sv_productSpecifications.scrollTo(0, ll_productParameters.getHeight() + ll_productSpecifications.getHeight());// 改变滚动条的位置
                 break;
             case R.id.tv_releaseGoods:
-                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, images1, paramsBean, productSpecificationsViewAdapter.getData());
+                ((ReleaseGoodsSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(name, brand_id, catId, type_id, brief, original, images, intro, images1, paramsBean, productSpecificationsViewAdapter.getData(), have_spec);
                 break;
         }
     }
@@ -211,6 +213,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
             ll_productSpecifications.setVisibility(View.VISIBLE);
             if (productParametersBean.getData().getSpecs() != null && productParametersBean.getData().getSpecs().size() > 0) {
                 tv_addSpecification.setVisibility(View.VISIBLE);
+                have_spec = 1;
                 List<SpecsBean> specsList = productParametersBean.getData().getSpecs();
                 specsListBean = new SpecsListBean();
                 List<SpecsListBean.SpecsBean> specsList1 = new ArrayList<SpecsListBean.SpecsBean>();
@@ -219,6 +222,7 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
                 }
                 specsListBean.setSpecs(specsList1);
             } else {
+                have_spec = 0;
                 tv_addSpecification.setVisibility(View.GONE);
                 specsListBean = new SpecsListBean();
             }

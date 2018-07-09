@@ -53,7 +53,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
     }
 
     @Override
-    public void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<SpecsListBean> specsListBean) {
+    public void postGoodAddAndEdit(ProductDetailsBean productDetailsBean, ReleaseGoodsBean.ParamsBean params, List<SpecsListBean> specsListBean, int have_spec) {
         if (productDetailsBean.getData().getCat_id() <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.selectCommodityClassification1), 2);
             return;
@@ -136,6 +136,7 @@ public class ProductSpecificationsPresenter implements ProductSpecificationsCont
         map.put("images", productDetailsBean.getData().getImages());
         map.put("detail_images", productDetailsBean.getData().getDetail_images());
         map.put("market_enable", 1);
+        map.put("have_spec", have_spec);
         List<ReleaseGoodsBean.ParamsBean> ParamsBeanList = new ArrayList<ReleaseGoodsBean.ParamsBean>();
         ParamsBeanList.add(params);
         map.put("params", JsonUtil.obj2JsonString(ParamsBeanList));

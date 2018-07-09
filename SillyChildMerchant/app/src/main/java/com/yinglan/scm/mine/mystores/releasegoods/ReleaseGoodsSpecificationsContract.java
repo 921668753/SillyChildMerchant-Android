@@ -25,7 +25,7 @@ public interface ReleaseGoodsSpecificationsContract {
          * 新增修改商品
          */
         void postGoodAddAndEdit(String name, int brand_id, int cat_id, int type_id, String brief, String original,
-                                List<String> images, String intro, List<String> detail_images, ParamsBean params, List<SpecsListBean> specsListBean);
+                                List<String> images, String intro, List<String> detail_images, ParamsBean params, List<SpecsListBean> specsListBean, int have_spec);
 
     }
 
