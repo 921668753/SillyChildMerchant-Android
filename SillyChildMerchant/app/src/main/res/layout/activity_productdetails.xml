@@ -15,11 +15,10 @@
         style="@style/MatchMatch"
         android:scrollbars="none">
 
-        <LinearLayout
-            style="@style/MatchMatch"
-            android:orientation="vertical">
+        <RelativeLayout style="@style/MatchMatch">
 
             <TextView
+                android:id="@+id/tv_selectCommodityClassification1"
                 style="@style/WrapWrap"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:layout_marginTop="@dimen/dimen32"
@@ -31,6 +30,7 @@
                 android:id="@+id/ll_classification"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen38"
+                android:layout_below="@id/tv_selectCommodityClassification1"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:layout_marginRight="@dimen/dimen15"
                 android:layout_marginTop="@dimen/dimen10"
@@ -54,7 +54,9 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_chooseBrand"
                 style="@style/WrapWrap"
+                android:layout_below="@id/ll_classification"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:layout_marginTop="@dimen/dimen15"
                 android:text="@string/chooseBrand"
@@ -65,6 +67,7 @@
                 android:id="@+id/ll_chooseBrand"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen38"
+                android:layout_below="@id/tv_chooseBrand"
                 android:layout_marginBottom="@dimen/dimen10"
                 android:layout_marginLeft="@dimen/dimen15"
                 android:layout_marginRight="@dimen/dimen15"
@@ -89,7 +92,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_productName"
                 style="@style/MatchWrap"
+                android:layout_below="@id/ll_chooseBrand"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
                 android:layout_marginTop="@dimen/dimen5"
@@ -136,7 +141,9 @@
 
 
             <TextView
+                android:id="@+id/tv_commodityImages"
                 style="@style/MatchWrap"
+                android:layout_below="@id/ll_productName"
                 android:background="@color/whiteColors"
                 android:paddingLeft="@dimen/dimen15"
                 android:paddingTop="@dimen/dimen15"
@@ -144,28 +151,31 @@
                 android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize15" />
 
-            <RelativeLayout style="@style/MatchWrap">
+            <!--<RelativeLayout style="@style/MatchWrap">-->
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    style="@style/MatchWrap"
-                    android:background="@color/whiteColors"
-                    android:choiceMode="singleChoice"
-                    android:divider="@null"
-                    android:fadingEdge="none"
-                    android:listSelector="@android:color/transparent"
-                    android:paddingBottom="@dimen/dimen15"
-                    android:paddingLeft="@dimen/dimen15"
-                    android:paddingRight="@dimen/dimen15"
-                    android:scrollbarStyle="outsideOverlay"
-                    android:visibility="visible"
-                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                    app:spanCount="1"
-                    tools:listitem="@layout/item_productimg" />
-            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                style="@style/MatchWrap"
+                android:layout_below="@id/tv_commodityImages"
+                android:background="@color/whiteColors"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:listSelector="@android:color/transparent"
+                android:paddingBottom="@dimen/dimen15"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:scrollbarStyle="outsideOverlay"
+                android:visibility="visible"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="1"
+                tools:listitem="@layout/item_productimg" />
+            <!--</RelativeLayout>-->
 
             <LinearLayout
+                android:id="@+id/ll_productIntroduction"
                 style="@style/MatchWrap"
+                android:layout_below="@id/recyclerView"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
                 android:layout_marginTop="@dimen/dimen34"
@@ -202,7 +212,9 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_introduction"
                 style="@style/MatchWrap"
+                android:layout_below="@id/ll_productIntroduction"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
                 android:layout_marginTop="@dimen/dimen34"
@@ -238,7 +250,9 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_detailsPictures"
                 style="@style/MatchWrap"
+                android:layout_below="@id/ll_introduction"
                 android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/whiteColors"
                 android:paddingLeft="@dimen/dimen15"
@@ -247,30 +261,32 @@
                 android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize15" />
 
-            <RelativeLayout style="@style/MatchWrap">
+            <!--<RelativeLayout style="@style/MatchWrap">-->
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView1"
-                    style="@style/MatchWrap"
-                    android:layout_marginBottom="@dimen/dimen5"
-                    android:background="@color/whiteColors"
-                    android:choiceMode="singleChoice"
-                    android:divider="@null"
-                    android:fadingEdge="none"
-                    android:listSelector="@android:color/transparent"
-                    android:paddingBottom="@dimen/dimen15"
-                    android:paddingLeft="@dimen/dimen15"
-                    android:paddingRight="@dimen/dimen15"
-                    android:scrollbarStyle="outsideOverlay"
-                    android:visibility="visible"
-                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                    app:spanCount="1"
-                    tools:listitem="@layout/item_productimg" />
-            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView1"
+                style="@style/MatchWrap"
+                android:layout_below="@id/tv_detailsPictures"
+                android:layout_marginBottom="@dimen/dimen5"
+                android:background="@color/whiteColors"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:listSelector="@android:color/transparent"
+                android:paddingBottom="@dimen/dimen15"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:scrollbarStyle="outsideOverlay"
+                android:visibility="visible"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="1"
+                tools:listitem="@layout/item_productimg" />
+            <!--</RelativeLayout>-->
 
             <TextView
                 android:id="@+id/tv_nextStep"
                 style="@style/Match40"
+                android:layout_below="@id/recyclerView1"
                 android:layout_marginBottom="@dimen/dimen43"
                 android:layout_marginLeft="@dimen/dimen68"
                 android:layout_marginRight="@dimen/dimen68"
@@ -281,8 +297,7 @@
                 android:textColor="@color/whiteColors"
                 android:textSize="@dimen/textsize16" />
 
-        </LinearLayout>
-
+        </RelativeLayout>
 
     </ScrollView>
 
