@@ -2,6 +2,7 @@ package com.yinglan.scm.main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,8 @@ import com.yinglan.scm.mine.sillychildcollege.SillyChildCollegeActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 import static android.app.Activity.RESULT_OK;
 import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE;
@@ -177,55 +180,69 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
         if (flag == 0) {
             Log.e("用户信息", "结果：" + success);
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-            if (userInfoBean != null && userInfoBean.getData() != null) {
-                tv_notLogged.setVisibility(View.GONE);
-                tv_loginImmediately.setVisibility(View.GONE);
-                ll_mineTop.setVisibility(View.VISIBLE);
-                tv_divider.setVisibility(View.VISIBLE);
-                ll_mineBot.setVisibility(View.VISIBLE);
-                saveUserInfo(userInfoBean);
+            if (userInfoBean == null || userInfoBean.getData() == null || StringUtils.toInt(userInfoBean.getData().getStore_id(), 0) <= 0) {
+                errorMsg(getString(R.string.serverReturnsDataError), 0);
+                return;
+            }
+            tv_notLogged.setVisibility(View.GONE);
+            tv_loginImmediately.setVisibility(View.GONE);
+            ll_mineTop.setVisibility(View.VISIBLE);
+            tv_divider.setVisibility(View.VISIBLE);
+            ll_mineBot.setVisibility(View.VISIBLE);
+            saveUserInfo(userInfoBean);
+            if (StringUtils.isEmpty(userInfoBean.getData().getFace())) {
+                img_head.setImageResource(R.mipmap.avatar);
+            } else {
+                GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), img_head, 0, R.mipmap.avatar);
+            }
+            String mobile = PreferenceHelper.readString(aty, StringConstants.FILENAME, "mobile");
+            if (!StringUtils.isEmpty(userInfoBean.getData().getNickname())) {
                 tv_storesName.setText(userInfoBean.getData().getNickname());
-                if (StringUtils.isEmpty(userInfoBean.getData().getFace())) {
-                    img_head.setImageResource(R.mipmap.avatar);
+            } else {
+                tv_storesName.setText(mobile);
+            }
+            int disabled = StringUtils.toInt(userInfoBean.getData().getDisabled(), 3);
+            if (disabled == 3) {
+                tv_nature.setVisibility(View.GONE);
+            } else if (disabled == -1) {
+                tv_nature.setVisibility(View.VISIBLE);
+                tv_nature.setText(getString(R.string.unapprove));
+                tv_nature.setTextColor(getResources().getColor(R.color.fF0000Colors));
+                setCurrentUserInfo(userInfoBean.getData().getFace(), tv_storesName.getText().toString());
+            } else if (disabled == 0) {
+                tv_nature.setVisibility(View.VISIBLE);
+                tv_nature.setText(getString(R.string.audit1));
+                tv_nature.setTextColor(getResources().getColor(R.color.textColor));
+                setCurrentUserInfo(userInfoBean.getData().getFace(), tv_storesName.getText().toString());
+            } else if (disabled == 1) {
+                tv_nature.setVisibility(View.VISIBLE);
+                tv_nature.setText(getString(R.string.merchants));
+                tv_nature.setTextColor(getResources().getColor(R.color.greenColors));
+                if (!StringUtils.isEmpty(userInfoBean.getData().getStore_name())) {
+                    setCurrentUserInfo(userInfoBean.getData().getStore_logo(), userInfoBean.getData().getStore_name());
                 } else {
-                    GlideImageLoader.glideLoader(aty, userInfoBean.getData().getFace(), img_head, 0, R.mipmap.avatar);
+                    setCurrentUserInfo(userInfoBean.getData().getFace(), tv_storesName.getText().toString());
                 }
-                String mobile = PreferenceHelper.readString(aty, StringConstants.FILENAME, "mobile");
-                if (!StringUtils.isEmpty(userInfoBean.getData().getNickname())) {
-                    tv_storesName.setText(userInfoBean.getData().getNickname());
+            } else if (disabled == 2) {
+                tv_nature.setVisibility(View.VISIBLE);
+                tv_nature.setText(getString(R.string.disabled1));
+                tv_nature.setTextColor(getResources().getColor(R.color.fF0000Colors));
+                if (!StringUtils.isEmpty(userInfoBean.getData().getStore_name())) {
+                    setCurrentUserInfo(userInfoBean.getData().getStore_logo(), userInfoBean.getData().getStore_name());
                 } else {
-                    tv_storesName.setText(mobile);
-                }
-                int disabled = StringUtils.toInt(userInfoBean.getData().getDisabled(), 3);
-                if (disabled == 3) {
-                    tv_nature.setVisibility(View.GONE);
-                } else if (disabled == -1) {
-                    tv_nature.setVisibility(View.VISIBLE);
-                    tv_nature.setText(getString(R.string.unapprove));
-                    tv_nature.setTextColor(getResources().getColor(R.color.fF0000Colors));
-                } else if (disabled == 0) {
-                    tv_nature.setVisibility(View.VISIBLE);
-                    tv_nature.setText(getString(R.string.audit1));
-                    tv_nature.setTextColor(getResources().getColor(R.color.textColor));
-                } else if (disabled == 1) {
-                    tv_nature.setVisibility(View.VISIBLE);
-                    tv_nature.setText(getString(R.string.merchants));
-                    tv_nature.setTextColor(getResources().getColor(R.color.greenColors));
-                } else if (disabled == 2) {
-                    tv_nature.setVisibility(View.VISIBLE);
-                    tv_nature.setText(getString(R.string.disabled1));
-                    tv_nature.setTextColor(getResources().getColor(R.color.fF0000Colors));
-                }
-                if (!StringUtils.isEmpty(userInfoBean.getData().getOrder_total())) {
-                    tv_ordersTotal.setText(userInfoBean.getData().getOrder_total());
-                }
-                if (!StringUtils.isEmpty(userInfoBean.getData().getStore_level())) {
-                    tv_storeLevel.setText(userInfoBean.getData().getStore_level());
-                }
-                if (!StringUtils.isEmpty(userInfoBean.getData().getLv_id())) {
-                    tv_businessLevel.setText(userInfoBean.getData().getLv_id());
+                    setCurrentUserInfo(userInfoBean.getData().getFace(), tv_storesName.getText().toString());
                 }
             }
+            if (!StringUtils.isEmpty(userInfoBean.getData().getOrder_total())) {
+                tv_ordersTotal.setText(userInfoBean.getData().getOrder_total());
+            }
+            if (!StringUtils.isEmpty(userInfoBean.getData().getStore_level())) {
+                tv_storeLevel.setText(userInfoBean.getData().getStore_level());
+            }
+            if (!StringUtils.isEmpty(userInfoBean.getData().getLv_id())) {
+                tv_businessLevel.setText(userInfoBean.getData().getLv_id());
+            }
+
         } else if (flag == 1) {
             Intent personalDataIntent = new Intent(aty, PersonalDataActivity.class);
             // 获取内容
@@ -260,6 +277,17 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
         PreferenceHelper.write(aty, StringConstants.FILENAME, "face", userInfoBean.getData().getFace());
         PreferenceHelper.write(aty, StringConstants.FILENAME, "lv_name", userInfoBean.getData().getLv_name());
     }
+
+
+    private void setCurrentUserInfo(String imgUrl, String name) {
+        if (RongIM.getInstance() != null && !StringUtils.isEmpty(name)) {
+            String userid = UserUtil.getRcId(aty);
+            UserInfo userInfo = new UserInfo(userid, name, Uri.parse(imgUrl));
+            RongIM.getInstance().setCurrentUserInfo(userInfo);
+            RongIM.getInstance().setMessageAttachedUserInfo(true);
+        }
+    }
+
 
     @Override
     public void errorMsg(String msg, int flag) {

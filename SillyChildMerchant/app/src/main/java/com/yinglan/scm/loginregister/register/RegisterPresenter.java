@@ -145,7 +145,12 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                      * 获取用户信息
                      */
                     UserUtil.saveRcTokenId(KJActivityStack.create().topActivity(), bean.getData().getRong_cloud(), userid);
-                    getRongYunUserInfo(userid);
+                    //   getRongYunUserInfo(userid);
+                    if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
+                        mView.getSuccess("", 2);
+                        return;
+                    }
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);
                 }
 
                 /**
