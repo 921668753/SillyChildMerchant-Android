@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
+import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.PreferenceHelper;
@@ -12,7 +13,9 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.qiniu.android.utils.UrlSafeBase64;
 import com.yinglan.scm.R;
+import com.yinglan.scm.entity.RongCloudBean;
 import com.yinglan.scm.entity.loginregister.LoginBean;
+import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import org.json.JSONObject;
@@ -142,18 +145,12 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                 @Override
                 public void onSuccess(String userid) {
                     Log.i("XJ", "application--RongIM.connect--onSuccess" + userid);
+
                     /**
                      * 获取用户信息
                      */
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "rongYunId", userid);
-                    if (RongIM.getInstance() != null && bean.getData() != null && !StringUtils.isEmpty(bean.getData().getUsername())) {
-                        UserInfo userInfo = new UserInfo(userid, bean.getData().getUsername(), Uri.parse(bean.getData().getFace()));
-                        RongIM.getInstance().setCurrentUserInfo(userInfo);
-                        RongIM.getInstance().setMessageAttachedUserInfo(true);
-                        mView.getSuccess("", 2);
-                        return;
-                    }
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
+                    UserUtil.saveRcTokenId(KJActivityStack.create().topActivity(), bean.getData().getRong_cloud(), userid);
+                    getRongYunUserInfo(userid);
                 }
 
                 /**
@@ -164,10 +161,36 @@ public class BindingPhonePresenter implements BindingPhoneContract.Presenter {
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
                     Log.i("XJ", "--errorCode" + errorCode);
-                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.failedCloudInformation1), 1);
+                    mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);
                 }
             });
         }
+    }
+
+
+    private void getRongYunUserInfo(String userid) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        httpParams.put("userId", userid);
+        RequestClient.getRongCloud(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                RongCloudBean rongCloudBean = (RongCloudBean) JsonUtil.json2Obj(response, RongCloudBean.class);
+                if (RongIM.getInstance() != null && rongCloudBean.getData() != null && !StringUtils.isEmpty(rongCloudBean.getData().getNickname())) {
+                    UserInfo userInfo = new UserInfo(userid, rongCloudBean.getData().getNickname(), Uri.parse(rongCloudBean.getData().getFace()));
+                    RongIM.getInstance().setCurrentUserInfo(userInfo);
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    mView.getSuccess("", 2);
+                    return;
+                }
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                Log.d("RongYun", "onFailure");
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.loginErr1), 1);
+            }
+        });
     }
 
 
