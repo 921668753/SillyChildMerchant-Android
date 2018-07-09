@@ -1,7 +1,5 @@
 package com.yinglan.scm.mine.mystores;
 
-import android.app.Activity;
-
 import com.common.cklibrary.common.BasePresenter;
 import com.common.cklibrary.common.BaseView;
 

@@ -6,7 +6,6 @@ import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.BitmapCoreUtil;
 import com.common.cklibrary.utils.DataCleanManager;
-import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
 import com.kymjs.common.StringUtils;
@@ -18,9 +17,7 @@ import com.yinglan.scm.retrofit.RequestClient;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**

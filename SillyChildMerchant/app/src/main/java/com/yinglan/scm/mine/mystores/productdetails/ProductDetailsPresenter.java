@@ -16,7 +16,6 @@ import com.yinglan.scm.entity.mine.mystores.productdetails.ProductDetailsBean;
 import com.yinglan.scm.retrofit.RequestClient;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 
