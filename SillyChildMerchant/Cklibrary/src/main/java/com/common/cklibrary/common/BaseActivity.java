@@ -8,6 +8,7 @@ import com.common.cklibrary.R;
 import com.common.cklibrary.utils.rx.MsgEvent;
 import com.common.cklibrary.utils.rx.RxBus;
 import com.common.cklibrary.utils.rx.RxManager;
+import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.RxVolley;
 
@@ -66,7 +67,11 @@ public abstract class BaseActivity extends KJActivity implements LoadingDialogVi
     public void initWidget() {
         super.initWidget();
         if (subscription != null && !subscription.isUnsubscribed()) {
-            RxManager.get().add(this.getClass().getName(), subscription);
+            try {
+                RxManager.get().add(this.getClass().getName(), subscription);
+            } catch (NoClassDefFoundError noClassDefFoundError) {
+                Log.d("Error", "Android版本过低");
+            }
         }
     }
 

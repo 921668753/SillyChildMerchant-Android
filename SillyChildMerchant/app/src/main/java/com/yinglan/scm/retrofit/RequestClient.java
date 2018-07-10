@@ -628,7 +628,7 @@ public class RequestClient {
         doServer(context, new TokenCallback() {
             @Override
             public void execute() {
-                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                String cookies = PreferenceHelper.readString(context, StringConstants.FILENAME, "Cookie", "");
                 if (StringUtils.isEmpty(cookies)) {
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
@@ -647,7 +647,7 @@ public class RequestClient {
         doServer(context, new TokenCallback() {
             @Override
             public void execute() {
-                String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+                String cookies = PreferenceHelper.readString(context, StringConstants.FILENAME, "Cookie", "");
                 if (StringUtils.isEmpty(cookies)) {
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
@@ -953,7 +953,7 @@ public class RequestClient {
      * 获取会员登录状态
      */
     public static void getIsLogin(Context context, HttpParams httpParams, ResponseListener<String> listener) {
-        String cookies = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "Cookie", "");
+        String cookies = PreferenceHelper.readString(context, StringConstants.FILENAME, "Cookie", "");
         if (StringUtils.isEmpty(cookies)) {
             /**
              * 发送消息
@@ -962,7 +962,12 @@ public class RequestClient {
             listener.onFailure(NumericConstants.TOLINGIN + "");
             return;
         }
-        httpParams.putHeaders("Cookie", cookies);
+        try {
+            httpParams.putHeaders("Cookie", cookies);
+        } catch (NullPointerException n) {
+            listener.onFailure(NumericConstants.TOLINGIN + "");
+            return;
+        }
         HttpRequest.requestGetHttp(context, URLConstants.ISLOGIN, httpParams, listener);
     }
 

@@ -1,7 +1,5 @@
 package com.common.cklibrary.utils.rx;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.util.ArrayMap;
 
 import java.util.Map;
@@ -19,7 +17,6 @@ public class RxManager implements RxActionManager<Object> {
     private Map<Object, Subscription> maps;
 
     public static RxManager get() {
-
         if (sInstance == null) {
             synchronized (RxManager.class) {
                 if (sInstance == null) {
@@ -30,18 +27,15 @@ public class RxManager implements RxActionManager<Object> {
         return sInstance;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private RxManager() {
         maps = new ArrayMap<>();
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void add(Object tag, Subscription subscription) {
         maps.put(tag, subscription);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void remove(Object tag) {
         if (!maps.isEmpty()) {
@@ -49,14 +43,13 @@ public class RxManager implements RxActionManager<Object> {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+
     public void removeAll() {
         if (!maps.isEmpty()) {
             maps.clear();
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void cancel(Object tag) {
         if (maps.isEmpty()) {
@@ -71,7 +64,7 @@ public class RxManager implements RxActionManager<Object> {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+
     @Override
     public void cancelAll() {
         if (maps.isEmpty()) {
