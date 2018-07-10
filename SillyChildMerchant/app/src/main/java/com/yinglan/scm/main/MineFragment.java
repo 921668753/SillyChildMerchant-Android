@@ -31,7 +31,6 @@ import com.yinglan.scm.mine.personaldata.PersonalDataActivity;
 import com.yinglan.scm.mine.setup.HelpCenterActivity;
 import com.yinglan.scm.mine.setup.SetUpActivity;
 import com.yinglan.scm.mine.sharepolite.SharePoliteActivity;
-import com.yinglan.scm.mine.sillychildcollege.SillyChildCollegeActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
