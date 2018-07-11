@@ -40,7 +40,7 @@ tinkerSupport {
     // buildAllFlavorsDir = "${bakPath}/${baseApkDir}"
 
     // 是否启用加固模式，默认为false.(tinker-spport 1.0.7起支持）
-    // isProtectedApp = true
+     isProtectedApp = true
 
     // 是否开启反射Application模式
     enableProxyApplication = false
