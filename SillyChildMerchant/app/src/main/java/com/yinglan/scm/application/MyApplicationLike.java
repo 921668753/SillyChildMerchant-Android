@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.common.cklibrary.common.KJActivityStack;
 import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.GlideCatchUtil;
 import com.kymjs.common.FileUtils;
@@ -32,8 +30,6 @@ import com.tencent.tinker.loader.app.DefaultApplicationLike;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
-
-import java.util.Locale;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -159,7 +155,7 @@ public class MyApplicationLike extends DefaultApplicationLike {
         // 设置是否自动合成补丁，默认为true
         Beta.canAutoPatch = true;
         // 设置是否提示用户重启，默认为false
-      //  Beta.canNotifyUserRestart = true;
+        //  Beta.canNotifyUserRestart = true;
         // 补丁回调接口
         Beta.betaPatchListener = new BetaPatchListener() {
             @Override
@@ -178,23 +174,23 @@ public class MyApplicationLike extends DefaultApplicationLike {
 
             @Override
             public void onDownloadSuccess(String msg) {
-              //  Toast.makeText(getApplication(), "补丁下载成功", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplication(), "补丁下载成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onDownloadFailure(String msg) {
-               // Toast.makeText(getApplication(), "补丁下载失败", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplication(), "补丁下载失败", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onApplySuccess(String msg) {
-               // Toast.makeText(getApplication(), "补丁应用成功", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplication(), "补丁应用成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onApplyFailure(String msg) {
-               // Toast.makeText(getApplication(), "补丁应用失败", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplication(), "补丁应用失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
