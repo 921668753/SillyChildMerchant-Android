@@ -158,7 +158,7 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
                 sv_productSpecifications.scrollTo(0, ll_productParameters.getHeight() + ll_productSpecifications.getHeight());// 改变滚动条的位置
                 break;
             case R.id.tv_confirmChange:
-                ((ProductSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(productDetailsBean, paramsBean, productSpecificationsViewAdapter.getData(),have_spec);
+                ((ProductSpecificationsContract.Presenter) mPresenter).postGoodAddAndEdit(productDetailsBean, paramsBean, productSpecificationsViewAdapter.getData(), have_spec);
                 break;
         }
     }
@@ -285,12 +285,9 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
         ViewInject.toast(msg);
     }
 
-
     @Override
-    public void onSetStatusListener(View view, ProductSpecificationViewAdapter
-            adapter, ProductSpecificationsGvViewAdapter madapter, int position, int position1,
-                                    int position2) {
-        for (int i = 0; i < adapter.getData().size(); i++) {
+    public void onSetStatusListener(View view, ProductSpecificationViewAdapter adapter, ProductSpecificationsGvViewAdapter madapter, int position, int position1, int position2) {
+        for (int i = 0; i < madapter.getData().size(); i++) {
             if (position2 == i && madapter.getItem(position2).getSelected() == 1) {
                 madapter.getItem(position2).setSelected(0);
             } else if (position2 == i && madapter.getItem(position2).getSelected() == 0) {
