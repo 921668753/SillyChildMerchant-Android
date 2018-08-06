@@ -179,10 +179,10 @@ public class MineFragment extends BaseFragment implements MineContract.View, BGA
         if (flag == 0) {
             Log.e("用户信息", "结果：" + success);
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
-            if (userInfoBean == null || userInfoBean.getData() == null || StringUtils.toInt(userInfoBean.getData().getStore_id(), 0) <= 0) {
-                errorMsg(getString(R.string.serverReturnsDataError), 0);
-                return;
-            }
+//            if (userInfoBean == null || userInfoBean.getData() == null || StringUtils.toInt(userInfoBean.getData().getStore_id(), 0) <= 0) {
+//                errorMsg(getString(R.string.serverReturnsDataError), 0);
+//                return;
+//            }
             tv_notLogged.setVisibility(View.GONE);
             tv_loginImmediately.setVisibility(View.GONE);
             ll_mineTop.setVisibility(View.VISIBLE);

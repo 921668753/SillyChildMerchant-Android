@@ -16,6 +16,7 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.common.SystemTool;
 import com.lzy.imagepicker.ImagePicker;
+import com.umeng.commonsdk.UMConfigure;
 import com.yinglan.scm.BuildConfig;
 import com.yinglan.scm.R;
 import com.yinglan.scm.message.interactivemessage.imuitl.RongCloudEvent;
@@ -34,7 +35,6 @@ import com.umeng.socialize.UMShareAPI;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 
-import static com.umeng.socialize.utils.Log.LOGTAG;
 
 /**
  * 自定义ApplicationLike类.
@@ -61,10 +61,11 @@ public class MyApplicationLike extends DefaultApplicationLike {
         crashHandler.init(getApplication());
         initBugly();
         initJPushInterface();
-        initBaiDuSDK();
         UMShareAPI.get(getApplication());//友盟分享
         initRongCloud();
         initImagePicker();
+        initPlatformConfig();
+        initBaiDuSDK();
         testMemoryInfo();
     }
 
@@ -102,14 +103,20 @@ public class MyApplicationLike extends DefaultApplicationLike {
     }
 
 
-    // 各个平台的配置，建议放在全局Application或者程序入口
-    {
+    /**
+     * 各个平台的配置，建议放在全局Application或者程序入口
+     */
+    private void initPlatformConfig() {
+        UMConfigure.init(getApplication(), UMConfigure.DEVICE_TYPE_PHONE, BuildConfig.UMENG_APPKEY);
+        UMConfigure.setLogEnabled(true);
+        UMConfigure.setEncryptEnabled(false);
+        UMShareAPI.get(getApplication());//友盟分享
         // 微信 wx12342956d1cab4f9,a5ae111de7d9ea137e88a5e02c07c94d
         PlatformConfig.setWeixin(BuildConfig.WEIXIN_APPKEY, BuildConfig.WEIXIN_APPSECRET);
         // QQ和Qzone appid appkey
         PlatformConfig.setQQZone(BuildConfig.QQ_APPID, BuildConfig.QQ_APPKEY);
-        //   PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
-        Config.DEBUG = true;
+        // 新浪
+        PlatformConfig.setSinaWeibo(BuildConfig.SiNA_WEIBOKEY, BuildConfig.SiNA_WEIBOSECRET, "http://sns.whalecloud.com");
     }
 
 
@@ -255,10 +262,10 @@ public class MyApplicationLike extends DefaultApplicationLike {
         int memoryClass = activityManager.getMemoryClass();
         ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
         activityManager.getMemoryInfo(info);
-        Log.d(LOGTAG, "largeMemoryClass = " + largeMemoryClass);
-        Log.d(LOGTAG, "memoryClass = " + memoryClass);
-        Log.d(LOGTAG, "availMem = " + (info.availMem / 1024 / 1024) + "M");
-        Log.d(LOGTAG, "lowMemory = " + info.lowMemory);
+        Log.d("tag", "largeMemoryClass = " + largeMemoryClass);
+        Log.d("tag", "memoryClass = " + memoryClass);
+        Log.d("tag", "availMem = " + (info.availMem / 1024 / 1024) + "M");
+        Log.d("tag", "lowMemory = " + info.lowMemory);
         long size = GlideCatchUtil.getInstance().getCacheSize();
         if (size >= StringConstants.GLIDE_CATCH_SIZE) {
             // 必须在UI线程中调用
