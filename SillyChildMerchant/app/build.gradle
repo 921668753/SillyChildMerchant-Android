@@ -10,8 +10,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         applicationId "com.yinglan.scm"
-        versionCode 43
-        versionName "1.0.0.1807111526"
+        versionCode 45
+        versionName "1.0.0.1808062114"
         multiDexEnabled true
 
         aaptOptions.cruncherEnabled = false
@@ -88,9 +88,12 @@ android {
             buildConfigField "String", "WEIXIN_APPSECRET", "\"ffd075c202c8aee81e629efbb9c9156b\""
             buildConfigField "String", "TENGXUNBUGLY_APPID", "\"d108b928c3\""
             buildConfigField "String", "TENGXUNBUGLY_APPKEY", "\"d2c8bb5b-e942-4877-86ba-f93642b8acff\""
-            buildConfigField "String", "QQ_APPID", "\"1106871195\""
-            buildConfigField "String", "QQ_APPKEY", "\"Zb9UOFfeMfSrg1uq\""
+            buildConfigField "String", "QQ_APPID", "\"1106716899\""
+            buildConfigField "String", "QQ_APPKEY", "\"AVj9LjzRPHF37WYj\""
             buildConfigField "String", "RONGYUN_APPKEY", "\"pkfcgjstpo5w8\""
+            buildConfigField "String", "UMENG_APPKEY", "\"5b21fb8fa40fa330cd0000ad\""
+            buildConfigField "String", "SiNA_WEIBOKEY", "\"1540846425\""
+            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c817f49eb49cd4aaf0f238d244fd3c48\""
             proguardFiles 'proguard-rules.pro'
         }
         release {
@@ -108,9 +111,12 @@ android {
             buildConfigField "String", "WEIXIN_APPSECRET", "\"ffd075c202c8aee81e629efbb9c9156b\""
             buildConfigField "String", "TENGXUNBUGLY_APPID", "\"d108b928c3\""
             buildConfigField "String", "TENGXUNBUGLY_APPKEY", "\"d2c8bb5b-e942-4877-86ba-f93642b8acff\""
-            buildConfigField "String", "QQ_APPID", "\"1106871195\""
-            buildConfigField "String", "QQ_APPKEY", "\"fjyo2xMLmXIU6NIi\""
+            buildConfigField "String", "QQ_APPID", "\"1106716899\""
+            buildConfigField "String", "QQ_APPKEY", "\"AVj9LjzRPHF37WYj\""
             buildConfigField "String", "RONGYUN_APPKEY", "\"pkfcgjstpo5w8\""
+            buildConfigField "String", "UMENG_APPKEY", "\"5b21fb8fa40fa330cd0000ad\""
+            buildConfigField "String", "SiNA_WEIBOKEY", "\"1540846425\""
+            buildConfigField "String", "SiNA_WEIBOSECRET", "\"c817f49eb49cd4aaf0f238d244fd3c48\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // proguardFiles 'proguard-rules.pro'
         }
@@ -181,7 +187,7 @@ dependencies {
     /**
      * 七牛云
      */
-    api 'com.qiniu:qiniu-android-sdk:7.2.3'
+    api 'com.qiniu:qiniu-android-sdk:7.3.12'
 
     /**
      * 腾讯bugly
@@ -195,16 +201,14 @@ dependencies {
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
     api 'com.tencent.bugly:nativecrashreport:3.3.1'
 
-    api files('libs/open_sdk_r5788_lite.jar')
-    api files('libs/SocialSDK_QQ_Full.jar')
-    api files('libs/SocialSDK_WeiXin_Full.jar')
-    api files('libs/umeng_social_api.jar')
-    api files('libs/umeng_social_net.jar')
-    api files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
-    api files('libs/SocialSDK_Sina_Full.jar')
-    api files('libs/weiboSDKCore.jar')
-    api files('libs/greendao-1.3.7.jar')
-    api files('libs/org.apache.http.legacy.jar')
-    api files('libs/fastjson-1.2.5.jar')
+    implementation files('libs/open_sdk_r5990_lite.jar')
+    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
+    implementation files('libs/umeng-share-core-6.9.3.jar')
+    implementation files('libs/umeng-share-QQ-full-6.9.3.jar')
+    implementation files('libs/umeng-share-sina-simplify-6.9.3.jar')
+    implementation files('libs/umeng-share-wechat-full-6.9.3.jar')
+    implementation files('libs/umeng-shareboard-widget-6.9.3.jar')
+    implementation files('libs/umeng-sharetool-6.9.3.jar')
+    implementation files('libs/wechat-sdk-android-without-mta-5.1.4.jar')
     api files('libs/alipaySdk-20180316.jar')
 }

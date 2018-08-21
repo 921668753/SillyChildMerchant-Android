@@ -1,5 +1,6 @@
 package com.yinglan.scm.mine.sharepolite.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,8 +10,12 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.common.cklibrary.common.ViewInject;
+import com.umeng.socialize.UMShareAPI;
 import com.yinglan.scm.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * 分享--------分享弹框
@@ -45,8 +50,8 @@ public abstract class ShareBouncedDialog extends Dialog implements View.OnClickL
         ll_circleFriends.setOnClickListener(this);
         LinearLayout ll_QQFriends = (LinearLayout) findViewById(R.id.ll_QQFriends);
         ll_QQFriends.setOnClickListener(this);
-        LinearLayout ll_qzone = (LinearLayout) findViewById(R.id.ll_qzone);
-        ll_qzone.setOnClickListener(this);
+        LinearLayout ll_sina = (LinearLayout) findViewById(R.id.ll_sina);
+        ll_sina.setOnClickListener(this);
         TextView tv_cancel = (TextView) findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
     }
@@ -55,20 +60,36 @@ public abstract class ShareBouncedDialog extends Dialog implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_weChatFriends:
+                if (!UMShareAPI.get(getApplication()).isInstall((Activity) context, SHARE_MEDIA.WEIXIN)) {
+                    ViewInject.toast(context.getString(R.string.authoriseErr2));
+                    return;
+                }
                 dismiss();
                 share(SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.ll_circleFriends:
+                if (!UMShareAPI.get(getApplication()).isInstall((Activity) context, SHARE_MEDIA.WEIXIN_CIRCLE)) {
+                    ViewInject.toast(context.getString(R.string.authoriseErr2));
+                    return;
+                }
                 dismiss();
                 share(SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
             case R.id.ll_QQFriends:
+                if (!UMShareAPI.get(getApplication()).isInstall((Activity) context, SHARE_MEDIA.QQ)) {
+                    ViewInject.toast(context.getString(R.string.authoriseErr2));
+                    return;
+                }
                 dismiss();
                 share(SHARE_MEDIA.QQ);
                 break;
-            case R.id.ll_qzone:
+            case R.id.ll_sina:
+                if (!UMShareAPI.get(getApplication()).isInstall((Activity) context, SHARE_MEDIA.SINA)) {
+                    ViewInject.toast(context.getString(R.string.authoriseErr2));
+                    return;
+                }
                 dismiss();
-                share(SHARE_MEDIA.QZONE);
+                share(SHARE_MEDIA.SINA);
                 break;
             case R.id.tv_cancel:
                 dismiss();

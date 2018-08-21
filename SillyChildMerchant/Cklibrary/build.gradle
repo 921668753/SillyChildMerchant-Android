@@ -83,7 +83,7 @@ dependencies {
      * https://github.com/bingoogolapple/BGABanner-Android
      *     图片轮番最新版本依赖库
      */
-    api 'cn.bingoogolapple:bga-banner:2.1.9@aar'
+    api 'cn.bingoogolapple:bga-banner:2.2.4@aar'
 
     // adapter
     api 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
@@ -101,7 +101,7 @@ dependencies {
      * https://github.com/Bigkoo/Android-PickerView
      * 滚动PickerView选择控件
      */
-    api 'com.contrarywind:Android-PickerView:4.1.3'
+    api 'com.contrarywind:Android-PickerView:4.1.6'
 
     /**
      * https://github.com/mcxtzhang/SuspensionIndexBar

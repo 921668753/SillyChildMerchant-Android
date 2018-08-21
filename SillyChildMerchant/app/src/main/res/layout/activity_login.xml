@@ -49,8 +49,8 @@
                         android:layout_marginLeft="@dimen/dimen25"
                         android:background="@color/whiteColors"
                         android:digits="@string/number0"
-                        android:inputType="phone"
                         android:hint="@string/hintAccountText"
+                        android:inputType="phone"
                         android:maxLength="11"
                         android:paddingTop="@dimen/dimen10"
                         android:singleLine="true"
@@ -217,7 +217,6 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen25">
-
 
                 <TextView
                     style="@style/WrapWrap"

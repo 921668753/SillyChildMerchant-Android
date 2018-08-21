@@ -4,11 +4,9 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.qiniu.android.utils.UrlSafeBase64;
@@ -47,22 +45,22 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void postToLogin(String phone, String pwd) {
-//        if (StringUtils.isEmpty(phone)) {
-//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintAccountText), 0);
-//            return;
-//        }
-//        if (phone.length() != 11) {
-//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
-//            return;
-//        }
-//        if (StringUtils.isEmpty(pwd)) {
-//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText), 0);
-//            return;
-//        }
-//        if (pwd.length() < 6 || pwd.length() > 20) {
-//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText1), 0);
-//            return;
-//        }
+        if (StringUtils.isEmpty(phone)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintAccountText), 0);
+            return;
+        }
+        if (phone.length() != 11) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(pwd)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText), 0);
+            return;
+        }
+        if (pwd.length() < 6 || pwd.length() > 20) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText1), 0);
+            return;
+        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("phone", phone);
         httpParams.put("password", pwd);
