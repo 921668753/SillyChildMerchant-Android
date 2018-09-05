@@ -61,7 +61,7 @@ public class URLConstants {
     /**
      * 退出登录
      */
-    public static String LOGOUT = APIURL + "sys/third.do";
+    public static String LOGOUT = APIURL + "sys/exit.do";
 
     /**
      * 第三方登录
