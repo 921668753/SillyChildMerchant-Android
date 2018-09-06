@@ -24,18 +24,22 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.yinglan.scm.BuildConfig;
 import com.yinglan.scm.R;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.main.UserInfoBean;
 import com.yinglan.scm.homepage.RecertificationActivity;
 import com.yinglan.scm.homepage.ShopkeeperCertificationActivity;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.message.interactivemessage.imuitl.RongIMUtil;
 import com.yinglan.scm.mine.personaldata.dialog.PictureSourceDialog;
 import com.yinglan.scm.utils.GlideImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -50,6 +54,9 @@ import static com.yinglan.scm.constant.NumericConstants.RESULT_CODE_GET;
 public class HomePageFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, HomePageContract.View {
 
     private MainActivity aty;
+
+    @BindView(id = R.id.img_customerService, click = true)
+    private ImageView img_customerService;
 
     @BindView(id = R.id.img_storeLogo, click = true)
     private ImageView img_storeLogo;
@@ -133,6 +140,9 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.img_customerService:
+                ((HomePageContract.Presenter) mPresenter).getIsLogin(aty, 4);
+                break;
             case R.id.img_storeLogo:
                 ((HomePageContract.Presenter) mPresenter).getIsLogin(aty, 2);
                 break;
@@ -287,6 +297,10 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
             intent.putExtra("store_logo", store_logo);
             intent.putExtra("store_name", et_enterNameStore.getText().toString().trim());
             startActivityForResult(intent, RESULT_CODE_GET);
+        } else if (flag == 4) {
+            RongIMUtil.connectRongIM(aty);
+            dismissLoadingDialog();
+            RongIM.getInstance().startConversation(aty, Conversation.ConversationType.CUSTOMER_SERVICE, BuildConfig.RONGYUN_KEFU, getString(R.string.sillyChildCustomerService));
         }
         dismissLoadingDialog();
     }
@@ -311,7 +325,7 @@ public class HomePageFragment extends BaseFragment implements EasyPermissions.Pe
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (flag == 2 && isLogin(msg) || flag == 3 && isLogin(msg)) {
+        if (flag == 2 && isLogin(msg) || flag == 3 && isLogin(msg) || flag == 4 && isLogin(msg)) {
             aty.showActivity(aty, LoginActivity.class);
             return;
         }

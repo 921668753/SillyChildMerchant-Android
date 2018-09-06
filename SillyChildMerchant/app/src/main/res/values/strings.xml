@@ -119,7 +119,7 @@
     <string name="shopNum">店铺号：</string>
     <string name="manager">店长</string>
     <string name="recertification">重新认证</string>
-
+    <string name="sillyChildCustomerService">傻孩子客服</string>
 
     <!--店主认证-->
     <string name="shopkeeperCertificat">店主认证</string>
