@@ -20,7 +20,7 @@ public interface ShopkeeperCertificationContract {
         /**
          * 申请成为店长
          */
-        void postHomePage(Context context, String store_logo, String store_name, String id_img);
+        void postHomePage(Context context, String store_logo, String store_name, String id_img, String id_card);
 
 //        /**
 //         * 重新申请成为店长

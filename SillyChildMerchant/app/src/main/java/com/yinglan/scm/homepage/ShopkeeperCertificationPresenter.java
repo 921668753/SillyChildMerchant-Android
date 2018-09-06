@@ -64,15 +64,20 @@ public class ShopkeeperCertificationPresenter implements ShopkeeperCertification
 
 
     @Override
-    public void postHomePage(Context context, String store_logo, String store_name, String id_img) {
+    public void postHomePage(Context context, String store_logo, String store_name, String id_img, String id_card) {
         if (StringUtils.isEmpty(id_img)) {
             mView.errorMsg(context.getString(R.string.localIdentityCard1), 1);
+            return;
+        }
+        if (StringUtils.isEmpty(id_card)) {
+            mView.errorMsg(context.getString(R.string.pleaseidNumber), 1);
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("store_logo", store_logo);
         httpParams.put("store_name", store_name);
         httpParams.put("id_img", id_img);
+        httpParams.put("id_number", id_card);
         RequestClient.postHomePage(context, httpParams, new ResponseListener<String>() {
 
             @Override

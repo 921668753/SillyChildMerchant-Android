@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +39,9 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
 
     @BindView(id = R.id.img_localIdentityCard, click = true)
     private ImageView img_localIdentityCard;
+
+    @BindView(id = R.id.et_idNumber)
+    private EditText et_idNumber;
 
     @BindView(id = R.id.tv_submitAudit, click = true)
     private TextView tv_submitAudit;
@@ -95,7 +99,7 @@ public class ShopkeeperCertificationActivity extends BaseActivity implements Eas
                 break;
             case R.id.tv_submitAudit:
                 showLoadingDialog(getString(R.string.submissionLoad));
-                ((ShopkeeperCertificationContract.Presenter) mPresenter).postHomePage(this, store_logo, store_name, id_img);
+                ((ShopkeeperCertificationContract.Presenter) mPresenter).postHomePage(this, store_logo, store_name, id_img, et_idNumber.getText().toString().trim());
                 break;
         }
     }
