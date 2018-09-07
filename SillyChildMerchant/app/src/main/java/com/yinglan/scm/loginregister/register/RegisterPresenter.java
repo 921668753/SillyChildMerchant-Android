@@ -4,18 +4,15 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.common.StringConstants;
 import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.qiniu.android.utils.UrlSafeBase64;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.RongCloudBean;
+import com.yinglan.scm.entity.loginregister.RongCloudBean;
 import com.yinglan.scm.entity.loginregister.LoginBean;
-import com.yinglan.scm.entity.startpage.QiNiuKeyBean;
 import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.retrofit.RequestClient;
 
@@ -48,17 +45,18 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void postCode(String phone, String opt) {
+    public void postCode(String phone, String countryCode, String opt) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
+//        if (phone.length() != 11) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
+//            return;
+//        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("phone", phone);
+        httpParams.put("country_code", countryCode);
         RequestClient.postCaptcha(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -78,10 +76,10 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
+//        if (phone.length() != 11) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
+//            return;
+//        }
         if (StringUtils.isEmpty(pwd)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText), 0);
             return;

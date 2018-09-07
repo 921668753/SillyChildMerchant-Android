@@ -22,17 +22,18 @@ public class RetrievePasswordPresenter implements RetrievePasswordContract.Prese
     }
 
     @Override
-    public void postCode(String phone, String opt) {
+    public void postCode(String phone, String countryCode, String opt) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
+//        if (phone.length() != 11) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
+//            return;
+//        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("phone", phone);
+        httpParams.put("country_code", countryCode);
         RequestClient.postSendFindCode(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
@@ -53,10 +54,10 @@ public class RetrievePasswordPresenter implements RetrievePasswordContract.Prese
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText), 0);
             return;
         }
-        if (phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
-            return;
-        }
+//        if (phone.length() != 11) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPhoneText1), 0);
+//            return;
+//        }
 
         if (StringUtils.isEmpty(code)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.errorCode), 0);

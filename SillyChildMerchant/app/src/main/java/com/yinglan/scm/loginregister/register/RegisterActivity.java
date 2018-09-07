@@ -21,12 +21,14 @@ import com.umeng.analytics.MobclickAgent;
 import com.yinglan.scm.R;
 import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.loginregister.SelectCountryCodeActivity;
 import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.mine.setup.HelpCenterActivity;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+import static com.yinglan.scm.constant.NumericConstants.REQUEST_CODE;
 import static com.yinglan.scm.constant.URLConstants.REGISTPROTOOL;
 
 /**
@@ -52,6 +54,9 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     /**
      * 手机号
      */
+    @BindView(id = R.id.tv_countryCode, click = true)
+    private TextView tv_countryCode;
+
     @BindView(id = R.id.et_accountNumber)
     private EditText et_accountNumber;
 
@@ -118,9 +123,13 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             case R.id.img_back:
                 finish();
                 break;
+            case R.id.tv_countryCode:
+                Intent intent = new Intent(aty, SelectCountryCodeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
             case R.id.tv_code:
                 showLoadingDialog(getString(R.string.sendingLoad));
-                ((RegisterContract.Presenter) mPresenter).postCode(et_accountNumber.getText().toString(), opt);
+                ((RegisterContract.Presenter) mPresenter).postCode(et_accountNumber.getText().toString(), tv_countryCode.getText().toString().substring(1), opt);
                 break;
             case R.id.tv_registe:
                 tv_registe.setEnabled(false);
@@ -142,10 +151,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                 break;
             case R.id.tv_agreement:
                 // 注册协议
-                Intent intent = new Intent(aty, HelpCenterActivity.class);
-                intent.putExtra("title", getString(R.string.agreement1));
-                intent.putExtra("url", REGISTPROTOOL);
-                showActivity(aty, intent);
+                Intent intent1 = new Intent(aty, HelpCenterActivity.class);
+                intent1.putExtra("title", getString(R.string.agreement1));
+                intent1.putExtra("url", REGISTPROTOOL);
+                showActivity(aty, intent1);
                 break;
             default:
                 break;
@@ -236,11 +245,11 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {// 如果等于1
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {// 如果等于1
             // 说明是我们的那次请求
             // 目的：区分请求，不同的请求要做不同的处理
-//            countroy_code = data.getStringExtra("areaCode");
-//            tv_areaCode.setText("+" + countroy_code);
+            String areaCode = data.getStringExtra("areaCode");
+            tv_countryCode.setText("+" + areaCode);
         }
     }
 }

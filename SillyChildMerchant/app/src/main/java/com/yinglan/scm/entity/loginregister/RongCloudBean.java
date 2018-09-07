@@ -1,4 +1,4 @@
-package com.yinglan.scm.entity;
+package com.yinglan.scm.entity.loginregister;
 
 import com.common.cklibrary.entity.BaseResult;
 

@@ -11,7 +11,7 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.qiniu.android.utils.UrlSafeBase64;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.RongCloudBean;
+import com.yinglan.scm.entity.loginregister.RongCloudBean;
 import com.yinglan.scm.entity.loginregister.LoginBean;
 import com.yinglan.scm.message.interactivemessage.imuitl.UserUtil;
 import com.yinglan.scm.retrofit.RequestClient;
@@ -44,15 +44,15 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void postToLogin(String phone, String pwd) {
+    public void postToLogin(String phone, String countryCode, String pwd) {
         if (StringUtils.isEmpty(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintAccountText), 0);
             return;
         }
-        if (phone.length() != 11) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
-            return;
-        }
+//        if (phone.length() != 11) {
+//            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
+//            return;
+//        }
         if (StringUtils.isEmpty(pwd)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintPasswordText), 0);
             return;

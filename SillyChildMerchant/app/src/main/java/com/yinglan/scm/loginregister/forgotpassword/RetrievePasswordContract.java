@@ -14,12 +14,12 @@ interface RetrievePasswordContract {
          *
          * @param phone
          */
-        void postCode(String phone,  String postCode);
+        void postCode(String phone, String countryCode, String postCode);
 
         /**
          * 重置密码请求
          */
-        void postResetpwd(String phone,  String code, String pwd, String pwd1);
+        void postResetpwd(String phone, String code, String pwd, String pwd1);
 
 
     }

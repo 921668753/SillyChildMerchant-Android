@@ -10,7 +10,7 @@ import com.common.cklibrary.utils.ActivityTitleUtils;
 import com.common.cklibrary.utils.JsonUtil;
 import com.kymjs.common.StringUtils;
 import com.yinglan.scm.R;
-import com.yinglan.scm.entity.RongCloudBean;
+import com.yinglan.scm.entity.loginregister.RongCloudBean;
 
 import java.util.Collection;
 import java.util.Iterator;

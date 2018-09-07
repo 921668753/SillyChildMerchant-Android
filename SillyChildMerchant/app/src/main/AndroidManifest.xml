@@ -82,7 +82,7 @@
 
         <!--选择国家或地区-->
         <activity
-            android:name=".loginregister.SelectCountryActivity"
+            android:name=".loginregister.SelectCountryCodeActivity"
             android:screenOrientation="portrait" />
 
         <!--注册-->
