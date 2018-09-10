@@ -18,9 +18,9 @@ public class URLConstants {
      * 测试服务器地址URL
      */
     //   public static String SERVERURL = "http://192.168.1.247:8080/";
-    public static String SERVERURL = "http://store.api.shahaizhi.com/";
+    public static String SERVERURL = "http://store.api.shahaizi.tech/";
 
-    public static String SERVERURL1 = "http://www.shahaizhi.com/";
+    public static String SERVERURL1 = "http://www.shahaizi.tech/";
 
     /**
      * 请求地址URL
@@ -290,7 +290,7 @@ public class URLConstants {
     public static String REGISTERHTML = SERVERURL1 + "html/login.html?icode=";
 
     /**
-     * 傻孩志学院
+     * 傻孩子学院
      */
     public static String COLLEGE = SERVERURL1 + "dist/pages/college.html";
 

@@ -105,7 +105,7 @@
                 <EditText
                     android:id="@+id/et_code"
                     style="@style/MatchAuto"
-                    android:paddingLeft="@dimen/dimen57"
+                    android:paddingLeft="@dimen/dimen10"
                     android:background="@color/whiteColors"
                     android:digits="@string/number0"
                     android:gravity="center"
