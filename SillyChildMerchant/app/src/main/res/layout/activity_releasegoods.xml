@@ -54,57 +54,77 @@
 
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/tv_chooseBrand"
-                style="@style/WrapWrap"
-                android:layout_below="@id/ll_classification"
-                android:layout_marginLeft="@dimen/dimen15"
-                android:layout_marginTop="@dimen/dimen15"
-                android:text="@string/chooseBrand"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize13" />
-
-
             <LinearLayout
                 android:id="@+id/ll_chooseBrand"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen38"
-                android:layout_below="@id/tv_chooseBrand"
-                android:layout_marginBottom="@dimen/dimen10"
-                android:layout_marginLeft="@dimen/dimen15"
-                android:layout_marginRight="@dimen/dimen15"
-                android:layout_marginTop="@dimen/dimen10"
-                android:background="@drawable/shape_express"
-                android:gravity="center_vertical">
+                style="@style/MatchWrap"
+                android:layout_below="@id/ll_classification"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen15">
 
                 <TextView
-                    android:id="@+id/tv_selectChooseBrand"
-                    style="@style/AutoWrap"
-                    android:paddingLeft="@dimen/dimen15"
-                    android:text="@string/pleaseSelect"
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:text="@string/chooseBrand"
                     android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    android:id="@+id/tv_chooseBrand"
+                    style="@style/AutoWrap"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:gravity="right"
+                    android:text="@string/chooseBrand"
+                    android:textColor="@color/hintColors"
                     android:textSize="@dimen/textsize13" />
 
                 <ImageView
-                    android:layout_width="@dimen/dimen7"
-                    android:layout_height="@dimen/dimen7"
-                    android:layout_marginRight="@dimen/dimen15"
-                    android:src="@mipmap/shop_down_arrow" />
+                    style="@style/Image712"
+                    android:layout_marginLeft="@dimen/dimen16"
+                    android:layout_marginRight="@dimen/dimen16"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/right_arrow" />
 
             </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/ll_chooseBrand"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dimen38"-->
+            <!--android:layout_below="@id/tv_chooseBrand"-->
+            <!--android:layout_marginBottom="@dimen/dimen10"-->
+            <!--android:layout_marginLeft="@dimen/dimen15"-->
+            <!--android:layout_marginRight="@dimen/dimen15"-->
+            <!--android:layout_marginTop="@dimen/dimen10"-->
+            <!--android:background="@drawable/shape_express"-->
+            <!--android:gravity="center_vertical">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_selectChooseBrand"-->
+            <!--style="@style/AutoWrap"-->
+            <!--android:paddingLeft="@dimen/dimen15"-->
+            <!--android:text="@string/pleaseSelect"-->
+            <!--android:textColor="@color/titletextcolors"-->
+            <!--android:textSize="@dimen/textsize13" />-->
+
+            <!--<ImageView-->
+            <!--android:layout_width="@dimen/dimen7"-->
+            <!--android:layout_height="@dimen/dimen7"-->
+            <!--android:layout_marginRight="@dimen/dimen15"-->
+            <!--android:src="@mipmap/shop_down_arrow" />-->
+
+            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/ll_productName"
                 style="@style/MatchWrap"
                 android:layout_below="@id/ll_chooseBrand"
-                android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
                 android:layout_marginTop="@dimen/dimen5"
                 android:background="@drawable/shape_homepage"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen10"
-                android:paddingLeft="@dimen/dimen10"
+                android:paddingLeft="@dimen/dimen15"
                 android:paddingRight="@dimen/dimen10">
 
                 <TextView

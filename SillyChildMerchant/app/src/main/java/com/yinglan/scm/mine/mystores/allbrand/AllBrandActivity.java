@@ -1,4 +1,4 @@
-package com.yinglan.scm.loginregister;
+package com.yinglan.scm.mine.mystores.allbrand;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,20 +12,20 @@ import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.myview.IndexNewBar;
 import com.mcxtzhang.indexlib.suspension.SuspensionDecoration;
 import com.yinglan.scm.R;
-import com.yinglan.scm.adapter.loginregister.SelectCountryCodeViewAdapter;
-import com.yinglan.scm.entity.loginregister.SelectCountryCodeBean;
-import com.yinglan.scm.entity.loginregister.SelectCountryCodeBean.DataBean;
+import com.yinglan.scm.adapter.mine.mystores.allbrand.AllBrandViewAdapter;
+import com.yinglan.scm.entity.mine.mystores.allbrand.GoodsBrandsBean;
+import com.yinglan.scm.entity.mine.mystores.allbrand.GoodsBrandsBean.DataBean;
+import com.yinglan.scm.loginregister.LoginActivity;
 import com.yinglan.scm.utils.decoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 选择国家区号
- * Created by Admin on 2017/9/6.
+ * 全部品牌
  */
+public class AllBrandActivity extends BaseActivity implements AllBrandContract.View {
 
-public class SelectCountryCodeActivity extends BaseActivity implements SelectCountryCodeContract.View {
 
     @BindView(id = R.id.rv)
     private RecyclerView mRv;
@@ -33,7 +33,7 @@ public class SelectCountryCodeActivity extends BaseActivity implements SelectCou
     @BindView(id = R.id.indexBar)
     private IndexNewBar mIndexBar;
 
-    private SelectCountryCodeViewAdapter mAdapter;
+    private AllBrandViewAdapter mAdapter;
 
     private LinearLayoutManager mManager;
 
@@ -45,22 +45,18 @@ public class SelectCountryCodeActivity extends BaseActivity implements SelectCou
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_selectcountry);
+        setContentView(R.layout.activity_allbrand);
     }
 
-    /**
-     * 初始化数据
-     */
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new SelectCountryCodePresenter(this);
-        mAdapter = new SelectCountryCodeViewAdapter(this, mDatas);
+        mPresenter = new AllBrandPresenter(this);
+        mAdapter = new AllBrandViewAdapter(this, mDatas);
         mDecoration = new SuspensionDecoration(this, mDatas);
         mManager = new LinearLayoutManager(this);
-        dividerItemDecoration = new DividerItemDecoration(SelectCountryCodeActivity.this, DividerItemDecoration.VERTICAL_LIST);
+        dividerItemDecoration = new DividerItemDecoration(AllBrandActivity.this, DividerItemDecoration.VERTICAL_LIST);
     }
-
 
     /**
      * 渲染view
@@ -71,16 +67,17 @@ public class SelectCountryCodeActivity extends BaseActivity implements SelectCou
         initTitle();
         mRv.setLayoutManager(mManager);
         mRv.setAdapter(mAdapter);
-        mAdapter.setViewCallBack(new SelectCountryCodeViewAdapter.ViewCallBack() {
+        mAdapter.setViewCallBack(new AllBrandViewAdapter.ViewCallBack() {
             @Override
-            public void onClickListener(String code) {
+            public void onClickListener(int id, String name) {
                 Intent intent = new Intent();
                 // 获取内容
-                intent.putExtra("areaCode", code);
+                intent.putExtra("brand_id", id);
+                intent.putExtra("brand_name", name);
                 // 设置结果 结果码，一个数据
                 setResult(RESULT_OK, intent);
                 // 结束该activity 结束之后，前面的activity才可以处理结果
-               finish();
+                finish();
             }
         });
         mRv.addItemDecoration(mDecoration);
@@ -91,28 +88,29 @@ public class SelectCountryCodeActivity extends BaseActivity implements SelectCou
                 .setNeedRealIndex(true)//设置需要真实的索引
                 .setmLayoutManager(mManager);//设置RecyclerView的LayoutManager
         showLoadingDialog(getString(R.string.dataLoad));
-        ((SelectCountryCodeContract.Presenter) mPresenter).getCountryNumber(this);
+        ((AllBrandContract.Presenter) mPresenter).getGoodsBrands();
     }
 
     /**
      * 设置标题
      */
     public void initTitle() {
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.selectCountryCode), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.allBrand), true, R.id.titlebar);
     }
 
+
     @Override
-    public void setPresenter(SelectCountryCodeContract.Presenter presenter) {
+    public void setPresenter(AllBrandContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
     public void getSuccess(String success, int flag) {
-        SelectCountryCodeBean selectCountryBean = (SelectCountryCodeBean) JsonUtil.getInstance().json2Obj(success, SelectCountryCodeBean.class);
-        if (selectCountryBean != null && selectCountryBean.getData() != null && selectCountryBean.getData().size() > 0) {
+        GoodsBrandsBean goodsBrandsBean = (GoodsBrandsBean) JsonUtil.getInstance().json2Obj(success, GoodsBrandsBean.class);
+        if (goodsBrandsBean != null && goodsBrandsBean.getData() != null && goodsBrandsBean.getData().size() > 0) {
             //模拟线上加载数据
             mDatas.clear();
-            mDatas.addAll(selectCountryBean.getData());
+            mDatas.addAll(goodsBrandsBean.getData());
             initDatas(mDatas);
         }
         dismissLoadingDialog();
@@ -134,6 +132,10 @@ public class SelectCountryCodeActivity extends BaseActivity implements SelectCou
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
+        if (isLogin(msg)) {
+            skipActivity(aty, LoginActivity.class);
+            return;
+        }
         ViewInject.toast(msg);
     }
 

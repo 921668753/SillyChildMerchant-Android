@@ -40,6 +40,7 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
         private String name;
         private String sn;
         private int brand_id;
+        private String brand_name;
         private int cat_id;
         private int type_id;
         private String brief;
@@ -68,6 +69,14 @@ public class ProductDetailsBean extends BaseResult<ProductDetailsBean.DataBean> 
 
         public void setGoods_id(int goods_id) {
             this.goods_id = goods_id;
+        }
+
+        public String getBrand_name() {
+            return brand_name;
+        }
+
+        public void setBrand_name(String brand_name) {
+            this.brand_name = brand_name;
         }
 
         public String getName() {

@@ -194,6 +194,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
+
+        <!--我的  我的店铺  全部品牌-->
+        <activity
+            android:name=".mine.mystores.allbrand.AllBrandActivity"
+            android:screenOrientation="portrait" />
+
+
         <!--我的  我的店铺  产品详情-->
         <activity
             android:name=".mine.mystores.productdetails.ProductDetailsActivity"

@@ -1,14 +1,14 @@
-package com.yinglan.scm.entity.mine.mystores.releasegoods;
+package com.yinglan.scm.entity.mine.mystores.allbrand;
 
 import com.common.cklibrary.entity.BaseResult;
-import com.contrarywind.interfaces.IPickerViewData;
+import com.mcxtzhang.indexlib.IndexBar.bean.BaseIndexPinyinBean;
 
 import java.util.List;
 
 public class GoodsBrandsBean extends BaseResult<List<GoodsBrandsBean.DataBean>> {
 
 
-    public class DataBean implements IPickerViewData {
+    public class DataBean extends BaseIndexPinyinBean {
         /**
          * brand_id : 1
          * name : 旺旺
@@ -24,12 +24,6 @@ public class GoodsBrandsBean extends BaseResult<List<GoodsBrandsBean.DataBean>> 
 
         private int brand_id;
         private String name;
-        private String logo;
-        private String keywords;
-        private String brief;
-        private String url;
-        private int disabled;
-        private int ordernum;
 
         public int getBrand_id() {
             return brand_id;
@@ -47,56 +41,8 @@ public class GoodsBrandsBean extends BaseResult<List<GoodsBrandsBean.DataBean>> 
             this.name = name;
         }
 
-        public String getLogo() {
-            return logo;
-        }
-
-        public void setLogo(String logo) {
-            this.logo = logo;
-        }
-
-        public String getKeywords() {
-            return keywords;
-        }
-
-        public void setKeywords(String keywords) {
-            this.keywords = keywords;
-        }
-
-        public String getBrief() {
-            return brief;
-        }
-
-        public void setBrief(String brief) {
-            this.brief = brief;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public int getDisabled() {
-            return disabled;
-        }
-
-        public void setDisabled(int disabled) {
-            this.disabled = disabled;
-        }
-
-        public int getOrdernum() {
-            return ordernum;
-        }
-
-        public void setOrdernum(int ordernum) {
-            this.ordernum = ordernum;
-        }
-
         @Override
-        public String getPickerViewText() {
+        public String getTarget() {
             return name;
         }
     }

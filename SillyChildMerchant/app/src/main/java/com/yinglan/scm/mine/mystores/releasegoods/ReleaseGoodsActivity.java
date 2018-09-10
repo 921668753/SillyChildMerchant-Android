@@ -1,5 +1,6 @@
 package com.yinglan.scm.mine.mystores.releasegoods;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +31,8 @@ import com.yinglan.scm.R;
 import com.yinglan.scm.adapter.mine.mystores.releasegoods.ReleaseGoodsImagePickerAdapter;
 import com.yinglan.scm.constant.NumericConstants;
 import com.yinglan.scm.entity.mine.mystores.GoodsTypeBean;
-import com.yinglan.scm.entity.mine.mystores.releasegoods.GoodsBrandsBean;
 import com.yinglan.scm.loginregister.LoginActivity;
+import com.yinglan.scm.mine.mystores.allbrand.AllBrandActivity;
 import com.yinglan.scm.utils.GlideImageLoader;
 import com.yinglan.scm.utils.SoftKeyboardUtils;
 
@@ -67,10 +68,8 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
     @BindView(id = R.id.ll_chooseBrand, click = true)
     private LinearLayout ll_chooseBrand;
 
-    @BindView(id = R.id.tv_selectChooseBrand)
-    private TextView tv_selectChooseBrand;
-
-    private OptionsPickerView brandsOptions;
+    @BindView(id = R.id.tv_chooseBrand)
+    private TextView tv_chooseBrand;
 
     /**
      * 商品图片
@@ -132,7 +131,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
 
     private ReleaseGoodsImagePickerAdapter adapter;
 
-    private List<GoodsBrandsBean.DataBean> goodsBrandsList;
 
     @Override
     public void setRootView() {
@@ -144,7 +142,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
         super.initData();
         mPresenter = new ReleaseGoodsPresenter(this);
         selectCategoryName();
-        selectBrandsName();
         initImagePicker();
         selImageList = new ArrayList<>();
         urllist = new ArrayList<String>();
@@ -186,21 +183,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
         }).build();
     }
 
-    /**
-     * 选择品牌名称
-     */
-    @SuppressWarnings("unchecked")
-    private void selectBrandsName() {
-        brandsOptions = new OptionsPickerBuilder(aty, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                brand_id = goodsBrandsList.get(options1).getBrand_id();
-                ((TextView) v).setText(goodsBrandsList.get(options1).getName());
-            }
-        }).build();
-    }
-
 
     @Override
     public void initWidget() {
@@ -230,7 +212,8 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                 break;
             case R.id.ll_chooseBrand:
                 SoftKeyboardUtils.packUpKeyboard(this);
-                brandsOptions.show(tv_selectChooseBrand);
+                Intent intent = new Intent(aty, AllBrandActivity.class);
+                startActivityForResult(intent, NumericConstants.RESULT_CODE_PAYMENT_SUCCEED);
                 break;
             case R.id.tv_nextStep:
                 ((ReleaseGoodsContract.Presenter) mPresenter).jumpActivity(this, brand_id, catId, type_id, et_goodName.getText().toString().trim(),
@@ -295,13 +278,14 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
         if (flag == 0) {
             GoodsTypeBean goodsTypeBean = (GoodsTypeBean) JsonUtil.json2Obj(success, GoodsTypeBean.class);
             setGoodsType(goodsTypeBean);
-            ((ReleaseGoodsContract.Presenter) mPresenter).getGoodsBrands();
+            dismissLoadingDialog();
+            //   ((ReleaseGoodsContract.Presenter) mPresenter).getGoodsBrands();
         } else if (flag == 1) {
-            GoodsBrandsBean goodsBrandsBean = (GoodsBrandsBean) JsonUtil.getInstance().json2Obj(success, GoodsBrandsBean.class);
-            goodsBrandsList = goodsBrandsBean.getData();
-            if (goodsBrandsList != null && goodsBrandsList.size() > 0) {
-                brandsOptions.setPicker(goodsBrandsList);
-            }
+//            GoodsBrandsBean goodsBrandsBean = (GoodsBrandsBean) JsonUtil.getInstance().json2Obj(success, GoodsBrandsBean.class);
+//            goodsBrandsList = goodsBrandsBean.getData();
+//            if (goodsBrandsList != null && goodsBrandsList.size() > 0) {
+//                brandsOptions.setPicker(goodsBrandsList);
+//            }
             dismissLoadingDialog();
         } else if (flag == 2) {
             urllist.add(success);
@@ -442,6 +426,9 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
                 selImageList1.addAll(images1);
                 adapter1.setImages(selImageList1);
             }
+        } else if (data != null && resultCode == Activity.RESULT_OK && requestCode == NumericConstants.RESULT_CODE_PAYMENT_SUCCEED) {
+            brand_id = data.getIntExtra("brand_id", 0);
+            tv_chooseBrand.setText(data.getStringExtra("brand_name"));
         }
     }
 
@@ -456,8 +443,6 @@ public class ReleaseGoodsActivity extends BaseActivity implements ReleaseGoodsCo
             ll_classification.requestFocusFromTouch();
             pvOptions.setSelectOptions(0, 0, 0);
             tv_selectCommodityClassification.setText(getString(R.string.pleaseSelect));
-            tv_selectChooseBrand.setText(getString(R.string.pleaseSelect));
-            brandsOptions.setSelectOptions(0);
             urllist.clear();
             if (images != null) {
                 images.clear();
