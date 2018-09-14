@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">傻孩子店主端</string>
+    <string name="app_name">傻孩子店家端</string>
     <string name="applicationId">com.yinglan.scm</string>
 
 
@@ -106,7 +106,6 @@
 
 
     <!--首页-->
-    <string name="sillyChildBusinessman">傻孩子店主端</string>
     <string name="myIdentity">我的身份</string>
     <string name="enterNameStore">请输入店铺名称(建议少于10个字)</string>
     <string name="asManager">成为店长</string>
