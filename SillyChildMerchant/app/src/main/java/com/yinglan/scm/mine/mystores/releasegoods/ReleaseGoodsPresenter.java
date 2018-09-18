@@ -111,7 +111,12 @@ public class ReleaseGoodsPresenter implements ReleaseGoodsContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, flag);
+                KJActivityStack.create().topActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.errorMsg(msg, flag);
+                    }
+                });
             }
         });
     }

@@ -195,7 +195,8 @@ public class ReleaseGoodsSpecificationsActivity extends BaseActivity implements 
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             ProductParametersBean productParametersBean = (ProductParametersBean) JsonUtil.getInstance().json2Obj(success, ProductParametersBean.class);
-            if (productParametersBean.getData().getParams() != null && productParametersBean.getData().getParams().size() > 0) {
+            if (productParametersBean.getData().getParams() != null && productParametersBean.getData().getParams().size() > 0 && productParametersBean.getData().getParams().get(0).getParamList() != null &&
+                    productParametersBean.getData().getParams().get(0).getParamList().size() > 0) {
                 ll_productParameters.setVisibility(View.VISIBLE);
                 tv_divider.setVisibility(View.VISIBLE);
                 paramsBean = new ParamsBean();

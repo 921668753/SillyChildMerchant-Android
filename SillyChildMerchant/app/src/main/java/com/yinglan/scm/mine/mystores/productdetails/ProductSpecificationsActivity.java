@@ -179,7 +179,7 @@ public class ProductSpecificationsActivity extends BaseActivity implements Produ
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             ProductParamsBean productParamsBean = (ProductParamsBean) JsonUtil.getInstance().json2Obj(success, ProductParamsBean.class);
-            if (productParamsBean != null && productParamsBean.getParams().size() > 0) {
+            if (productParamsBean != null && productParamsBean.getParams().size() > 0 && productParamsBean.getParams().get(0).getParamList() != null && productParamsBean.getParams().get(0).getParamList().size() > 0) {
                 ll_productParameters.setVisibility(View.VISIBLE);
                 tv_divider.setVisibility(View.VISIBLE);
                 paramsBean = new ParamsBean();
