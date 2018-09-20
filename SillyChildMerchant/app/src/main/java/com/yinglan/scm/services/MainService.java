@@ -54,7 +54,7 @@ public class MainService extends Service {
 
     public void getSystemMessage() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getSystemMessage(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
+        RequestClient.getSystemMessage(this, httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 SystemMessageBean systemMessageBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(response, SystemMessageBean.class);
