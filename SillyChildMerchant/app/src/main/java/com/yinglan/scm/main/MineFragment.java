@@ -1,6 +1,5 @@
 package com.yinglan.scm.main;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,7 +44,6 @@ import static com.yinglan.scm.constant.URLConstants.COLLEGE;
  * 个人中心
  * Created by Admin on 2017/8/10.
  */
-@SuppressLint("NewApi")
 public class MineFragment extends BaseFragment implements MineContract.View, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private MainActivity aty;
