@@ -1,17 +1,13 @@
 package com.yinglan.scm.mine.mywallet.mybankcard;
 
 import com.common.cklibrary.common.KJActivityStack;
-import com.common.cklibrary.utils.JsonUtil;
 import com.common.cklibrary.utils.httputil.HttpUtilParams;
 import com.common.cklibrary.utils.httputil.ResponseListener;
-import com.kymjs.common.CipherUtils;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.yinglan.scm.R;
 import com.yinglan.scm.retrofit.RequestClient;
-import com.yinglan.scm.utils.AccountValidatorUtil;
 
-import java.util.HashMap;
 import java.util.regex.Pattern;
 
 /**
@@ -56,7 +52,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
     @Override
     public void getBank() {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getBank(KJActivityStack.create().topActivity(),httpParams, new ResponseListener<String>() {
+        RequestClient.getBank(KJActivityStack.create().topActivity(), httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
@@ -77,7 +73,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             return;
         }
         String all = "^[A-Za-z\\u4e00-\\u9fa5]{2,10}";//{2,10}表示字符的长度是2-10
-      //  Pattern pattern = Pattern.compile(all);
+        //  Pattern pattern = Pattern.compile(all);
         boolean tf = Pattern.matches(all, account_name);
         if (!tf) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.hintName1), 0);
