@@ -2,6 +2,7 @@ package com.common.cklibrary.utils.rx;
 
 import android.util.ArrayMap;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,7 +29,11 @@ public class RxManager implements RxActionManager<Object> {
     }
 
     private RxManager() {
-        maps = new ArrayMap<>();
+        try {
+            maps = new ArrayMap<Object, Subscription>();
+        } catch (NoClassDefFoundError error) {
+            maps = new HashMap<Object, Subscription>();
+        }
     }
 
     @Override
