@@ -96,7 +96,6 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.bankCardNumber1), 0);
             return;
         }
-
 //        if (StringUtils.isEmpty(phone)) {
 //            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.accountText), 0);
 //            return;
