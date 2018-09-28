@@ -944,7 +944,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("Cookie", cookies);
-                HttpRequest.requestPostFORMHttp(context, URLConstants.ADVICEPOST, httpParams, listener);
+                HttpRequest.requestPostHttp(context, URLConstants.ADVICEPOST, httpParams, listener);
             }
         }, listener);
     }
