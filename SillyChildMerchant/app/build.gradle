@@ -10,8 +10,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         applicationId "com.yinglan.scm"
-        versionCode 53
-        versionName "1.0.0.1809281618"
+        versionCode 54
+        versionName "1.0.0.1809301748"
         multiDexEnabled true
 
         aaptOptions.cruncherEnabled = false
@@ -31,7 +31,7 @@ android {
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                 UMENG_APPKEY  : "5b21fb8fa40fa330cd0000ad",//友盟分享上注册的包名对应的appkey.
                 BAIDU_APPKEY  : "lIYGHXEb5pZTGFNcNiy4qPnKstmzveEM",//百度定位上注册的包名对应的appkey.
-                RONGYUN_APPKEY: "pkfcgjstpo5w8"//融云即时通讯上注册的包名对应的appkey.
+                RONGYUN_APPKEY: "0vnjpoad069rz"//融云即时通讯上注册的包名对应的appkey.
         ]
         //   useLibrary 'org.apache.http.legacy'
     }
@@ -90,11 +90,11 @@ android {
             buildConfigField "String", "TENGXUNBUGLY_APPKEY", "\"d2c8bb5b-e942-4877-86ba-f93642b8acff\""
             buildConfigField "String", "QQ_APPID", "\"1106716899\""
             buildConfigField "String", "QQ_APPKEY", "\"AVj9LjzRPHF37WYj\""
-            buildConfigField "String", "RONGYUN_APPKEY", "\"pkfcgjstpo5w8\""
             buildConfigField "String", "UMENG_APPKEY", "\"5b21fb8fa40fa330cd0000ad\""
             buildConfigField "String", "SiNA_WEIBOKEY", "\"1540846425\""
             buildConfigField "String", "SiNA_WEIBOSECRET", "\"c817f49eb49cd4aaf0f238d244fd3c48\""
-            buildConfigField "String", "RONGYUN_KEFU", "\"KEFU153016724744283\""
+            buildConfigField "String", "RONGYUN_APPKEY", "\"0vnjpoad069rz\""
+            buildConfigField "String", "RONGYUN_KEFU", "\"KEFU153828850438962\""
             proguardFiles 'proguard-rules.pro'
         }
         release {
@@ -114,11 +114,11 @@ android {
             buildConfigField "String", "TENGXUNBUGLY_APPKEY", "\"d2c8bb5b-e942-4877-86ba-f93642b8acff\""
             buildConfigField "String", "QQ_APPID", "\"1106716899\""
             buildConfigField "String", "QQ_APPKEY", "\"AVj9LjzRPHF37WYj\""
-            buildConfigField "String", "RONGYUN_APPKEY", "\"pkfcgjstpo5w8\""
             buildConfigField "String", "UMENG_APPKEY", "\"5b21fb8fa40fa330cd0000ad\""
             buildConfigField "String", "SiNA_WEIBOKEY", "\"1540846425\""
             buildConfigField "String", "SiNA_WEIBOSECRET", "\"c817f49eb49cd4aaf0f238d244fd3c48\""
-            buildConfigField "String", "RONGYUN_KEFU", "\"KEFU153016724744283\""
+            buildConfigField "String", "RONGYUN_APPKEY", "\"0vnjpoad069rz\""
+            buildConfigField "String", "RONGYUN_KEFU", "\"KEFU153828850438962\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // proguardFiles 'proguard-rules.pro'
         }
